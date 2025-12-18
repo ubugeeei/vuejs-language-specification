@@ -36,7 +36,7 @@ This specification uses a notation similar to [ESTree](https://github.com/estree
 
 ### 2.1 Namespace `[U]`
 
-```
+```js
 enum Namespace {
     HTML | SVG | MATH_ML
 }
@@ -50,7 +50,7 @@ enum Namespace {
 
 ### 2.2 NodeType `[U]`
 
-```
+```js
 enum NodeType {
     // Template Nodes
     ROOT | ELEMENT | TEXT | COMMENT | SIMPLE_EXPRESSION |
@@ -99,7 +99,7 @@ enum NodeType {
 
 ### 2.3 ElementType `[U]`
 
-```
+```js
 enum ElementType {
     ELEMENT | COMPONENT | SLOT | TEMPLATE
 }
@@ -116,7 +116,7 @@ enum ElementType {
 
 Used for static analysis and optimization. Higher levels imply lower levels.
 
-```
+```js
 enum ConstantType {
     NOT_CONSTANT | CAN_SKIP_PATCH | CAN_CACHE | CAN_STRINGIFY
 }
@@ -133,7 +133,7 @@ enum ConstantType {
 
 Bitwise flags for optimizing Virtual DOM patching.
 
-```
+```js
 enum PatchFlag {
     TEXT | CLASS | STYLE | PROPS | FULL_PROPS | HYDRATE_EVENTS |
     STABLE_FRAGMENT | KEYED_FRAGMENT | UNKEYED_FRAGMENT |
@@ -164,7 +164,7 @@ enum PatchFlag {
 
 All AST nodes contain location information for error reporting and source maps.
 
-```
+```js
 interface Position {
     offset: number;
     line: number;
@@ -202,7 +202,7 @@ interface SourceLocation {
 
 All AST nodes inherit from this base structure.
 
-```
+```js
 interface Node {
     type: NodeType;
     loc: SourceLocation;
@@ -217,7 +217,7 @@ interface Node {
 
 The root of a parsed template.
 
-```
+```js
 interface RootNode <: Node {
     type: "ROOT";
     source: string;
@@ -252,7 +252,7 @@ interface RootNode <: Node {
 
 ### 5.2 ElementNode `[U]`
 
-```
+```js
 interface ElementNode <: Node {
     type: "ELEMENT";
     ns: Namespace;
@@ -279,7 +279,7 @@ interface ElementNode <: Node {
 
 Native HTML/SVG elements.
 
-```
+```js
 interface PlainElementNode <: ElementNode {
     tagType: "ELEMENT";
     codegenNode: VNodeCall | SimpleExpressionNode | CacheExpression | MemoExpression | null;
@@ -291,7 +291,7 @@ interface PlainElementNode <: ElementNode {
 
 Vue component elements.
 
-```
+```js
 interface ComponentNode <: ElementNode {
     tagType: "COMPONENT";
     codegenNode: VNodeCall | CacheExpression | MemoExpression | null;
@@ -303,7 +303,7 @@ interface ComponentNode <: ElementNode {
 
 `<slot>` elements.
 
-```
+```js
 interface SlotOutletNode <: ElementNode {
     tagType: "SLOT";
     codegenNode: RenderSlotCall | CacheExpression | null;
@@ -315,7 +315,7 @@ interface SlotOutletNode <: ElementNode {
 
 `<template>` wrapper elements.
 
-```
+```js
 interface TemplateNode <: ElementNode {
     tagType: "TEMPLATE";
     codegenNode: null;
@@ -328,7 +328,7 @@ interface TemplateNode <: ElementNode {
 
 Static text content.
 
-```
+```js
 interface TextNode <: Node {
     type: "TEXT";
     content: string;
@@ -343,7 +343,7 @@ interface TextNode <: Node {
 
 HTML comments.
 
-```
+```js
 interface CommentNode <: Node {
     type: "COMMENT";
     content: string;
@@ -358,7 +358,7 @@ interface CommentNode <: Node {
 
 Static attributes (without `v-bind`).
 
-```
+```js
 interface AttributeNode <: Node {
     type: "ATTRIBUTE";
     name: string;
@@ -384,7 +384,7 @@ interface AttributeNode <: Node {
 
 Directives (`v-*`, `:`, `@`, `#`).
 
-```
+```js
 interface DirectiveNode <: Node {
     type: "DIRECTIVE";
     name: string;
@@ -419,7 +419,7 @@ interface DirectiveNode <: Node {
 
 Mustache interpolation `{{ expression }}`.
 
-```
+```js
 interface InterpolationNode <: Node {
     type: "INTERPOLATION";
     content: ExpressionNode;
@@ -434,7 +434,7 @@ interface InterpolationNode <: Node {
 
 ## 6. Expression Nodes `[U]`
 
-```
+```js
 ExpressionNode = SimpleExpressionNode | CompoundExpressionNode;
 ```
 
@@ -442,7 +442,7 @@ ExpressionNode = SimpleExpressionNode | CompoundExpressionNode;
 
 A single expression.
 
-```
+```js
 interface SimpleExpressionNode <: Node {
     type: "SIMPLE_EXPRESSION";
     content: string;
@@ -469,7 +469,7 @@ interface SimpleExpressionNode <: Node {
 
 Multiple expressions combined.
 
-```
+```js
 CompoundExpressionChild = SimpleExpressionNode | CompoundExpressionNode |
                           InterpolationNode | TextNode | string | symbol;
 
@@ -490,7 +490,7 @@ interface CompoundExpressionNode <: Node {
 
 Represents `v-if`/`v-else-if`/`v-else` chains.
 
-```
+```js
 interface IfNode <: Node {
     type: "IF";
     branches: [ IfBranchNode ];
@@ -507,7 +507,7 @@ interface IfNode <: Node {
 
 A single branch in an if chain.
 
-```
+```js
 interface IfBranchNode <: Node {
     type: "IF_BRANCH";
     condition: ExpressionNode | null;
@@ -528,7 +528,7 @@ interface IfBranchNode <: Node {
 
 Represents `v-for` loops.
 
-```
+```js
 interface ForParseResult {
     source: ExpressionNode;
     value: ExpressionNode | null;
@@ -570,7 +570,7 @@ interface ForNode <: Node {
 
 Wraps text content that needs runtime handling.
 
-```
+```js
 interface TextCallNode <: Node {
     type: "TEXT_CALL";
     content: TextNode | InterpolationNode | CompoundExpressionNode;
@@ -586,7 +586,7 @@ interface TextCallNode <: Node {
 
 Represents a VNode creation call.
 
-```
+```js
 VNodeChildren = [ TemplateChildNode ] | TemplateTextChildNode |
                 SlotsExpression | ForRenderListExpression |
                 SimpleExpressionNode | CacheExpression | null;
@@ -619,7 +619,7 @@ interface VNodeCall <: Node {
 
 ### 8.2 CallExpression `[U]`
 
-```
+```js
 CallArgument = string | symbol | JSChildNode | SSRCodegenNode |
                TemplateChildNode | [ TemplateChildNode ];
 
@@ -632,7 +632,7 @@ interface CallExpression <: Node {
 
 ### 8.3 ObjectExpression `[U]`
 
-```
+```js
 interface Property <: Node {
     type: "JS_PROPERTY";
     key: ExpressionNode;
@@ -647,7 +647,7 @@ interface ObjectExpression <: Node {
 
 ### 8.4 ArrayExpression `[U]`
 
-```
+```js
 interface ArrayExpression <: Node {
     type: "JS_ARRAY_EXPRESSION";
     elements: [ string | Node ];
@@ -656,7 +656,7 @@ interface ArrayExpression <: Node {
 
 ### 8.5 FunctionExpression `[U]`
 
-```
+```js
 FunctionParams = ExpressionNode | string | [ ExpressionNode | string ] | null;
 
 interface FunctionExpression <: Node {
@@ -672,7 +672,7 @@ interface FunctionExpression <: Node {
 
 ### 8.6 ConditionalExpression `[U]`
 
-```
+```js
 interface ConditionalExpression <: Node {
     type: "JS_CONDITIONAL_EXPRESSION";
     test: JSChildNode;
@@ -686,7 +686,7 @@ interface ConditionalExpression <: Node {
 
 Caching wrapper for v-once and v-memo.
 
-```
+```js
 interface CacheExpression <: Node {
     type: "JS_CACHE_EXPRESSION";
     index: number;
@@ -711,7 +711,7 @@ interface CacheExpression <: Node {
 
 ### 9.1 BlockStatement
 
-```
+```js
 interface BlockStatement <: Node {
     type: "JS_BLOCK_STATEMENT";
     body: [ JSChildNode | IfStatement ];
@@ -720,7 +720,7 @@ interface BlockStatement <: Node {
 
 ### 9.2 TemplateLiteral
 
-```
+```js
 interface TemplateLiteral <: Node {
     type: "JS_TEMPLATE_LITERAL";
     elements: [ string | JSChildNode ];
@@ -729,7 +729,7 @@ interface TemplateLiteral <: Node {
 
 ### 9.3 IfStatement
 
-```
+```js
 interface IfStatement <: Node {
     type: "JS_IF_STATEMENT";
     test: ExpressionNode;
@@ -740,7 +740,7 @@ interface IfStatement <: Node {
 
 ### 9.4 AssignmentExpression
 
-```
+```js
 interface AssignmentExpression <: Node {
     type: "JS_ASSIGNMENT_EXPRESSION";
     left: SimpleExpressionNode;
@@ -750,7 +750,7 @@ interface AssignmentExpression <: Node {
 
 ### 9.5 SequenceExpression
 
-```
+```js
 interface SequenceExpression <: Node {
     type: "JS_SEQUENCE_EXPRESSION";
     expressions: [ JSChildNode ];
@@ -759,7 +759,7 @@ interface SequenceExpression <: Node {
 
 ### 9.6 ReturnStatement
 
-```
+```js
 interface ReturnStatement <: Node {
     type: "JS_RETURN_STATEMENT";
     returns: TemplateChildNode | [ TemplateChildNode ] | JSChildNode;
@@ -774,7 +774,7 @@ interface ReturnStatement <: Node {
 
 All possible children of a template element.
 
-```
+```js
 TemplateChildNode = ElementNode | InterpolationNode | CompoundExpressionNode |
                     TextNode | CommentNode | IfNode | IfBranchNode |
                     ForNode | TextCallNode;
@@ -784,13 +784,13 @@ TemplateChildNode = ElementNode | InterpolationNode | CompoundExpressionNode |
 
 Nodes that can contain children.
 
-```
+```js
 ParentNode = RootNode | ElementNode | IfBranchNode | ForNode;
 ```
 
 ### 10.3 JSChildNode
 
-```
+```js
 JSChildNode = VNodeCall | CallExpression | ObjectExpression | ArrayExpression |
               ExpressionNode | FunctionExpression | ConditionalExpression |
               CacheExpression | AssignmentExpression | SequenceExpression;
@@ -798,7 +798,7 @@ JSChildNode = VNodeCall | CallExpression | ObjectExpression | ArrayExpression |
 
 ### 10.4 SSRCodegenNode
 
-```
+```js
 SSRCodegenNode = BlockStatement | TemplateLiteral | IfStatement |
                  AssignmentExpression | ReturnStatement | SequenceExpression;
 ```
@@ -811,7 +811,7 @@ SSRCodegenNode = BlockStatement | TemplateLiteral | IfStatement |
 
 Base structure for SFC blocks.
 
-```
+```js
 interface SFCBlock {
     type: string;
     content: string;
@@ -835,7 +835,7 @@ interface SFCBlock {
 
 ### 11.2 SFCTemplateBlock
 
-```
+```js
 interface SFCTemplateBlock <: SFCBlock {
     type: "template";
     ast: RootNode | null;
@@ -844,7 +844,7 @@ interface SFCTemplateBlock <: SFCBlock {
 
 ### 11.3 SFCScriptBlock
 
-```
+```js
 interface SFCScriptBlock <: SFCBlock {
     type: "script";
     setup: string | boolean | null;
@@ -869,7 +869,7 @@ interface SFCScriptBlock <: SFCBlock {
 
 ### 11.4 SFCStyleBlock
 
-```
+```js
 interface SFCStyleBlock <: SFCBlock {
     type: "style";
     scoped: boolean | null;
@@ -886,7 +886,7 @@ interface SFCStyleBlock <: SFCBlock {
 
 Represents a parsed Single File Component.
 
-```
+```js
 interface SFCDescriptor {
     filename: string;
     source: string;
@@ -924,7 +924,7 @@ interface SFCDescriptor {
 ```
 
 **AST**:
-```
+```js
 RootNode {
     type: "ROOT"
     children: [
@@ -962,7 +962,7 @@ RootNode {
 ```
 
 **AST**:
-```
+```js
 RootNode {
     type: "ROOT"
     children: [
@@ -999,7 +999,7 @@ RootNode {
 ```
 
 **AST**:
-```
+```js
 ForNode {
     type: "FOR"
     source: SimpleExpressionNode { content: "items" }
