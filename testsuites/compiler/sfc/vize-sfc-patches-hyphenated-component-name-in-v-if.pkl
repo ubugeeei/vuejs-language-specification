@@ -1,0 +1,98 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-hyphenated-component-name-in-v-if"
+title = "Imported SFC input: hyphenated component name in v-if"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "hyphenated component name in v-if"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "hyphenated component name in v-if"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-hyphenated-component-name-in-v-if.vue"
+  sfc = #"""
+  <script setup>
+  import { ref } from 'vue'
+  const show = ref(true)
+  </script>
+  
+  <template>
+    <router-link v-if="show" to="/">Home</router-link>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { ref } from 'vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-hyphenated-component-name-in-v-if',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const show = ref(true)
+  
+  const __returned__ = { show, ref }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { createTextVNode as _createTextVNode, resolveComponent as _resolveComponent, withCtx as _withCtx, openBlock as _openBlock, createBlock as _createBlock, createCommentVNode as _createCommentVNode } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_router_link = _resolveComponent("router-link")
+  
+    return ($setup.show)
+      ? (_openBlock(), _createBlock(_component_router_link, {
+          key: 0,
+          to: "/"
+        }, {
+          default: _withCtx(() => [...(_cache[0] || (_cache[0] = [
+            _createTextVNode("Home", -1 /* CACHED */)
+          ]))]),
+          _: 1 /* STABLE */
+        }))
+      : _createCommentVNode("v-if", true)
+  }
+  """#
+}

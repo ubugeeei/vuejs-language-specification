@@ -1,0 +1,98 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-transition-inside-v-if-should-use-builtin"
+title = "Imported SFC input: transition inside v-if should use builtin"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "transition inside v-if should use builtin"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "transition inside v-if should use builtin"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-transition-inside-v-if-should-use-builtin.vue"
+  sfc = #"""
+  <script setup>
+  import { ref } from 'vue'
+  const show = ref(true)
+  </script>
+  
+  <template>
+    <transition v-if="show" name="fade">
+      <div>content</div>
+    </transition>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { ref } from 'vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-transition-inside-v-if-should-use-builtin',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const show = ref(true)
+  
+  const __returned__ = { show, ref }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { createElementVNode as _createElementVNode, Transition as _Transition, withCtx as _withCtx, openBlock as _openBlock, createBlock as _createBlock, createCommentVNode as _createCommentVNode } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return ($setup.show)
+      ? (_openBlock(), _createBlock(_Transition, {
+          key: 0,
+          name: "fade"
+        }, {
+          default: _withCtx(() => [...(_cache[0] || (_cache[0] = [
+            _createElementVNode("div", null, "content", -1 /* CACHED */)
+          ]))]),
+          _: 1 /* STABLE */
+        }))
+      : _createCommentVNode("v-if", true)
+  }
+  """#
+}

@@ -1,0 +1,66 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-transform-errors-reference-to-private-property"
+title = "Imported transform input: reference to private property"
+kind = "template-dom-compile"
+summary = "Static compiler conformance derived from copied input tests/fixtures/errors/transform-errors.toml and the official vuejs/core compiler oracle, including exact diagnostics when emitted."
+
+features {
+  "compiler.template"
+  "compiler.errors"
+  "imported.input"
+  "imported.input.transform-errors"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/errors/transform-errors.toml"
+  source = "tests/fixtures/errors/transform-errors.toml"
+  caseName = "reference to private property"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/errors/transform-errors.toml"
+    cases {
+      "reference to private property"
+    }
+  }
+}
+
+input {
+  source = "<div>{{ _privateVar }}</div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "TO_DISPLAY_STRING"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { toDisplayString: _toDisplayString, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return (_openBlock(), _createElementBlock("div", null, _toDisplayString(_privateVar), 1 /* TEXT */))
+    }
+  }
+  """#
+}

@@ -1,0 +1,78 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-transform-errors-v-for-template-key-on-child"
+title = "Imported transform input: v-for template key on child"
+kind = "template-dom-compile"
+summary = "Static compiler conformance derived from copied input tests/fixtures/errors/transform-errors.toml and the official vuejs/core compiler oracle, including exact diagnostics when emitted."
+
+features {
+  "compiler.template"
+  "compiler.errors"
+  "imported.input"
+  "imported.input.transform-errors"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/errors/transform-errors.toml"
+  source = "tests/fixtures/errors/transform-errors.toml"
+  caseName = "v-for template key on child"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/errors/transform-errors.toml"
+    cases {
+      "v-for template key on child"
+    }
+  }
+}
+
+input {
+  source = "<template v-for=\"item in items\"><div :key=\"item.id\"></div></template>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "RENDER_LIST"
+    }
+    new HelperExpectation {
+      name = "FRAGMENT"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  diagnostics {
+    new ErrorExpectation {
+      name = "SyntaxError"
+      message = "<template v-for> key should be placed on the <template> tag."
+      code = "X_V_FOR_TEMPLATE_KEY_PLACEMENT"
+    }
+  }
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { renderList: _renderList, Fragment: _Fragment, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return (_openBlock(true), _createElementBlock(_Fragment, null, _renderList(items, (item) => {
+        return (_openBlock(), _createElementBlock("div", { key: item.id }))
+      }), 256 /* UNKEYED_FRAGMENT */))
+    }
+  }
+  """#
+}

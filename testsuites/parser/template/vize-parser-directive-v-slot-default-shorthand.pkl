@@ -1,0 +1,303 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-directive-v-slot-default-shorthand"
+title = "Imported parser input: v-slot default shorthand"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/directive.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.directive"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/directive.toml"
+  source = "tests/fixtures/parser/directive.toml"
+  caseName = "v-slot default shorthand"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/directive.toml"
+    cases {
+      "v-slot default shorthand"
+    }
+  }
+}
+
+input {
+  source = "<template #default></template>"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<template #default></template>",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "template",
+        "ns": "HTML",
+        "tagType": "TEMPLATE",
+        "props": [
+          {
+            "type": "DIRECTIVE",
+            "name": "slot",
+            "rawName": "#default",
+            "arg": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 12,
+                  "line": 1,
+                  "offset": 11
+                },
+                "end": {
+                  "column": 19,
+                  "line": 1,
+                  "offset": 18
+                },
+                "source": "default"
+              },
+              "content": "default",
+              "isStatic": true,
+              "constType": "CAN_STRINGIFY"
+            },
+            "modifiers": [],
+            "loc": {
+              "start": {
+                "column": 11,
+                "line": 1,
+                "offset": 10
+              },
+              "end": {
+                "column": 19,
+                "line": 1,
+                "offset": 18
+              },
+              "source": "#default"
+            }
+          }
+        ],
+        "children": [],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 31,
+            "line": 1,
+            "offset": 30
+          },
+          "source": "<template #default></template>"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 31,
+        "line": 1,
+        "offset": 30
+      },
+      "source": "<template #default></template>"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 31
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 30
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<template #default></template>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/constType"
+      equals = "CAN_STRINGIFY"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/content"
+      equals = "default"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/isStatic"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/end/column"
+      equals = 19
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/end/offset"
+      equals = 18
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/source"
+      equals = "default"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/start/column"
+      equals = 12
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/start/offset"
+      equals = 11
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/column"
+      equals = 19
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/offset"
+      equals = 18
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/source"
+      equals = "#default"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/column"
+      equals = 11
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/offset"
+      equals = 10
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "slot"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/rawName"
+      equals = "#default"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "template"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "TEMPLATE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 31
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 30
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<template #default></template>"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<template #default></template>"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

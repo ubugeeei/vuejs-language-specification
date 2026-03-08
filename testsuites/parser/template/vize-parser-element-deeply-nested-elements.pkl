@@ -1,0 +1,378 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-element-deeply-nested-elements"
+title = "Imported parser input: deeply nested elements"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/element.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.element"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/element.toml"
+  source = "tests/fixtures/parser/element.toml"
+  caseName = "deeply nested elements"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/element.toml"
+    cases {
+      "deeply nested elements"
+    }
+  }
+}
+
+input {
+  source = "<div><p><span><a></a></span></p></div>"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<div><p><span><a></a></span></p></div>",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "div",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [],
+        "children": [
+          {
+            "type": "ELEMENT",
+            "tag": "p",
+            "ns": "HTML",
+            "tagType": "ELEMENT",
+            "props": [],
+            "children": [
+              {
+                "type": "ELEMENT",
+                "tag": "span",
+                "ns": "HTML",
+                "tagType": "ELEMENT",
+                "props": [],
+                "children": [
+                  {
+                    "type": "ELEMENT",
+                    "tag": "a",
+                    "ns": "HTML",
+                    "tagType": "ELEMENT",
+                    "props": [],
+                    "children": [],
+                    "loc": {
+                      "start": {
+                        "column": 15,
+                        "line": 1,
+                        "offset": 14
+                      },
+                      "end": {
+                        "column": 22,
+                        "line": 1,
+                        "offset": 21
+                      },
+                      "source": "<a></a>"
+                    }
+                  }
+                ],
+                "loc": {
+                  "start": {
+                    "column": 9,
+                    "line": 1,
+                    "offset": 8
+                  },
+                  "end": {
+                    "column": 29,
+                    "line": 1,
+                    "offset": 28
+                  },
+                  "source": "<span><a></a></span>"
+                }
+              }
+            ],
+            "loc": {
+              "start": {
+                "column": 6,
+                "line": 1,
+                "offset": 5
+              },
+              "end": {
+                "column": 33,
+                "line": 1,
+                "offset": 32
+              },
+              "source": "<p><span><a></a></span></p>"
+            }
+          }
+        ],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 39,
+            "line": 1,
+            "offset": 38
+          },
+          "source": "<div><p><span><a></a></span></p></div>"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 39,
+        "line": 1,
+        "offset": 38
+      },
+      "source": "<div><p><span><a></a></span></p></div>"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/children/0/loc/end/column"
+      equals = 22
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/children/0/loc/end/offset"
+      equals = 21
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/children/0/loc/source"
+      equals = "<a></a>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/children/0/loc/start/column"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/children/0/loc/start/offset"
+      equals = 14
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/children/0/tag"
+      equals = "a"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/loc/end/column"
+      equals = 29
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/loc/end/offset"
+      equals = 28
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/loc/source"
+      equals = "<span><a></a></span>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/loc/start/column"
+      equals = 9
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/loc/start/offset"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/tag"
+      equals = "span"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/column"
+      equals = 33
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/offset"
+      equals = 32
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/source"
+      equals = "<p><span><a></a></span></p>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/column"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/offset"
+      equals = 5
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/tag"
+      equals = "p"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 39
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 38
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<div><p><span><a></a></span></p></div>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "div"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 39
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 38
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<div><p><span><a></a></span></p></div>"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<div><p><span><a></a></span></p></div>"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

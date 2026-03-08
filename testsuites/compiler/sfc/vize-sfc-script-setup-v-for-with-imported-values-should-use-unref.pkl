@@ -1,0 +1,92 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-v-for-with-imported-values-should-use-unref"
+title = "Imported SFC input: v-for with imported values should use _unref"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "v-for with imported values should use _unref"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "v-for with imported values should use _unref"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-v-for-with-imported-values-should-use-unref.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  import { PRESETS } from './constants'
+  </script>
+  
+  <template>
+    <div v-for="preset in PRESETS" :key="preset.name">
+      {{ preset.label }}
+    </div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  import { PRESETS } from './constants'
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-script-setup-v-for-with-imported-values-should-use-unref',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  
+  const __returned__ = { get PRESETS() { return PRESETS } }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { renderList as _renderList, Fragment as _Fragment, openBlock as _openBlock, createElementBlock as _createElementBlock, toDisplayString as _toDisplayString } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(true), _createElementBlock(_Fragment, null, _renderList($setup.PRESETS, (preset) => {
+      return (_openBlock(), _createElementBlock("div", {
+        key: preset.name
+      }, _toDisplayString(preset.label), 1 /* TEXT */))
+    }), 128 /* KEYED_FRAGMENT */))
+  }
+  """#
+}

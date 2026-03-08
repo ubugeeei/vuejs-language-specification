@@ -1,0 +1,86 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-model-select-with-dynamic-options"
+title = "Imported template input: select with dynamic options"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-model.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-model"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-model.toml"
+  source = "tests/fixtures/vdom/v-model.toml"
+  caseName = "select with dynamic options"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-model.toml"
+    cases {
+      "select with dynamic options"
+    }
+  }
+}
+
+input {
+  source = "<select v-model=\"selected\"><option v-for=\"opt in options\" :value=\"opt.value\">{{ opt.label }}</option></select>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "RENDER_LIST"
+    }
+    new HelperExpectation {
+      name = "FRAGMENT"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+    new HelperExpectation {
+      name = "TO_DISPLAY_STRING"
+    }
+    new HelperExpectation {
+      name = "V_MODEL_SELECT"
+    }
+    new HelperExpectation {
+      name = "WITH_DIRECTIVES"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { renderList: _renderList, Fragment: _Fragment, openBlock: _openBlock, createElementBlock: _createElementBlock, toDisplayString: _toDisplayString, vModelSelect: _vModelSelect, withDirectives: _withDirectives } = _Vue
+  
+      return _withDirectives((_openBlock(), _createElementBlock("select", {
+        "onUpdate:modelValue": $event => ((selected) = $event)
+      }, [
+        (_openBlock(true), _createElementBlock(_Fragment, null, _renderList(options, (opt) => {
+          return (_openBlock(), _createElementBlock("option", { value: opt.value }, _toDisplayString(opt.label), 9 /* TEXT, PROPS */, ["value"]))
+        }), 256 /* UNKEYED_FRAGMENT */))
+      ], 8 /* PROPS */, ["onUpdate:modelValue"])), [
+        [_vModelSelect, selected]
+      ])
+    }
+  }
+  """#
+}

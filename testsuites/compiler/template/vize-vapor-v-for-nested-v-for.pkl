@@ -1,0 +1,90 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-for-nested-v-for"
+title = "Imported vapor input: nested v-for"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-for.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-for"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-for.toml"
+  source = "tests/fixtures/vapor/v-for.toml"
+  caseName = "nested v-for"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-for.toml"
+    cases {
+      "nested v-for"
+    }
+  }
+}
+
+input {
+  source = "<div v-for=\"row in rows\" :key=\"row.id\"><span v-for=\"cell in row.cells\" :key=\"cell.id\">{{ cell }}</span></div>"
+}
+
+expect {
+  normalizedCode = #"""
+  import { setInsertionState as _setInsertionState, txt as _txt, toDisplayString as _toDisplayString, setText as _setText, renderEffect as _renderEffect, createFor as _createFor, template as _template } from 'vue';
+  const t0 = _template("<span> </span>")
+  const t1 = _template("<div></div>")
+  
+  export function render(_ctx) {
+    const n0 = _createFor(() => (_ctx.rows), (_for_item0) => {
+      const n5 = t1()
+      _setInsertionState(n5, null, true)
+      const n2 = _createFor(() => (_for_item0.value.cells), (_for_item1) => {
+        const n4 = t0()
+        const x4 = _txt(n4)
+        _renderEffect(() => _setText(x4, _toDisplayString(_for_item1.value)))
+        return n4
+      }, (cell) => (cell.id), 1)
+      return n5
+    }, (row) => (row.id))
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { setInsertionState as _setInsertionState, txt as _txt, toDisplayString as _toDisplayString, setText as _setText, renderEffect as _renderEffect, createFor as _createFor, template as _template } from 'vue';
+  const t0 = _template("<span> </span>")
+  const t1 = _template("<div></div>")
+  
+  export function render(_ctx) {
+    const n0 = _createFor(() => (_ctx.rows), (_for_item0) => {
+      const n5 = t1()
+      _setInsertionState(n5, null, true)
+      const n2 = _createFor(() => (_for_item0.value.cells), (_for_item1) => {
+        const n4 = t0()
+        const x4 = _txt(n4)
+        _renderEffect(() => _setText(x4, _toDisplayString(_for_item1.value)))
+        return n4
+      }, (cell) => (cell.id), 1)
+      return n5
+    }, (row) => (row.id))
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

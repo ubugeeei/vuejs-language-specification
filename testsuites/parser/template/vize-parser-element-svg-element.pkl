@@ -1,0 +1,246 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-element-svg-element"
+title = "Imported parser input: SVG element"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/element.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.element"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/element.toml"
+  source = "tests/fixtures/parser/element.toml"
+  caseName = "SVG element"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/element.toml"
+    cases {
+      "SVG element"
+    }
+  }
+}
+
+input {
+  source = "<svg><circle></circle></svg>"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<svg><circle></circle></svg>",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "svg",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [],
+        "children": [
+          {
+            "type": "ELEMENT",
+            "tag": "circle",
+            "ns": "HTML",
+            "tagType": "ELEMENT",
+            "props": [],
+            "children": [],
+            "loc": {
+              "start": {
+                "column": 6,
+                "line": 1,
+                "offset": 5
+              },
+              "end": {
+                "column": 23,
+                "line": 1,
+                "offset": 22
+              },
+              "source": "<circle></circle>"
+            }
+          }
+        ],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 29,
+            "line": 1,
+            "offset": 28
+          },
+          "source": "<svg><circle></circle></svg>"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 29,
+        "line": 1,
+        "offset": 28
+      },
+      "source": "<svg><circle></circle></svg>"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/column"
+      equals = 23
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/offset"
+      equals = 22
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/source"
+      equals = "<circle></circle>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/column"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/offset"
+      equals = 5
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/tag"
+      equals = "circle"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 29
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 28
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<svg><circle></circle></svg>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "svg"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 29
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 28
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<svg><circle></circle></svg>"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<svg><circle></circle></svg>"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

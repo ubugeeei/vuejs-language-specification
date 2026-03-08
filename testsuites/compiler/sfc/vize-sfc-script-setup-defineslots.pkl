@@ -1,0 +1,85 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-defineslots"
+title = "Imported SFC input: defineSlots"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "defineSlots"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "defineSlots"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-defineslots.vue"
+  sfc = #"""
+  <script setup>
+  const slots = defineSlots()
+  </script>
+  
+  <template>
+    <slot></slot>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { useSlots as _useSlots } from 'vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-script-setup-defineslots',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const slots = _useSlots()
+  
+  const __returned__ = { slots }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { renderSlot as _renderSlot } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return _renderSlot(_ctx.$slots, "default")
+  }
+  """#
+}

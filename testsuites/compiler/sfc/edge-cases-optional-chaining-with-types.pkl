@@ -1,0 +1,76 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.edge-cases-optional-chaining-with-types"
+title = "Edge-case SFC: optional chaining and inline interfaces remain intact"
+kind = "sfc-full-compile"
+summary = "Script setup lowering must preserve inline interface declarations and optional chaining expressions while exposing the resolved binding to template compilation."
+
+features {
+  "compiler.sfc"
+  "script-setup.typescript"
+  "typescript.optional-chaining"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/edge-cases.test.ts"
+    cases {
+      "should handle optional chaining with types"
+    }
+  }
+}
+
+input {
+  filename = "optionalChainingWithTypes.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  interface User { name?: { first: string } }
+  const user: User = {}
+  const name = user?.name?.first
+  </script>
+
+  <template>
+    <div>{{ name }}</div>
+  </template>
+  """#
+}
+
+expect {
+  descriptor {
+    template = true
+    script = false
+    scriptSetup = true
+    styles = 0
+    customBlocks = 0
+    scriptLang = null
+    scriptSetupLang = "ts"
+    scopedStyles = 0
+  }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  interface User { name?: { first: string } }
+
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'optionalChainingWithTypes',
+    setup(__props, { expose: __expose }) {
+    __expose();
+
+  const user: User = {}
+  const name = user?.name?.first
+
+  const __returned__ = { user, name }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+
+  })
+  """#
+  templateCode = #"""
+  import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, _toDisplayString($setup.name), 1 /* TEXT */))
+  }
+  """#
+}

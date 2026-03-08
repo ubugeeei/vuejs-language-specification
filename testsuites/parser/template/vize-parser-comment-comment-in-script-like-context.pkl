@@ -1,0 +1,234 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-comment-comment-in-script-like-context"
+title = "Imported parser input: comment in script-like context"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/comment.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.comment"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/comment.toml"
+  source = "tests/fixtures/parser/comment.toml"
+  caseName = "comment in script-like context"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/comment.toml"
+    cases {
+      "comment in script-like context"
+    }
+  }
+}
+
+input {
+  source = "<script><!-- not parsed --></script>"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<script><!-- not parsed --></script>",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "script",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [],
+        "children": [
+          {
+            "type": "COMMENT",
+            "content": " not parsed ",
+            "loc": {
+              "start": {
+                "column": 9,
+                "line": 1,
+                "offset": 8
+              },
+              "end": {
+                "column": 28,
+                "line": 1,
+                "offset": 27
+              },
+              "source": "<!-- not parsed -->"
+            }
+          }
+        ],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 37,
+            "line": 1,
+            "offset": 36
+          },
+          "source": "<script><!-- not parsed --></script>"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 37,
+        "line": 1,
+        "offset": 36
+      },
+      "source": "<script><!-- not parsed --></script>"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/children/0/content"
+      equals = " not parsed "
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/column"
+      equals = 28
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/offset"
+      equals = 27
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/source"
+      equals = "<!-- not parsed -->"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/column"
+      equals = 9
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/offset"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/type"
+      equals = "COMMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 37
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 36
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<script><!-- not parsed --></script>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "script"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 37
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 36
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<script><!-- not parsed --></script>"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<script><!-- not parsed --></script>"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

@@ -1,0 +1,328 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-attribute-style-attribute"
+title = "Imported parser input: style attribute"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/attribute.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.attribute"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/attribute.toml"
+  source = "tests/fixtures/parser/attribute.toml"
+  caseName = "style attribute"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/attribute.toml"
+    cases {
+      "style attribute"
+    }
+  }
+}
+
+input {
+  source = "<div style=\"color: red;\"></div>"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<div style=\"color: red;\"></div>",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "div",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [
+          {
+            "type": "ATTRIBUTE",
+            "name": "style",
+            "nameLoc": {
+              "start": {
+                "column": 6,
+                "line": 1,
+                "offset": 5
+              },
+              "end": {
+                "column": 11,
+                "line": 1,
+                "offset": 10
+              },
+              "source": "style"
+            },
+            "value": {
+              "type": "TEXT",
+              "content": "color: red;",
+              "loc": {
+                "start": {
+                  "column": 12,
+                  "line": 1,
+                  "offset": 11
+                },
+                "end": {
+                  "column": 25,
+                  "line": 1,
+                  "offset": 24
+                },
+                "source": "\"color: red;\""
+              }
+            },
+            "loc": {
+              "start": {
+                "column": 6,
+                "line": 1,
+                "offset": 5
+              },
+              "end": {
+                "column": 25,
+                "line": 1,
+                "offset": 24
+              },
+              "source": "style=\"color: red;\""
+            }
+          }
+        ],
+        "children": [],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 32,
+            "line": 1,
+            "offset": 31
+          },
+          "source": "<div style=\"color: red;\"></div>"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 32,
+        "line": 1,
+        "offset": 31
+      },
+      "source": "<div style=\"color: red;\"></div>"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 32
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 31
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<div style=\"color: red;\"></div>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/column"
+      equals = 25
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/offset"
+      equals = 24
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/source"
+      equals = "style=\"color: red;\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/column"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/offset"
+      equals = 5
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "style"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/end/column"
+      equals = 11
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/end/offset"
+      equals = 10
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/source"
+      equals = "style"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/start/column"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/start/offset"
+      equals = 5
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "ATTRIBUTE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/content"
+      equals = "color: red;"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/end/column"
+      equals = 25
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/end/offset"
+      equals = 24
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/source"
+      equals = "\"color: red;\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/start/column"
+      equals = 12
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/start/offset"
+      equals = 11
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "div"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 32
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 31
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<div style=\"color: red;\"></div>"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<div style=\"color: red;\"></div>"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

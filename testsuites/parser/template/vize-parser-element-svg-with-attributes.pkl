@@ -1,0 +1,983 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-element-svg-with-attributes"
+title = "Imported parser input: SVG with attributes"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/element.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.element"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/element.toml"
+  source = "tests/fixtures/parser/element.toml"
+  caseName = "SVG with attributes"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/element.toml"
+    cases {
+      "SVG with attributes"
+    }
+  }
+}
+
+input {
+  source = "<svg width=\"100\" height=\"100\"><circle cx=\"50\" cy=\"50\" r=\"40\"></circle></svg>"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<svg width=\"100\" height=\"100\"><circle cx=\"50\" cy=\"50\" r=\"40\"></circle></svg>",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "svg",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [
+          {
+            "type": "ATTRIBUTE",
+            "name": "width",
+            "nameLoc": {
+              "start": {
+                "column": 6,
+                "line": 1,
+                "offset": 5
+              },
+              "end": {
+                "column": 11,
+                "line": 1,
+                "offset": 10
+              },
+              "source": "width"
+            },
+            "value": {
+              "type": "TEXT",
+              "content": "100",
+              "loc": {
+                "start": {
+                  "column": 12,
+                  "line": 1,
+                  "offset": 11
+                },
+                "end": {
+                  "column": 17,
+                  "line": 1,
+                  "offset": 16
+                },
+                "source": "\"100\""
+              }
+            },
+            "loc": {
+              "start": {
+                "column": 6,
+                "line": 1,
+                "offset": 5
+              },
+              "end": {
+                "column": 17,
+                "line": 1,
+                "offset": 16
+              },
+              "source": "width=\"100\""
+            }
+          },
+          {
+            "type": "ATTRIBUTE",
+            "name": "height",
+            "nameLoc": {
+              "start": {
+                "column": 18,
+                "line": 1,
+                "offset": 17
+              },
+              "end": {
+                "column": 24,
+                "line": 1,
+                "offset": 23
+              },
+              "source": "height"
+            },
+            "value": {
+              "type": "TEXT",
+              "content": "100",
+              "loc": {
+                "start": {
+                  "column": 25,
+                  "line": 1,
+                  "offset": 24
+                },
+                "end": {
+                  "column": 30,
+                  "line": 1,
+                  "offset": 29
+                },
+                "source": "\"100\""
+              }
+            },
+            "loc": {
+              "start": {
+                "column": 18,
+                "line": 1,
+                "offset": 17
+              },
+              "end": {
+                "column": 30,
+                "line": 1,
+                "offset": 29
+              },
+              "source": "height=\"100\""
+            }
+          }
+        ],
+        "children": [
+          {
+            "type": "ELEMENT",
+            "tag": "circle",
+            "ns": "HTML",
+            "tagType": "ELEMENT",
+            "props": [
+              {
+                "type": "ATTRIBUTE",
+                "name": "cx",
+                "nameLoc": {
+                  "start": {
+                    "column": 39,
+                    "line": 1,
+                    "offset": 38
+                  },
+                  "end": {
+                    "column": 41,
+                    "line": 1,
+                    "offset": 40
+                  },
+                  "source": "cx"
+                },
+                "value": {
+                  "type": "TEXT",
+                  "content": "50",
+                  "loc": {
+                    "start": {
+                      "column": 42,
+                      "line": 1,
+                      "offset": 41
+                    },
+                    "end": {
+                      "column": 46,
+                      "line": 1,
+                      "offset": 45
+                    },
+                    "source": "\"50\""
+                  }
+                },
+                "loc": {
+                  "start": {
+                    "column": 39,
+                    "line": 1,
+                    "offset": 38
+                  },
+                  "end": {
+                    "column": 46,
+                    "line": 1,
+                    "offset": 45
+                  },
+                  "source": "cx=\"50\""
+                }
+              },
+              {
+                "type": "ATTRIBUTE",
+                "name": "cy",
+                "nameLoc": {
+                  "start": {
+                    "column": 47,
+                    "line": 1,
+                    "offset": 46
+                  },
+                  "end": {
+                    "column": 49,
+                    "line": 1,
+                    "offset": 48
+                  },
+                  "source": "cy"
+                },
+                "value": {
+                  "type": "TEXT",
+                  "content": "50",
+                  "loc": {
+                    "start": {
+                      "column": 50,
+                      "line": 1,
+                      "offset": 49
+                    },
+                    "end": {
+                      "column": 54,
+                      "line": 1,
+                      "offset": 53
+                    },
+                    "source": "\"50\""
+                  }
+                },
+                "loc": {
+                  "start": {
+                    "column": 47,
+                    "line": 1,
+                    "offset": 46
+                  },
+                  "end": {
+                    "column": 54,
+                    "line": 1,
+                    "offset": 53
+                  },
+                  "source": "cy=\"50\""
+                }
+              },
+              {
+                "type": "ATTRIBUTE",
+                "name": "r",
+                "nameLoc": {
+                  "start": {
+                    "column": 55,
+                    "line": 1,
+                    "offset": 54
+                  },
+                  "end": {
+                    "column": 56,
+                    "line": 1,
+                    "offset": 55
+                  },
+                  "source": "r"
+                },
+                "value": {
+                  "type": "TEXT",
+                  "content": "40",
+                  "loc": {
+                    "start": {
+                      "column": 57,
+                      "line": 1,
+                      "offset": 56
+                    },
+                    "end": {
+                      "column": 61,
+                      "line": 1,
+                      "offset": 60
+                    },
+                    "source": "\"40\""
+                  }
+                },
+                "loc": {
+                  "start": {
+                    "column": 55,
+                    "line": 1,
+                    "offset": 54
+                  },
+                  "end": {
+                    "column": 61,
+                    "line": 1,
+                    "offset": 60
+                  },
+                  "source": "r=\"40\""
+                }
+              }
+            ],
+            "children": [],
+            "loc": {
+              "start": {
+                "column": 31,
+                "line": 1,
+                "offset": 30
+              },
+              "end": {
+                "column": 71,
+                "line": 1,
+                "offset": 70
+              },
+              "source": "<circle cx=\"50\" cy=\"50\" r=\"40\"></circle>"
+            }
+          }
+        ],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 77,
+            "line": 1,
+            "offset": 76
+          },
+          "source": "<svg width=\"100\" height=\"100\"><circle cx=\"50\" cy=\"50\" r=\"40\"></circle></svg>"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 77,
+        "line": 1,
+        "offset": 76
+      },
+      "source": "<svg width=\"100\" height=\"100\"><circle cx=\"50\" cy=\"50\" r=\"40\"></circle></svg>"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/column"
+      equals = 71
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/offset"
+      equals = 70
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/source"
+      equals = "<circle cx=\"50\" cy=\"50\" r=\"40\"></circle>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/column"
+      equals = 31
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/offset"
+      equals = 30
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/loc/end/column"
+      equals = 46
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/loc/end/offset"
+      equals = 45
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/loc/source"
+      equals = "cx=\"50\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/loc/start/column"
+      equals = 39
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/loc/start/offset"
+      equals = 38
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/name"
+      equals = "cx"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/nameLoc/end/column"
+      equals = 41
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/nameLoc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/nameLoc/end/offset"
+      equals = 40
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/nameLoc/source"
+      equals = "cx"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/nameLoc/start/column"
+      equals = 39
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/nameLoc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/nameLoc/start/offset"
+      equals = 38
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/type"
+      equals = "ATTRIBUTE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/value/content"
+      equals = "50"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/value/loc/end/column"
+      equals = 46
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/value/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/value/loc/end/offset"
+      equals = 45
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/value/loc/source"
+      equals = "\"50\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/value/loc/start/column"
+      equals = 42
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/value/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/value/loc/start/offset"
+      equals = 41
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/value/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/loc/end/column"
+      equals = 54
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/loc/end/offset"
+      equals = 53
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/loc/source"
+      equals = "cy=\"50\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/loc/start/column"
+      equals = 47
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/loc/start/offset"
+      equals = 46
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/name"
+      equals = "cy"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/nameLoc/end/column"
+      equals = 49
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/nameLoc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/nameLoc/end/offset"
+      equals = 48
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/nameLoc/source"
+      equals = "cy"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/nameLoc/start/column"
+      equals = 47
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/nameLoc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/nameLoc/start/offset"
+      equals = 46
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/type"
+      equals = "ATTRIBUTE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/value/content"
+      equals = "50"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/value/loc/end/column"
+      equals = 54
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/value/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/value/loc/end/offset"
+      equals = 53
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/value/loc/source"
+      equals = "\"50\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/value/loc/start/column"
+      equals = 50
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/value/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/value/loc/start/offset"
+      equals = 49
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/1/value/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/loc/end/column"
+      equals = 61
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/loc/end/offset"
+      equals = 60
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/loc/source"
+      equals = "r=\"40\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/loc/start/column"
+      equals = 55
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/loc/start/offset"
+      equals = 54
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/name"
+      equals = "r"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/nameLoc/end/column"
+      equals = 56
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/nameLoc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/nameLoc/end/offset"
+      equals = 55
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/nameLoc/source"
+      equals = "r"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/nameLoc/start/column"
+      equals = 55
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/nameLoc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/nameLoc/start/offset"
+      equals = 54
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/type"
+      equals = "ATTRIBUTE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/value/content"
+      equals = "40"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/value/loc/end/column"
+      equals = 61
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/value/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/value/loc/end/offset"
+      equals = 60
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/value/loc/source"
+      equals = "\"40\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/value/loc/start/column"
+      equals = 57
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/value/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/value/loc/start/offset"
+      equals = 56
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/2/value/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/tag"
+      equals = "circle"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 77
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 76
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<svg width=\"100\" height=\"100\"><circle cx=\"50\" cy=\"50\" r=\"40\"></circle></svg>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/column"
+      equals = 17
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/offset"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/source"
+      equals = "width=\"100\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/column"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/offset"
+      equals = 5
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "width"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/end/column"
+      equals = 11
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/end/offset"
+      equals = 10
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/source"
+      equals = "width"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/start/column"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/start/offset"
+      equals = 5
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "ATTRIBUTE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/content"
+      equals = "100"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/end/column"
+      equals = 17
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/end/offset"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/source"
+      equals = "\"100\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/start/column"
+      equals = 12
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/start/offset"
+      equals = 11
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/end/column"
+      equals = 30
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/end/offset"
+      equals = 29
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/source"
+      equals = "height=\"100\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/start/column"
+      equals = 18
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/start/offset"
+      equals = 17
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/name"
+      equals = "height"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/nameLoc/end/column"
+      equals = 24
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/nameLoc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/nameLoc/end/offset"
+      equals = 23
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/nameLoc/source"
+      equals = "height"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/nameLoc/start/column"
+      equals = 18
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/nameLoc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/nameLoc/start/offset"
+      equals = 17
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/type"
+      equals = "ATTRIBUTE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/content"
+      equals = "100"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/loc/end/column"
+      equals = 30
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/loc/end/offset"
+      equals = 29
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/loc/source"
+      equals = "\"100\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/loc/start/column"
+      equals = 25
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/loc/start/offset"
+      equals = 24
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "svg"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 77
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 76
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<svg width=\"100\" height=\"100\"><circle cx=\"50\" cy=\"50\" r=\"40\"></circle></svg>"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<svg width=\"100\" height=\"100\"><circle cx=\"50\" cy=\"50\" r=\"40\"></circle></svg>"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

@@ -1,0 +1,104 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-generic-component-with-extends"
+title = "Imported SFC input: generic component with extends"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "generic component with extends"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "generic component with extends"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-generic-component-with-extends.vue"
+  sfc = #"""
+  <script setup lang="ts" generic="T extends string | number">
+  defineProps<{
+    value: T
+    options: T[]
+  }>()
+  </script>
+  
+  <template>
+    <select>
+      <option v-for="opt in options" :key="opt" :value="opt">{{ opt }}</option>
+    </select>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-script-setup-generic-component-with-extends',
+    props: {
+      value: { type: null, required: true },
+      options: { type: Array, required: true }
+    },
+    setup(__props: any, { expose: __expose }) {
+    __expose();
+  
+  
+  
+  const __returned__ = {  }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { renderList as _renderList, Fragment as _Fragment, openBlock as _openBlock, createElementBlock as _createElementBlock, toDisplayString as _toDisplayString } from "vue"
+  
+  const _hoisted_1 = ["value"]
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("select", null, [
+      (_openBlock(true), _createElementBlock(_Fragment, null, _renderList($props.options, (opt) => {
+        return (_openBlock(), _createElementBlock("option", {
+          key: opt,
+          value: opt
+        }, _toDisplayString(opt), 9 /* TEXT, PROPS */, _hoisted_1))
+      }), 128 /* KEYED_FRAGMENT */))
+    ]))
+  }
+  """#
+}

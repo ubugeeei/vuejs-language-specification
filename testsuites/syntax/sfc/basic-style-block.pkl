@@ -1,0 +1,52 @@
+amends "../../../schemas/SyntaxTestSuite.pkl"
+
+id = "syntax.sfc.basic-style-block"
+title = "Descriptor preserves a plain style block"
+summary = "SFC descriptor parsing must retain an authored style block even when the component has no script content."
+
+features {
+  "sfc.style-block"
+  "descriptor.styles"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/css-compile.test.ts"
+    cases {
+      "should compile SFC with style block"
+    }
+  }
+}
+
+input {
+  filename = "BasicStyleBlock.vue"
+  source = #"""
+    <template>
+      <div class="container">Hello</div>
+    </template>
+
+    <style>
+    .container {
+      padding: 20px;
+    }
+    </style>
+    """#
+}
+
+expect {
+  descriptor {
+    template = true
+    script = false
+    scriptSetup = false
+    styles = 1
+    customBlocks = 0
+    scriptLang = null
+    scriptSetupLang = null
+    scopedStyles = 0
+  }
+  templateContentIncludes {
+    "class=\"container\""
+    "Hello"
+  }
+}

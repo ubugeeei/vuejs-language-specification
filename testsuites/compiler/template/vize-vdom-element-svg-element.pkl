@@ -1,0 +1,72 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-element-svg-element"
+title = "Imported template input: svg element"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/element.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.element"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/element.toml"
+  source = "tests/fixtures/vdom/element.toml"
+  caseName = "svg element"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/element.toml"
+    cases {
+      "svg element"
+    }
+  }
+}
+
+input {
+  source = "<svg viewBox=\"0 0 100 100\"><circle cx=\"50\" cy=\"50\" r=\"40\"/></svg>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_VNODE"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { createElementVNode: _createElementVNode, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return (_openBlock(), _createElementBlock("svg", { viewBox: "0 0 100 100" }, [
+        _createElementVNode("circle", {
+          cx: "50",
+          cy: "50",
+          r: "40"
+        })
+      ]))
+    }
+  }
+  """#
+}

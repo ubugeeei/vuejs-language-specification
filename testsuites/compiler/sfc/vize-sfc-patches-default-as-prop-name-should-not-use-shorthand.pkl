@@ -1,0 +1,84 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-default-as-prop-name-should-not-use-shorthand"
+title = "Imported SFC input: default as prop name should not use shorthand"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "default as prop name should not use shorthand"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "default as prop name should not use shorthand"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-default-as-prop-name-should-not-use-shorthand.vue"
+  sfc = #"""
+  <script setup>
+  import DefaultComponent from './Default.vue'
+  </script>
+  
+  <template>
+    <DefaultComponent />
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import DefaultComponent from './Default.vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-default-as-prop-name-should-not-use-shorthand',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  
+  const __returned__ = { DefaultComponent }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { openBlock as _openBlock, createBlock as _createBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createBlock($setup["DefaultComponent"]))
+  }
+  """#
+}

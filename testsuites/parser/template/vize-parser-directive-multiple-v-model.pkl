@@ -1,0 +1,556 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-directive-multiple-v-model"
+title = "Imported parser input: multiple v-model"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/directive.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.directive"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/directive.toml"
+  source = "tests/fixtures/parser/directive.toml"
+  caseName = "multiple v-model"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/directive.toml"
+    cases {
+      "multiple v-model"
+    }
+  }
+}
+
+input {
+  source = "<MyComponent v-model:first=\"firstName\" v-model:last=\"lastName\" />"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<MyComponent v-model:first=\"firstName\" v-model:last=\"lastName\" />",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "MyComponent",
+        "ns": "HTML",
+        "tagType": "COMPONENT",
+        "props": [
+          {
+            "type": "DIRECTIVE",
+            "name": "model",
+            "rawName": "v-model:first",
+            "exp": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 29,
+                  "line": 1,
+                  "offset": 28
+                },
+                "end": {
+                  "column": 38,
+                  "line": 1,
+                  "offset": 37
+                },
+                "source": "firstName"
+              },
+              "content": "firstName",
+              "isStatic": false,
+              "constType": "NOT_CONSTANT"
+            },
+            "arg": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 22,
+                  "line": 1,
+                  "offset": 21
+                },
+                "end": {
+                  "column": 27,
+                  "line": 1,
+                  "offset": 26
+                },
+                "source": "first"
+              },
+              "content": "first",
+              "isStatic": true,
+              "constType": "CAN_STRINGIFY"
+            },
+            "modifiers": [],
+            "loc": {
+              "start": {
+                "column": 14,
+                "line": 1,
+                "offset": 13
+              },
+              "end": {
+                "column": 39,
+                "line": 1,
+                "offset": 38
+              },
+              "source": "v-model:first=\"firstName\""
+            }
+          },
+          {
+            "type": "DIRECTIVE",
+            "name": "model",
+            "rawName": "v-model:last",
+            "exp": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 54,
+                  "line": 1,
+                  "offset": 53
+                },
+                "end": {
+                  "column": 62,
+                  "line": 1,
+                  "offset": 61
+                },
+                "source": "lastName"
+              },
+              "content": "lastName",
+              "isStatic": false,
+              "constType": "NOT_CONSTANT"
+            },
+            "arg": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 48,
+                  "line": 1,
+                  "offset": 47
+                },
+                "end": {
+                  "column": 52,
+                  "line": 1,
+                  "offset": 51
+                },
+                "source": "last"
+              },
+              "content": "last",
+              "isStatic": true,
+              "constType": "CAN_STRINGIFY"
+            },
+            "modifiers": [],
+            "loc": {
+              "start": {
+                "column": 40,
+                "line": 1,
+                "offset": 39
+              },
+              "end": {
+                "column": 63,
+                "line": 1,
+                "offset": 62
+              },
+              "source": "v-model:last=\"lastName\""
+            }
+          }
+        ],
+        "children": [],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 66,
+            "line": 1,
+            "offset": 65
+          },
+          "source": "<MyComponent v-model:first=\"firstName\" v-model:last=\"lastName\" />"
+        },
+        "isSelfClosing": true
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 66,
+        "line": 1,
+        "offset": 65
+      },
+      "source": "<MyComponent v-model:first=\"firstName\" v-model:last=\"lastName\" />"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/isSelfClosing"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 66
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 65
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<MyComponent v-model:first=\"firstName\" v-model:last=\"lastName\" />"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/constType"
+      equals = "CAN_STRINGIFY"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/content"
+      equals = "first"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/isStatic"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/end/column"
+      equals = 27
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/end/offset"
+      equals = 26
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/source"
+      equals = "first"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/start/column"
+      equals = 22
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/start/offset"
+      equals = 21
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/content"
+      equals = "firstName"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/column"
+      equals = 38
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/offset"
+      equals = 37
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/source"
+      equals = "firstName"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/column"
+      equals = 29
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/offset"
+      equals = 28
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/column"
+      equals = 39
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/offset"
+      equals = 38
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/source"
+      equals = "v-model:first=\"firstName\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/column"
+      equals = 14
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/offset"
+      equals = 13
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "model"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/rawName"
+      equals = "v-model:first"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/constType"
+      equals = "CAN_STRINGIFY"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/content"
+      equals = "last"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/isStatic"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/loc/end/column"
+      equals = 52
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/loc/end/offset"
+      equals = 51
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/loc/source"
+      equals = "last"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/loc/start/column"
+      equals = 48
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/loc/start/offset"
+      equals = 47
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/content"
+      equals = "lastName"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/loc/end/column"
+      equals = 62
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/loc/end/offset"
+      equals = 61
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/loc/source"
+      equals = "lastName"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/loc/start/column"
+      equals = 54
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/loc/start/offset"
+      equals = 53
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/end/column"
+      equals = 63
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/end/offset"
+      equals = 62
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/source"
+      equals = "v-model:last=\"lastName\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/start/column"
+      equals = 40
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/start/offset"
+      equals = 39
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/name"
+      equals = "model"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/rawName"
+      equals = "v-model:last"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "MyComponent"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "COMPONENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 66
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 65
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<MyComponent v-model:first=\"firstName\" v-model:last=\"lastName\" />"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<MyComponent v-model:first=\"firstName\" v-model:last=\"lastName\" />"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

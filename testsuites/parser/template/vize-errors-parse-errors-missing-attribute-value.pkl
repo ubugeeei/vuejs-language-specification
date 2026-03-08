@@ -1,0 +1,381 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-errors-parse-errors-missing-attribute-value"
+title = "Imported parser input: missing attribute value"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/errors/parse-errors.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.errors"
+  "imported.input.parse-errors"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/errors/parse-errors.toml"
+  source = "tests/fixtures/errors/parse-errors.toml"
+  caseName = "missing attribute value"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/errors/parse-errors.toml"
+    cases {
+      "missing attribute value"
+    }
+  }
+}
+
+input {
+  source = "<div id=></div>"
+}
+
+expect {
+  errorCount = 1
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<div id=></div>",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "div",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [
+          {
+            "type": "ATTRIBUTE",
+            "name": "id",
+            "nameLoc": {
+              "start": {
+                "column": 6,
+                "line": 1,
+                "offset": 5
+              },
+              "end": {
+                "column": 8,
+                "line": 1,
+                "offset": 7
+              },
+              "source": "id"
+            },
+            "value": {
+              "type": "TEXT",
+              "content": "",
+              "loc": {
+                "start": {
+                  "column": 9,
+                  "line": 1,
+                  "offset": 8
+                },
+                "end": {
+                  "column": 9,
+                  "line": 1,
+                  "offset": 8
+                },
+                "source": ""
+              }
+            },
+            "loc": {
+              "start": {
+                "column": 6,
+                "line": 1,
+                "offset": 5
+              },
+              "end": {
+                "column": 9,
+                "line": 1,
+                "offset": 8
+              },
+              "source": "id="
+            }
+          }
+        ],
+        "children": [],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 16,
+            "line": 1,
+            "offset": 15
+          },
+          "source": "<div id=></div>"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 16,
+        "line": 1,
+        "offset": 15
+      },
+      "source": "<div id=></div>"
+    }
+  }
+  """#
+  normalizedErrors = #"""
+  [
+    {
+      "code": "MISSING_ATTRIBUTE_VALUE",
+      "loc": {
+        "start": {
+          "column": 9,
+          "line": 1,
+          "offset": 8
+        },
+        "end": {
+          "column": 9,
+          "line": 1,
+          "offset": 8
+        },
+        "source": ""
+      }
+    }
+  ]
+  """#
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<div id=></div>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/column"
+      equals = 9
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/offset"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/source"
+      equals = "id="
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/column"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/offset"
+      equals = 5
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "id"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/end/column"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/end/offset"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/source"
+      equals = "id"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/start/column"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/start/offset"
+      equals = 5
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "ATTRIBUTE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/content"
+      equals = ""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/end/column"
+      equals = 9
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/end/offset"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/source"
+      equals = ""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/start/column"
+      equals = 9
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/start/offset"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "div"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<div id=></div>"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<div id=></div>"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+  errors {
+    new PointerAssertion {
+      pointer = "/0/code"
+      equals = "MISSING_ATTRIBUTE_VALUE"
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/column"
+      equals = 9
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/offset"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/source"
+      equals = ""
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/column"
+      equals = 9
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/offset"
+      equals = 8
+    }
+  }
+}

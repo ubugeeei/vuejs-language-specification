@@ -1,0 +1,89 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-for-v-for-with-default-value"
+title = "Imported template input: v-for with default value"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-for.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-for"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-for.toml"
+  source = "tests/fixtures/vdom/v-for.toml"
+  caseName = "v-for with default value"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-for.toml"
+    cases {
+      "v-for with default value"
+    }
+  }
+}
+
+input {
+  source = "<div v-for=\"{ id, name = \"default\" } in items\" :key=\"id\">{{ name }}</div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "TO_DISPLAY_STRING"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  diagnostics {
+    new ErrorExpectation {
+      name = "SyntaxError"
+      message = "Attribute name cannot contain U+0022 (\"), U+0027 ('), and U+003C (<)."
+      code = "UNEXPECTED_CHARACTER_IN_ATTRIBUTE_NAME"
+    }
+    new ErrorExpectation {
+      name = "SyntaxError"
+      message = "Attribute name cannot contain U+0022 (\"), U+0027 ('), and U+003C (<)."
+      code = "UNEXPECTED_CHARACTER_IN_ATTRIBUTE_NAME"
+    }
+    new ErrorExpectation {
+      name = "SyntaxError"
+      message = "v-for has invalid expression."
+      code = "X_V_FOR_MALFORMED_EXPRESSION"
+    }
+  }
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { toDisplayString: _toDisplayString, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return (_openBlock(), _createElementBlock("div", {
+        "default\"": "",
+        "}": "",
+        in: "",
+        "items\"": "",
+        key: id
+      }, _toDisplayString(name), 1 /* TEXT */))
+    }
+  }
+  """#
+}

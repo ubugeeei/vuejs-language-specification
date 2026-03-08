@@ -1,0 +1,778 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-directive-v-if-with-v-else-if-chain"
+title = "Imported parser input: v-if with v-else-if chain"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/directive.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.directive"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/directive.toml"
+  source = "tests/fixtures/parser/directive.toml"
+  caseName = "v-if with v-else-if chain"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/directive.toml"
+    cases {
+      "v-if with v-else-if chain"
+    }
+  }
+}
+
+input {
+  source = "<div v-if=\"a\">A</div><div v-else-if=\"b\">B</div><div v-else>C</div>"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<div v-if=\"a\">A</div><div v-else-if=\"b\">B</div><div v-else>C</div>",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "div",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [
+          {
+            "type": "DIRECTIVE",
+            "name": "if",
+            "rawName": "v-if",
+            "exp": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 12,
+                  "line": 1,
+                  "offset": 11
+                },
+                "end": {
+                  "column": 13,
+                  "line": 1,
+                  "offset": 12
+                },
+                "source": "a"
+              },
+              "content": "a",
+              "isStatic": false,
+              "constType": "NOT_CONSTANT"
+            },
+            "modifiers": [],
+            "loc": {
+              "start": {
+                "column": 6,
+                "line": 1,
+                "offset": 5
+              },
+              "end": {
+                "column": 14,
+                "line": 1,
+                "offset": 13
+              },
+              "source": "v-if=\"a\""
+            }
+          }
+        ],
+        "children": [
+          {
+            "type": "TEXT",
+            "content": "A",
+            "loc": {
+              "start": {
+                "column": 15,
+                "line": 1,
+                "offset": 14
+              },
+              "end": {
+                "column": 16,
+                "line": 1,
+                "offset": 15
+              },
+              "source": "A"
+            }
+          }
+        ],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 22,
+            "line": 1,
+            "offset": 21
+          },
+          "source": "<div v-if=\"a\">A</div>"
+        }
+      },
+      {
+        "type": "ELEMENT",
+        "tag": "div",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [
+          {
+            "type": "DIRECTIVE",
+            "name": "else-if",
+            "rawName": "v-else-if",
+            "exp": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 38,
+                  "line": 1,
+                  "offset": 37
+                },
+                "end": {
+                  "column": 39,
+                  "line": 1,
+                  "offset": 38
+                },
+                "source": "b"
+              },
+              "content": "b",
+              "isStatic": false,
+              "constType": "NOT_CONSTANT"
+            },
+            "modifiers": [],
+            "loc": {
+              "start": {
+                "column": 27,
+                "line": 1,
+                "offset": 26
+              },
+              "end": {
+                "column": 40,
+                "line": 1,
+                "offset": 39
+              },
+              "source": "v-else-if=\"b\""
+            }
+          }
+        ],
+        "children": [
+          {
+            "type": "TEXT",
+            "content": "B",
+            "loc": {
+              "start": {
+                "column": 41,
+                "line": 1,
+                "offset": 40
+              },
+              "end": {
+                "column": 42,
+                "line": 1,
+                "offset": 41
+              },
+              "source": "B"
+            }
+          }
+        ],
+        "loc": {
+          "start": {
+            "column": 22,
+            "line": 1,
+            "offset": 21
+          },
+          "end": {
+            "column": 48,
+            "line": 1,
+            "offset": 47
+          },
+          "source": "<div v-else-if=\"b\">B</div>"
+        }
+      },
+      {
+        "type": "ELEMENT",
+        "tag": "div",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [
+          {
+            "type": "DIRECTIVE",
+            "name": "else",
+            "rawName": "v-else",
+            "modifiers": [],
+            "loc": {
+              "start": {
+                "column": 53,
+                "line": 1,
+                "offset": 52
+              },
+              "end": {
+                "column": 59,
+                "line": 1,
+                "offset": 58
+              },
+              "source": "v-else"
+            }
+          }
+        ],
+        "children": [
+          {
+            "type": "TEXT",
+            "content": "C",
+            "loc": {
+              "start": {
+                "column": 60,
+                "line": 1,
+                "offset": 59
+              },
+              "end": {
+                "column": 61,
+                "line": 1,
+                "offset": 60
+              },
+              "source": "C"
+            }
+          }
+        ],
+        "loc": {
+          "start": {
+            "column": 48,
+            "line": 1,
+            "offset": 47
+          },
+          "end": {
+            "column": 67,
+            "line": 1,
+            "offset": 66
+          },
+          "source": "<div v-else>C</div>"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 67,
+        "line": 1,
+        "offset": 66
+      },
+      "source": "<div v-if=\"a\">A</div><div v-else-if=\"b\">B</div><div v-else>C</div>"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/children/0/content"
+      equals = "A"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/column"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/offset"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/source"
+      equals = "A"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/column"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/offset"
+      equals = 14
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 22
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 21
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<div v-if=\"a\">A</div>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/content"
+      equals = "a"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/column"
+      equals = 13
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/offset"
+      equals = 12
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/source"
+      equals = "a"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/column"
+      equals = 12
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/offset"
+      equals = 11
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/column"
+      equals = 14
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/offset"
+      equals = 13
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/source"
+      equals = "v-if=\"a\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/column"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/offset"
+      equals = 5
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "if"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/rawName"
+      equals = "v-if"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "div"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/content"
+      equals = "B"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/loc/end/column"
+      equals = 42
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/loc/end/offset"
+      equals = 41
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/loc/source"
+      equals = "B"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/loc/start/column"
+      equals = 41
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/loc/start/offset"
+      equals = 40
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/column"
+      equals = 48
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/offset"
+      equals = 47
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/source"
+      equals = "<div v-else-if=\"b\">B</div>"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/column"
+      equals = 22
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/offset"
+      equals = 21
+    }
+    new PointerAssertion {
+      pointer = "/children/1/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/exp/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/exp/content"
+      equals = "b"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/exp/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/exp/loc/end/column"
+      equals = 39
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/exp/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/exp/loc/end/offset"
+      equals = 38
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/exp/loc/source"
+      equals = "b"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/exp/loc/start/column"
+      equals = 38
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/exp/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/exp/loc/start/offset"
+      equals = 37
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/exp/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/loc/end/column"
+      equals = 40
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/loc/end/offset"
+      equals = 39
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/loc/source"
+      equals = "v-else-if=\"b\""
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/loc/start/column"
+      equals = 27
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/loc/start/offset"
+      equals = 26
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/name"
+      equals = "else-if"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/rawName"
+      equals = "v-else-if"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/props/0/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/tag"
+      equals = "div"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/children/0/content"
+      equals = "C"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/children/0/loc/end/column"
+      equals = 61
+    }
+    new PointerAssertion {
+      pointer = "/children/2/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/2/children/0/loc/end/offset"
+      equals = 60
+    }
+    new PointerAssertion {
+      pointer = "/children/2/children/0/loc/source"
+      equals = "C"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/children/0/loc/start/column"
+      equals = 60
+    }
+    new PointerAssertion {
+      pointer = "/children/2/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/2/children/0/loc/start/offset"
+      equals = 59
+    }
+    new PointerAssertion {
+      pointer = "/children/2/children/0/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/end/column"
+      equals = 67
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/end/offset"
+      equals = 66
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/source"
+      equals = "<div v-else>C</div>"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/start/column"
+      equals = 48
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/start/offset"
+      equals = 47
+    }
+    new PointerAssertion {
+      pointer = "/children/2/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/props/0/loc/end/column"
+      equals = 59
+    }
+    new PointerAssertion {
+      pointer = "/children/2/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/2/props/0/loc/end/offset"
+      equals = 58
+    }
+    new PointerAssertion {
+      pointer = "/children/2/props/0/loc/source"
+      equals = "v-else"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/props/0/loc/start/column"
+      equals = 53
+    }
+    new PointerAssertion {
+      pointer = "/children/2/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/2/props/0/loc/start/offset"
+      equals = 52
+    }
+    new PointerAssertion {
+      pointer = "/children/2/props/0/name"
+      equals = "else"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/props/0/rawName"
+      equals = "v-else"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/props/0/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/tag"
+      equals = "div"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 67
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 66
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<div v-if=\"a\">A</div><div v-else-if=\"b\">B</div><div v-else>C</div>"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<div v-if=\"a\">A</div><div v-else-if=\"b\">B</div><div v-else>C</div>"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

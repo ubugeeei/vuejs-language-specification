@@ -1,0 +1,74 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-for-v-for-object"
+title = "Imported template input: v-for object"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-for.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-for"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-for.toml"
+  source = "tests/fixtures/vdom/v-for.toml"
+  caseName = "v-for object"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-for.toml"
+    cases {
+      "v-for object"
+    }
+  }
+}
+
+input {
+  source = "<div v-for=\"(value, key) in obj\" :key=\"key\">{{ key }}: {{ value }}</div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "RENDER_LIST"
+    }
+    new HelperExpectation {
+      name = "FRAGMENT"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+    new HelperExpectation {
+      name = "TO_DISPLAY_STRING"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { renderList: _renderList, Fragment: _Fragment, openBlock: _openBlock, createElementBlock: _createElementBlock, toDisplayString: _toDisplayString } = _Vue
+  
+      return (_openBlock(true), _createElementBlock(_Fragment, null, _renderList(obj, (value, key) => {
+        return (_openBlock(), _createElementBlock("div", { key: key }, _toDisplayString(key) + ": " + _toDisplayString(value), 1 /* TEXT */))
+      }), 128 /* KEYED_FRAGMENT */))
+    }
+  }
+  """#
+}

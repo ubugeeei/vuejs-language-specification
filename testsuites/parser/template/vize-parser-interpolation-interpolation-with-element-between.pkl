@@ -1,0 +1,456 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-interpolation-interpolation-with-element-between"
+title = "Imported parser input: interpolation with element between"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/interpolation.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.interpolation"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/interpolation.toml"
+  source = "tests/fixtures/parser/interpolation.toml"
+  caseName = "interpolation with element between"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/interpolation.toml"
+    cases {
+      "interpolation with element between"
+    }
+  }
+}
+
+input {
+  source = "{{ a }}<br>{{ b }}"
+}
+
+expect {
+  errorCount = 1
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "{{ a }}<br>{{ b }}",
+    "children": [
+      {
+        "type": "INTERPOLATION",
+        "content": {
+          "type": "SIMPLE_EXPRESSION",
+          "loc": {
+            "start": {
+              "column": 4,
+              "line": 1,
+              "offset": 3
+            },
+            "end": {
+              "column": 5,
+              "line": 1,
+              "offset": 4
+            },
+            "source": "a"
+          },
+          "content": "a",
+          "isStatic": false,
+          "constType": "NOT_CONSTANT"
+        },
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 8,
+            "line": 1,
+            "offset": 7
+          },
+          "source": "{{ a }}"
+        }
+      },
+      {
+        "type": "ELEMENT",
+        "tag": "br",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [],
+        "children": [
+          {
+            "type": "INTERPOLATION",
+            "content": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 15,
+                  "line": 1,
+                  "offset": 14
+                },
+                "end": {
+                  "column": 16,
+                  "line": 1,
+                  "offset": 15
+                },
+                "source": "b"
+              },
+              "content": "b",
+              "isStatic": false,
+              "constType": "NOT_CONSTANT"
+            },
+            "loc": {
+              "start": {
+                "column": 12,
+                "line": 1,
+                "offset": 11
+              },
+              "end": {
+                "column": 19,
+                "line": 1,
+                "offset": 18
+              },
+              "source": "{{ b }}"
+            }
+          }
+        ],
+        "loc": {
+          "start": {
+            "column": 8,
+            "line": 1,
+            "offset": 7
+          },
+          "end": {
+            "column": 19,
+            "line": 1,
+            "offset": 18
+          },
+          "source": "<br>{{ b }}"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 19,
+        "line": 1,
+        "offset": 18
+      },
+      "source": "{{ a }}<br>{{ b }}"
+    }
+  }
+  """#
+  normalizedErrors = #"""
+  [
+    {
+      "code": "X_MISSING_END_TAG",
+      "loc": {
+        "start": {
+          "column": 8,
+          "line": 1,
+          "offset": 7
+        },
+        "end": {
+          "column": 8,
+          "line": 1,
+          "offset": 7
+        },
+        "source": ""
+      }
+    }
+  ]
+  """#
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/content/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/content"
+      equals = "a"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/end/column"
+      equals = 5
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/end/offset"
+      equals = 4
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/source"
+      equals = "a"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/start/column"
+      equals = 4
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/start/offset"
+      equals = 3
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "{{ a }}"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "INTERPOLATION"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/content/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/content/content"
+      equals = "b"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/content/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/content/loc/end/column"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/content/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/content/loc/end/offset"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/content/loc/source"
+      equals = "b"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/content/loc/start/column"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/content/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/content/loc/start/offset"
+      equals = 14
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/content/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/loc/end/column"
+      equals = 19
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/loc/end/offset"
+      equals = 18
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/loc/source"
+      equals = "{{ b }}"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/loc/start/column"
+      equals = 12
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/loc/start/offset"
+      equals = 11
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/type"
+      equals = "INTERPOLATION"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/column"
+      equals = 19
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/offset"
+      equals = 18
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/source"
+      equals = "<br>{{ b }}"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/column"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/offset"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/children/1/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/tag"
+      equals = "br"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 19
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 18
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "{{ a }}<br>{{ b }}"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "{{ a }}<br>{{ b }}"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+  errors {
+    new PointerAssertion {
+      pointer = "/0/code"
+      equals = "X_MISSING_END_TAG"
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/column"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/offset"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/source"
+      equals = ""
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/column"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/offset"
+      equals = 7
+    }
+  }
+}

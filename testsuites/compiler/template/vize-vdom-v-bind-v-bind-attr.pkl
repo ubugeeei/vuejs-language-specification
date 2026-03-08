@@ -1,0 +1,63 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-bind-v-bind-attr"
+title = "Imported template input: v-bind.attr"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-bind.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-bind"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-bind.toml"
+  source = "tests/fixtures/vdom/v-bind.toml"
+  caseName = "v-bind.attr"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-bind.toml"
+    cases {
+      "v-bind.attr"
+    }
+  }
+}
+
+input {
+  source = "<div :foo.attr=\"bar\"></div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return (_openBlock(), _createElementBlock("div", { "^foo": bar }, null, 8 /* PROPS */, ["^foo"]))
+    }
+  }
+  """#
+}

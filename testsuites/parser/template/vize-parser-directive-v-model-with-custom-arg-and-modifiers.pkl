@@ -1,0 +1,435 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-directive-v-model-with-custom-arg-and-modifiers"
+title = "Imported parser input: v-model with custom arg and modifiers"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/directive.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.directive"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/directive.toml"
+  source = "tests/fixtures/parser/directive.toml"
+  caseName = "v-model with custom arg and modifiers"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/directive.toml"
+    cases {
+      "v-model with custom arg and modifiers"
+    }
+  }
+}
+
+input {
+  source = "<MyComponent v-model:title.trim=\"pageTitle\" />"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<MyComponent v-model:title.trim=\"pageTitle\" />",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "MyComponent",
+        "ns": "HTML",
+        "tagType": "COMPONENT",
+        "props": [
+          {
+            "type": "DIRECTIVE",
+            "name": "model",
+            "rawName": "v-model:title.trim",
+            "exp": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 34,
+                  "line": 1,
+                  "offset": 33
+                },
+                "end": {
+                  "column": 43,
+                  "line": 1,
+                  "offset": 42
+                },
+                "source": "pageTitle"
+              },
+              "content": "pageTitle",
+              "isStatic": false,
+              "constType": "NOT_CONSTANT"
+            },
+            "arg": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 22,
+                  "line": 1,
+                  "offset": 21
+                },
+                "end": {
+                  "column": 27,
+                  "line": 1,
+                  "offset": 26
+                },
+                "source": "title"
+              },
+              "content": "title",
+              "isStatic": true,
+              "constType": "CAN_STRINGIFY"
+            },
+            "modifiers": [
+              {
+                "type": "SIMPLE_EXPRESSION",
+                "loc": {
+                  "start": {
+                    "column": 28,
+                    "line": 1,
+                    "offset": 27
+                  },
+                  "end": {
+                    "column": 32,
+                    "line": 1,
+                    "offset": 31
+                  },
+                  "source": "trim"
+                },
+                "content": "trim",
+                "isStatic": true,
+                "constType": "CAN_STRINGIFY"
+              }
+            ],
+            "loc": {
+              "start": {
+                "column": 14,
+                "line": 1,
+                "offset": 13
+              },
+              "end": {
+                "column": 44,
+                "line": 1,
+                "offset": 43
+              },
+              "source": "v-model:title.trim=\"pageTitle\""
+            }
+          }
+        ],
+        "children": [],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 47,
+            "line": 1,
+            "offset": 46
+          },
+          "source": "<MyComponent v-model:title.trim=\"pageTitle\" />"
+        },
+        "isSelfClosing": true
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 47,
+        "line": 1,
+        "offset": 46
+      },
+      "source": "<MyComponent v-model:title.trim=\"pageTitle\" />"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/isSelfClosing"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 47
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 46
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<MyComponent v-model:title.trim=\"pageTitle\" />"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/constType"
+      equals = "CAN_STRINGIFY"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/content"
+      equals = "title"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/isStatic"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/end/column"
+      equals = 27
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/end/offset"
+      equals = 26
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/source"
+      equals = "title"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/start/column"
+      equals = 22
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/start/offset"
+      equals = 21
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/content"
+      equals = "pageTitle"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/column"
+      equals = 43
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/offset"
+      equals = 42
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/source"
+      equals = "pageTitle"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/column"
+      equals = 34
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/offset"
+      equals = 33
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/column"
+      equals = 44
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/offset"
+      equals = 43
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/source"
+      equals = "v-model:title.trim=\"pageTitle\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/column"
+      equals = 14
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/offset"
+      equals = 13
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/constType"
+      equals = "CAN_STRINGIFY"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/content"
+      equals = "trim"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/isStatic"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/end/column"
+      equals = 32
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/end/offset"
+      equals = 31
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/source"
+      equals = "trim"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/start/column"
+      equals = 28
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/start/offset"
+      equals = 27
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "model"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/rawName"
+      equals = "v-model:title.trim"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "MyComponent"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "COMPONENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 47
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 46
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<MyComponent v-model:title.trim=\"pageTitle\" />"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<MyComponent v-model:title.trim=\"pageTitle\" />"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

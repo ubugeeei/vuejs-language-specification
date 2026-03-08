@@ -1,0 +1,68 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-patch-flags-class-array"
+title = "Imported template input: class array"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/patch-flags.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.patch-flags"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/patch-flags.toml"
+  source = "tests/fixtures/vdom/patch-flags.toml"
+  caseName = "class array"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/patch-flags.toml"
+    cases {
+      "class array"
+    }
+  }
+}
+
+input {
+  source = "<div :class=\"[a, b]\"></div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "NORMALIZE_CLASS"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { normalizeClass: _normalizeClass, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return (_openBlock(), _createElementBlock("div", {
+        class: _normalizeClass([a, b])
+      }, null, 2 /* CLASS */))
+    }
+  }
+  """#
+}

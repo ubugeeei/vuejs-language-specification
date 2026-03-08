@@ -1,0 +1,163 @@
+# VDom: v-bind tests
+
+mode = "vdom"
+
+# =============================================================================
+# Basic v-bind
+# =============================================================================
+
+[[cases]]
+name = "v-bind attribute"
+input = '<div v-bind:id="id"></div>'
+
+[[cases]]
+name = "v-bind shorthand"
+input = '<div :id="id"></div>'
+
+[[cases]]
+name = "v-bind class"
+input = '<div :class="cls"></div>'
+
+[[cases]]
+name = "v-bind style"
+input = '<div :style="styles"></div>'
+
+# =============================================================================
+# Class bindings
+# =============================================================================
+
+[[cases]]
+name = "class object syntax"
+input = '<div :class="{ active: isActive }"></div>'
+
+[[cases]]
+name = "class multiple objects"
+input = '<div :class="{ active: isActive, error: hasError }"></div>'
+
+[[cases]]
+name = "class array syntax"
+input = '<div :class="[activeClass, errorClass]"></div>'
+
+[[cases]]
+name = "class array with object"
+input = '<div :class="[{ active: isActive }, errorClass]"></div>'
+
+[[cases]]
+name = "class with static"
+input = '<div class="static" :class="dynamic"></div>'
+
+[[cases]]
+name = "class ternary"
+input = "<div :class=\"isActive ? 'active' : 'inactive'\"></div>"
+
+# =============================================================================
+# Style bindings
+# =============================================================================
+
+[[cases]]
+name = "style object syntax"
+input = '<div :style="{ color: textColor }"></div>'
+
+[[cases]]
+name = "style multiple properties"
+input = "<div :style=\"{ color: textColor, fontSize: size + 'px' }\"></div>"
+
+[[cases]]
+name = "style array syntax"
+input = '<div :style="[baseStyles, overrideStyles]"></div>'
+
+[[cases]]
+name = "style with static"
+input = '<div style="color: red" :style="{ fontSize: size }"></div>'
+
+[[cases]]
+name = "style camelCase"
+input = '<div :style="{ backgroundColor: bg }"></div>'
+
+[[cases]]
+name = "style kebab-case"
+input = "<div :style=\"{ 'background-color': bg }\"></div>"
+
+# =============================================================================
+# v-bind object
+# =============================================================================
+
+[[cases]]
+name = "v-bind object"
+input = '<div v-bind="attrs"></div>'
+
+[[cases]]
+name = "v-bind object with other attrs"
+input = '<div v-bind="attrs" id="static"></div>'
+
+[[cases]]
+name = "v-bind object with dynamic"
+input = '<div v-bind="attrs" :class="cls"></div>'
+
+[[cases]]
+name = "v-bind $attrs"
+input = '<div v-bind="$attrs"></div>'
+
+[[cases]]
+name = "v-bind $props"
+input = '<MyComponent v-bind="$props" />'
+
+# =============================================================================
+# Dynamic attribute name
+# =============================================================================
+
+[[cases]]
+name = "dynamic attribute name"
+input = '<div :[attr]="value"></div>'
+
+[[cases]]
+name = "dynamic attribute with prefix"
+input = "<div :[`data-${key}`]=\"value\"></div>"
+
+# =============================================================================
+# Modifiers
+# =============================================================================
+
+[[cases]]
+name = "v-bind.camel"
+input = '<svg :view-box.camel="viewBox"></svg>'
+
+[[cases]]
+name = "v-bind.prop"
+input = '<div :text-content.prop="text"></div>'
+
+[[cases]]
+name = "v-bind.attr"
+input = '<div :foo.attr="bar"></div>'
+
+# =============================================================================
+# Special attributes
+# =============================================================================
+
+[[cases]]
+name = "v-bind key"
+input = '<div :key="id"></div>'
+
+[[cases]]
+name = "v-bind ref"
+input = '<div :ref="refName"></div>'
+
+[[cases]]
+name = "v-bind is"
+input = '<component :is="comp"></component>'
+
+# =============================================================================
+# Boolean attributes
+# =============================================================================
+
+[[cases]]
+name = "boolean attribute binding"
+input = '<input :disabled="isDisabled">'
+
+[[cases]]
+name = "boolean attribute expression"
+input = '<input :disabled="count > 0">'
+
+[[cases]]
+name = "boolean readonly"
+input = '<input :readonly="isReadonly">'

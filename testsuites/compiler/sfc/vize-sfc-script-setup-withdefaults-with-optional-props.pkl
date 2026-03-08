@@ -1,0 +1,106 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-withdefaults-with-optional-props"
+title = "Imported SFC input: withDefaults with optional props"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "withDefaults with optional props"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "withDefaults with optional props"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-withdefaults-with-optional-props.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  interface Props {
+    msg: string
+    count?: number
+    disabled?: boolean
+  }
+  
+  withDefaults(defineProps<Props>(), {
+    count: 0,
+    disabled: false
+  })
+  </script>
+  
+  <template>
+    <div>{{ msg }}</div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  interface Props {
+    msg: string
+    count?: number
+    disabled?: boolean
+  }
+  
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-script-setup-withdefaults-with-optional-props',
+    props: {
+      msg: { type: String, required: true },
+      count: { type: Number, required: false, default: 0 },
+      disabled: { type: Boolean, required: false, default: false }
+    },
+    setup(__props: any, { expose: __expose }) {
+    __expose();
+  
+  
+  
+  const __returned__ = {  }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, _toDisplayString($props.msg), 1 /* TEXT */))
+  }
+  """#
+}

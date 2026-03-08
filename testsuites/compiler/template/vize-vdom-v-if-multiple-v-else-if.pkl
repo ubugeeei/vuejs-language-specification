@@ -1,0 +1,72 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-if-multiple-v-else-if"
+title = "Imported template input: multiple v-else-if"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-if.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-if"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-if.toml"
+  source = "tests/fixtures/vdom/v-if.toml"
+  caseName = "multiple v-else-if"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-if.toml"
+    cases {
+      "multiple v-else-if"
+    }
+  }
+}
+
+input {
+  source = "<div v-if=\"a\">A</div><div v-else-if=\"b\">B</div><div v-else-if=\"c\">C</div><div v-else>D</div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_COMMENT"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { openBlock: _openBlock, createElementBlock: _createElementBlock, createCommentVNode: _createCommentVNode } = _Vue
+  
+      return a
+        ? (_openBlock(), _createElementBlock("div", { key: 0 }, "A"))
+        : b
+          ? (_openBlock(), _createElementBlock("div", { key: 1 }, "B"))
+          : c
+            ? (_openBlock(), _createElementBlock("div", { key: 2 }, "C"))
+            : (_openBlock(), _createElementBlock("div", { key: 3 }, "D"))
+    }
+  }
+  """#
+}

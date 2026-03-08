@@ -1,0 +1,104 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-arrow-function-with-multiple-statements-in-v-for"
+title = "Imported SFC input: arrow function with multiple statements in v-for"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "arrow function with multiple statements in v-for"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "arrow function with multiple statements in v-for"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-arrow-function-with-multiple-statements-in-v-for.vue"
+  sfc = #"""
+  <script setup>
+  import { ref } from 'vue'
+  const items = ref([{ id: 1, value: 0 }])
+  </script>
+  
+  <template>
+    <div v-for="item in items" :key="item.id">
+      <button @click="() => {
+        item.value++;
+        console.log(item.id);
+      }">{{ item.value }}</button>
+    </div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { ref } from 'vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-arrow-function-with-multiple-statements-in-v-for',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const items = ref([{ id: 1, value: 0 }])
+  
+  const __returned__ = { items, ref }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { renderList as _renderList, Fragment as _Fragment, openBlock as _openBlock, createElementBlock as _createElementBlock, toDisplayString as _toDisplayString, createElementVNode as _createElementVNode } from "vue"
+  
+  const _hoisted_1 = ["onClick"]
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(true), _createElementBlock(_Fragment, null, _renderList($setup.items, (item) => {
+      return (_openBlock(), _createElementBlock("div", {
+        key: item.id
+      }, [
+        _createElementVNode("button", {
+          onClick: () => {
+        item.value++;
+        console.log(item.id);
+      }
+        }, _toDisplayString(item.value), 9 /* TEXT, PROPS */, _hoisted_1)
+      ]))
+    }), 128 /* KEYED_FRAGMENT */))
+  }
+  """#
+}

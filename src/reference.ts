@@ -4,7 +4,12 @@ import { isExpression } from "@babel/types";
 import * as CompilerCore from "@vue/compiler-core";
 import * as CompilerDom from "@vue/compiler-dom";
 import { compile as compileTemplate } from "@vue/compiler-dom";
-import { compileScript, compileStyle, parse as parseSfc } from "@vue/compiler-sfc";
+import {
+  compileScript,
+  compileStyle,
+  compileTemplate as compileSfcTemplate,
+  parse as parseSfc,
+} from "@vue/compiler-sfc";
 import type { SFCDescriptor } from "@vue/compiler-sfc";
 import type {
   ArrayExpression,
@@ -35,9 +40,14 @@ import type {
   ParserTestSuite,
   PropConstructorExpectation,
   RuntimePropExpectation,
+  SfcDescriptorExpectation,
   SyntaxTestSuite,
   TypeEvaluationTestSuite,
 } from "./types.ts";
+import {
+  loadVendoredVizeExpectedSnapshotCase,
+  normalizeVizeSnapshotInput,
+} from "./vize-snapshots.ts";
 
 interface ExtractedRuntimeProp {
   name: string;
@@ -50,6 +60,7 @@ type ScriptCompileOptions = NonNullable<Parameters<typeof compileScript>[1]>;
 type TemplateDomCompileOptions = Parameters<typeof compileTemplate>[1];
 type ParserOptions = NonNullable<Parameters<typeof CompilerCore.baseParse>[1]>;
 type DomParserOptions = NonNullable<Parameters<typeof CompilerDom.parse>[1]>;
+type SfcTemplateCompileOptions = Parameters<typeof compileSfcTemplate>[0];
 const ansiPattern = new RegExp(`${String.fromCharCode(27)}\\[[0-?]*[ -/]*[@-~]`, "g");
 
 const helperSymbolNames = new Map<symbol, string>(
@@ -80,6 +91,20 @@ function stripAnsi(value: string): string {
 
 function normalizeDiagnosticText(value: string): string {
   return normalizeNewlines(stripAnsi(value)).trimEnd();
+}
+
+function extractCssVars(source: string): string[] {
+  const matches = source.matchAll(/v-bind\(\s*(?:'([^']+)'|"([^"]+)"|([^'"][^)]*))\s*\)/gu);
+  const cssVars: string[] = [];
+
+  for (const match of matches) {
+    const value = (match[1] ?? match[2] ?? match[3] ?? "").trim();
+    if (value.length > 0) {
+      cssVars.push(value);
+    }
+  }
+
+  return cssVars;
 }
 
 function normalizeEnumField(key: string, value: unknown): unknown {
@@ -217,6 +242,53 @@ function assertWarnings(
   assert.deepEqual(actual, expected);
 }
 
+function assertDiagnostics(
+  actualDiagnostics: Array<Error | CompilerCore.CompilerError>,
+  expectedDiagnostics: CompilerTestSuite["expect"]["diagnostics"],
+): void {
+  if (expectedDiagnostics === undefined) {
+    return;
+  }
+
+  const actual = actualDiagnostics.map((diagnostic) => {
+    const entry: {
+      name: string;
+      message: string;
+      code?: string | number;
+    } = {
+      name: diagnostic.name,
+      message: normalizeDiagnosticText(diagnostic.message),
+    };
+
+    const normalizedCode = normalizeCompilerErrorCode(
+      diagnostic && typeof diagnostic === "object" && "code" in diagnostic
+        ? diagnostic.code
+        : undefined,
+    );
+    if (normalizedCode !== undefined) {
+      entry.code = normalizedCode;
+    }
+
+    return entry;
+  });
+  const expected = expectedDiagnostics.map((diagnostic) => {
+    const entry: {
+      name: string;
+      message: string;
+      code?: string | number;
+    } = {
+      name: diagnostic.name,
+      message: normalizeDiagnosticText(diagnostic.message),
+    };
+    if (diagnostic.code !== undefined) {
+      entry.code = diagnostic.code;
+    }
+    return entry;
+  });
+
+  assert.deepEqual(actual, expected);
+}
+
 function captureWarnings<T>(run: () => T): { result: T; warnings: string[] } {
   const warnings: string[] = [];
   const originalWarn = console.warn;
@@ -239,6 +311,55 @@ function createDescriptor(testSuite: SyntaxTestSuite): SFCDescriptor {
     filename: testSuite.input.filename,
   });
   return descriptor;
+}
+
+function assertVendoredVizeSnapshotExpectation(args: {
+  id: string;
+  upstream: Array<{ repository: string; source: string; cases: string[] }>;
+  source: string;
+  output: string | null | undefined;
+  options: string | null | undefined;
+}): void {
+  if (args.output == null && args.options == null) {
+    return;
+  }
+
+  const reference = args.upstream.find(
+    (entry) => entry.repository === "ubugeeei/vize" && entry.source.startsWith("tests/fixtures/"),
+  );
+  assert.ok(reference, `Expected copied fixture provenance for snapshot-backed suite ${args.id}`);
+  const caseName = reference.cases[0];
+  assert.ok(caseName, `Expected copied fixture case name for snapshot-backed suite ${args.id}`);
+  const snapshot = loadVendoredVizeExpectedSnapshotCase(reference.source, caseName);
+  assert.ok(snapshot, `Expected copied snapshot oracle for ${reference.source} :: ${caseName}`);
+  assert.equal(normalizeVizeSnapshotInput(args.source), normalizeVizeSnapshotInput(snapshot.input));
+
+  if (args.output != null) {
+    assert.equal(normalizeNewlines(args.output), normalizeNewlines(snapshot.output));
+  }
+
+  assert.equal(args.options ?? null, snapshot.options ?? null);
+}
+
+function assertDescriptorExpectation(
+  descriptor: SFCDescriptor,
+  expectation: SfcDescriptorExpectation,
+): void {
+  assert.equal(Boolean(descriptor.template), expectation.template);
+  assert.equal(Boolean(descriptor.script), expectation.script);
+  assert.equal(Boolean(descriptor.scriptSetup), expectation.scriptSetup);
+  assert.equal(descriptor.styles.length, expectation.styles);
+  assert.equal(descriptor.customBlocks.length, expectation.customBlocks);
+  assert.equal(descriptor.script?.lang ?? null, expectation.scriptLang ?? null);
+  assert.equal(descriptor.scriptSetup?.lang ?? null, expectation.scriptSetupLang ?? null);
+  assert.deepEqual(
+    descriptor.styles.map((style) => style.lang).filter((value): value is string => Boolean(value)),
+    expectation.styleLangs ?? [],
+  );
+  assert.equal(
+    descriptor.styles.filter((style) => style.scoped).length,
+    expectation.scopedStyles ?? 0,
+  );
 }
 
 function createMembershipPredicate(
@@ -1111,24 +1232,7 @@ function assertRuntimeProps(
 
 export function runSyntaxReferenceTestSuite(testSuite: SyntaxTestSuite): void {
   const descriptor = createDescriptor(testSuite);
-  assert.equal(Boolean(descriptor.template), testSuite.expect.descriptor.template);
-  assert.equal(Boolean(descriptor.script), testSuite.expect.descriptor.script);
-  assert.equal(Boolean(descriptor.scriptSetup), testSuite.expect.descriptor.scriptSetup);
-  assert.equal(descriptor.styles.length, testSuite.expect.descriptor.styles);
-  assert.equal(descriptor.customBlocks.length, testSuite.expect.descriptor.customBlocks);
-  assert.equal(descriptor.script?.lang ?? null, testSuite.expect.descriptor.scriptLang ?? null);
-  assert.equal(
-    descriptor.scriptSetup?.lang ?? null,
-    testSuite.expect.descriptor.scriptSetupLang ?? null,
-  );
-  assert.deepEqual(
-    descriptor.styles.map((style) => style.lang).filter((value): value is string => Boolean(value)),
-    testSuite.expect.descriptor.styleLangs ?? [],
-  );
-  assert.equal(
-    descriptor.styles.filter((style) => style.scoped).length,
-    testSuite.expect.descriptor.scopedStyles ?? 0,
-  );
+  assertDescriptorExpectation(descriptor, testSuite.expect.descriptor);
 
   for (const fragment of testSuite.expect.templateContentIncludes ?? []) {
     assert.match(descriptor.template?.content ?? "", new RegExp(escapeRegExp(fragment)));
@@ -1142,23 +1246,50 @@ export function runParserReferenceTestSuite(testSuite: ParserTestSuite): void {
     testSuite.kind === "template-dom-parse"
       ? CompilerDom.parse(testSuite.input.source, parserOptions as DomParserOptions)
       : CompilerCore.baseParse(testSuite.input.source, parserOptions);
+  const normalizedAst = normalizeStructuredArtifact(ast);
+  const normalizedErrors = normalizeStructuredArtifact(errors);
 
   assert.equal(errors.length, testSuite.expect.errorCount);
-  assertPointerAssertions(normalizeStructuredArtifact(ast), testSuite.expect.ast);
-  assertPointerAssertions(normalizeStructuredArtifact(errors), testSuite.expect.errors);
+  assertPointerAssertions(normalizedAst, testSuite.expect.ast);
+  assertPointerAssertions(normalizedErrors, testSuite.expect.errors);
+
+  if (testSuite.expect.normalizedAst != null) {
+    assert.equal(
+      JSON.stringify(normalizedAst, null, 2),
+      normalizeNewlines(testSuite.expect.normalizedAst),
+    );
+  }
+
+  if (testSuite.expect.normalizedErrors != null) {
+    assert.equal(
+      JSON.stringify(normalizedErrors, null, 2),
+      normalizeNewlines(testSuite.expect.normalizedErrors),
+    );
+  }
+
+  assertVendoredVizeSnapshotExpectation({
+    id: testSuite.id,
+    upstream: testSuite.upstream,
+    source: testSuite.input.source,
+    output: testSuite.expect.vendoredSnapshotOutput,
+    options: testSuite.expect.vendoredSnapshotOptions,
+  });
 }
 
 export function runCompilerReferenceTestSuite(testSuite: CompilerTestSuite): void {
   if (testSuite.expect.error) {
     let thrown: unknown;
+    let capturedTemplateErrors: CompilerCore.CompilerError[] = [];
 
     try {
       switch (testSuite.kind) {
         case "template-dom-compile":
-          compileTemplate(
-            testSuite.input.source ?? "",
-            testSuite.input.compilerOptions as TemplateDomCompileOptions,
-          );
+          compileTemplate(testSuite.input.source ?? "", {
+            ...(testSuite.input.compilerOptions as TemplateDomCompileOptions | undefined),
+            onError: (error) => {
+              capturedTemplateErrors.push(error);
+            },
+          });
           break;
         case "sfc-script-compile": {
           const { descriptor } = parseSfc(testSuite.input.sfc ?? "", {
@@ -1181,9 +1312,47 @@ export function runCompilerReferenceTestSuite(testSuite: CompilerTestSuite): voi
             scoped: Boolean(testSuite.input.styleOptions?.scoped),
           });
           break;
+        case "sfc-full-compile": {
+          const filename = testSuite.input.filename ?? `${testSuite.id}.vue`;
+          const { descriptor } = parseSfc(testSuite.input.sfc ?? "", {
+            filename,
+          });
+          const scriptOptions = testSuite.input.scriptOptions;
+          const scriptResult =
+            descriptor.script || descriptor.scriptSetup
+              ? captureWarnings(() =>
+                  compileScript(descriptor, {
+                    ...scriptOptions,
+                    id: scriptOptions?.id ?? testSuite.id,
+                  } as ScriptCompileOptions),
+                ).result
+              : null;
+
+          if (descriptor.template) {
+            compileSfcTemplate({
+              id: scriptOptions?.id ?? testSuite.id,
+              filename,
+              source: descriptor.template.content,
+              scoped: descriptor.styles.some((style) => style.scoped),
+              compilerOptions: {
+                ...(testSuite.input.compilerOptions as TemplateDomCompileOptions | undefined),
+                bindingMetadata: scriptResult?.bindings,
+              },
+            } as SfcTemplateCompileOptions);
+          }
+
+          break;
+        }
       }
     } catch (error) {
       thrown = error;
+    }
+
+    assertDiagnostics(capturedTemplateErrors, testSuite.expect.diagnostics);
+
+    if (capturedTemplateErrors.length > 0) {
+      assertExactError(capturedTemplateErrors[0], testSuite.expect.error);
+      return;
     }
 
     assertExactError(thrown, testSuite.expect.error);
@@ -1192,8 +1361,12 @@ export function runCompilerReferenceTestSuite(testSuite: CompilerTestSuite): voi
 
   switch (testSuite.kind) {
     case "template-dom-compile": {
+      const diagnostics: CompilerCore.CompilerError[] = [];
       const compilerOptions = {
         ...(testSuite.input.compilerOptions as TemplateDomCompileOptions | undefined),
+        onError: (error: CompilerCore.CompilerError) => {
+          diagnostics.push(error);
+        },
       };
       const customElementTags = new Set(testSuite.input.compilerOptions?.customElementTags ?? []);
       if (customElementTags.size > 0) {
@@ -1201,6 +1374,7 @@ export function runCompilerReferenceTestSuite(testSuite: CompilerTestSuite): voi
       }
       const result = compileTemplate(testSuite.input.source ?? "", compilerOptions);
 
+      assertDiagnostics(diagnostics, testSuite.expect.diagnostics);
       assertHelpers(result.ast.helpers, testSuite.expect.helpers);
       assertPointerAssertions(normalizeStructuredArtifact(result.ast), testSuite.expect.ast);
 
@@ -1212,6 +1386,35 @@ export function runCompilerReferenceTestSuite(testSuite: CompilerTestSuite): voi
         assert.equal(
           normalizeNewlines(result.code),
           normalizeNewlines(testSuite.expect.normalizedCode),
+        );
+      }
+
+      assertVendoredVizeSnapshotExpectation({
+        id: testSuite.id,
+        upstream: testSuite.upstream,
+        source: testSuite.input.source ?? "",
+        output: testSuite.expect.vendoredSnapshotOutput,
+        options: testSuite.expect.vendoredSnapshotOptions,
+      });
+
+      break;
+    }
+    case "template-expected-snapshot": {
+      assertVendoredVizeSnapshotExpectation({
+        id: testSuite.id,
+        upstream: testSuite.upstream,
+        source: testSuite.input.source ?? "",
+        output: testSuite.expect.vendoredSnapshotOutput ?? testSuite.expect.normalizedCode ?? null,
+        options: testSuite.expect.vendoredSnapshotOptions,
+      });
+
+      if (
+        testSuite.expect.vendoredSnapshotOutput != null &&
+        testSuite.expect.normalizedCode != null
+      ) {
+        assert.equal(
+          normalizeNewlines(testSuite.expect.normalizedCode),
+          normalizeNewlines(testSuite.expect.vendoredSnapshotOutput),
         );
       }
 
@@ -1260,7 +1463,10 @@ export function runCompilerReferenceTestSuite(testSuite: CompilerTestSuite): voi
       });
 
       assert.equal(result.errors.length, 0, `Expected no style errors for ${testSuite.id}`);
-      assert.deepEqual(testSuite.expect.cssVars ?? [], []);
+      assert.deepEqual(
+        extractCssVars(testSuite.input.source ?? ""),
+        testSuite.expect.cssVars ?? [],
+      );
 
       if (testSuite.expect.normalizedCode != null) {
         assert.equal(
@@ -1268,6 +1474,115 @@ export function runCompilerReferenceTestSuite(testSuite: CompilerTestSuite): voi
           normalizeNewlines(testSuite.expect.normalizedCode),
         );
       }
+      break;
+    }
+    case "sfc-full-compile": {
+      const filename = testSuite.input.filename ?? `${testSuite.id}.vue`;
+      const { descriptor } = parseSfc(testSuite.input.sfc ?? "", {
+        filename,
+      });
+      const scriptOptions = testSuite.input.scriptOptions;
+      const scriptCapture =
+        descriptor.script || descriptor.scriptSetup
+          ? captureWarnings(() =>
+              compileScript(descriptor, {
+                ...scriptOptions,
+                id: scriptOptions?.id ?? testSuite.id,
+              } as ScriptCompileOptions),
+            )
+          : null;
+
+      if (testSuite.expect.descriptor) {
+        assertDescriptorExpectation(descriptor, testSuite.expect.descriptor);
+      }
+
+      assertWarnings(scriptCapture?.warnings ?? [], testSuite.expect.warnings);
+
+      if (testSuite.expect.normalizedCode != null) {
+        assert.equal(
+          normalizeNewlines(scriptCapture?.result.content ?? ""),
+          normalizeNewlines(testSuite.expect.normalizedCode),
+        );
+      }
+
+      const templateResult = descriptor.template
+        ? compileSfcTemplate({
+            id: scriptOptions?.id ?? testSuite.id,
+            filename,
+            source: descriptor.template.content,
+            scoped: descriptor.styles.some((style) => style.scoped),
+            compilerOptions: {
+              ...(testSuite.input.compilerOptions as TemplateDomCompileOptions | undefined),
+              bindingMetadata: scriptCapture?.result.bindings,
+            },
+          } as SfcTemplateCompileOptions)
+        : null;
+
+      assert.equal(
+        templateResult?.errors.length ?? 0,
+        0,
+        `Expected no SFC template errors for ${testSuite.id}`,
+      );
+
+      if (testSuite.expect.templateCode != null) {
+        assert.equal(
+          normalizeNewlines(templateResult?.code ?? ""),
+          normalizeNewlines(testSuite.expect.templateCode),
+        );
+      }
+
+      if ((testSuite.expect.styleCodes?.length ?? 0) > 0) {
+        const expectedStyleCodes = testSuite.expect.styleCodes ?? [];
+        const compiledStyleCodes = descriptor.styles
+          .filter((style) => !style.lang || style.lang === "css")
+          .map((style, index) =>
+            compileStyle({
+              source: style.content,
+              filename,
+              id: `${testSuite.id}-style-${index}`,
+              scoped: Boolean(style.scoped),
+            }),
+          )
+          .map((result) => {
+            assert.equal(result.errors.length, 0, `Expected no style errors for ${testSuite.id}`);
+            return normalizeNewlines(result.code);
+          });
+
+        assert.deepEqual(
+          compiledStyleCodes,
+          expectedStyleCodes.map((entry) => normalizeNewlines(entry)),
+        );
+      }
+
+      assertVendoredVizeSnapshotExpectation({
+        id: testSuite.id,
+        upstream: testSuite.upstream,
+        source: testSuite.input.sfc ?? "",
+        output: testSuite.expect.vendoredSnapshotOutput,
+        options: testSuite.expect.vendoredSnapshotOptions,
+      });
+
+      break;
+    }
+    case "sfc-expected-snapshot": {
+      assertVendoredVizeSnapshotExpectation({
+        id: testSuite.id,
+        upstream: testSuite.upstream,
+        source: testSuite.input.sfc ?? "",
+        output: testSuite.expect.vendoredSnapshotOutput ?? testSuite.expect.normalizedCode ?? null,
+        options: testSuite.expect.vendoredSnapshotOptions,
+      });
+
+      if (
+        testSuite.expect.vendoredSnapshotOutput != null &&
+        testSuite.expect.normalizedCode != null
+      ) {
+        assert.equal(
+          normalizeNewlines(testSuite.expect.normalizedCode),
+          normalizeNewlines(testSuite.expect.vendoredSnapshotOutput),
+        );
+      }
+
       break;
     }
   }

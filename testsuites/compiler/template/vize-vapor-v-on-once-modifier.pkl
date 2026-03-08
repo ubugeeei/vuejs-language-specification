@@ -1,0 +1,74 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-on-once-modifier"
+title = "Imported vapor input: once modifier"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-on.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-on"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-on.toml"
+  source = "tests/fixtures/vapor/v-on.toml"
+  caseName = "once modifier"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-on.toml"
+    cases {
+      "once modifier"
+    }
+  }
+}
+
+input {
+  source = "<button @click.once=\"handler\"></button>"
+}
+
+expect {
+  normalizedCode = #"""
+  import { createInvoker as _createInvoker, on as _on, template as _template } from 'vue';
+  const t0 = _template("<button></button>", true)
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    _on(n0, "click", _createInvoker(e => _ctx.handler(e)), {
+      once: true
+    })
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { createInvoker as _createInvoker, on as _on, template as _template } from 'vue';
+  const t0 = _template("<button></button>", true)
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    _on(n0, "click", _createInvoker(e => _ctx.handler(e)), {
+      once: true
+    })
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

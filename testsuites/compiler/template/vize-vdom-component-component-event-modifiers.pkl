@@ -1,0 +1,68 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-component-component-event-modifiers"
+title = "Imported template input: component event modifiers"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/component.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.component"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/component.toml"
+  source = "tests/fixtures/vdom/component.toml"
+  caseName = "component event modifiers"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/component.toml"
+    cases {
+      "component event modifiers"
+    }
+  }
+}
+
+input {
+  source = "<MyComponent @update.once=\"onUpdate\" />"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "RESOLVE_COMPONENT"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { resolveComponent: _resolveComponent, openBlock: _openBlock, createBlock: _createBlock } = _Vue
+  
+      const _component_MyComponent = _resolveComponent("MyComponent")
+  
+      return (_openBlock(), _createBlock(_component_MyComponent, { onUpdateOnce: onUpdate }, null, 8 /* PROPS */, ["onUpdateOnce"]))
+    }
+  }
+  """#
+}

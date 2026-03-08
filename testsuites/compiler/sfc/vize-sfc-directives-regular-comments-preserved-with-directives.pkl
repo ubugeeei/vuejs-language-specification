@@ -1,0 +1,90 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-directives-regular-comments-preserved-with-directives"
+title = "Imported SFC input: regular comments preserved with directives"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/directives.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.directives"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/directives.toml"
+  source = "tests/fixtures/sfc/directives.toml"
+  caseName = "regular comments preserved with directives"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/directives.toml"
+    cases {
+      "regular comments preserved with directives"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-directives-regular-comments-preserved-with-directives.vue"
+  sfc = #"""
+  <script setup>
+  const msg = 'hi'
+  </script>
+  
+  <template>
+    <!-- regular comment kept -->
+    <!-- @vize:docs this is stripped -->
+    <div>{{ msg }}</div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  const msg = 'hi'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-directives-regular-comments-preserved-with-directives',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  
+  const __returned__ = { msg }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { createCommentVNode as _createCommentVNode, toDisplayString as _toDisplayString, createElementVNode as _createElementVNode, Fragment as _Fragment, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock(_Fragment, null, [
+      _createCommentVNode(" regular comment kept "),
+      _createCommentVNode(" @vize:docs this is stripped "),
+      _createElementVNode("div", null, _toDisplayString($setup.msg))
+    ], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */))
+  }
+  """#
+}

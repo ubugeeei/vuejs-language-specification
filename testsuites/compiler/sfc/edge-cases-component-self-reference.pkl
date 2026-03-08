@@ -1,0 +1,85 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.edge-cases-component-self-reference"
+title = "Edge-case SFC: component self-reference keeps the recursive dynamic component lowering"
+kind = "sfc-full-compile"
+summary = "Script setup props lowering and template compilation must preserve the self-referential dynamic component pattern that targets the current component options object."
+
+features {
+  "compiler.sfc"
+  "script-setup.defineProps"
+  "template.dynamic-component"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/edge-cases.test.ts"
+    cases {
+      "should handle component self-reference"
+    }
+  }
+}
+
+input {
+  filename = "componentSelfReference.vue"
+  sfc = #"""
+  <script setup>
+  defineProps(['depth'])
+  </script>
+
+  <template>
+    <div>
+      Depth: {{ depth }}
+      <template v-if="depth > 0">
+        <component :is="$options" :depth="depth - 1" />
+      </template>
+    </div>
+  </template>
+  """#
+}
+
+expect {
+  descriptor {
+    template = true
+    script = false
+    scriptSetup = true
+    styles = 0
+    customBlocks = 0
+    scriptLang = null
+    scriptSetupLang = null
+    scopedStyles = 0
+  }
+  normalizedCode = #"""
+
+  export default {
+    __name: 'componentSelfReference',
+    props: ['depth'],
+    setup(__props, { expose: __expose }) {
+    __expose();
+
+
+
+  const __returned__ = {  }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+
+  }
+  """#
+  templateCode = #"""
+  import { toDisplayString as _toDisplayString, resolveDynamicComponent as _resolveDynamicComponent, openBlock as _openBlock, createBlock as _createBlock, createCommentVNode as _createCommentVNode, createTextVNode as _createTextVNode, createElementBlock as _createElementBlock } from "vue"
+
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, [
+      _createTextVNode(" Depth: " + _toDisplayString($props.depth) + " ", 1 /* TEXT */),
+      ($props.depth > 0)
+        ? (_openBlock(), _createBlock(_resolveDynamicComponent(_ctx.$options), {
+            key: 0,
+            depth: $props.depth - 1
+          }, null, 8 /* PROPS */, ["depth"]))
+        : _createCommentVNode("v-if", true)
+    ]))
+  }
+  """#
+}

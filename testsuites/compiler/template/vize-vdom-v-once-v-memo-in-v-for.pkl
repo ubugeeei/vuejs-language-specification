@@ -1,0 +1,89 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-once-v-memo-in-v-for"
+title = "Imported template input: v-memo in v-for"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-once.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-once"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-once.toml"
+  source = "tests/fixtures/vdom/v-once.toml"
+  caseName = "v-memo in v-for"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-once.toml"
+    cases {
+      "v-memo in v-for"
+    }
+  }
+}
+
+input {
+  source = "<div v-for=\"item in items\" :key=\"item.id\" v-memo=\"[item.selected]\">{{ item.name }}</div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "RENDER_LIST"
+    }
+    new HelperExpectation {
+      name = "FRAGMENT"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+    new HelperExpectation {
+      name = "TO_DISPLAY_STRING"
+    }
+    new HelperExpectation {
+      name = "CREATE_TEXT"
+    }
+    new HelperExpectation {
+      name = "IS_MEMO_SAME"
+    }
+    new HelperExpectation {
+      name = "WITH_MEMO"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { renderList: _renderList, Fragment: _Fragment, openBlock: _openBlock, createElementBlock: _createElementBlock, toDisplayString: _toDisplayString, createTextVNode: _createTextVNode, isMemoSame: _isMemoSame, withMemo: _withMemo } = _Vue
+  
+      return (_openBlock(true), _createElementBlock(_Fragment, null, _renderList(items, (item, __, ___, _cached) => {
+        const _memo = ([item.selected])
+        if (_cached && _cached.key === item.id && _isMemoSame(_cached, _memo)) return _cached
+        const _item = (_openBlock(), _createElementBlock("div", { key: item.id }, [
+          _createTextVNode(_toDisplayString(item.name), 1 /* TEXT */)
+        ]))
+        _item.memo = _memo
+        return _item
+      }, _cache, 0), 128 /* KEYED_FRAGMENT */))
+    }
+  }
+  """#
+}

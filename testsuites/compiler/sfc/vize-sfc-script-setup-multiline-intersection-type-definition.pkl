@@ -1,0 +1,94 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-multiline-intersection-type-definition"
+title = "Imported SFC input: multiline intersection type definition"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "multiline intersection type definition"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "multiline intersection type definition"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-multiline-intersection-type-definition.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  type Combined =
+    & { name: string }
+    & { age: number };
+  
+  const data: Combined = { name: 'test', age: 10 };
+  </script>
+  
+  <template>
+    <div>{{ data.name }} - {{ data.age }}</div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  type Combined =
+    & { name: string }
+    & { age: number };
+  
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-script-setup-multiline-intersection-type-definition',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const data: Combined = { name: 'test', age: 10 };
+  
+  const __returned__ = { data }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, _toDisplayString($setup.data.name) + " - " + _toDisplayString($setup.data.age), 1 /* TEXT */))
+  }
+  """#
+}

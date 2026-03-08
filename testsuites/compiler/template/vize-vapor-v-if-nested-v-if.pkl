@@ -1,0 +1,86 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-if-nested-v-if"
+title = "Imported vapor input: nested v-if"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-if.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-if"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-if.toml"
+  source = "tests/fixtures/vapor/v-if.toml"
+  caseName = "nested v-if"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-if.toml"
+    cases {
+      "nested v-if"
+    }
+  }
+}
+
+input {
+  source = "<div v-if=\"a\"><span v-if=\"b\">nested</span></div>"
+}
+
+expect {
+  normalizedCode = #"""
+  import { setInsertionState as _setInsertionState, createIf as _createIf, template as _template } from 'vue';
+  const t0 = _template("<span>nested</span>")
+  const t1 = _template("<div></div>", true)
+  
+  export function render(_ctx) {
+    const n0 = _createIf(() => (_ctx.a), () => {
+      const n5 = t1()
+      _setInsertionState(n5, null, true)
+      const n2 = _createIf(() => (_ctx.b), () => {
+        const n4 = t0()
+        return n4
+      })
+      return n5
+    })
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { setInsertionState as _setInsertionState, createIf as _createIf, template as _template } from 'vue';
+  const t0 = _template("<span>nested</span>")
+  const t1 = _template("<div></div>", true)
+  
+  export function render(_ctx) {
+    const n0 = _createIf(() => (_ctx.a), () => {
+      const n5 = t1()
+      _setInsertionState(n5, null, true)
+      const n2 = _createIf(() => (_ctx.b), () => {
+        const n4 = t0()
+        return n4
+      })
+      return n5
+    })
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

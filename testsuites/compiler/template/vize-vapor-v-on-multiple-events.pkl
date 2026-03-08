@@ -1,0 +1,72 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-on-multiple-events"
+title = "Imported vapor input: multiple events"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-on.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-on"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-on.toml"
+  source = "tests/fixtures/vapor/v-on.toml"
+  caseName = "multiple events"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-on.toml"
+    cases {
+      "multiple events"
+    }
+  }
+}
+
+input {
+  source = "<input @focus=\"onFocus\" @blur=\"onBlur\">"
+}
+
+expect {
+  normalizedCode = #"""
+  import { createInvoker as _createInvoker, on as _on, template as _template } from 'vue';
+  const t0 = _template("<input>", true)
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    _on(n0, "focus", _createInvoker(e => _ctx.onFocus(e)))
+    _on(n0, "blur", _createInvoker(e => _ctx.onBlur(e)))
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { createInvoker as _createInvoker, on as _on, template as _template } from 'vue';
+  const t0 = _template("<input>", true)
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    _on(n0, "focus", _createInvoker(e => _ctx.onFocus(e)))
+    _on(n0, "blur", _createInvoker(e => _ctx.onBlur(e)))
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

@@ -1,0 +1,69 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-bind-v-bind-object"
+title = "Imported template input: v-bind object"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-bind.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-bind"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-bind.toml"
+  source = "tests/fixtures/vdom/v-bind.toml"
+  caseName = "v-bind object"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-bind.toml"
+    cases {
+      "v-bind object"
+    }
+  }
+}
+
+input {
+  source = "<div v-bind=\"attrs\"></div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "NORMALIZE_PROPS"
+    }
+    new HelperExpectation {
+      name = "GUARD_REACTIVE_PROPS"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { normalizeProps: _normalizeProps, guardReactiveProps: _guardReactiveProps, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return (_openBlock(), _createElementBlock("div", _normalizeProps(_guardReactiveProps(attrs)), null, 16 /* FULL_PROPS */))
+    }
+  }
+  """#
+}

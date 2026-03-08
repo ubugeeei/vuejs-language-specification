@@ -1,0 +1,74 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.edge-cases-non-null-assertions"
+title = "Edge-case SFC: non-null assertions survive script setup lowering"
+kind = "sfc-full-compile"
+summary = "TypeScript non-null assertions in script setup must remain intact in the lowered script output while template compilation stays stable."
+
+features {
+  "compiler.sfc"
+  "script-setup.typescript"
+  "typescript.non-null"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/edge-cases.test.ts"
+    cases {
+      "should handle non-null assertions"
+    }
+  }
+}
+
+input {
+  filename = "nonNullAssertions.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  const element = document.querySelector('.test')!
+  const value = maybeNull!.property
+  </script>
+
+  <template>
+    <div>Test</div>
+  </template>
+  """#
+}
+
+expect {
+  descriptor {
+    template = true
+    script = false
+    scriptSetup = true
+    styles = 0
+    customBlocks = 0
+    scriptLang = null
+    scriptSetupLang = "ts"
+    scopedStyles = 0
+  }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'nonNullAssertions',
+    setup(__props, { expose: __expose }) {
+    __expose();
+
+  const element = document.querySelector('.test')!
+  const value = maybeNull!.property
+
+  const __returned__ = { element, value }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+
+  })
+  """#
+  templateCode = #"""
+  import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, "Test"))
+  }
+  """#
+}

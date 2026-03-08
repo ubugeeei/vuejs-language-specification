@@ -1,0 +1,94 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-keep-alive-inside-v-for-should-use-builtin"
+title = "Imported SFC input: keep-alive inside v-for should use builtin"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "keep-alive inside v-for should use builtin"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "keep-alive inside v-for should use builtin"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-keep-alive-inside-v-for-should-use-builtin.vue"
+  sfc = #"""
+  <script setup>
+  import { ref } from 'vue'
+  const tabs = ref([{ id: 1, component: 'TabA' }])
+  </script>
+  
+  <template>
+    <keep-alive v-for="tab in tabs" :key="tab.id">
+      <component :is="tab.component" />
+    </keep-alive>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { ref } from 'vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-keep-alive-inside-v-for-should-use-builtin',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const tabs = ref([{ id: 1, component: 'TabA' }])
+  
+  const __returned__ = { tabs, ref }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { renderList as _renderList, Fragment as _Fragment, openBlock as _openBlock, createElementBlock as _createElementBlock, resolveDynamicComponent as _resolveDynamicComponent, createBlock as _createBlock, KeepAlive as _KeepAlive } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(true), _createElementBlock(_Fragment, null, _renderList($setup.tabs, (tab) => {
+      return (_openBlock(), _createBlock(_KeepAlive, {
+        key: tab.id
+      }, [
+        (_openBlock(), _createBlock(_resolveDynamicComponent(tab.component)))
+      ], 1024 /* DYNAMIC_SLOTS */))
+    }), 128 /* KEYED_FRAGMENT */))
+  }
+  """#
+}

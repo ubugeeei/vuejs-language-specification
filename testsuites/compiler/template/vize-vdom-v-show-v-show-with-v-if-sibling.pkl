@@ -1,0 +1,85 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-show-v-show-with-v-if-sibling"
+title = "Imported template input: v-show with v-if sibling"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-show.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-show"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-show.toml"
+  source = "tests/fixtures/vdom/v-show.toml"
+  caseName = "v-show with v-if sibling"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-show.toml"
+    cases {
+      "v-show with v-if sibling"
+    }
+  }
+}
+
+input {
+  source = "<div v-show=\"a\">A</div><div v-if=\"b\">B</div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "V_SHOW"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_VNODE"
+    }
+    new HelperExpectation {
+      name = "WITH_DIRECTIVES"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_COMMENT"
+    }
+    new HelperExpectation {
+      name = "FRAGMENT"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { vShow: _vShow, createElementVNode: _createElementVNode, withDirectives: _withDirectives, openBlock: _openBlock, createElementBlock: _createElementBlock, createCommentVNode: _createCommentVNode, Fragment: _Fragment } = _Vue
+  
+      return (_openBlock(), _createElementBlock(_Fragment, null, [
+        _withDirectives(_createElementVNode("div", null, "A", 512 /* NEED_PATCH */), [
+          [_vShow, a]
+        ]),
+        b
+          ? (_openBlock(), _createElementBlock("div", { key: 0 }, "B"))
+          : _createCommentVNode("v-if", true)
+      ], 64 /* STABLE_FRAGMENT */))
+    }
+  }
+  """#
+}

@@ -1,0 +1,82 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-slot-scoped-slot-destructure"
+title = "Imported vapor input: scoped slot destructure"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-slot.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-slot"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-slot.toml"
+  source = "tests/fixtures/vapor/v-slot.toml"
+  caseName = "scoped slot destructure"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-slot.toml"
+    cases {
+      "scoped slot destructure"
+    }
+  }
+}
+
+input {
+  source = "<MyComponent v-slot=\"{ item, index }\">{{ index }}: {{ item }}</MyComponent>"
+}
+
+expect {
+  normalizedCode = #"""
+  import { resolveComponent as _resolveComponent, toDisplayString as _toDisplayString, setText as _setText, renderEffect as _renderEffect, createComponentWithFallback as _createComponentWithFallback, template as _template } from 'vue';
+  const t0 = _template(" ")
+  
+  export function render(_ctx) {
+    const _component_MyComponent = _resolveComponent("MyComponent")
+    const n3 = _createComponentWithFallback(_component_MyComponent, null, {
+      "default": (_slotProps0) => {
+        const n0 = t0()
+        _renderEffect(() => _setText(n0, _toDisplayString(_slotProps0.index) + ": " + _toDisplayString(_slotProps0.item)))
+        return n0
+      }
+    }, true)
+    return n3
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { resolveComponent as _resolveComponent, toDisplayString as _toDisplayString, setText as _setText, renderEffect as _renderEffect, createComponentWithFallback as _createComponentWithFallback, template as _template } from 'vue';
+  const t0 = _template(" ")
+  
+  export function render(_ctx) {
+    const _component_MyComponent = _resolveComponent("MyComponent")
+    const n3 = _createComponentWithFallback(_component_MyComponent, null, {
+      "default": (_slotProps0) => {
+        const n0 = t0()
+        _renderEffect(() => _setText(n0, _toDisplayString(_slotProps0.index) + ": " + _toDisplayString(_slotProps0.item)))
+        return n0
+      }
+    }, true)
+    return n3
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

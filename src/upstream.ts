@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
-import { join } from "node:path";
 import { loadGenericTestSuites } from "./catalog.ts";
 import { packageRoot, walkFiles } from "./fs.ts";
+import { provenanceInventoriesRoot, provenanceVendorRoot } from "./layout.ts";
 import { evaluatePklFile } from "./pkl.ts";
 import { runtimeTestSuites } from "./runtime/index.ts";
 import type {
@@ -27,11 +27,263 @@ export interface LocalUpstreamReference {
   caseName: string;
 }
 
+interface EquivalentCoverageAlias {
+  repository: string;
+  source: string;
+  caseName: string;
+  localTestSuites: string[];
+}
+
 const COVERABLE_REFERENCE_KINDS = new Set<UpstreamEvidenceKind>(["test", "benchmark"]);
 
 function createCoverageKey(repository: string, source: string, caseName: string): string {
   return `${repository}\u0000${source}\u0000${caseName}`;
 }
+
+const equivalentCoverageAliases: EquivalentCoverageAlias[] = [
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/sfc-compile.test.ts",
+    caseName: "should compile SFC with script setup",
+    localTestSuites: ["compiler.sfc.vize-sfc-basic-script-setup-with-template"],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/sfc-compile.test.ts",
+    caseName: "should compile SFC with both script and script setup",
+    localTestSuites: [
+      "syntax.sfc.script-and-script-setup",
+      "compiler.sfc.vize-sfc-script-setup-script-before-script-setup",
+      "compiler.sfc.vize-sfc-script-setup-script-setup-before-script",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/sfc-compile.test.ts",
+    caseName: "should compile event handlers",
+    localTestSuites: ["compiler.sfc.vize-sfc-script-setup-template-with-event-handler"],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/sfc-compile.test.ts",
+    caseName: "should compile slot content",
+    localTestSuites: [
+      "compiler.template.component-named-slot",
+      "compiler.template.vize-vdom-v-slot-default-slot-content",
+      "compiler.template.vize-vdom-v-slot-named-slot",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/sfc-compile.test.ts",
+    caseName: "should compile v-model directive",
+    localTestSuites: [
+      "compiler.sfc.vize-sfc-script-setup-template-with-v-model-on-ref",
+      "compiler.template.v-model-text",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/sfc-compile.test.ts",
+    caseName: "should handle complex generic types",
+    localTestSuites: [
+      "compiler.sfc.vize-sfc-patches-ref-with-generic-type-should-be-stripped",
+      "compiler.sfc.vize-sfc-script-setup-generic-component-with-complex-constraint",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/sfc-compile.test.ts",
+    caseName: "should handle defineEmits with type parameter",
+    localTestSuites: [
+      "compiler.sfc.vize-sfc-script-setup-defineemits-with-typed-function-signatures",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/sfc-compile.test.ts",
+    caseName: "should handle interface declarations",
+    localTestSuites: [
+      "compiler.sfc.vize-sfc-script-setup-script-with-interfaces-before-script-setup",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/sfc-compile.test.ts",
+    caseName: "should handle type aliases",
+    localTestSuites: [
+      "compiler.sfc.vize-sfc-script-setup-script-with-type-definitions-and-script-setup",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/sfc-compile.test.ts",
+    caseName: "should handle withDefaults",
+    localTestSuites: [
+      "compiler.sfc.vize-sfc-script-setup-withdefaults-with-object-type",
+      "compiler.script.with-defaults-typed-props",
+      "type-evaluation.props.with-defaults-literal",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/sfc-compile.test.ts",
+    caseName: "should strip generic type parameters from ref/reactive",
+    localTestSuites: ["compiler.sfc.vize-sfc-patches-ref-with-generic-type-should-be-stripped"],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/sfc-compile.test.ts",
+    caseName: "should strip type annotations from script setup",
+    localTestSuites: [
+      "compiler.sfc.vize-sfc-basic-lang-attributes",
+      "compiler.sfc.vize-sfc-script-setup-multiline-const-with-type-annotation",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle async/await with types",
+    localTestSuites: [
+      "compiler.sfc.vize-sfc-patches-top-level-await-generates-async-setup",
+      "compiler.sfc.vize-sfc-script-setup-top-level-await-in-initialization",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle class with decorators pattern",
+    localTestSuites: ["compiler.sfc.vize-sfc-script-setup-class-declarations"],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle deeply nested templates",
+    localTestSuites: [
+      "compiler.template.vize-vdom-element-deeply-nested",
+      "parser.template.vize-parser-element-deeply-nested-elements",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle defineExpose",
+    localTestSuites: [
+      "compiler.sfc.vize-sfc-script-setup-defineexpose",
+      "compiler.script.define-expose-basic",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle defineModel",
+    localTestSuites: [
+      "compiler.sfc.vize-sfc-script-setup-definemodel-basic",
+      "compiler.script.define-model-basic",
+      "type-evaluation.props.define-model-basic",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle defineModel with options",
+    localTestSuites: ["compiler.sfc.vize-sfc-script-setup-definemodel-with-options"],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle defineOptions",
+    localTestSuites: [
+      "compiler.sfc.vize-sfc-script-setup-defineoptions",
+      "compiler.script.define-options-basic",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle defineSlots with types",
+    localTestSuites: [
+      "compiler.sfc.vize-sfc-script-setup-defineslots",
+      "compiler.script.define-slots-basic",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle enum declarations",
+    localTestSuites: [
+      "compiler.sfc.vize-sfc-script-setup-script-with-type-definitions-and-script-setup",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle const enum declarations",
+    localTestSuites: [
+      "compiler.sfc.vize-sfc-script-setup-script-with-type-definitions-and-script-setup",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle generic function declarations",
+    localTestSuites: ["compiler.sfc.vize-sfc-script-setup-function-declarations"],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle keep-alive",
+    localTestSuites: [
+      "compiler.template.vize-vdom-component-keepalive",
+      "compiler.template.vize-vapor-component-keepalive",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle multiple root elements (fragments)",
+    localTestSuites: ["compiler.template.vize-vdom-element-multiple-children"],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle special HTML entities",
+    localTestSuites: ["parser.template.decode-entities-default"],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle suspense",
+    localTestSuites: [
+      "compiler.template.vize-vdom-component-suspense",
+      "compiler.template.vize-vapor-component-suspense",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle teleport",
+    localTestSuites: [
+      "compiler.template.vize-vdom-component-teleport",
+      "compiler.template.vize-vapor-component-teleport",
+    ],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle template with only whitespace",
+    localTestSuites: ["parser.template.vize-parser-text-only-whitespace"],
+  },
+  {
+    repository: "ubugeeei/vize",
+    source: "playground/e2e/edge-cases.test.ts",
+    caseName: "should handle unicode in template",
+    localTestSuites: [
+      "parser.template.vize-parser-text-text-with-unicode",
+      "parser.template.vize-parser-interpolation-interpolation-with-unicode",
+    ],
+  },
+];
 
 export function normalizeUpstreamEvidenceKind(
   reference: Pick<UpstreamReference, "kind">,
@@ -91,6 +343,17 @@ function buildCoverageMap(localReferences: LocalUpstreamReference[]): Map<string
   return coverageMap;
 }
 
+function applyEquivalentCoverageAliases(coverageMap: Map<string, Set<string>>): void {
+  for (const alias of equivalentCoverageAliases) {
+    const key = createCoverageKey(alias.repository, alias.source, alias.caseName);
+    const coveredBy = coverageMap.get(key) ?? new Set<string>();
+    for (const localTestSuiteId of alias.localTestSuites) {
+      coveredBy.add(localTestSuiteId);
+    }
+    coverageMap.set(key, coveredBy);
+  }
+}
+
 function inferProfile(repository: string, source: string, name: string): string | null {
   if (
     repository === "ubugeeei/vize" &&
@@ -115,7 +378,7 @@ function classifyUpstreamEntry(args: {
   classification: UpstreamTraceabilityClassification;
   rationale: string;
 } {
-  const { repository, source, kind } = args;
+  const { repository, source, name, kind } = args;
 
   if (kind === "benchmark") {
     return {
@@ -163,6 +426,38 @@ function classifyUpstreamEntry(args: {
         classification: "integration-host",
         rationale:
           "This upstream case depends on application fixtures, playground wiring, or environment-specific integration and is therefore tracked rather than normalized into a portable test suite.",
+      };
+    }
+
+    if (source.includes("vite-plugin-vapor.test.ts")) {
+      return {
+        classification: "tooling-host",
+        rationale:
+          "This upstream case depends on the Vite plugin wrapper, plugin option builders, or playground application compilation and is therefore tracked as tooling-host behavior.",
+      };
+    }
+
+    if (source.startsWith("npm/")) {
+      return {
+        classification: "tooling-host",
+        rationale:
+          "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage.",
+      };
+    }
+
+    if (source.includes("css-compile.test.ts") && name.toLowerCase().includes("minify")) {
+      return {
+        classification: "tooling-host",
+        rationale:
+          "This upstream case exercises implementation-specific CSS minify toggles rather than stable portable Vue language semantics, so it remains tooling-host coverage.",
+      };
+    }
+
+    if (source.includes("sfc-compile.test.ts") && name === "should compile SFC in SSR mode") {
+      return {
+        classification: "tooling-host",
+        rationale:
+          "This upstream case depends on an SSR-oriented compile wrapper surface that is tracked separately from the current portable static suite.",
       };
     }
 
@@ -227,7 +522,7 @@ function defaultStatusForClassification(
 export function loadUpstreamInventories(
   root: string = packageRoot(import.meta.url),
 ): UpstreamInventory[] {
-  const upstreamRoot = join(root, "sources", "upstream");
+  const upstreamRoot = provenanceInventoriesRoot(root);
   const inventories = walkFiles(upstreamRoot, (file) => file.endsWith(".pkl")).map((file) =>
     evaluatePklFile<UpstreamInventory>(file),
   );
@@ -274,7 +569,7 @@ function vendoredCorpusToInventory(manifest: VendoredUpstreamCorpusManifest): Up
 export function loadVendoredUpstreamCorpora(
   root: string = packageRoot(import.meta.url),
 ): VendoredUpstreamCorpusManifest[] {
-  const copiedRoot = join(root, "sources", "copied");
+  const copiedRoot = provenanceVendorRoot(root);
   if (!existsSync(copiedRoot)) {
     return [];
   }
@@ -290,6 +585,7 @@ export function buildUpstreamCoverage(
   const inventories = loadUpstreamInventories(root);
   const localReferences = loadLocalUpstreamReferences(root);
   const coverageMap = buildCoverageMap(localReferences);
+  applyEquivalentCoverageAliases(coverageMap);
 
   const inventoryKeys = new Set<string>();
   const repositories: UpstreamCoverageRepositorySummary[] = [];
@@ -363,6 +659,7 @@ export function buildUpstreamTraceability(
   const generatedAt = new Date().toISOString();
   const inventories = loadUpstreamInventories(root);
   const coverageMap = buildCoverageMap(loadLocalUpstreamReferences(root));
+  applyEquivalentCoverageAliases(coverageMap);
 
   return inventories.map((inventory) => {
     const entries: UpstreamTraceabilityEntry[] = inventory.files

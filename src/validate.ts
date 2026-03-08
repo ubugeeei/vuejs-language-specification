@@ -2,7 +2,15 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
+import { parse as parseSfc } from "@vue/compiler-sfc";
 import { packageRoot, walkFiles } from "./fs.ts";
+import {
+  provenanceInventoriesRoot,
+  provenanceTraceabilityRoot,
+  runtimeTestSuitesRoot,
+  vendoredRepositoryRoot,
+  vendoredVizeSnapshotRoot,
+} from "./layout.ts";
 import { discoverTestSuiteFiles } from "./catalog.ts";
 import { evaluatePklFile } from "./pkl.ts";
 import { loadRequirementMatrixEntries, requiredRequirementMatrixFiles } from "./requirements.ts";
@@ -13,8 +21,14 @@ import {
   loadLocalUpstreamReferences,
   loadVendoredUpstreamCorpora,
 } from "./upstream.ts";
+import {
+  loadVendoredVizeExpectedSnapshotCase,
+  normalizeVizeSnapshotInput,
+} from "./vize-snapshots.ts";
 import type {
+  CompilerTestSuite,
   GenericTestSuite,
+  ParserTestSuite,
   UpstreamInventory,
   UpstreamReference,
   UpstreamTraceabilityManifest,
@@ -25,9 +39,7 @@ import type {
 
 function repositoryToTraceabilityFile(root: string, repository: string): string {
   return join(
-    root,
-    "sources",
-    "traceability",
+    provenanceTraceabilityRoot(root),
     `${repository.replaceAll("/", "-")}.traceability.pkl`,
   );
 }
@@ -38,6 +50,60 @@ function extractSnapshotNames(content: string): Set<string> {
       .map((match) => match[1]?.trim())
       .filter(Boolean) as string[],
   );
+}
+
+const canonicalSfcBlockOrder = ["script", "script setup", "template", "style scoped", "style"];
+
+function extractSfcBlockOrder(source: string): string[] {
+  const { descriptor } = parseSfc(source, {
+    filename: "validation-order.vue",
+  });
+  const blockEntries = [
+    descriptor.script
+      ? {
+          kind: "script",
+          offset: descriptor.script.loc.start.offset,
+        }
+      : null,
+    descriptor.scriptSetup
+      ? {
+          kind: "script setup",
+          offset: descriptor.scriptSetup.loc.start.offset,
+        }
+      : null,
+    descriptor.template
+      ? {
+          kind: "template",
+          offset: descriptor.template.loc.start.offset,
+        }
+      : null,
+    ...descriptor.styles.map((style) => ({
+      kind: style.scoped ? "style scoped" : "style",
+      offset: style.loc.start.offset,
+    })),
+  ].filter((entry): entry is { kind: string; offset: number } => entry !== null);
+
+  return blockEntries.sort((left, right) => left.offset - right.offset).map((entry) => entry.kind);
+}
+
+function validateSfcBlockOrder(source: string): boolean {
+  const order = extractSfcBlockOrder(source);
+
+  if (order.length === 0) {
+    return true;
+  }
+
+  let lastRank = -1;
+  for (const block of order) {
+    const rank = canonicalSfcBlockOrder.indexOf(block);
+    if (rank === -1 || rank < lastRank) {
+      return false;
+    }
+
+    lastRank = rank;
+  }
+
+  return true;
 }
 
 function normalizeTraceabilityManifest(
@@ -139,7 +205,15 @@ const legacyLocalNamingRules = [
   },
   {
     needle: "src/runtime/cases/",
-    replacement: "src/runtime/testsuites/",
+    replacement: "runtime/testsuites/",
+  },
+  {
+    needle: "src/runtime/testsuites/",
+    replacement: "runtime/testsuites/",
+  },
+  {
+    needle: "sources/",
+    replacement: "provenance/",
   },
   {
     needle: "schemas/BenchmarkCase.pkl",
@@ -256,7 +330,7 @@ function collectConventionScanFiles(root: string): string[] {
     join(root, "tsdown.config.ts"),
   ].filter((file) => existsSync(file));
 
-  for (const directory of ["src", "schemas", "scripts"] as const) {
+  for (const directory of ["src", "schemas", "scripts", "runtime"] as const) {
     const fullDirectory = join(root, directory);
     if (!existsSync(fullDirectory)) {
       continue;
@@ -331,6 +405,87 @@ function validateUpstreamSelectors(selectors: UpstreamReference[], context: stri
   return errors;
 }
 
+function normalizeNewlines(value: string): string {
+  return value.replace(/\r\n?/g, "\n");
+}
+
+function validateVendoredSnapshotExpectation(testSuite: GenericTestSuite, root: string): string[] {
+  if (testSuite.suite !== "parser" && testSuite.suite !== "compiler") {
+    return [];
+  }
+
+  const source =
+    testSuite.suite === "parser"
+      ? testSuite.input.source
+      : testSuite.kind.startsWith("sfc-")
+        ? ((testSuite as CompilerTestSuite).input.sfc ?? "")
+        : ((testSuite as CompilerTestSuite).input.source ?? "");
+
+  const output =
+    testSuite.suite === "parser"
+      ? (testSuite as ParserTestSuite).expect.vendoredSnapshotOutput
+      : (testSuite as CompilerTestSuite).expect.vendoredSnapshotOutput;
+  const options =
+    testSuite.suite === "parser"
+      ? (testSuite as ParserTestSuite).expect.vendoredSnapshotOptions
+      : (testSuite as CompilerTestSuite).expect.vendoredSnapshotOptions;
+
+  if (output == null && options == null) {
+    return [];
+  }
+
+  const reference = testSuite.upstream.find(
+    (entry) => entry.repository === "ubugeeei/vize" && entry.source.startsWith("tests/fixtures/"),
+  );
+  if (!reference) {
+    return [
+      `test suite ${testSuite.id} declares vendored snapshot output without copied fixture provenance`,
+    ];
+  }
+
+  const caseName = reference.cases[0];
+  if (!caseName) {
+    return [`test suite ${testSuite.id} declares vendored snapshot output without a case name`];
+  }
+
+  const snapshot = loadVendoredVizeExpectedSnapshotCase(reference.source, caseName, root);
+  if (!snapshot) {
+    return [
+      `test suite ${testSuite.id} references missing vendored snapshot ${reference.source} :: ${caseName}`,
+    ];
+  }
+
+  const errors: string[] = [];
+  if (normalizeVizeSnapshotInput(source) !== normalizeVizeSnapshotInput(snapshot.input)) {
+    errors.push(`test suite ${testSuite.id} source does not match vendored snapshot input`);
+  }
+  if (output != null && normalizeNewlines(output) !== normalizeNewlines(snapshot.output)) {
+    errors.push(
+      `test suite ${testSuite.id} vendored snapshot output does not match copied snapshot`,
+    );
+  }
+  if ((options ?? null) !== (snapshot.options ?? null)) {
+    errors.push(
+      `test suite ${testSuite.id} vendored snapshot options do not match copied snapshot`,
+    );
+  }
+
+  if (testSuite.suite === "compiler") {
+    const compilerTestSuite = testSuite as CompilerTestSuite;
+    if (
+      (compilerTestSuite.kind === "template-expected-snapshot" ||
+        compilerTestSuite.kind === "sfc-expected-snapshot") &&
+      compilerTestSuite.expect.normalizedCode != null &&
+      output != null &&
+      normalizeNewlines(compilerTestSuite.expect.normalizedCode) !== normalizeNewlines(output)
+    ) {
+      errors.push(`test suite ${testSuite.id} normalizedCode must equal vendored snapshot output`);
+    }
+  }
+
+  return errors;
+}
+
 function extractRuntimeTestSuiteId(file: string): string | null {
   const content = readFileSync(file, "utf8");
   const match = content.match(/id:\s*"([^"]+)"/u);
@@ -344,6 +499,7 @@ export function validateRepositoryConventions(
   const legacyPaths = [
     join(root, "cases"),
     join(root, "src", "runtime", "cases"),
+    join(root, "src", "runtime", "testsuites"),
     join(root, "schemas", "BenchmarkCase.pkl"),
     join(root, "schemas", "CompilerCase.pkl"),
     join(root, "schemas", "ParserCase.pkl"),
@@ -368,7 +524,7 @@ export function validateRepositoryConventions(
     }
   }
 
-  const runtimeTestSuiteFilesRoot = join(root, "src", "runtime", "testsuites");
+  const runtimeTestSuiteFilesRoot = runtimeTestSuitesRoot(root);
   if (existsSync(runtimeTestSuiteFilesRoot)) {
     const runtimeExportPattern = /^export const [A-Za-z0-9]+TestSuite: RuntimeTestSuite = /mu;
     for (const file of walkFiles(runtimeTestSuiteFilesRoot, (entry) => entry.endsWith(".ts"))) {
@@ -489,7 +645,87 @@ export function validateTestSuites(
       errors.push(`${suiteContext} profile must be non-empty when present`);
     }
 
+    if (!entry.data.inputOrigin) {
+      const sfcSource =
+        entry.data.suite === "syntax"
+          ? entry.data.input.source
+          : entry.data.suite === "compiler"
+            ? entry.data.input.sfc
+            : undefined;
+
+      if (sfcSource && !validateSfcBlockOrder(sfcSource)) {
+        errors.push(
+          `${suiteContext} SFC block order must be script -> script setup -> template -> style scoped -> style`,
+        );
+      }
+    }
+
+    const isImportedInputSuite = entry.data.features.includes("imported.input");
+    if (isImportedInputSuite) {
+      if (!entry.data.inputOrigin) {
+        errors.push(`${suiteContext} imported.input suites must declare inputOrigin`);
+      } else {
+        if (isBlank(entry.data.inputOrigin.copiedPath)) {
+          errors.push(`${suiteContext} inputOrigin.copiedPath must be non-empty`);
+        } else if (!existsSync(join(root, entry.data.inputOrigin.copiedPath))) {
+          errors.push(
+            `${suiteContext} inputOrigin.copiedPath does not exist: ${entry.data.inputOrigin.copiedPath}`,
+          );
+        }
+
+        if (isBlank(entry.data.inputOrigin.source)) {
+          errors.push(`${suiteContext} inputOrigin.source must be non-empty`);
+        }
+
+        if (isBlank(entry.data.inputOrigin.caseName)) {
+          errors.push(`${suiteContext} inputOrigin.caseName must be non-empty`);
+        }
+      }
+
+      if (!entry.data.oracle) {
+        errors.push(`${suiteContext} imported.input suites must declare oracle`);
+      }
+    }
+
+    if (entry.data.oracle) {
+      if (isBlank(entry.data.oracle.repository)) {
+        errors.push(`${suiteContext} oracle.repository must be non-empty`);
+      }
+
+      if (isBlank(entry.data.oracle.moduleName)) {
+        errors.push(`${suiteContext} oracle.moduleName must be non-empty`);
+      }
+
+      if (isBlank(entry.data.oracle.operation)) {
+        errors.push(`${suiteContext} oracle.operation must be non-empty`);
+      }
+
+      const usesSnapshotKind =
+        entry.data.kind === "template-expected-snapshot" ||
+        entry.data.kind === "sfc-expected-snapshot";
+      const usesSnapshotExpectation =
+        entry.data.suite === "parser"
+          ? ((entry.data as ParserTestSuite).expect.vendoredSnapshotOutput ?? null) !== null ||
+            ((entry.data as ParserTestSuite).expect.vendoredSnapshotOptions ?? null) !== null
+          : entry.data.suite === "compiler"
+            ? ((entry.data as CompilerTestSuite).expect.vendoredSnapshotOutput ?? null) !== null ||
+              ((entry.data as CompilerTestSuite).expect.vendoredSnapshotOptions ?? null) !== null
+            : false;
+
+      if (
+        entry.data.oracle.repository === "vuejs/core" &&
+        entry.data.oracle.provisional !== true &&
+        entry.data.profile !== "vapor" &&
+        (usesSnapshotKind || usesSnapshotExpectation)
+      ) {
+        errors.push(
+          `${suiteContext} official vuejs/core oracles must not rely on vendored snapshot kinds or expectations`,
+        );
+      }
+    }
+
     errors.push(...validateUpstreamSelectors(entry.data.upstream, suiteContext));
+    errors.push(...validateVendoredSnapshotExpectation(entry.data, root));
 
     return {
       file: entry.file,
@@ -541,12 +777,32 @@ export function validateRuntimeTestSuites(
       errors.push(`${suiteContext} must declare at least one upstream selector`);
     }
 
+    if (testSuite.input.kind !== "sfc") {
+      errors.push(`${suiteContext} input.kind must currently be "sfc"`);
+    }
+
+    if (isBlank(testSuite.input.filename)) {
+      errors.push(`${suiteContext} input.filename must be non-empty`);
+    } else if (!testSuite.input.filename.endsWith(".vue")) {
+      errors.push(`${suiteContext} input.filename must end with ".vue"`);
+    }
+
+    if (isBlank(testSuite.input.source)) {
+      errors.push(`${suiteContext} input.source must be non-empty`);
+    } else if (!testSuite.input.source.includes("<template>")) {
+      errors.push(`${suiteContext} input.source must declare a <template> block`);
+    } else if (!validateSfcBlockOrder(testSuite.input.source)) {
+      errors.push(
+        `${suiteContext} SFC block order must be script -> script setup -> template -> style scoped -> style`,
+      );
+    }
+
     errors.push(...validateUpstreamSelectors(testSuite.upstream, suiteContext));
   }
 
   return [
     {
-      file: join(root, "src", "runtime", "testsuites"),
+      file: runtimeTestSuitesRoot(root),
       valid: errors.length === 0,
       errors,
     },
@@ -580,7 +836,7 @@ export function validateRequirementMatrices(
     suiteReferences.set(relative(root, file), 0);
   }
 
-  const runtimeRoot = join(root, "src", "runtime", "testsuites");
+  const runtimeRoot = runtimeTestSuitesRoot(root);
   if (existsSync(runtimeRoot)) {
     for (const file of walkFiles(runtimeRoot, (entry) => entry.endsWith(".ts"))) {
       const runtimeId = extractRuntimeTestSuiteId(file);
@@ -738,7 +994,7 @@ export function validateNormativeChapterStructure(
 export function validateUpstreamInventories(
   root: string = packageRoot(import.meta.url),
 ): ValidationMessage[] {
-  const inventoryFiles = walkFiles(join(root, "sources", "upstream"), (file) =>
+  const inventoryFiles = walkFiles(provenanceInventoriesRoot(root), (file) =>
     file.endsWith(".pkl"),
   );
 
@@ -763,7 +1019,7 @@ export function validateUpstreamInventories(
 export function validateVendoredSnapshots(
   root: string = packageRoot(import.meta.url),
 ): ValidationMessage[] {
-  const manifestFile = join(root, "sources", "copied", "vize", "expected-snapshots.pkl");
+  const manifestFile = join(vendoredVizeSnapshotRoot(root), "expected-snapshots.pkl");
 
   try {
     const manifest = evaluatePklFile<VendoredSnapshotManifest>(manifestFile);
@@ -889,7 +1145,7 @@ export function validateVendoredUpstreamCorpora(
 ): ValidationMessage[] {
   const manifests = loadVendoredUpstreamCorpora(root);
   const inventoryByRepository = new Map(
-    walkFiles(join(root, "sources", "upstream"), (file) => file.endsWith(".pkl")).map((file) => {
+    walkFiles(provenanceInventoriesRoot(root), (file) => file.endsWith(".pkl")).map((file) => {
       const inventory = evaluatePklFile<UpstreamInventory>(file);
       return [inventory.repository, inventory] as const;
     }),
@@ -897,10 +1153,7 @@ export function validateVendoredUpstreamCorpora(
 
   return manifests.map((manifest) => {
     const manifestFile = join(
-      root,
-      "sources",
-      "copied",
-      manifest.originRepository.replaceAll("/", "-"),
+      vendoredRepositoryRoot(root, manifest.originRepository),
       "test-corpus.pkl",
     );
     const normalizedManifest = normalizeVendoredCorpusManifest(manifest);
@@ -987,7 +1240,7 @@ export function validateUpstreamReferences(
   root: string = packageRoot(import.meta.url),
 ): ValidationMessage[] {
   const report = buildUpstreamCoverage(root);
-  const snapshotManifestFile = join(root, "sources", "copied", "vize", "expected-snapshots.pkl");
+  const snapshotManifestFile = join(vendoredVizeSnapshotRoot(root), "expected-snapshots.pkl");
   const errors: string[] = report.danglingReferences.map(
     (reference) =>
       `Unresolved ${reference.kind} reference: ${reference.repository} ${reference.source} :: ${reference.caseName} <- ${reference.localTestSuiteId}`,
@@ -1032,7 +1285,7 @@ export function validateUpstreamReferences(
 
   return [
     {
-      file: join(root, "sources", "upstream"),
+      file: provenanceInventoriesRoot(root),
       valid: errors.length === 0,
       errors,
     },
@@ -1043,9 +1296,7 @@ export function validateUpstreamTraceability(
   root: string = packageRoot(import.meta.url),
 ): ValidationMessage[] {
   const expectedManifests = buildUpstreamTraceability(root);
-  const actualFiles = walkFiles(join(root, "sources", "traceability"), (file) =>
-    file.endsWith(".pkl"),
-  );
+  const actualFiles = walkFiles(provenanceTraceabilityRoot(root), (file) => file.endsWith(".pkl"));
   const actualByRepository = new Map<string, UpstreamTraceabilityManifest>();
   const messages: ValidationMessage[] = [];
 

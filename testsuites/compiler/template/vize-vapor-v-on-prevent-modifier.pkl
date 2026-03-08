@@ -1,0 +1,70 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-on-prevent-modifier"
+title = "Imported vapor input: prevent modifier"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-on.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-on"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-on.toml"
+  source = "tests/fixtures/vapor/v-on.toml"
+  caseName = "prevent modifier"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-on.toml"
+    cases {
+      "prevent modifier"
+    }
+  }
+}
+
+input {
+  source = "<form @submit.prevent=\"onSubmit\"></form>"
+}
+
+expect {
+  normalizedCode = #"""
+  import { createInvoker as _createInvoker, withModifiers as _withModifiers, on as _on, template as _template } from 'vue';
+  const t0 = _template("<form></form>", true)
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    _on(n0, "submit", _createInvoker(_withModifiers(e => _ctx.onSubmit(e), ["prevent"])))
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { createInvoker as _createInvoker, withModifiers as _withModifiers, on as _on, template as _template } from 'vue';
+  const t0 = _template("<form></form>", true)
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    _on(n0, "submit", _createInvoker(_withModifiers(e => _ctx.onSubmit(e), ["prevent"])))
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

@@ -1,0 +1,70 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-transform-errors-v-else-if-without-v-if"
+title = "Imported transform input: v-else-if without v-if"
+kind = "template-dom-compile"
+summary = "Static compiler conformance derived from copied input tests/fixtures/errors/transform-errors.toml and the official vuejs/core compiler oracle, including exact diagnostics when emitted."
+
+features {
+  "compiler.template"
+  "compiler.errors"
+  "imported.input"
+  "imported.input.transform-errors"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/errors/transform-errors.toml"
+  source = "tests/fixtures/errors/transform-errors.toml"
+  caseName = "v-else-if without v-if"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/errors/transform-errors.toml"
+    cases {
+      "v-else-if without v-if"
+    }
+  }
+}
+
+input {
+  source = "<div v-else-if=\"b\"></div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  diagnostics {
+    new ErrorExpectation {
+      name = "SyntaxError"
+      message = "v-else/v-else-if has no adjacent v-if or v-else-if."
+      code = "X_V_ELSE_NO_ADJACENT_IF"
+    }
+  }
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return (_openBlock(), _createElementBlock("div"))
+    }
+  }
+  """#
+}

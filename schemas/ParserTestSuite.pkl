@@ -6,6 +6,21 @@ class UpstreamReference {
   issues: Listing<String> = new Listing {}
 }
 
+class ImportedInputOrigin {
+  copiedPath: String
+  source: String
+  caseName: String
+  originRepository: String?
+}
+
+class ReferenceOracle {
+  repository: String
+  moduleName: String
+  operation: String
+  profile: String?
+  provisional: Boolean? = null
+}
+
 suite = "parser"
 
 class Input {
@@ -36,6 +51,10 @@ class Expectation {
   errorCount: Int
   ast: Listing<PointerAssertion> = new Listing {}
   errors: Listing<PointerAssertion> = new Listing {}
+  normalizedAst: String?
+  normalizedErrors: String?
+  vendoredSnapshotOutput: String?
+  vendoredSnapshotOptions: String?
 }
 
 id: String
@@ -44,6 +63,8 @@ kind: "template-base-parse"|"template-dom-parse" = "template-base-parse"
 summary: String
 features: Listing<String>
 profile: String?
+inputOrigin: ImportedInputOrigin?
+oracle: ReferenceOracle?
 upstream: Listing<UpstreamReference>
 input: Input
 expect: Expectation

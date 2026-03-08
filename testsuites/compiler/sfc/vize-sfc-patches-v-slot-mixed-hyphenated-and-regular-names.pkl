@@ -1,0 +1,99 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-v-slot-mixed-hyphenated-and-regular-names"
+title = "Imported SFC input: v-slot mixed hyphenated and regular names"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "v-slot mixed hyphenated and regular names"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "v-slot mixed hyphenated and regular names"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-v-slot-mixed-hyphenated-and-regular-names.vue"
+  sfc = #"""
+  <script setup>
+  import Layout from './Layout.vue'
+  </script>
+  
+  <template>
+    <Layout>
+      <template #header>Regular</template>
+      <template #main-content>Hyphenated</template>
+      <template #footer>Regular Again</template>
+    </Layout>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import Layout from './Layout.vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-v-slot-mixed-hyphenated-and-regular-names',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  
+  const __returned__ = { Layout }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { createTextVNode as _createTextVNode, withCtx as _withCtx, openBlock as _openBlock, createBlock as _createBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createBlock($setup["Layout"], null, {
+      header: _withCtx(() => [...(_cache[0] || (_cache[0] = [
+        _createTextVNode("Regular", -1 /* CACHED */)
+      ]))]),
+      "main-content": _withCtx(() => [...(_cache[1] || (_cache[1] = [
+        _createTextVNode("Hyphenated", -1 /* CACHED */)
+      ]))]),
+      footer: _withCtx(() => [...(_cache[2] || (_cache[2] = [
+        _createTextVNode("Regular Again", -1 /* CACHED */)
+      ]))]),
+      _: 1 /* STABLE */
+    }))
+  }
+  """#
+}

@@ -1,0 +1,76 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-show-v-show-on-component"
+title = "Imported template input: v-show on component"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-show.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-show"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-show.toml"
+  source = "tests/fixtures/vdom/v-show.toml"
+  caseName = "v-show on component"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-show.toml"
+    cases {
+      "v-show on component"
+    }
+  }
+}
+
+input {
+  source = "<MyComponent v-show=\"visible\" />"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "RESOLVE_COMPONENT"
+    }
+    new HelperExpectation {
+      name = "V_SHOW"
+    }
+    new HelperExpectation {
+      name = "WITH_DIRECTIVES"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { resolveComponent: _resolveComponent, vShow: _vShow, withDirectives: _withDirectives, openBlock: _openBlock, createBlock: _createBlock } = _Vue
+  
+      const _component_MyComponent = _resolveComponent("MyComponent")
+  
+      return _withDirectives((_openBlock(), _createBlock(_component_MyComponent, null, null, 512 /* NEED_PATCH */)), [
+        [_vShow, visible]
+      ])
+    }
+  }
+  """#
+}

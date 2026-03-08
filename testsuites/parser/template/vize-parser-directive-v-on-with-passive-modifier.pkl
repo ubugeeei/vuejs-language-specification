@@ -1,0 +1,430 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-directive-v-on-with-passive-modifier"
+title = "Imported parser input: v-on with .passive modifier"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/directive.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.directive"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/directive.toml"
+  source = "tests/fixtures/parser/directive.toml"
+  caseName = "v-on with .passive modifier"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/directive.toml"
+    cases {
+      "v-on with .passive modifier"
+    }
+  }
+}
+
+input {
+  source = "<div @scroll.passive=\"handler\"></div>"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<div @scroll.passive=\"handler\"></div>",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "div",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [
+          {
+            "type": "DIRECTIVE",
+            "name": "on",
+            "rawName": "@scroll.passive",
+            "exp": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 23,
+                  "line": 1,
+                  "offset": 22
+                },
+                "end": {
+                  "column": 30,
+                  "line": 1,
+                  "offset": 29
+                },
+                "source": "handler"
+              },
+              "content": "handler",
+              "isStatic": false,
+              "constType": "NOT_CONSTANT"
+            },
+            "arg": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 7,
+                  "line": 1,
+                  "offset": 6
+                },
+                "end": {
+                  "column": 13,
+                  "line": 1,
+                  "offset": 12
+                },
+                "source": "scroll"
+              },
+              "content": "scroll",
+              "isStatic": true,
+              "constType": "CAN_STRINGIFY"
+            },
+            "modifiers": [
+              {
+                "type": "SIMPLE_EXPRESSION",
+                "loc": {
+                  "start": {
+                    "column": 14,
+                    "line": 1,
+                    "offset": 13
+                  },
+                  "end": {
+                    "column": 21,
+                    "line": 1,
+                    "offset": 20
+                  },
+                  "source": "passive"
+                },
+                "content": "passive",
+                "isStatic": true,
+                "constType": "CAN_STRINGIFY"
+              }
+            ],
+            "loc": {
+              "start": {
+                "column": 6,
+                "line": 1,
+                "offset": 5
+              },
+              "end": {
+                "column": 31,
+                "line": 1,
+                "offset": 30
+              },
+              "source": "@scroll.passive=\"handler\""
+            }
+          }
+        ],
+        "children": [],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 38,
+            "line": 1,
+            "offset": 37
+          },
+          "source": "<div @scroll.passive=\"handler\"></div>"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 38,
+        "line": 1,
+        "offset": 37
+      },
+      "source": "<div @scroll.passive=\"handler\"></div>"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 38
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 37
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<div @scroll.passive=\"handler\"></div>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/constType"
+      equals = "CAN_STRINGIFY"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/content"
+      equals = "scroll"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/isStatic"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/end/column"
+      equals = 13
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/end/offset"
+      equals = 12
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/source"
+      equals = "scroll"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/start/column"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/start/offset"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/content"
+      equals = "handler"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/column"
+      equals = 30
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/offset"
+      equals = 29
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/source"
+      equals = "handler"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/column"
+      equals = 23
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/offset"
+      equals = 22
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/column"
+      equals = 31
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/offset"
+      equals = 30
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/source"
+      equals = "@scroll.passive=\"handler\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/column"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/offset"
+      equals = 5
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/constType"
+      equals = "CAN_STRINGIFY"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/content"
+      equals = "passive"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/isStatic"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/end/column"
+      equals = 21
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/end/offset"
+      equals = 20
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/source"
+      equals = "passive"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/start/column"
+      equals = 14
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/start/offset"
+      equals = 13
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "on"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/rawName"
+      equals = "@scroll.passive"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "div"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 38
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 37
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<div @scroll.passive=\"handler\"></div>"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<div @scroll.passive=\"handler\"></div>"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

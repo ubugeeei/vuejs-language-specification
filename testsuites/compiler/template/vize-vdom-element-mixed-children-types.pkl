@@ -1,0 +1,76 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-element-mixed-children-types"
+title = "Imported template input: mixed children types"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/element.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.element"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/element.toml"
+  source = "tests/fixtures/vdom/element.toml"
+  caseName = "mixed children types"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/element.toml"
+    cases {
+      "mixed children types"
+    }
+  }
+}
+
+input {
+  source = "<div>text<span>element</span>{{ interp }}</div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_VNODE"
+    }
+    new HelperExpectation {
+      name = "TO_DISPLAY_STRING"
+    }
+    new HelperExpectation {
+      name = "CREATE_TEXT"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { createElementVNode: _createElementVNode, toDisplayString: _toDisplayString, createTextVNode: _createTextVNode, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return (_openBlock(), _createElementBlock("div", null, [
+        _createTextVNode("text"),
+        _createElementVNode("span", null, "element"),
+        _createTextVNode(_toDisplayString(interp), 1 /* TEXT */)
+      ]))
+    }
+  }
+  """#
+}

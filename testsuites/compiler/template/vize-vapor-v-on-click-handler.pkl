@@ -1,0 +1,72 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-on-click-handler"
+title = "Imported vapor input: click handler"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-on.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-on"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-on.toml"
+  source = "tests/fixtures/vapor/v-on.toml"
+  caseName = "click handler"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-on.toml"
+    cases {
+      "click handler"
+    }
+  }
+}
+
+input {
+  source = "<button @click=\"handler\"></button>"
+}
+
+expect {
+  normalizedCode = #"""
+  import { createInvoker as _createInvoker, delegateEvents as _delegateEvents, template as _template } from 'vue';
+  const t0 = _template("<button></button>", true)
+  _delegateEvents("click")
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    n0.$evtclick = _createInvoker(e => _ctx.handler(e))
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { createInvoker as _createInvoker, delegateEvents as _delegateEvents, template as _template } from 'vue';
+  const t0 = _template("<button></button>", true)
+  _delegateEvents("click")
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    n0.$evtclick = _createInvoker(e => _ctx.handler(e))
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

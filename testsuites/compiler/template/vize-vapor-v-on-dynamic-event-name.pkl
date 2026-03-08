@@ -1,0 +1,80 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-on-dynamic-event-name"
+title = "Imported vapor input: dynamic event name"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-on.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-on"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-on.toml"
+  source = "tests/fixtures/vapor/v-on.toml"
+  caseName = "dynamic event name"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-on.toml"
+    cases {
+      "dynamic event name"
+    }
+  }
+}
+
+input {
+  source = "<button @[event]=\"handler\"></button>"
+}
+
+expect {
+  normalizedCode = #"""
+  import { createInvoker as _createInvoker, on as _on, renderEffect as _renderEffect, template as _template } from 'vue';
+  const t0 = _template("<button></button>", true)
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    _renderEffect(() => {
+      
+      _on(n0, _ctx.event, _createInvoker(e => _ctx.handler(e)), {
+        effect: true
+      })
+    })
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { createInvoker as _createInvoker, on as _on, renderEffect as _renderEffect, template as _template } from 'vue';
+  const t0 = _template("<button></button>", true)
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    _renderEffect(() => {
+      
+      _on(n0, _ctx.event, _createInvoker(e => _ctx.handler(e)), {
+        effect: true
+      })
+    })
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

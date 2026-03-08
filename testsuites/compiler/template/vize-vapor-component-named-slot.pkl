@@ -1,0 +1,80 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-component-named-slot"
+title = "Imported vapor input: named slot"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/component.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.component"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/component.toml"
+  source = "tests/fixtures/vapor/component.toml"
+  caseName = "named slot"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/component.toml"
+    cases {
+      "named slot"
+    }
+  }
+}
+
+input {
+  source = "<MyComponent><template #header>Header</template></MyComponent>"
+}
+
+expect {
+  normalizedCode = #"""
+  import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback, template as _template } from 'vue';
+  const t0 = _template("Header")
+  
+  export function render(_ctx) {
+    const _component_MyComponent = _resolveComponent("MyComponent")
+    const n2 = _createComponentWithFallback(_component_MyComponent, null, {
+      "header": () => {
+        const n0 = t0()
+        return n0
+      }
+    }, true)
+    return n2
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback, template as _template } from 'vue';
+  const t0 = _template("Header")
+  
+  export function render(_ctx) {
+    const _component_MyComponent = _resolveComponent("MyComponent")
+    const n2 = _createComponentWithFallback(_component_MyComponent, null, {
+      "header": () => {
+        const n0 = t0()
+        return n0
+      }
+    }, true)
+    return n2
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

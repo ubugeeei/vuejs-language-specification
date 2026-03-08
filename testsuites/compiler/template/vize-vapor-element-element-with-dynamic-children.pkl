@@ -1,0 +1,84 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-element-element-with-dynamic-children"
+title = "Imported vapor input: element with dynamic children"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/element.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.element"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/element.toml"
+  source = "tests/fixtures/vapor/element.toml"
+  caseName = "element with dynamic children"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/element.toml"
+    cases {
+      "element with dynamic children"
+    }
+  }
+}
+
+input {
+  source = "<div><span>{{ a }}</span><span>{{ b }}</span></div>"
+}
+
+expect {
+  normalizedCode = #"""
+  import { child as _child, next as _next, txt as _txt, toDisplayString as _toDisplayString, setText as _setText, renderEffect as _renderEffect, template as _template } from 'vue';
+  const t0 = _template("<div><span> </span><span> </span></div>", true)
+  
+  export function render(_ctx) {
+    const n2 = t0()
+    const n0 = _child(n2)
+    const n1 = _next(n0, 1)
+    const x0 = _txt(n0)
+    const x1 = _txt(n1)
+    _renderEffect(() => {
+      _setText(x0, _toDisplayString(_ctx.a))
+      _setText(x1, _toDisplayString(_ctx.b))
+    })
+    return n2
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { child as _child, next as _next, txt as _txt, toDisplayString as _toDisplayString, setText as _setText, renderEffect as _renderEffect, template as _template } from 'vue';
+  const t0 = _template("<div><span> </span><span> </span></div>", true)
+  
+  export function render(_ctx) {
+    const n2 = t0()
+    const n0 = _child(n2)
+    const n1 = _next(n0, 1)
+    const x0 = _txt(n0)
+    const x1 = _txt(n1)
+    _renderEffect(() => {
+      _setText(x0, _toDisplayString(_ctx.a))
+      _setText(x1, _toDisplayString(_ctx.b))
+    })
+    return n2
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

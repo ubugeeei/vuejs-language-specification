@@ -1,0 +1,291 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-text-text-around-self-closing"
+title = "Imported parser input: text around self-closing"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/text.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.text"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/text.toml"
+  source = "tests/fixtures/parser/text.toml"
+  caseName = "text around self-closing"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/text.toml"
+    cases {
+      "text around self-closing"
+    }
+  }
+}
+
+input {
+  source = "before<input/>after"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "before<input/>after",
+    "children": [
+      {
+        "type": "TEXT",
+        "content": "before",
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 7,
+            "line": 1,
+            "offset": 6
+          },
+          "source": "before"
+        }
+      },
+      {
+        "type": "ELEMENT",
+        "tag": "input",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [],
+        "children": [],
+        "loc": {
+          "start": {
+            "column": 7,
+            "line": 1,
+            "offset": 6
+          },
+          "end": {
+            "column": 15,
+            "line": 1,
+            "offset": 14
+          },
+          "source": "<input/>"
+        },
+        "isSelfClosing": true
+      },
+      {
+        "type": "TEXT",
+        "content": "after",
+        "loc": {
+          "start": {
+            "column": 15,
+            "line": 1,
+            "offset": 14
+          },
+          "end": {
+            "column": 20,
+            "line": 1,
+            "offset": 19
+          },
+          "source": "after"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 20,
+        "line": 1,
+        "offset": 19
+      },
+      "source": "before<input/>after"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/content"
+      equals = "before"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "before"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/isSelfClosing"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/column"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/offset"
+      equals = 14
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/source"
+      equals = "<input/>"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/column"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/offset"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/children/1/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/tag"
+      equals = "input"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/content"
+      equals = "after"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/end/column"
+      equals = 20
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/end/offset"
+      equals = 19
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/source"
+      equals = "after"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/start/column"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/start/offset"
+      equals = 14
+    }
+    new PointerAssertion {
+      pointer = "/children/2/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 20
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 19
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "before<input/>after"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "before<input/>after"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

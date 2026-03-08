@@ -1,0 +1,546 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-directive-v-on-with-multiple-key-modifiers"
+title = "Imported parser input: v-on with multiple key modifiers"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/directive.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.directive"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/directive.toml"
+  source = "tests/fixtures/parser/directive.toml"
+  caseName = "v-on with multiple key modifiers"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/directive.toml"
+    cases {
+      "v-on with multiple key modifiers"
+    }
+  }
+}
+
+input {
+  source = "<input @keyup.ctrl.enter=\"submit\">"
+}
+
+expect {
+  errorCount = 1
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<input @keyup.ctrl.enter=\"submit\">",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "input",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [
+          {
+            "type": "DIRECTIVE",
+            "name": "on",
+            "rawName": "@keyup.ctrl.enter",
+            "exp": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 27,
+                  "line": 1,
+                  "offset": 26
+                },
+                "end": {
+                  "column": 33,
+                  "line": 1,
+                  "offset": 32
+                },
+                "source": "submit"
+              },
+              "content": "submit",
+              "isStatic": false,
+              "constType": "NOT_CONSTANT"
+            },
+            "arg": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 9,
+                  "line": 1,
+                  "offset": 8
+                },
+                "end": {
+                  "column": 14,
+                  "line": 1,
+                  "offset": 13
+                },
+                "source": "keyup"
+              },
+              "content": "keyup",
+              "isStatic": true,
+              "constType": "CAN_STRINGIFY"
+            },
+            "modifiers": [
+              {
+                "type": "SIMPLE_EXPRESSION",
+                "loc": {
+                  "start": {
+                    "column": 15,
+                    "line": 1,
+                    "offset": 14
+                  },
+                  "end": {
+                    "column": 19,
+                    "line": 1,
+                    "offset": 18
+                  },
+                  "source": "ctrl"
+                },
+                "content": "ctrl",
+                "isStatic": true,
+                "constType": "CAN_STRINGIFY"
+              },
+              {
+                "type": "SIMPLE_EXPRESSION",
+                "loc": {
+                  "start": {
+                    "column": 20,
+                    "line": 1,
+                    "offset": 19
+                  },
+                  "end": {
+                    "column": 25,
+                    "line": 1,
+                    "offset": 24
+                  },
+                  "source": "enter"
+                },
+                "content": "enter",
+                "isStatic": true,
+                "constType": "CAN_STRINGIFY"
+              }
+            ],
+            "loc": {
+              "start": {
+                "column": 8,
+                "line": 1,
+                "offset": 7
+              },
+              "end": {
+                "column": 34,
+                "line": 1,
+                "offset": 33
+              },
+              "source": "@keyup.ctrl.enter=\"submit\""
+            }
+          }
+        ],
+        "children": [],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 35,
+            "line": 1,
+            "offset": 34
+          },
+          "source": "<input @keyup.ctrl.enter=\"submit\">"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 35,
+        "line": 1,
+        "offset": 34
+      },
+      "source": "<input @keyup.ctrl.enter=\"submit\">"
+    }
+  }
+  """#
+  normalizedErrors = #"""
+  [
+    {
+      "code": "X_MISSING_END_TAG",
+      "loc": {
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        },
+        "end": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        },
+        "source": ""
+      }
+    }
+  ]
+  """#
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 35
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 34
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<input @keyup.ctrl.enter=\"submit\">"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/constType"
+      equals = "CAN_STRINGIFY"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/content"
+      equals = "keyup"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/isStatic"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/end/column"
+      equals = 14
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/end/offset"
+      equals = 13
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/source"
+      equals = "keyup"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/start/column"
+      equals = 9
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/loc/start/offset"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/content"
+      equals = "submit"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/column"
+      equals = 33
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/offset"
+      equals = 32
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/source"
+      equals = "submit"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/column"
+      equals = 27
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/offset"
+      equals = 26
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/column"
+      equals = 34
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/offset"
+      equals = 33
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/source"
+      equals = "@keyup.ctrl.enter=\"submit\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/column"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/offset"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/constType"
+      equals = "CAN_STRINGIFY"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/content"
+      equals = "ctrl"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/isStatic"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/end/column"
+      equals = 19
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/end/offset"
+      equals = 18
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/source"
+      equals = "ctrl"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/start/column"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/start/offset"
+      equals = 14
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/constType"
+      equals = "CAN_STRINGIFY"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/content"
+      equals = "enter"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/isStatic"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/loc/end/column"
+      equals = 25
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/loc/end/offset"
+      equals = 24
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/loc/source"
+      equals = "enter"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/loc/start/column"
+      equals = 20
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/loc/start/offset"
+      equals = 19
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "on"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/rawName"
+      equals = "@keyup.ctrl.enter"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "input"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 35
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 34
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<input @keyup.ctrl.enter=\"submit\">"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<input @keyup.ctrl.enter=\"submit\">"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+  errors {
+    new PointerAssertion {
+      pointer = "/0/code"
+      equals = "X_MISSING_END_TAG"
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/source"
+      equals = ""
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/offset"
+      equals = 0
+    }
+  }
+}

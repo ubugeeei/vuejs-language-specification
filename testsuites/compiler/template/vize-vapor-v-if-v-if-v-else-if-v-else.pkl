@@ -1,0 +1,90 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-if-v-if-v-else-if-v-else"
+title = "Imported vapor input: v-if/v-else-if/v-else"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-if.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-if"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-if.toml"
+  source = "tests/fixtures/vapor/v-if.toml"
+  caseName = "v-if/v-else-if/v-else"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-if.toml"
+    cases {
+      "v-if/v-else-if/v-else"
+    }
+  }
+}
+
+input {
+  source = "<div v-if=\"a\">A</div><div v-else-if=\"b\">B</div><div v-else>C</div>"
+}
+
+expect {
+  normalizedCode = #"""
+  import { createIf as _createIf, template as _template } from 'vue';
+  const t0 = _template("<div>A</div>", true)
+  const t1 = _template("<div>B</div>", true)
+  const t2 = _template("<div>C</div>", true)
+  
+  export function render(_ctx) {
+    const n0 = _createIf(() => (_ctx.a), () => {
+      const n2 = t0()
+      return n2
+    }, () => _createIf(() => (_ctx.b), () => {
+      const n4 = t1()
+      return n4
+    }, () => {
+      const n7 = t2()
+      return n7
+    }))
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { createIf as _createIf, template as _template } from 'vue';
+  const t0 = _template("<div>A</div>", true)
+  const t1 = _template("<div>B</div>", true)
+  const t2 = _template("<div>C</div>", true)
+  
+  export function render(_ctx) {
+    const n0 = _createIf(() => (_ctx.a), () => {
+      const n2 = t0()
+      return n2
+    }, () => _createIf(() => (_ctx.b), () => {
+      const n4 = t1()
+      return n4
+    }, () => {
+      const n7 = t2()
+      return n7
+    }))
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

@@ -1,0 +1,68 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-directives-v-pre-with-children"
+title = "Imported template input: v-pre with children"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/directives.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.directives"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/directives.toml"
+  source = "tests/fixtures/vdom/directives.toml"
+  caseName = "v-pre with children"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/directives.toml"
+    cases {
+      "v-pre with children"
+    }
+  }
+}
+
+input {
+  source = "<div v-pre><span>{{ raw }}</span></div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_VNODE"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { createElementVNode: _createElementVNode, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return (_openBlock(), _createElementBlock("div", null, [
+        _createElementVNode("span", null, "{{ raw }}")
+      ]))
+    }
+  }
+  """#
+}

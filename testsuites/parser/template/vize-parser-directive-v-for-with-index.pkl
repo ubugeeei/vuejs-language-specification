@@ -1,0 +1,499 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-directive-v-for-with-index"
+title = "Imported parser input: v-for with index"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/directive.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.directive"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/directive.toml"
+  source = "tests/fixtures/parser/directive.toml"
+  caseName = "v-for with index"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/directive.toml"
+    cases {
+      "v-for with index"
+    }
+  }
+}
+
+input {
+  source = "<div v-for=\"(item, index) in items\"></div>"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<div v-for=\"(item, index) in items\"></div>",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "div",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [
+          {
+            "type": "DIRECTIVE",
+            "name": "for",
+            "rawName": "v-for",
+            "exp": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 13,
+                  "line": 1,
+                  "offset": 12
+                },
+                "end": {
+                  "column": 35,
+                  "line": 1,
+                  "offset": 34
+                },
+                "source": "(item, index) in items"
+              },
+              "content": "(item, index) in items",
+              "isStatic": false,
+              "constType": "NOT_CONSTANT"
+            },
+            "modifiers": [],
+            "loc": {
+              "start": {
+                "column": 6,
+                "line": 1,
+                "offset": 5
+              },
+              "end": {
+                "column": 36,
+                "line": 1,
+                "offset": 35
+              },
+              "source": "v-for=\"(item, index) in items\""
+            },
+            "forParseResult": {
+              "source": {
+                "type": "SIMPLE_EXPRESSION",
+                "loc": {
+                  "start": {
+                    "column": 30,
+                    "line": 1,
+                    "offset": 29
+                  },
+                  "end": {
+                    "column": 35,
+                    "line": 1,
+                    "offset": 34
+                  },
+                  "source": "items"
+                },
+                "content": "items",
+                "isStatic": false,
+                "constType": "NOT_CONSTANT"
+              },
+              "value": {
+                "type": "SIMPLE_EXPRESSION",
+                "loc": {
+                  "start": {
+                    "column": 14,
+                    "line": 1,
+                    "offset": 13
+                  },
+                  "end": {
+                    "column": 18,
+                    "line": 1,
+                    "offset": 17
+                  },
+                  "source": "item"
+                },
+                "content": "item",
+                "isStatic": false,
+                "constType": "NOT_CONSTANT"
+              },
+              "key": {
+                "type": "SIMPLE_EXPRESSION",
+                "loc": {
+                  "start": {
+                    "column": 20,
+                    "line": 1,
+                    "offset": 19
+                  },
+                  "end": {
+                    "column": 25,
+                    "line": 1,
+                    "offset": 24
+                  },
+                  "source": "index"
+                },
+                "content": "index",
+                "isStatic": false,
+                "constType": "NOT_CONSTANT"
+              },
+              "finalized": false
+            }
+          }
+        ],
+        "children": [],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 43,
+            "line": 1,
+            "offset": 42
+          },
+          "source": "<div v-for=\"(item, index) in items\"></div>"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 43,
+        "line": 1,
+        "offset": 42
+      },
+      "source": "<div v-for=\"(item, index) in items\"></div>"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 43
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 42
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<div v-for=\"(item, index) in items\"></div>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/content"
+      equals = "(item, index) in items"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/column"
+      equals = 35
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/offset"
+      equals = 34
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/source"
+      equals = "(item, index) in items"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/column"
+      equals = 13
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/offset"
+      equals = 12
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/finalized"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/key/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/key/content"
+      equals = "index"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/key/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/key/loc/end/column"
+      equals = 25
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/key/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/key/loc/end/offset"
+      equals = 24
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/key/loc/source"
+      equals = "index"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/key/loc/start/column"
+      equals = 20
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/key/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/key/loc/start/offset"
+      equals = 19
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/key/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/content"
+      equals = "items"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/loc/end/column"
+      equals = 35
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/loc/end/offset"
+      equals = 34
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/loc/source"
+      equals = "items"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/loc/start/column"
+      equals = 30
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/loc/start/offset"
+      equals = 29
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/content"
+      equals = "item"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/loc/end/column"
+      equals = 18
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/loc/end/offset"
+      equals = 17
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/loc/source"
+      equals = "item"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/loc/start/column"
+      equals = 14
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/loc/start/offset"
+      equals = 13
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/column"
+      equals = 36
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/offset"
+      equals = 35
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/source"
+      equals = "v-for=\"(item, index) in items\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/column"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/offset"
+      equals = 5
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "for"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/rawName"
+      equals = "v-for"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "div"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 43
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 42
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<div v-for=\"(item, index) in items\"></div>"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<div v-for=\"(item, index) in items\"></div>"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

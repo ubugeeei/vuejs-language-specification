@@ -1,6 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
+import { discoverVizeFixtureFiles, parseVizeFixtureFile } from "./_shared/vize-fixtures.ts";
 
 interface ExtractedCase {
   name: string;
@@ -174,6 +175,29 @@ function main() {
     })
     .filter((file) => file.cases.length > 0 || file.issues.length > 0)
     .sort((left, right) => left.path.localeCompare(right.path));
+
+  if (repository === "ubugeeei/vize") {
+    files.push(
+      ...discoverVizeFixtureFiles(root)
+        .map((file) => parseVizeFixtureFile(root, file))
+        .filter((file) => file.cases.length > 0)
+        .map(
+          (file) =>
+            ({
+              path: file.path,
+              kind: "test",
+              cases: file.cases.map((entry) => ({
+                name: entry.name,
+                kind: "test",
+                line: entry.line,
+              })),
+              issues: [],
+            }) satisfies InventoryFile,
+        ),
+    );
+  }
+
+  files.sort((left, right) => left.path.localeCompare(right.path));
 
   const commit = execFileSync("git", ["-C", root, "rev-parse", "HEAD"], {
     encoding: "utf8",

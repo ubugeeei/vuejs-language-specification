@@ -1,0 +1,554 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-interpolation-three-interpolations"
+title = "Imported parser input: three interpolations"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/interpolation.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.interpolation"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/interpolation.toml"
+  source = "tests/fixtures/parser/interpolation.toml"
+  caseName = "three interpolations"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/interpolation.toml"
+    cases {
+      "three interpolations"
+    }
+  }
+}
+
+input {
+  source = "{{ a }} {{ b }} {{ c }}"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "{{ a }} {{ b }} {{ c }}",
+    "children": [
+      {
+        "type": "INTERPOLATION",
+        "content": {
+          "type": "SIMPLE_EXPRESSION",
+          "loc": {
+            "start": {
+              "column": 4,
+              "line": 1,
+              "offset": 3
+            },
+            "end": {
+              "column": 5,
+              "line": 1,
+              "offset": 4
+            },
+            "source": "a"
+          },
+          "content": "a",
+          "isStatic": false,
+          "constType": "NOT_CONSTANT"
+        },
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 8,
+            "line": 1,
+            "offset": 7
+          },
+          "source": "{{ a }}"
+        }
+      },
+      {
+        "type": "TEXT",
+        "content": " ",
+        "loc": {
+          "start": {
+            "column": 8,
+            "line": 1,
+            "offset": 7
+          },
+          "end": {
+            "column": 9,
+            "line": 1,
+            "offset": 8
+          },
+          "source": " "
+        }
+      },
+      {
+        "type": "INTERPOLATION",
+        "content": {
+          "type": "SIMPLE_EXPRESSION",
+          "loc": {
+            "start": {
+              "column": 12,
+              "line": 1,
+              "offset": 11
+            },
+            "end": {
+              "column": 13,
+              "line": 1,
+              "offset": 12
+            },
+            "source": "b"
+          },
+          "content": "b",
+          "isStatic": false,
+          "constType": "NOT_CONSTANT"
+        },
+        "loc": {
+          "start": {
+            "column": 9,
+            "line": 1,
+            "offset": 8
+          },
+          "end": {
+            "column": 16,
+            "line": 1,
+            "offset": 15
+          },
+          "source": "{{ b }}"
+        }
+      },
+      {
+        "type": "TEXT",
+        "content": " ",
+        "loc": {
+          "start": {
+            "column": 16,
+            "line": 1,
+            "offset": 15
+          },
+          "end": {
+            "column": 17,
+            "line": 1,
+            "offset": 16
+          },
+          "source": " "
+        }
+      },
+      {
+        "type": "INTERPOLATION",
+        "content": {
+          "type": "SIMPLE_EXPRESSION",
+          "loc": {
+            "start": {
+              "column": 20,
+              "line": 1,
+              "offset": 19
+            },
+            "end": {
+              "column": 21,
+              "line": 1,
+              "offset": 20
+            },
+            "source": "c"
+          },
+          "content": "c",
+          "isStatic": false,
+          "constType": "NOT_CONSTANT"
+        },
+        "loc": {
+          "start": {
+            "column": 17,
+            "line": 1,
+            "offset": 16
+          },
+          "end": {
+            "column": 24,
+            "line": 1,
+            "offset": 23
+          },
+          "source": "{{ c }}"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 24,
+        "line": 1,
+        "offset": 23
+      },
+      "source": "{{ a }} {{ b }} {{ c }}"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/content/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/content"
+      equals = "a"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/end/column"
+      equals = 5
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/end/offset"
+      equals = 4
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/source"
+      equals = "a"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/start/column"
+      equals = 4
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/start/offset"
+      equals = 3
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "{{ a }}"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "INTERPOLATION"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/content"
+      equals = " "
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/column"
+      equals = 9
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/offset"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/source"
+      equals = " "
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/column"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/offset"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/children/1/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/content/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/content/content"
+      equals = "b"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/content/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/2/content/loc/end/column"
+      equals = 13
+    }
+    new PointerAssertion {
+      pointer = "/children/2/content/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/2/content/loc/end/offset"
+      equals = 12
+    }
+    new PointerAssertion {
+      pointer = "/children/2/content/loc/source"
+      equals = "b"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/content/loc/start/column"
+      equals = 12
+    }
+    new PointerAssertion {
+      pointer = "/children/2/content/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/2/content/loc/start/offset"
+      equals = 11
+    }
+    new PointerAssertion {
+      pointer = "/children/2/content/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/end/column"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/end/offset"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/source"
+      equals = "{{ b }}"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/start/column"
+      equals = 9
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/2/loc/start/offset"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/2/type"
+      equals = "INTERPOLATION"
+    }
+    new PointerAssertion {
+      pointer = "/children/3/content"
+      equals = " "
+    }
+    new PointerAssertion {
+      pointer = "/children/3/loc/end/column"
+      equals = 17
+    }
+    new PointerAssertion {
+      pointer = "/children/3/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/3/loc/end/offset"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/children/3/loc/source"
+      equals = " "
+    }
+    new PointerAssertion {
+      pointer = "/children/3/loc/start/column"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/children/3/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/3/loc/start/offset"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/3/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/4/content/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/4/content/content"
+      equals = "c"
+    }
+    new PointerAssertion {
+      pointer = "/children/4/content/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/4/content/loc/end/column"
+      equals = 21
+    }
+    new PointerAssertion {
+      pointer = "/children/4/content/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/4/content/loc/end/offset"
+      equals = 20
+    }
+    new PointerAssertion {
+      pointer = "/children/4/content/loc/source"
+      equals = "c"
+    }
+    new PointerAssertion {
+      pointer = "/children/4/content/loc/start/column"
+      equals = 20
+    }
+    new PointerAssertion {
+      pointer = "/children/4/content/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/4/content/loc/start/offset"
+      equals = 19
+    }
+    new PointerAssertion {
+      pointer = "/children/4/content/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/4/loc/end/column"
+      equals = 24
+    }
+    new PointerAssertion {
+      pointer = "/children/4/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/4/loc/end/offset"
+      equals = 23
+    }
+    new PointerAssertion {
+      pointer = "/children/4/loc/source"
+      equals = "{{ c }}"
+    }
+    new PointerAssertion {
+      pointer = "/children/4/loc/start/column"
+      equals = 17
+    }
+    new PointerAssertion {
+      pointer = "/children/4/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/4/loc/start/offset"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/children/4/type"
+      equals = "INTERPOLATION"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 24
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 23
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "{{ a }} {{ b }} {{ c }}"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "{{ a }} {{ b }} {{ c }}"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

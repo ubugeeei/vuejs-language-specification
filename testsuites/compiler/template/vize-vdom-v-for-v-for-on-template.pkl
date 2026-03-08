@@ -1,0 +1,80 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-for-v-for-on-template"
+title = "Imported template input: v-for on template"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-for.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-for"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-for.toml"
+  source = "tests/fixtures/vdom/v-for.toml"
+  caseName = "v-for on template"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-for.toml"
+    cases {
+      "v-for on template"
+    }
+  }
+}
+
+input {
+  source = "<template v-for=\"item in items\" :key=\"item.id\"><div>{{ item.a }}</div><div>{{ item.b }}</div></template>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "RENDER_LIST"
+    }
+    new HelperExpectation {
+      name = "FRAGMENT"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+    new HelperExpectation {
+      name = "TO_DISPLAY_STRING"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_VNODE"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { renderList: _renderList, Fragment: _Fragment, openBlock: _openBlock, createElementBlock: _createElementBlock, toDisplayString: _toDisplayString, createElementVNode: _createElementVNode } = _Vue
+  
+      return (_openBlock(true), _createElementBlock(_Fragment, null, _renderList(items, (item) => {
+        return (_openBlock(), _createElementBlock(_Fragment, { key: item.id }, [
+          _createElementVNode("div", null, _toDisplayString(item.a), 1 /* TEXT */),
+          _createElementVNode("div", null, _toDisplayString(item.b), 1 /* TEXT */)
+        ], 64 /* STABLE_FRAGMENT */))
+      }), 128 /* KEYED_FRAGMENT */))
+    }
+  }
+  """#
+}

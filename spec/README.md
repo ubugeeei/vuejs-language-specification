@@ -35,6 +35,10 @@ The specification uses the following document classes:
   - structural well-formedness rules for local Pkl and runtime test suites
 - `09-requirement-matrix-model.md`
   - formal mapping rules from requirement identifiers to executable local test suites
+- `10-imported-parser-input-corpus.md`
+  - generated annex that links copied community parser inputs to local executable parser test suites with official `vuejs/core` parser oracles
+- `11-imported-compiler-input-corpus.md`
+  - generated annex that links copied community compiler inputs to local executable compiler test suites with official `vuejs/core` default-profile oracles and provisional Vapor coverage
 
 ## Normative Conventions
 
@@ -47,7 +51,7 @@ The specification uses the following document classes:
 
 ## Terminology
 
-- `test suite` means a local executable artifact curated in this repository, typically under `testsuites/` or `src/runtime/testsuites/`.
+- `test suite` means a local executable artifact curated in this repository, typically under `testsuites/` or `runtime/testsuites/`.
 - `upstream case` means an inventoried upstream test or benchmark title referenced through provenance metadata.
 - `requirement matrix` means the validated Markdown mapping from requirement identifiers to local executable test suites.
 - Specification text should use `test suite` for local conformance artifacts and reserve `case` for upstream provenance unless the term is part of an upstream title.

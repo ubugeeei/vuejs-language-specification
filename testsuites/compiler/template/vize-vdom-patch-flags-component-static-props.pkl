@@ -1,0 +1,68 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-patch-flags-component-static-props"
+title = "Imported template input: component static props"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/patch-flags.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.patch-flags"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/patch-flags.toml"
+  source = "tests/fixtures/vdom/patch-flags.toml"
+  caseName = "component static props"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/patch-flags.toml"
+    cases {
+      "component static props"
+    }
+  }
+}
+
+input {
+  source = "<MyComponent msg=\"hello\" />"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "RESOLVE_COMPONENT"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { resolveComponent: _resolveComponent, openBlock: _openBlock, createBlock: _createBlock } = _Vue
+  
+      const _component_MyComponent = _resolveComponent("MyComponent")
+  
+      return (_openBlock(), _createBlock(_component_MyComponent, { msg: "hello" }))
+    }
+  }
+  """#
+}

@@ -1,0 +1,78 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-once-v-once-with-binding"
+title = "Imported template input: v-once with binding"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-once.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-once"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-once.toml"
+  source = "tests/fixtures/vdom/v-once.toml"
+  caseName = "v-once with binding"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-once.toml"
+    cases {
+      "v-once with binding"
+    }
+  }
+}
+
+input {
+  source = "<div v-once :class=\"cls\">content</div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "SET_BLOCK_TRACKING"
+    }
+    new HelperExpectation {
+      name = "CREATE_TEXT"
+    }
+    new HelperExpectation {
+      name = "NORMALIZE_CLASS"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_VNODE"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { setBlockTracking: _setBlockTracking, createTextVNode: _createTextVNode, normalizeClass: _normalizeClass, createElementVNode: _createElementVNode } = _Vue
+  
+      return _cache[0] || (
+        _setBlockTracking(-1, true),
+        (_cache[0] = _createElementVNode("div", {
+          class: _normalizeClass(cls)
+        }, [
+          _createTextVNode("content")
+        ], 2 /* CLASS */)).cacheIndex = 0,
+        _setBlockTracking(1),
+        _cache[0]
+      )
+    }
+  }
+  """#
+}

@@ -1,0 +1,95 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-v-if-with-component-props"
+title = "Imported SFC input: v-if with component props"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "v-if with component props"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "v-if with component props"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-v-if-with-component-props.vue"
+  sfc = #"""
+  <script setup>
+  import PatinaPlayground from './PatinaPlayground.vue'
+  const show = true
+  const compiler = {}
+  </script>
+  
+  <template>
+    <template v-if="show">
+      <PatinaPlayground :compiler="compiler" />
+    </template>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import PatinaPlayground from './PatinaPlayground.vue'
+  const show = true
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-v-if-with-component-props',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const compiler = {}
+  
+  const __returned__ = { show, compiler, PatinaPlayground }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { openBlock as _openBlock, createBlock as _createBlock, createCommentVNode as _createCommentVNode } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return ($setup.show)
+      ? (_openBlock(), _createBlock($setup["PatinaPlayground"], {
+          key: 0,
+          compiler: $setup.compiler
+        }))
+      : _createCommentVNode("v-if", true)
+  }
+  """#
+}

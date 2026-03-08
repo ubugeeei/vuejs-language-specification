@@ -1,0 +1,166 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-v-else-if-chain-with-ref-bindings"
+title = "Imported SFC input: v-else-if chain with ref bindings"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "v-else-if chain with ref bindings"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "v-else-if chain with ref bindings"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-v-else-if-chain-with-ref-bindings.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  import { ref, computed } from 'vue';
+  const output = ref<{ code: string } | null>({ code: 'test' });
+  const activeTab = ref<'code' | 'ast' | 'helpers' | 'sfc'>('code');
+  const isTypeScript = computed(() => true);
+  const codeViewMode = ref<'ts' | 'js'>('ts');
+  </script>
+  
+  <template>
+    <div>
+      <template v-if="output">
+        <div v-if="activeTab === 'code'" class="code-output">
+          <div v-if="isTypeScript" class="code-mode-toggle">
+            <button :class="['btn', { active: codeViewMode === 'ts' }]" @click="codeViewMode = 'ts'">TS</button>
+            <button :class="['btn', { active: codeViewMode === 'js' }]" @click="codeViewMode = 'js'">JS</button>
+          </div>
+        </div>
+        <div v-else-if="activeTab === 'ast'" class="ast-output">
+          <h4>AST</h4>
+        </div>
+        <div v-else-if="activeTab === 'helpers'" class="helpers-output">
+          <h4>Helpers</h4>
+        </div>
+        <div v-else-if="activeTab === 'sfc'" class="sfc-output">
+          <h4>SFC</h4>
+        </div>
+      </template>
+    </div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  import { ref, computed } from 'vue';
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-script-setup-v-else-if-chain-with-ref-bindings',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const output = ref<{ code: string } | null>({ code: 'test' });
+  const activeTab = ref<'code' | 'ast' | 'helpers' | 'sfc'>('code');
+  const isTypeScript = computed(() => true);
+  const codeViewMode = ref<'ts' | 'js'>('ts');
+  
+  const __returned__ = { output, activeTab, isTypeScript, codeViewMode }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { normalizeClass as _normalizeClass, createElementVNode as _createElementVNode, openBlock as _openBlock, createElementBlock as _createElementBlock, createCommentVNode as _createCommentVNode, Fragment as _Fragment } from "vue"
+  
+  const _hoisted_1 = {
+    key: 0,
+    class: "code-output"
+  }
+  const _hoisted_2 = {
+    key: 0,
+    class: "code-mode-toggle"
+  }
+  const _hoisted_3 = {
+    key: 1,
+    class: "ast-output"
+  }
+  const _hoisted_4 = {
+    key: 2,
+    class: "helpers-output"
+  }
+  const _hoisted_5 = {
+    key: 3,
+    class: "sfc-output"
+  }
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, [
+      ($setup.output)
+        ? (_openBlock(), _createElementBlock(_Fragment, { key: 0 }, [
+            ($setup.activeTab === 'code')
+              ? (_openBlock(), _createElementBlock("div", _hoisted_1, [
+                  ($setup.isTypeScript)
+                    ? (_openBlock(), _createElementBlock("div", _hoisted_2, [
+                        _createElementVNode("button", {
+                          class: _normalizeClass(['btn', { active: $setup.codeViewMode === 'ts' }]),
+                          onClick: _cache[0] || (_cache[0] = $event => ($setup.codeViewMode = 'ts'))
+                        }, "TS", 2 /* CLASS */),
+                        _createElementVNode("button", {
+                          class: _normalizeClass(['btn', { active: $setup.codeViewMode === 'js' }]),
+                          onClick: _cache[1] || (_cache[1] = $event => ($setup.codeViewMode = 'js'))
+                        }, "JS", 2 /* CLASS */)
+                      ]))
+                    : _createCommentVNode("v-if", true)
+                ]))
+              : ($setup.activeTab === 'ast')
+                ? (_openBlock(), _createElementBlock("div", _hoisted_3, [...(_cache[2] || (_cache[2] = [
+                    _createElementVNode("h4", null, "AST", -1 /* CACHED */)
+                  ]))]))
+                : ($setup.activeTab === 'helpers')
+                  ? (_openBlock(), _createElementBlock("div", _hoisted_4, [...(_cache[3] || (_cache[3] = [
+                      _createElementVNode("h4", null, "Helpers", -1 /* CACHED */)
+                    ]))]))
+                  : ($setup.activeTab === 'sfc')
+                    ? (_openBlock(), _createElementBlock("div", _hoisted_5, [...(_cache[4] || (_cache[4] = [
+                        _createElementVNode("h4", null, "SFC", -1 /* CACHED */)
+                      ]))]))
+                    : _createCommentVNode("v-if", true)
+          ], 64 /* STABLE_FRAGMENT */))
+        : _createCommentVNode("v-if", true)
+    ]))
+  }
+  """#
+}

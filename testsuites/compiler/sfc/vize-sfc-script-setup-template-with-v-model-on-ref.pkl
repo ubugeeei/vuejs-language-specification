@@ -1,0 +1,90 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-template-with-v-model-on-ref"
+title = "Imported SFC input: template with v-model on ref"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "template with v-model on ref"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "template with v-model on ref"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-template-with-v-model-on-ref.vue"
+  sfc = #"""
+  <script setup>
+  import { ref } from 'vue'
+  const msg = ref('')
+  </script>
+  
+  <template>
+    <input v-model="msg">
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { ref } from 'vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-script-setup-template-with-v-model-on-ref',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const msg = ref('')
+  
+  const __returned__ = { msg, ref }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { vModelText as _vModelText, withDirectives as _withDirectives, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return _withDirectives((_openBlock(), _createElementBlock("input", {
+      "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (($setup.msg) = $event))
+    }, null, 512 /* NEED_PATCH */)), [
+      [_vModelText, $setup.msg]
+    ])
+  }
+  """#
+}

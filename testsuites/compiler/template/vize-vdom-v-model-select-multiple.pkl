@@ -1,0 +1,80 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-model-select-multiple"
+title = "Imported template input: select multiple"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-model.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-model"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-model.toml"
+  source = "tests/fixtures/vdom/v-model.toml"
+  caseName = "select multiple"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-model.toml"
+    cases {
+      "select multiple"
+    }
+  }
+}
+
+input {
+  source = "<select v-model=\"selected\" multiple><option>A</option><option>B</option></select>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_VNODE"
+    }
+    new HelperExpectation {
+      name = "V_MODEL_SELECT"
+    }
+    new HelperExpectation {
+      name = "WITH_DIRECTIVES"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { createElementVNode: _createElementVNode, vModelSelect: _vModelSelect, withDirectives: _withDirectives, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return _withDirectives((_openBlock(), _createElementBlock("select", {
+        "onUpdate:modelValue": $event => ((selected) = $event),
+        multiple: ""
+      }, [
+        _createElementVNode("option", null, "A"),
+        _createElementVNode("option", null, "B")
+      ], 8 /* PROPS */, ["onUpdate:modelValue"])), [
+        [_vModelSelect, selected]
+      ])
+    }
+  }
+  """#
+}

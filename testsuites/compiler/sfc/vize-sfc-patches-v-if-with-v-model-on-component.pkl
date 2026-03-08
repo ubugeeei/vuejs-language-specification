@@ -1,0 +1,96 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-v-if-with-v-model-on-component"
+title = "Imported SFC input: v-if with v-model on component"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "v-if with v-model on component"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "v-if with v-model on component"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-v-if-with-v-model-on-component.vue"
+  sfc = #"""
+  <script setup>
+  import { ref } from 'vue'
+  import MyInput from './MyInput.vue'
+  const visible = ref(true)
+  const value = ref('')
+  </script>
+  
+  <template>
+    <MyInput v-if="visible" v-model="value" />
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { ref } from 'vue'
+  import MyInput from './MyInput.vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-v-if-with-v-model-on-component',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const visible = ref(true)
+  const value = ref('')
+  
+  const __returned__ = { visible, value, ref, MyInput }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { openBlock as _openBlock, createBlock as _createBlock, createCommentVNode as _createCommentVNode } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return ($setup.visible)
+      ? (_openBlock(), _createBlock($setup["MyInput"], {
+          key: 0,
+          modelValue: $setup.value,
+          "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (($setup.value) = $event))
+        }, null, 8 /* PROPS */, ["modelValue"]))
+      : _createCommentVNode("v-if", true)
+  }
+  """#
+}

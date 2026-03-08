@@ -1,0 +1,101 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-withdefaults-with-function-default"
+title = "Imported SFC input: withDefaults with function default"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "withDefaults with function default"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "withDefaults with function default"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-withdefaults-with-function-default.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  interface Props {
+    items?: string[]
+  }
+  
+  withDefaults(defineProps<Props>(), {
+    items: () => []
+  })
+  </script>
+  
+  <template>
+    <div v-for="item in items" :key="item">{{ item }}</div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  interface Props {
+    items?: string[]
+  }
+  
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-script-setup-withdefaults-with-function-default',
+    props: {
+      items: { type: Array, required: false, default: () => [] }
+    },
+    setup(__props: any, { expose: __expose }) {
+    __expose();
+  
+  
+  
+  const __returned__ = {  }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { renderList as _renderList, Fragment as _Fragment, openBlock as _openBlock, createElementBlock as _createElementBlock, toDisplayString as _toDisplayString } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(true), _createElementBlock(_Fragment, null, _renderList($props.items, (item) => {
+      return (_openBlock(), _createElementBlock("div", { key: item }, _toDisplayString(item), 1 /* TEXT */))
+    }), 128 /* KEYED_FRAGMENT */))
+  }
+  """#
+}

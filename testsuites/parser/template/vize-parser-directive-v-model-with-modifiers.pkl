@@ -1,0 +1,483 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-directive-v-model-with-modifiers"
+title = "Imported parser input: v-model with modifiers"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/directive.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.directive"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/directive.toml"
+  source = "tests/fixtures/parser/directive.toml"
+  caseName = "v-model with modifiers"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/directive.toml"
+    cases {
+      "v-model with modifiers"
+    }
+  }
+}
+
+input {
+  source = "<input v-model.lazy.trim=\"text\">"
+}
+
+expect {
+  errorCount = 1
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<input v-model.lazy.trim=\"text\">",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "input",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [
+          {
+            "type": "DIRECTIVE",
+            "name": "model",
+            "rawName": "v-model.lazy.trim",
+            "exp": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 27,
+                  "line": 1,
+                  "offset": 26
+                },
+                "end": {
+                  "column": 31,
+                  "line": 1,
+                  "offset": 30
+                },
+                "source": "text"
+              },
+              "content": "text",
+              "isStatic": false,
+              "constType": "NOT_CONSTANT"
+            },
+            "modifiers": [
+              {
+                "type": "SIMPLE_EXPRESSION",
+                "loc": {
+                  "start": {
+                    "column": 16,
+                    "line": 1,
+                    "offset": 15
+                  },
+                  "end": {
+                    "column": 20,
+                    "line": 1,
+                    "offset": 19
+                  },
+                  "source": "lazy"
+                },
+                "content": "lazy",
+                "isStatic": true,
+                "constType": "CAN_STRINGIFY"
+              },
+              {
+                "type": "SIMPLE_EXPRESSION",
+                "loc": {
+                  "start": {
+                    "column": 21,
+                    "line": 1,
+                    "offset": 20
+                  },
+                  "end": {
+                    "column": 25,
+                    "line": 1,
+                    "offset": 24
+                  },
+                  "source": "trim"
+                },
+                "content": "trim",
+                "isStatic": true,
+                "constType": "CAN_STRINGIFY"
+              }
+            ],
+            "loc": {
+              "start": {
+                "column": 8,
+                "line": 1,
+                "offset": 7
+              },
+              "end": {
+                "column": 32,
+                "line": 1,
+                "offset": 31
+              },
+              "source": "v-model.lazy.trim=\"text\""
+            }
+          }
+        ],
+        "children": [],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 33,
+            "line": 1,
+            "offset": 32
+          },
+          "source": "<input v-model.lazy.trim=\"text\">"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 33,
+        "line": 1,
+        "offset": 32
+      },
+      "source": "<input v-model.lazy.trim=\"text\">"
+    }
+  }
+  """#
+  normalizedErrors = #"""
+  [
+    {
+      "code": "X_MISSING_END_TAG",
+      "loc": {
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        },
+        "end": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        },
+        "source": ""
+      }
+    }
+  ]
+  """#
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 33
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 32
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<input v-model.lazy.trim=\"text\">"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/content"
+      equals = "text"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/column"
+      equals = 31
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/offset"
+      equals = 30
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/source"
+      equals = "text"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/column"
+      equals = 27
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/offset"
+      equals = 26
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/column"
+      equals = 32
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/offset"
+      equals = 31
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/source"
+      equals = "v-model.lazy.trim=\"text\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/column"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/offset"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/constType"
+      equals = "CAN_STRINGIFY"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/content"
+      equals = "lazy"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/isStatic"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/end/column"
+      equals = 20
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/end/offset"
+      equals = 19
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/source"
+      equals = "lazy"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/start/column"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/loc/start/offset"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/0/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/constType"
+      equals = "CAN_STRINGIFY"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/content"
+      equals = "trim"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/isStatic"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/loc/end/column"
+      equals = 25
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/loc/end/offset"
+      equals = 24
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/loc/source"
+      equals = "trim"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/loc/start/column"
+      equals = 21
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/loc/start/offset"
+      equals = 20
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/modifiers/1/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "model"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/rawName"
+      equals = "v-model.lazy.trim"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "input"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 33
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 32
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<input v-model.lazy.trim=\"text\">"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<input v-model.lazy.trim=\"text\">"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+  errors {
+    new PointerAssertion {
+      pointer = "/0/code"
+      equals = "X_MISSING_END_TAG"
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/source"
+      equals = ""
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/offset"
+      equals = 0
+    }
+  }
+}

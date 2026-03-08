@@ -1,0 +1,328 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-attribute-boolean-attribute-readonly"
+title = "Imported parser input: boolean attribute readonly"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/attribute.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.attribute"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/attribute.toml"
+  source = "tests/fixtures/parser/attribute.toml"
+  caseName = "boolean attribute readonly"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/attribute.toml"
+    cases {
+      "boolean attribute readonly"
+    }
+  }
+}
+
+input {
+  source = "<input readonly>"
+}
+
+expect {
+  errorCount = 1
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<input readonly>",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "input",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [
+          {
+            "type": "ATTRIBUTE",
+            "name": "readonly",
+            "nameLoc": {
+              "start": {
+                "column": 8,
+                "line": 1,
+                "offset": 7
+              },
+              "end": {
+                "column": 16,
+                "line": 1,
+                "offset": 15
+              },
+              "source": "readonly"
+            },
+            "loc": {
+              "start": {
+                "column": 8,
+                "line": 1,
+                "offset": 7
+              },
+              "end": {
+                "column": 16,
+                "line": 1,
+                "offset": 15
+              },
+              "source": "readonly"
+            }
+          }
+        ],
+        "children": [],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 17,
+            "line": 1,
+            "offset": 16
+          },
+          "source": "<input readonly>"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 17,
+        "line": 1,
+        "offset": 16
+      },
+      "source": "<input readonly>"
+    }
+  }
+  """#
+  normalizedErrors = #"""
+  [
+    {
+      "code": "X_MISSING_END_TAG",
+      "loc": {
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        },
+        "end": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        },
+        "source": ""
+      }
+    }
+  ]
+  """#
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 17
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<input readonly>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/column"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/offset"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/source"
+      equals = "readonly"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/column"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/offset"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "readonly"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/end/column"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/end/offset"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/source"
+      equals = "readonly"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/start/column"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/start/offset"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "ATTRIBUTE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "input"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 17
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<input readonly>"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<input readonly>"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+  errors {
+    new PointerAssertion {
+      pointer = "/0/code"
+      equals = "X_MISSING_END_TAG"
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/source"
+      equals = ""
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/offset"
+      equals = 0
+    }
+  }
+}

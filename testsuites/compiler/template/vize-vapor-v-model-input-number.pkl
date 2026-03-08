@@ -1,0 +1,70 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-model-input-number"
+title = "Imported vapor input: input number"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-model.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-model"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-model.toml"
+  source = "tests/fixtures/vapor/v-model.toml"
+  caseName = "input number"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-model.toml"
+    cases {
+      "input number"
+    }
+  }
+}
+
+input {
+  source = "<input type=\"number\" v-model=\"count\">"
+}
+
+expect {
+  normalizedCode = #"""
+  import { applyTextModel as _applyTextModel, template as _template } from 'vue';
+  const t0 = _template("<input type=\"number\">", true)
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    _applyTextModel(n0, () => (_ctx.count), _value => (_ctx.count = _value))
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { applyTextModel as _applyTextModel, template as _template } from 'vue';
+  const t0 = _template("<input type=\"number\">", true)
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    _applyTextModel(n0, () => (_ctx.count), _value => (_ctx.count = _value))
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

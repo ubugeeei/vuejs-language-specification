@@ -1,0 +1,98 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-basic-script-setup-with-scoped-style"
+title = "Imported SFC input: script setup with scoped style"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/basic.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.basic"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/basic.toml"
+  source = "tests/fixtures/sfc/basic.toml"
+  caseName = "script setup with scoped style"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/basic.toml"
+    cases {
+      "script setup with scoped style"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-basic-script-setup-with-scoped-style.vue"
+  sfc = #"""
+  <script setup>
+  const msg = 'hello'
+  </script>
+  
+  <template>
+    <div class="text">{{ msg }}</div>
+  </template>
+  
+  <style scoped>
+  .text { color: red; }
+  </style>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 1
+      customBlocks = 0
+      scopedStyles = 1
+    }
+  normalizedCode = #"""
+  const msg = 'hello'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-basic-script-setup-with-scoped-style',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  
+  const __returned__ = { msg }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  const _hoisted_1 = { class: "text" }
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", _hoisted_1, _toDisplayString($setup.msg)))
+  }
+  """#
+  styleCodes {
+    #"""
+    
+    .text[data-v-compiler.sfc.vize-sfc-basic-script-setup-with-scoped-style-style-0] { color: red;
+    }
+    
+    """#
+  }
+}

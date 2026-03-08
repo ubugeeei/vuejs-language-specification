@@ -1,0 +1,88 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-static-string-with-newline"
+title = "Imported SFC input: static string with newline"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "static string with newline"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "static string with newline"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-static-string-with-newline.vue"
+  sfc = #"""
+  <script setup>
+  const multiline = `Line 1
+  Line 2
+  Line 3`
+  </script>
+  
+  <template>
+    <pre>{{ multiline }}</pre>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  const multiline = `Line 1
+  Line 2
+  Line 3`
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-static-string-with-newline',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  
+  const __returned__ = { multiline }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("pre", null, _toDisplayString($setup.multiline)))
+  }
+  """#
+}

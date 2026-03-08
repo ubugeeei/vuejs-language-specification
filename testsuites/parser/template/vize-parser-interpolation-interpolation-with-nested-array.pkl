@@ -1,0 +1,226 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-interpolation-interpolation-with-nested-array"
+title = "Imported parser input: interpolation with nested array"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/interpolation.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.interpolation"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/interpolation.toml"
+  source = "tests/fixtures/parser/interpolation.toml"
+  caseName = "interpolation with nested array"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/interpolation.toml"
+    cases {
+      "interpolation with nested array"
+    }
+  }
+}
+
+input {
+  source = "{{ [[1, 2], [3, 4]] }}"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "{{ [[1, 2], [3, 4]] }}",
+    "children": [
+      {
+        "type": "INTERPOLATION",
+        "content": {
+          "type": "SIMPLE_EXPRESSION",
+          "loc": {
+            "start": {
+              "column": 4,
+              "line": 1,
+              "offset": 3
+            },
+            "end": {
+              "column": 20,
+              "line": 1,
+              "offset": 19
+            },
+            "source": "[[1, 2], [3, 4]]"
+          },
+          "content": "[[1, 2], [3, 4]]",
+          "isStatic": false,
+          "constType": "NOT_CONSTANT"
+        },
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 23,
+            "line": 1,
+            "offset": 22
+          },
+          "source": "{{ [[1, 2], [3, 4]] }}"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 23,
+        "line": 1,
+        "offset": 22
+      },
+      "source": "{{ [[1, 2], [3, 4]] }}"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/content/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/content"
+      equals = "[[1, 2], [3, 4]]"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/end/column"
+      equals = 20
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/end/offset"
+      equals = 19
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/source"
+      equals = "[[1, 2], [3, 4]]"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/start/column"
+      equals = 4
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/start/offset"
+      equals = 3
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 23
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 22
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "{{ [[1, 2], [3, 4]] }}"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "INTERPOLATION"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 23
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 22
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "{{ [[1, 2], [3, 4]] }}"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "{{ [[1, 2], [3, 4]] }}"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

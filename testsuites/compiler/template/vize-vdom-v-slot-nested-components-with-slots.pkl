@@ -1,0 +1,88 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-slot-nested-components-with-slots"
+title = "Imported template input: nested components with slots"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-slot.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-slot"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-slot.toml"
+  source = "tests/fixtures/vdom/v-slot.toml"
+  caseName = "nested components with slots"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-slot.toml"
+    cases {
+      "nested components with slots"
+    }
+  }
+}
+
+input {
+  source = "<Outer><template #default><Inner><template #content>Nested</template></Inner></template></Outer>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "CREATE_TEXT"
+    }
+    new HelperExpectation {
+      name = "RESOLVE_COMPONENT"
+    }
+    new HelperExpectation {
+      name = "WITH_CTX"
+    }
+    new HelperExpectation {
+      name = "CREATE_VNODE"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { createTextVNode: _createTextVNode, resolveComponent: _resolveComponent, withCtx: _withCtx, createVNode: _createVNode, openBlock: _openBlock, createBlock: _createBlock } = _Vue
+  
+      const _component_Inner = _resolveComponent("Inner")
+      const _component_Outer = _resolveComponent("Outer")
+  
+      return (_openBlock(), _createBlock(_component_Outer, null, {
+        default: _withCtx(() => [
+          _createVNode(_component_Inner, null, {
+            content: _withCtx(() => [
+              _createTextVNode("Nested")
+            ]),
+            _: 1 /* STABLE */
+          })
+        ]),
+        _: 1 /* STABLE */
+      }))
+    }
+  }
+  """#
+}

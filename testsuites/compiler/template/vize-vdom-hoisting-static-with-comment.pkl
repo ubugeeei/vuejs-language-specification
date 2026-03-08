@@ -1,0 +1,72 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-hoisting-static-with-comment"
+title = "Imported template input: static with comment"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/hoisting.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.hoisting"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/hoisting.toml"
+  source = "tests/fixtures/vdom/hoisting.toml"
+  caseName = "static with comment"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/hoisting.toml"
+    cases {
+      "static with comment"
+    }
+  }
+}
+
+input {
+  source = "<div><!-- comment -->static</div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "CREATE_COMMENT"
+    }
+    new HelperExpectation {
+      name = "CREATE_TEXT"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { createCommentVNode: _createCommentVNode, createTextVNode: _createTextVNode, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return (_openBlock(), _createElementBlock("div", null, [
+        _createCommentVNode(" comment "),
+        _createTextVNode("static")
+      ]))
+    }
+  }
+  """#
+}

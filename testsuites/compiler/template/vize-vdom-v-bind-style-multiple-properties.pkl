@@ -1,0 +1,68 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-bind-style-multiple-properties"
+title = "Imported template input: style multiple properties"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-bind.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-bind"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-bind.toml"
+  source = "tests/fixtures/vdom/v-bind.toml"
+  caseName = "style multiple properties"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-bind.toml"
+    cases {
+      "style multiple properties"
+    }
+  }
+}
+
+input {
+  source = "<div :style=\"{ color: textColor, fontSize: size + 'px' }\"></div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "NORMALIZE_STYLE"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { normalizeStyle: _normalizeStyle, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return (_openBlock(), _createElementBlock("div", {
+        style: _normalizeStyle({ color: textColor, fontSize: size + 'px' })
+      }, null, 4 /* STYLE */))
+    }
+  }
+  """#
+}

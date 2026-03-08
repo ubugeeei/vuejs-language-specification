@@ -1,0 +1,74 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.edge-cases-type-assertions"
+title = "Edge-case SFC: chained type assertions remain stable through lowering"
+kind = "sfc-full-compile"
+summary = "Script setup lowering must preserve TypeScript assertion syntax in runtime-bearing expressions while compiling the template independently."
+
+features {
+  "compiler.sfc"
+  "script-setup.typescript"
+  "typescript.type-assertion"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/edge-cases.test.ts"
+    cases {
+      "should handle type assertions"
+    }
+  }
+}
+
+input {
+  filename = "typeAssertions.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  const element = document.querySelector('.test') as HTMLDivElement
+  const value = (someValue as unknown) as number
+  </script>
+
+  <template>
+    <div>Test</div>
+  </template>
+  """#
+}
+
+expect {
+  descriptor {
+    template = true
+    script = false
+    scriptSetup = true
+    styles = 0
+    customBlocks = 0
+    scriptLang = null
+    scriptSetupLang = "ts"
+    scopedStyles = 0
+  }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'typeAssertions',
+    setup(__props, { expose: __expose }) {
+    __expose();
+
+  const element = document.querySelector('.test') as HTMLDivElement
+  const value = (someValue as unknown) as number
+
+  const __returned__ = { element, value }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+
+  })
+  """#
+  templateCode = #"""
+  import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, "Test"))
+  }
+  """#
+}

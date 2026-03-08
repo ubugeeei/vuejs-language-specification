@@ -1,0 +1,70 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-show-v-show-with-comparison"
+title = "Imported vapor input: v-show with comparison"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-show.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-show"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-show.toml"
+  source = "tests/fixtures/vapor/v-show.toml"
+  caseName = "v-show with comparison"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-show.toml"
+    cases {
+      "v-show with comparison"
+    }
+  }
+}
+
+input {
+  source = "<div v-show=\"count > 0\">positive</div>"
+}
+
+expect {
+  normalizedCode = #"""
+  import { applyVShow as _applyVShow, template as _template } from 'vue';
+  const t0 = _template("<div>positive</div>", true)
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    _applyVShow(n0, () => (_ctx.count > 0))
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { applyVShow as _applyVShow, template as _template } from 'vue';
+  const t0 = _template("<div>positive</div>", true)
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    _applyVShow(n0, () => (_ctx.count > 0))
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

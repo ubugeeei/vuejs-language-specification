@@ -1,0 +1,71 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-component-teleport-kebab-case"
+title = "Imported template input: teleport kebab-case"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/component.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.component"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/component.toml"
+  source = "tests/fixtures/vdom/component.toml"
+  caseName = "teleport kebab-case"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/component.toml"
+    cases {
+      "teleport kebab-case"
+    }
+  }
+}
+
+input {
+  source = "<teleport to=\"body\"><div>content</div></teleport>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_VNODE"
+    }
+    new HelperExpectation {
+      name = "TELEPORT"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { createElementVNode: _createElementVNode, Teleport: _Teleport, openBlock: _openBlock, createBlock: _createBlock } = _Vue
+  
+      return (_openBlock(), _createBlock(_Teleport, { to: "body" }, [
+        _createElementVNode("div", null, "content")
+      ]))
+    }
+  }
+  """#
+}

@@ -24,7 +24,7 @@ Formally:
 RequirementId      ::= Upper (Upper | Digit | "-")*
 RequirementStmt    ::= non-empty markdown text
 PklSuitePath       ::= "../testsuites/" Segment "/" Segment "/" Segment ".pkl"
-RuntimeSuitePath   ::= "../src/runtime/testsuites/" Segment ".ts"
+RuntimeSuitePath   ::= "../runtime/testsuites/" Segment ".ts"
 RequirementLink    ::= ⟨label, path⟩
 RequirementRow     ::= ⟨id, stmt, links+⟩
 RequirementMatrix  ::= RequirementRow*

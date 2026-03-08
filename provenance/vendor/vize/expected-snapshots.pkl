@@ -1,0 +1,248 @@
+amends "../../../schemas/VendoredSnapshotManifest.pkl"
+
+originRepository = "ubugeeei/vize"
+originCommit = "923a9d864583e7e06438db3bc6a720113cf171ac"
+generatedAt = "2026-03-08T02:47:21.762Z"
+policy = "Vendored raw snapshot files copied from vize/tests/expected. This repository owns the copied artifacts so it can evolve them into the primary source of truth for curated Vue language expectations."
+snapshotCount = 34
+
+entries {
+  ["tests/expected/errors/parse-errors.snap"] = new SnapshotEntry {
+    suite = "errors"
+    originPath = "tests/expected/errors/parse-errors.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/errors/parse-errors.snap"
+    bytes = 14625
+    sha256 = "bf30de6fc1fe5e3ad7ea7f6d764ce4fcfe0a6b618b6b03f4223840ece153eabb"
+  }
+  ["tests/expected/errors/transform-errors.snap"] = new SnapshotEntry {
+    suite = "errors"
+    originPath = "tests/expected/errors/transform-errors.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/errors/transform-errors.snap"
+    bytes = 18911
+    sha256 = "b0aa871868c91393a7aa4afb8753a340e5321790145c82a1a59f8a033ca3a85b"
+  }
+  ["tests/expected/parser/attribute.snap"] = new SnapshotEntry {
+    suite = "parser"
+    originPath = "tests/expected/parser/attribute.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/parser/attribute.snap"
+    bytes = 4963
+    sha256 = "03535065b58bde803eebae4a31112edb80be5a60a802cfe6ba232db6f8177b4f"
+  }
+  ["tests/expected/parser/comment.snap"] = new SnapshotEntry {
+    suite = "parser"
+    originPath = "tests/expected/parser/comment.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/parser/comment.snap"
+    bytes = 19492
+    sha256 = "ebe558f7da4b2f7c9f0bed1c6102c2dc421ae30824736f27f6ba5b19e8cf0558"
+  }
+  ["tests/expected/parser/directive.snap"] = new SnapshotEntry {
+    suite = "parser"
+    originPath = "tests/expected/parser/directive.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/parser/directive.snap"
+    bytes = 64659
+    sha256 = "3f011167c85e1c76a7ea700e82229070a25816cdf4ccac95488fa2e60575dc5a"
+  }
+  ["tests/expected/parser/element.snap"] = new SnapshotEntry {
+    suite = "parser"
+    originPath = "tests/expected/parser/element.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/parser/element.snap"
+    bytes = 12989
+    sha256 = "618c7f7153c633a61c2257f590142e79ef7965c5d398830f6a162226b0d87b1e"
+  }
+  ["tests/expected/parser/interpolation.snap"] = new SnapshotEntry {
+    suite = "parser"
+    originPath = "tests/expected/parser/interpolation.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/parser/interpolation.snap"
+    bytes = 23016
+    sha256 = "39b53893419e4a5e389092ccbf761c87f5f539bdfaaa74023f111d8aa818e57b"
+  }
+  ["tests/expected/parser/text.snap"] = new SnapshotEntry {
+    suite = "parser"
+    originPath = "tests/expected/parser/text.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/parser/text.snap"
+    bytes = 17298
+    sha256 = "175c714e9d971e943c9bc84fea61676276640e0b79c41f1ad9e480fada91c490"
+  }
+  ["tests/expected/sfc/basic.snap"] = new SnapshotEntry {
+    suite = "sfc"
+    originPath = "tests/expected/sfc/basic.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/sfc/basic.snap"
+    bytes = 6528
+    sha256 = "51db7d9c7c27712327712ca5f035844896e508537e0445d0f3ffd9edc4d06c92"
+  }
+  ["tests/expected/sfc/patches.snap"] = new SnapshotEntry {
+    suite = "sfc"
+    originPath = "tests/expected/sfc/patches.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/sfc/patches.snap"
+    bytes = 37246
+    sha256 = "1370d1757dfc46bf8c22f0e51ad5c8cfbde76bda7afce4428f25084e962c275a"
+  }
+  ["tests/expected/sfc/script-setup.snap"] = new SnapshotEntry {
+    suite = "sfc"
+    originPath = "tests/expected/sfc/script-setup.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/sfc/script-setup.snap"
+    bytes = 66372
+    sha256 = "5c4e4dfe46b40c061fd4d9979327e3f584fe1c52f7b367913a5128bcd348551b"
+  }
+  ["tests/expected/vapor/component.snap"] = new SnapshotEntry {
+    suite = "vapor"
+    originPath = "tests/expected/vapor/component.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vapor/component.snap"
+    bytes = 7051
+    sha256 = "a15b402866cf87e43d72ae19d07d52828eccc830e38dd56796e693ee06af032d"
+  }
+  ["tests/expected/vapor/edge-cases.snap"] = new SnapshotEntry {
+    suite = "vapor"
+    originPath = "tests/expected/vapor/edge-cases.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vapor/edge-cases.snap"
+    bytes = 1244
+    sha256 = "4b3f90b9948e7fe2ef01ef4d3c085b26d02ec434d0e73eb757aab85a34577738"
+  }
+  ["tests/expected/vapor/element.snap"] = new SnapshotEntry {
+    suite = "vapor"
+    originPath = "tests/expected/vapor/element.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vapor/element.snap"
+    bytes = 5769
+    sha256 = "0fdeb086fab5d42373f05245cea4222c5fdf902ae80abf9d52a2d25ba81518d4"
+  }
+  ["tests/expected/vapor/v-bind.snap"] = new SnapshotEntry {
+    suite = "vapor"
+    originPath = "tests/expected/vapor/v-bind.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vapor/v-bind.snap"
+    bytes = 4415
+    sha256 = "acfd00615ab65b54ed2ef19138f745b66e96195cda80e63723ad6194324fa670"
+  }
+  ["tests/expected/vapor/v-for.snap"] = new SnapshotEntry {
+    suite = "vapor"
+    originPath = "tests/expected/vapor/v-for.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vapor/v-for.snap"
+    bytes = 6027
+    sha256 = "43bc3b4b580b2b887545e7aea1756dd4dbb71a3af0234427791dfd994f00fedf"
+  }
+  ["tests/expected/vapor/v-if.snap"] = new SnapshotEntry {
+    suite = "vapor"
+    originPath = "tests/expected/vapor/v-if.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vapor/v-if.snap"
+    bytes = 3308
+    sha256 = "f90bbb3114ab0bd6c81419eb2750a9d26990595b6b72c6d97fceaef53d42728b"
+  }
+  ["tests/expected/vapor/v-model.snap"] = new SnapshotEntry {
+    suite = "vapor"
+    originPath = "tests/expected/vapor/v-model.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vapor/v-model.snap"
+    bytes = 5471
+    sha256 = "e38e62bf9cf5900b2475dda84b587537a3225f627d3fc73ba3533dfc243c964a"
+  }
+  ["tests/expected/vapor/v-on.snap"] = new SnapshotEntry {
+    suite = "vapor"
+    originPath = "tests/expected/vapor/v-on.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vapor/v-on.snap"
+    bytes = 5579
+    sha256 = "2a23032bd5a32140b8f0fb1bb77f0d21e16c95657316df709e1e0cab867d610c"
+  }
+  ["tests/expected/vapor/v-show.snap"] = new SnapshotEntry {
+    suite = "vapor"
+    originPath = "tests/expected/vapor/v-show.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vapor/v-show.snap"
+    bytes = 2536
+    sha256 = "57afd2d78801a5ad21cd120fd3122330fd5dc5d99b0facb07e80fc47aa73c4f7"
+  }
+  ["tests/expected/vapor/v-slot.snap"] = new SnapshotEntry {
+    suite = "vapor"
+    originPath = "tests/expected/vapor/v-slot.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vapor/v-slot.snap"
+    bytes = 5350
+    sha256 = "b3eae6f3aa6c2f5cb4c6fb8a2554ebc3dc0086869989ffc1428a6d84eec124ec"
+  }
+  ["tests/expected/vdom/component.snap"] = new SnapshotEntry {
+    suite = "vdom"
+    originPath = "tests/expected/vdom/component.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vdom/component.snap"
+    bytes = 19996
+    sha256 = "d4d2b592cd58279c450ee2824dd183f255ed7935d3615add95d8daf70bcb3c13"
+  }
+  ["tests/expected/vdom/directives.snap"] = new SnapshotEntry {
+    suite = "vdom"
+    originPath = "tests/expected/vdom/directives.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vdom/directives.snap"
+    bytes = 10900
+    sha256 = "83d78100fdfabace69d85c1fe4c703c5c9f82a1b1dadced86ca1614948b13c26"
+  }
+  ["tests/expected/vdom/element.snap"] = new SnapshotEntry {
+    suite = "vdom"
+    originPath = "tests/expected/vdom/element.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vdom/element.snap"
+    bytes = 11711
+    sha256 = "5d838967dc6ff9c380599110a2ab2bfdf401f85bb783356fda464add6ae2aa7f"
+  }
+  ["tests/expected/vdom/hoisting.snap"] = new SnapshotEntry {
+    suite = "vdom"
+    originPath = "tests/expected/vdom/hoisting.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vdom/hoisting.snap"
+    bytes = 9236
+    sha256 = "598ee806ab205cf244832dc8770afc60a1a83eed45395d9888fcf2c37e8c9b14"
+  }
+  ["tests/expected/vdom/patch-flags.snap"] = new SnapshotEntry {
+    suite = "vdom"
+    originPath = "tests/expected/vdom/patch-flags.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vdom/patch-flags.snap"
+    bytes = 13661
+    sha256 = "a35a860344ea2dcc73356b290273d917e0460f323287de6a109a832045db277d"
+  }
+  ["tests/expected/vdom/v-bind.snap"] = new SnapshotEntry {
+    suite = "vdom"
+    originPath = "tests/expected/vdom/v-bind.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vdom/v-bind.snap"
+    bytes = 12866
+    sha256 = "3057e40087947767b0a92e58533c2f131ea06e33e66a6b0729770b3a3ea8250e"
+  }
+  ["tests/expected/vdom/v-for.snap"] = new SnapshotEntry {
+    suite = "vdom"
+    originPath = "tests/expected/vdom/v-for.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vdom/v-for.snap"
+    bytes = 15734
+    sha256 = "2413ff9c6e65dc3c77383e671a402b18923b2b47ed584663dd24a879aa72dfc4"
+  }
+  ["tests/expected/vdom/v-if.snap"] = new SnapshotEntry {
+    suite = "vdom"
+    originPath = "tests/expected/vdom/v-if.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vdom/v-if.snap"
+    bytes = 11402
+    sha256 = "47c661650546d0a51fdb2e1e8b102d11f4d910a2d7cbacff5768d222fb19fa3a"
+  }
+  ["tests/expected/vdom/v-model.snap"] = new SnapshotEntry {
+    suite = "vdom"
+    originPath = "tests/expected/vdom/v-model.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vdom/v-model.snap"
+    bytes = 19600
+    sha256 = "52fe50fa3394e696e87fdfeee1a59f26a551b3eaec875dac3a11b7480a4aaaa0"
+  }
+  ["tests/expected/vdom/v-on.snap"] = new SnapshotEntry {
+    suite = "vdom"
+    originPath = "tests/expected/vdom/v-on.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vdom/v-on.snap"
+    bytes = 18562
+    sha256 = "a3a53e2fc879cab7b892be797d1cf83e2420eae35a8a016700d76dc7385a3882"
+  }
+  ["tests/expected/vdom/v-once.snap"] = new SnapshotEntry {
+    suite = "vdom"
+    originPath = "tests/expected/vdom/v-once.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vdom/v-once.snap"
+    bytes = 8821
+    sha256 = "58c04a3ee1e3dab5245354132f179d80951ec5cba713c433f8e3131e2cc59cd1"
+  }
+  ["tests/expected/vdom/v-show.snap"] = new SnapshotEntry {
+    suite = "vdom"
+    originPath = "tests/expected/vdom/v-show.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vdom/v-show.snap"
+    bytes = 8408
+    sha256 = "aeba3f9e242df431e875dcb0838d3d6ad3b7da4390326ca6ca7b98ae0cc79c8f"
+  }
+  ["tests/expected/vdom/v-slot.snap"] = new SnapshotEntry {
+    suite = "vdom"
+    originPath = "tests/expected/vdom/v-slot.snap"
+    copiedPath = "provenance/vendor/vize/tests/expected/vdom/v-slot.snap"
+    bytes = 16651
+    sha256 = "ccdf5b1bf34ae512327da24de0f724be909732dcfe032dc2697e8a52201a14af"
+  }
+}

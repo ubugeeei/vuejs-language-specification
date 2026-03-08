@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 import { buildUpstreamTraceability } from "../src/upstream.ts";
+import { provenanceTraceabilityRoot } from "../src/layout.ts";
 import type { UpstreamTraceabilityManifest } from "../src/types.ts";
 
 function escapeString(value: string): string {
@@ -62,7 +63,7 @@ function formatManifest(manifest: UpstreamTraceabilityManifest): string {
 
 function main() {
   const root = resolve(process.argv[2] ?? process.cwd());
-  const outputDirectory = join(root, "sources", "traceability");
+  const outputDirectory = provenanceTraceabilityRoot(root);
   mkdirSync(outputDirectory, { recursive: true });
 
   for (const manifest of buildUpstreamTraceability(root)) {

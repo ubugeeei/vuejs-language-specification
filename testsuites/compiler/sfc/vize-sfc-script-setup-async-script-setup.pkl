@@ -1,0 +1,92 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-async-script-setup"
+title = "Imported SFC input: async script setup"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "async script setup"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "async script setup"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-async-script-setup.vue"
+  sfc = #"""
+  <script setup>
+  const data = await fetch('/api').then(r => r.json())
+  </script>
+  
+  <template>
+    <div>{{ data }}</div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { withAsyncContext as _withAsyncContext } from 'vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-script-setup-async-script-setup',
+    async setup(__props, { expose: __expose }) {
+    __expose();
+  
+  let __temp, __restore
+  
+  const data = (
+    ([__temp,__restore] = _withAsyncContext(() => fetch('/api').then(r => r.json()))),
+    __temp = await __temp,
+    __restore(),
+    __temp
+  )
+  
+  const __returned__ = { data }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, _toDisplayString($setup.data), 1 /* TEXT */))
+  }
+  """#
+}

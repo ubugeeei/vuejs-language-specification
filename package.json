@@ -16,10 +16,11 @@
   },
   "files": [
     "dist",
+    "runtime",
     "testsuites",
     "fixtures",
     "schemas",
-    "sources",
+    "provenance",
     "spec",
     "README.md"
   ],
@@ -41,8 +42,8 @@
   "scripts": {
     "build": "tsdown",
     "check": "oxlint --type-aware --type-check --vitest-plugin --node-plugin . && vitest run",
-    "format": "oxfmt .",
-    "format:check": "oxfmt --check .",
+    "fmt": "oxfmt .",
+    "fmt:check": "oxfmt --check .",
     "lint": "oxlint --type-aware --type-check --vitest-plugin --node-plugin .",
     "validate": "node --strip-types src/cli.ts validate",
     "catalog": "node --strip-types src/cli.ts catalog",
@@ -50,7 +51,11 @@
     "traceability:upstream": "node --strip-types src/cli.ts traceability",
     "benchmark:smoke": "node --strip-types src/cli.ts benchmark --smoke",
     "generate:traceability": "node --strip-types scripts/generate-upstream-traceability.ts",
-    "vendor:vue-core:tests": "node --strip-types scripts/vendor-upstream-test-corpus.ts --inventory sources/upstream/vuejs-core.inventory.pkl --upstream /tmp/vuejs-core-spec",
+    "generate:stability": "node --strip-types scripts/generate-stability-manifests.ts",
+    "generate:imported:testsuites": "node --strip-types scripts/generate-vize-language-testsuites.ts",
+    "generate:vize:testsuites": "node --strip-types scripts/generate-vize-language-testsuites.ts",
+    "vendor:vue-core:tests": "node --strip-types scripts/vendor-upstream-test-corpus.ts --inventory provenance/inventories/vuejs-core.inventory.pkl --upstream /tmp/vuejs-core-spec",
+    "vendor:vize:tests": "node --strip-types scripts/vendor-upstream-test-corpus.ts --inventory provenance/inventories/vize.inventory.pkl --upstream /tmp/vize-spec-upstream --outputDir provenance/vendor/ubugeeei-vize",
     "vendor:vize:snapshots": "node --strip-types scripts/vendor-vize-expected-snapshots.ts",
     "test": "vitest run",
     "test:watch": "vitest"

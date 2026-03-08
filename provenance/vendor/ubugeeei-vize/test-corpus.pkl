@@ -1,0 +1,6616 @@
+amends "../../../schemas/VendoredUpstreamCorpusManifest.pkl"
+
+originRepository = "ubugeeei/vize"
+originCommit = "adbe89847252af5e88789450b1bd4fdb9929a958"
+generatedAt = "2026-03-08T14:53:26.651Z"
+policy = "Vendored raw upstream test and benchmark source files copied into this repository. These copies are committed so provenance remains local and this repository can evolve toward a self-hosted source of truth for curated Vue language behavior."
+
+counts {
+  files = 60
+  cases = 1212
+  issueRefs = 0
+  benchmarks = 0
+}
+
+files {
+  new CorpusFile {
+    sourcePath = "examples/vite-musea/e2e/vrt/musea-gallery.spec.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/examples/vite-musea/e2e/vrt/musea-gallery.spec.ts"
+    bytes = 1011
+    sha256 = "e4672f474a963102f6c82a4ecc73f8c1303643fab28d93fabadf14ce40422cd2"
+    cases {
+      new CorpusCase {
+        name = "gallery top page"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "component - ${component}"
+        kind = "test"
+        line = 21
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "npm/rspack-vize-plugin/src/integration.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/npm/rspack-vize-plugin/src/integration.test.ts"
+    bytes = 2473
+    sha256 = "41c532017ffc19dac0d8f6f901697e50080e8a4bd0c4905e12dc5bb9490a91e9"
+    cases {
+      new CorpusCase {
+        name = "rspack builds a Vue SFC with dedicated loader and style paths"
+        kind = "test"
+        line = 36
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "npm/rspack-vize-plugin/src/plugin/index.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/npm/rspack-vize-plugin/src/plugin/index.test.ts"
+    bytes = 1528
+    sha256 = "daef63d09b68733c845d5ab106d4ba1c701e785d325247cf8b6f2fe064bdcea2"
+    cases {
+      new CorpusCase {
+        name = "injects the default Vue compile-time flags"
+        kind = "test"
+        line = 46
+      }
+      new CorpusCase {
+        name = "does not override Vue flags that are already defined"
+        kind = "test"
+        line = 53
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "npm/unplugin-vize/src/core.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/npm/unplugin-vize/src/core.test.ts"
+    bytes = 1147
+    sha256 = "db05fa45f7759d0b604144106706829fceed742c24ac23c084d31e30172daab9"
+    cases {
+      new CorpusCase {
+        name = "raw transform compiles a basic SFC"
+        kind = "test"
+        line = 20
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "npm/unplugin-vize/src/esbuild.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/npm/unplugin-vize/src/esbuild.test.ts"
+    bytes = 805
+    sha256 = "68262bdffbdd5c67b3c22fea6ec1b1c2f791c4c9434659d7589f0c03d9e001c2"
+    cases {
+      new CorpusCase {
+        name = "esbuild bundles a basic SFC"
+        kind = "test"
+        line = 7
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "npm/unplugin-vize/src/rollup.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/npm/unplugin-vize/src/rollup.test.ts"
+    bytes = 713
+    sha256 = "621f99a071ac77ae083d285a7a239711fdcff3d4cae5b211050bb00378acfc7f"
+    cases {
+      new CorpusCase {
+        name = "rollup bundles a basic SFC"
+        kind = "test"
+        line = 7
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "npm/unplugin-vize/src/style.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/npm/unplugin-vize/src/style.test.ts"
+    bytes = 1478
+    sha256 = "6c0d869ee9a6aee2867805d47ad2151e4e185561d62110a36822822db5bc0ead"
+    cases {
+      new CorpusCase {
+        name = "raw hooks expose a dedicated CSS module path"
+        kind = "test"
+        line = 19
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "npm/unplugin-vize/src/webpack.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/npm/unplugin-vize/src/webpack.test.ts"
+    bytes = 1757
+    sha256 = "f7b4f7bee54edc72c51167a2fc18d6df290315895e184bcf4696f01bb9fa918f"
+    cases {
+      new CorpusCase {
+        name = "webpack bundles a basic SFC"
+        kind = "test"
+        line = 29
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "playground/e2e/atelier-output-tabs.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/playground/e2e/atelier-output-tabs.test.ts"
+    bytes = 4990
+    sha256 = "bb0f70f4d25910894160763aa1be0a655e52191bb3152764f9c908794016c7c8"
+    cases {
+      new CorpusCase {
+        name = "switches between VDOM, SSR, and Vapor outputs without shifting the code view toggle"
+        kind = "test"
+        line = 96
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "playground/e2e/components.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/playground/e2e/components.test.ts"
+    bytes = 9484
+    sha256 = "01a2f81e990cd943aff34167228a49b1cfda13c2bacb3c6a9fb33e67ab78896c"
+    cases {
+      new CorpusCase {
+        name = "should render default button"
+        kind = "test"
+        line = 14
+      }
+      new CorpusCase {
+        name = "should render primary variant"
+        kind = "test"
+        line = 25
+      }
+      new CorpusCase {
+        name = "should render secondary variant"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "should handle disabled state"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "should emit click event"
+        kind = "test"
+        line = 62
+      }
+      new CorpusCase {
+        name = "should render component with reactive state"
+        kind = "test"
+        line = 74
+      }
+      new CorpusCase {
+        name = "should handle props correctly"
+        kind = "test"
+        line = 101
+      }
+      new CorpusCase {
+        name = "should handle computed properties"
+        kind = "test"
+        line = 126
+      }
+      new CorpusCase {
+        name = "should handle v-if directive"
+        kind = "test"
+        line = 148
+      }
+      new CorpusCase {
+        name = "should handle v-for directive"
+        kind = "test"
+        line = 175
+      }
+      new CorpusCase {
+        name = "should handle v-model on input"
+        kind = "test"
+        line = 198
+      }
+      new CorpusCase {
+        name = "should handle emits"
+        kind = "test"
+        line = 225
+      }
+      new CorpusCase {
+        name = "should handle slots"
+        kind = "test"
+        line = 244
+      }
+      new CorpusCase {
+        name = "should call onMounted"
+        kind = "test"
+        line = 271
+      }
+      new CorpusCase {
+        name = "should call onUnmounted"
+        kind = "test"
+        line = 291
+      }
+      new CorpusCase {
+        name = "should handle async setup"
+        kind = "test"
+        line = 313
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "playground/e2e/css-compile.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/playground/e2e/css-compile.test.ts"
+    bytes = 5891
+    sha256 = "e1fee553a51c298a824be87a59a1953835efb4a2325fe9eddf4ef6c7b2a64a73"
+    cases {
+      new CorpusCase {
+        name = "should compile basic CSS"
+        kind = "test"
+        line = 12
+      }
+      new CorpusCase {
+        name = "should compile multiple rules"
+        kind = "test"
+        line = 20
+      }
+      new CorpusCase {
+        name = "should handle nested selectors"
+        kind = "test"
+        line = 32
+      }
+      new CorpusCase {
+        name = "should add scope attribute to selectors"
+        kind = "test"
+        line = 47
+      }
+      new CorpusCase {
+        name = "should scope multiple selectors"
+        kind = "test"
+        line = 56
+      }
+      new CorpusCase {
+        name = "should handle :deep() pseudo-selector"
+        kind = "test"
+        line = 68
+      }
+      new CorpusCase {
+        name = "should handle :slotted() pseudo-selector"
+        kind = "test"
+        line = 81
+      }
+      new CorpusCase {
+        name = "should handle :global() pseudo-selector"
+        kind = "test"
+        line = 94
+      }
+      new CorpusCase {
+        name = "should minify CSS when option is enabled"
+        kind = "test"
+        line = 109
+      }
+      new CorpusCase {
+        name = "should not minify by default"
+        kind = "test"
+        line = 125
+      }
+      new CorpusCase {
+        name = "should detect v-bind() usage"
+        kind = "test"
+        line = 136
+      }
+      new CorpusCase {
+        name = "should detect multiple v-bind() usages"
+        kind = "test"
+        line = 149
+      }
+      new CorpusCase {
+        name = "should handle v-bind with expressions"
+        kind = "test"
+        line = 161
+      }
+      new CorpusCase {
+        name = "should compile SFC with style block"
+        kind = "test"
+        line = 173
+      }
+      new CorpusCase {
+        name = "should compile SFC with scoped style"
+        kind = "test"
+        line = 190
+      }
+      new CorpusCase {
+        name = "should compile SFC with multiple style blocks"
+        kind = "test"
+        line = 207
+      }
+      new CorpusCase {
+        name = "should handle style lang attribute"
+        kind = "test"
+        line = 229
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "playground/e2e/edge-cases.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/playground/e2e/edge-cases.test.ts"
+    bytes = 9725
+    sha256 = "f8136326b93dd73cf8746f9d1f49d1c6ef7afc08cf5856503ec31ee5e8f56b85"
+    cases {
+      new CorpusCase {
+        name = "should handle empty template"
+        kind = "test"
+        line = 12
+      }
+      new CorpusCase {
+        name = "should handle template with only whitespace"
+        kind = "test"
+        line = 20
+      }
+      new CorpusCase {
+        name = "should handle empty script setup"
+        kind = "test"
+        line = 30
+      }
+      new CorpusCase {
+        name = "should handle generic function declarations"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "should handle async/await with types"
+        kind = "test"
+        line = 66
+      }
+      new CorpusCase {
+        name = "should handle type assertions"
+        kind = "test"
+        line = 87
+      }
+      new CorpusCase {
+        name = "should handle non-null assertions"
+        kind = "test"
+        line = 106
+      }
+      new CorpusCase {
+        name = "should handle optional chaining with types"
+        kind = "test"
+        line = 121
+      }
+      new CorpusCase {
+        name = "should handle enum declarations"
+        kind = "test"
+        line = 139
+      }
+      new CorpusCase {
+        name = "should handle const enum declarations"
+        kind = "test"
+        line = 157
+      }
+      new CorpusCase {
+        name = "should handle class with decorators pattern"
+        kind = "test"
+        line = 177
+      }
+      new CorpusCase {
+        name = "should handle deeply nested templates"
+        kind = "test"
+        line = 207
+      }
+      new CorpusCase {
+        name = "should handle multiple root elements (fragments)"
+        kind = "test"
+        line = 227
+      }
+      new CorpusCase {
+        name = "should handle component self-reference"
+        kind = "test"
+        line = 242
+      }
+      new CorpusCase {
+        name = "should handle teleport"
+        kind = "test"
+        line = 261
+      }
+      new CorpusCase {
+        name = "should handle suspense"
+        kind = "test"
+        line = 276
+      }
+      new CorpusCase {
+        name = "should handle keep-alive"
+        kind = "test"
+        line = 297
+      }
+      new CorpusCase {
+        name = "should handle template literals"
+        kind = "test"
+        line = 316
+      }
+      new CorpusCase {
+        name = "should handle unicode in template"
+        kind = "test"
+        line = 331
+      }
+      new CorpusCase {
+        name = "should handle special HTML entities"
+        kind = "test"
+        line = 346
+      }
+      new CorpusCase {
+        name = "should handle defineModel"
+        kind = "test"
+        line = 358
+      }
+      new CorpusCase {
+        name = "should handle defineModel with options"
+        kind = "test"
+        line = 372
+      }
+      new CorpusCase {
+        name = "should handle defineExpose"
+        kind = "test"
+        line = 388
+      }
+      new CorpusCase {
+        name = "should handle defineOptions"
+        kind = "test"
+        line = 411
+      }
+      new CorpusCase {
+        name = "should handle defineSlots with types"
+        kind = "test"
+        line = 430
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "playground/e2e/sfc-compile.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/playground/e2e/sfc-compile.test.ts"
+    bytes = 7659
+    sha256 = "a4c0180f018e2eb00e97807ce88002255f513bbc0b8adedbc2483c8bc2376d64"
+    cases {
+      new CorpusCase {
+        name = "should compile template-only SFC"
+        kind = "test"
+        line = 12
+      }
+      new CorpusCase {
+        name = "should compile SFC with script setup"
+        kind = "test"
+        line = 25
+      }
+      new CorpusCase {
+        name = "should compile SFC with both script and script setup"
+        kind = "test"
+        line = 41
+      }
+      new CorpusCase {
+        name = "should strip type annotations from script setup"
+        kind = "test"
+        line = 64
+      }
+      new CorpusCase {
+        name = "should strip generic type parameters from ref/reactive"
+        kind = "test"
+        line = 85
+      }
+      new CorpusCase {
+        name = "should handle complex generic types"
+        kind = "test"
+        line = 109
+      }
+      new CorpusCase {
+        name = "should handle interface declarations"
+        kind = "test"
+        line = 131
+      }
+      new CorpusCase {
+        name = "should handle type aliases"
+        kind = "test"
+        line = 151
+      }
+      new CorpusCase {
+        name = "should handle defineProps with type parameter"
+        kind = "test"
+        line = 170
+      }
+      new CorpusCase {
+        name = "should handle defineEmits with type parameter"
+        kind = "test"
+        line = 188
+      }
+      new CorpusCase {
+        name = "should handle withDefaults"
+        kind = "test"
+        line = 205
+      }
+      new CorpusCase {
+        name = "should compile v-if directive"
+        kind = "test"
+        line = 228
+      }
+      new CorpusCase {
+        name = "should compile v-for directive"
+        kind = "test"
+        line = 242
+      }
+      new CorpusCase {
+        name = "should compile v-model directive"
+        kind = "test"
+        line = 256
+      }
+      new CorpusCase {
+        name = "should compile event handlers"
+        kind = "test"
+        line = 271
+      }
+      new CorpusCase {
+        name = "should compile slot content"
+        kind = "test"
+        line = 285
+      }
+      new CorpusCase {
+        name = "should compile SFC in SSR mode"
+        kind = "test"
+        line = 304
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "playground/e2e/vite-plugin-vapor.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/playground/e2e/vite-plugin-vapor.test.ts"
+    bytes = 7237
+    sha256 = "dc882ed8245c421451c46c130875fd92c968e02de8e17c48598998c52f77c5f2"
+    cases {
+      new CorpusCase {
+        name = "builds scoped single-file options with vapor enabled"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "omits scopeId for unscoped styles while keeping vapor"
+        kind = "test"
+        line = 29
+      }
+      new CorpusCase {
+        name = "builds batch options with vapor enabled"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "compiles script setup SFCs to a full Vapor render block"
+        kind = "test"
+        line = 52
+      }
+      new CorpusCase {
+        name = "compiles the playground app itself to Vapor output"
+        kind = "test"
+        line = 82
+      }
+      new CorpusCase {
+        name = "avoids collisions with local render bindings in script setup"
+        kind = "test"
+        line = 115
+      }
+      new CorpusCase {
+        name = "emits Vapor template ref setters for DOM refs used by playground components"
+        kind = "test"
+        line = 142
+      }
+      new CorpusCase {
+        name = "keeps v-for aliases inside Vapor v-html expressions"
+        kind = "test"
+        line = 180
+      }
+      new CorpusCase {
+        name = "keeps Atelier output tabs reactive even when v-if siblings are present"
+        kind = "test"
+        line = 197
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "playground/e2e/vrt/atelier-code-tabs.spec.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/playground/e2e/vrt/atelier-code-tabs.spec.ts"
+    bytes = 4477
+    sha256 = "e692f6c1cc14eb535603886bac95011a0f33c1b2f5b971fcc32205e53c3f7528"
+    cases {
+      new CorpusCase {
+        name = "atelier code targets expose VDOM, SSR, and Vapor outputs with stable toggles"
+        kind = "test"
+        line = 45
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "playground/e2e/vrt/playground.spec.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/playground/e2e/vrt/playground.spec.ts"
+    bytes = 1625
+    sha256 = "db602b1b00ce9790e72f7c2d4c43b6143ca06b7a23d4fb10879da6d1d2c2e6db"
+    cases {
+      new CorpusCase {
+        name = "light"
+        kind = "test"
+        line = 47
+      }
+      new CorpusCase {
+        name = "dark"
+        kind = "test"
+        line = 53
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "playground/e2e/vrt/vapor-runtime.spec.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/playground/e2e/vrt/vapor-runtime.spec.ts"
+    bytes = 2907
+    sha256 = "e7c9efb9a522d1df2b2c4b57725f145a052b505f1689de42ee1c693ca1b10299"
+    cases {
+      new CorpusCase {
+        name = "playground main tabs and output tabs stay runtime-clean in Vapor mode"
+        kind = "test"
+        line = 78
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "playground/e2e/wasm.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/playground/e2e/wasm.test.ts"
+    bytes = 1166
+    sha256 = "647277c32e522bb1c1e6045670c46715faa254915f860b3fe87a2ee5abec46ce"
+    cases {
+      new CorpusCase {
+        name = "should load WASM module"
+        kind = "test"
+        line = 5
+      }
+      new CorpusCase {
+        name = "should return WASM module after loading"
+        kind = "test"
+        line = 11
+      }
+      new CorpusCase {
+        name = "should have compileSfc function"
+        kind = "test"
+        line = 16
+      }
+      new CorpusCase {
+        name = "should compile a simple SFC"
+        kind = "test"
+        line = 24
+      }
+      new CorpusCase {
+        name = "should use real WASM, not mock"
+        kind = "test"
+        line = 43
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "playground/src/features/atelier/codeOutputs.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/playground/src/features/atelier/codeOutputs.test.ts"
+    bytes = 5181
+    sha256 = "1cc76fb9a52744ba9b1146544135f493c6a23a7f0ca385f8800186f7d8c009eb"
+    cases {
+      new CorpusCase {
+        name = "compiles template outputs for SSR and Vapor variants"
+        kind = "test"
+        line = 82
+      }
+      new CorpusCase {
+        name = "normalizes SFC SSR and Vapor template outputs using script setup bindings"
+        kind = "test"
+        line = 111
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "playground/src/features/atelier/formatters.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/playground/src/features/atelier/formatters.test.ts"
+    bytes = 1837
+    sha256 = "9066791bb77b89beecd8015f093b510af3625210645422166219bda4199c103f"
+    cases {
+      new CorpusCase {
+        name = "formats SSR template literal output"
+        kind = "test"
+        line = 5
+      }
+      new CorpusCase {
+        name = "formats Vapor template factory output"
+        kind = "test"
+        line = 26
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "playground/src/simple.test.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/playground/src/simple.test.ts"
+    bytes = 540
+    sha256 = "8369050e00550e9e73b0006d27a5feba4ef76db4ebc0326ba1fb7cfd5a8f8b48"
+    cases {
+      new CorpusCase {
+        name = "should mount Button with slot"
+        kind = "test"
+        line = 6
+      }
+      new CorpusCase {
+        name = "should mount Button without slot"
+        kind = "test"
+        line = 14
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/app/dev/elk.spec.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/app/dev/elk.spec.ts"
+    bytes = 6129
+    sha256 = "1d9a717bd8cc0d600de6b1dd46e39837fecbd2710cfa0f06c1473bc4c611e06c"
+    cases {
+      new CorpusCase {
+        name = "page renders with #__nuxt attached"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "SSR: server-rendered HTML is not empty"
+        kind = "test"
+        line = 75
+      }
+      new CorpusCase {
+        name = "no hydration mismatch errors"
+        kind = "test"
+        line = 82
+      }
+      new CorpusCase {
+        name = "scoped CSS: data-v-* attributes exist"
+        kind = "test"
+        line = 94
+      }
+      new CorpusCase {
+        name = "styles are applied: computed styles are non-default"
+        kind = "test"
+        line = 105
+      }
+      new CorpusCase {
+        name = "navigation components are visible"
+        kind = "test"
+        line = 118
+      }
+      new CorpusCase {
+        name = "no fatal console errors"
+        kind = "test"
+        line = 131
+      }
+      new CorpusCase {
+        name = "i18n: no raw key patterns displayed"
+        kind = "test"
+        line = 148
+      }
+      new CorpusCase {
+        name = "screenshot"
+        kind = "test"
+        line = 171
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/app/dev/misskey.spec.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/app/dev/misskey.spec.ts"
+    bytes = 5446
+    sha256 = "2aa3290892a07cd176136229620c0fdf8b8c403bd76e2c66a32338bbc617a012"
+    cases {
+      new CorpusCase {
+        name = "page renders with #misskey_app attached"
+        kind = "test"
+        line = 47
+      }
+      new CorpusCase {
+        name = "visitor UI renders"
+        kind = "test"
+        line = 75
+      }
+      new CorpusCase {
+        name = "scoped CSS: data-v-* attributes exist"
+        kind = "test"
+        line = 89
+      }
+      new CorpusCase {
+        name = "CSS Modules: module-generated class names exist"
+        kind = "test"
+        line = 102
+      }
+      new CorpusCase {
+        name = "async components load"
+        kind = "test"
+        line = 125
+      }
+      new CorpusCase {
+        name = "no fatal console errors"
+        kind = "test"
+        line = 144
+      }
+      new CorpusCase {
+        name = "screenshot"
+        kind = "test"
+        line = 161
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/app/dev/npmx.spec.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/app/dev/npmx.spec.ts"
+    bytes = 11763
+    sha256 = "edfd4650bf48504fc6e590143d960d409e0be364962c2877a711d526c0083c2f"
+    cases {
+      new CorpusCase {
+        name = "page renders with #__nuxt attached"
+        kind = "test"
+        line = 116
+      }
+      new CorpusCase {
+        name = "SSR: server-rendered HTML contains expected content"
+        kind = "test"
+        line = 142
+      }
+      new CorpusCase {
+        name = "SSR: accessibility route keeps definePageMeta route name"
+        kind = "test"
+        line = 151
+      }
+      new CorpusCase {
+        name = "SSR: docs alias resolves definePageMeta alias and meta"
+        kind = "test"
+        line = 169
+      }
+      new CorpusCase {
+        name = "server logs stay clean during docs prefetch"
+        kind = "test"
+        line = 191
+      }
+      new CorpusCase {
+        name = "no hydration mismatch errors"
+        kind = "test"
+        line = 211
+      }
+      new CorpusCase {
+        name = "scoped CSS: data-v-* attributes exist"
+        kind = "test"
+        line = 223
+      }
+      new CorpusCase {
+        name = "styles are applied: .skip-link has position fixed"
+        kind = "test"
+        line = 234
+      }
+      new CorpusCase {
+        name = "client-side navigation works"
+        kind = "test"
+        line = 253
+      }
+      new CorpusCase {
+        name = "reactivity: search input updates state"
+        kind = "test"
+        line = 270
+      }
+      new CorpusCase {
+        name = "i18n: localized strings displayed (no raw keys)"
+        kind = "test"
+        line = 290
+      }
+      new CorpusCase {
+        name = "components: AppHeader and AppFooter are visible"
+        kind = "test"
+        line = 309
+      }
+      new CorpusCase {
+        name = "no fatal console errors"
+        kind = "test"
+        line = 327
+      }
+      new CorpusCase {
+        name = "screenshot"
+        kind = "test"
+        line = 343
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/app/dev/vuefes.spec.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/app/dev/vuefes.spec.ts"
+    bytes = 3788
+    sha256 = "1e9c592504edd8dcfe0c7466573f934ccee7d8282f85f06c3a1902a7304f08e8"
+    cases {
+      new CorpusCase {
+        name = "page renders with #__nuxt attached"
+        kind = "test"
+        line = 48
+      }
+      new CorpusCase {
+        name = "SSR: server-rendered HTML is not empty"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "no hydration mismatch errors"
+        kind = "test"
+        line = 67
+      }
+      new CorpusCase {
+        name = "scoped CSS: data-v-* attributes exist"
+        kind = "test"
+        line = 83
+      }
+      new CorpusCase {
+        name = "no fatal console errors"
+        kind = "test"
+        line = 94
+      }
+      new CorpusCase {
+        name = "screenshot"
+        kind = "test"
+        line = 110
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/errors/parse-errors.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/errors/parse-errors.toml"
+    bytes = 7432
+    sha256 = "148c3fab8b2c64143aa567f165dcba76590ee6570cfb30617036c42f0df68f5b"
+    cases {
+      new CorpusCase {
+        name = "missing end tag"
+        kind = "test"
+        line = 8
+      }
+      new CorpusCase {
+        name = "missing nested end tag"
+        kind = "test"
+        line = 15
+      }
+      new CorpusCase {
+        name = "missing multiple end tags"
+        kind = "test"
+        line = 22
+      }
+      new CorpusCase {
+        name = "wrong end tag"
+        kind = "test"
+        line = 28
+      }
+      new CorpusCase {
+        name = "invalid tag name starting with digit"
+        kind = "test"
+        line = 38
+      }
+      new CorpusCase {
+        name = "invalid tag name starting with slash"
+        kind = "test"
+        line = 44
+      }
+      new CorpusCase {
+        name = "missing attribute value"
+        kind = "test"
+        line = 54
+      }
+      new CorpusCase {
+        name = "unexpected equals in attribute"
+        kind = "test"
+        line = 60
+      }
+      new CorpusCase {
+        name = "duplicate attribute"
+        kind = "test"
+        line = 66
+      }
+      new CorpusCase {
+        name = "missing whitespace between attributes"
+        kind = "test"
+        line = 73
+      }
+      new CorpusCase {
+        name = "unexpected character in attribute name"
+        kind = "test"
+        line = 79
+      }
+      new CorpusCase {
+        name = "v-else without adjacent v-if"
+        kind = "test"
+        line = 91
+      }
+      new CorpusCase {
+        name = "v-else-if without adjacent v-if"
+        kind = "test"
+        line = 98
+      }
+      new CorpusCase {
+        name = "v-else with text between"
+        kind = "test"
+        line = 104
+      }
+      new CorpusCase {
+        name = "v-for missing expression"
+        kind = "test"
+        line = 110
+      }
+      new CorpusCase {
+        name = "v-for malformed expression"
+        kind = "test"
+        line = 116
+      }
+      new CorpusCase {
+        name = "v-for template key placement"
+        kind = "test"
+        line = 123
+      }
+      new CorpusCase {
+        name = "v-bind no expression"
+        kind = "test"
+        line = 129
+      }
+      new CorpusCase {
+        name = "v-bind invalid same-name shorthand"
+        kind = "test"
+        line = 135
+      }
+      new CorpusCase {
+        name = "v-on no expression"
+        kind = "test"
+        line = 141
+      }
+      new CorpusCase {
+        name = "v-model no expression"
+        kind = "test"
+        line = 147
+      }
+      new CorpusCase {
+        name = "v-model malformed expression"
+        kind = "test"
+        line = 153
+      }
+      new CorpusCase {
+        name = "v-model on props element"
+        kind = "test"
+        line = 159
+      }
+      new CorpusCase {
+        name = "v-model argument on native element"
+        kind = "test"
+        line = 165
+      }
+      new CorpusCase {
+        name = "v-show no expression"
+        kind = "test"
+        line = 171
+      }
+      new CorpusCase {
+        name = "v-slot wrong placement"
+        kind = "test"
+        line = 177
+      }
+      new CorpusCase {
+        name = "v-slot on component with children"
+        kind = "test"
+        line = 183
+      }
+      new CorpusCase {
+        name = "v-slot duplicate slot names"
+        kind = "test"
+        line = 189
+      }
+      new CorpusCase {
+        name = "v-slot extraneous default slot children"
+        kind = "test"
+        line = 195
+      }
+      new CorpusCase {
+        name = "incorrectly opened comment"
+        kind = "test"
+        line = 205
+      }
+      new CorpusCase {
+        name = "abrupt closing of empty comment"
+        kind = "test"
+        line = 213
+      }
+      new CorpusCase {
+        name = "DOCTYPE in component"
+        kind = "test"
+        line = 231
+      }
+      new CorpusCase {
+        name = "eof in interpolation"
+        kind = "test"
+        line = 241
+      }
+      new CorpusCase {
+        name = "empty interpolation"
+        kind = "test"
+        line = 247
+      }
+      new CorpusCase {
+        name = "unexpected end tag void element"
+        kind = "test"
+        line = 257
+      }
+      new CorpusCase {
+        name = "element with invalid directive syntax"
+        kind = "test"
+        line = 265
+      }
+      new CorpusCase {
+        name = "prefix if without expression"
+        kind = "test"
+        line = 271
+      }
+      new CorpusCase {
+        name = "v-if on root with v-for"
+        kind = "test"
+        line = 277
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/errors/transform-errors.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/errors/transform-errors.toml"
+    bytes = 9260
+    sha256 = "d174b2c14db35d6c358714d53fe96f40f6ffe23d8010e666469bc8fa471a8499"
+    cases {
+      new CorpusCase {
+        name = "v-if no expression"
+        kind = "test"
+        line = 8
+      }
+      new CorpusCase {
+        name = "v-else without v-if"
+        kind = "test"
+        line = 15
+      }
+      new CorpusCase {
+        name = "v-else-if without v-if"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "v-else after v-else"
+        kind = "test"
+        line = 27
+      }
+      new CorpusCase {
+        name = "v-else-if after v-else"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "v-if with key on different branches"
+        kind = "test"
+        line = 39
+      }
+      new CorpusCase {
+        name = "v-for no expression"
+        kind = "test"
+        line = 50
+      }
+      new CorpusCase {
+        name = "v-for missing in/of"
+        kind = "test"
+        line = 57
+      }
+      new CorpusCase {
+        name = "v-for missing alias"
+        kind = "test"
+        line = 64
+      }
+      new CorpusCase {
+        name = "v-for missing iterator"
+        kind = "test"
+        line = 70
+      }
+      new CorpusCase {
+        name = "v-for template key on child"
+        kind = "test"
+        line = 76
+      }
+      new CorpusCase {
+        name = "v-bind with empty expression"
+        kind = "test"
+        line = 87
+      }
+      new CorpusCase {
+        name = "v-bind shorthand with dynamic arg and no expression"
+        kind = "test"
+        line = 93
+      }
+      new CorpusCase {
+        name = "v-on with empty expression"
+        kind = "test"
+        line = 104
+      }
+      new CorpusCase {
+        name = "v-on without argument or expression"
+        kind = "test"
+        line = 110
+      }
+      new CorpusCase {
+        name = "v-model no expression"
+        kind = "test"
+        line = 120
+      }
+      new CorpusCase {
+        name = "v-model empty expression"
+        kind = "test"
+        line = 126
+      }
+      new CorpusCase {
+        name = "v-model invalid expression (function call)"
+        kind = "test"
+        line = 132
+      }
+      new CorpusCase {
+        name = "v-model invalid expression (binary)"
+        kind = "test"
+        line = 139
+      }
+      new CorpusCase {
+        name = "v-model invalid expression (unary)"
+        kind = "test"
+        line = 145
+      }
+      new CorpusCase {
+        name = "v-model on v-for scope variable"
+        kind = "test"
+        line = 151
+      }
+      new CorpusCase {
+        name = "v-model argument on native element"
+        kind = "test"
+        line = 158
+      }
+      new CorpusCase {
+        name = "v-model with .sync modifier"
+        kind = "test"
+        line = 165
+      }
+      new CorpusCase {
+        name = "v-model on file input"
+        kind = "test"
+        line = 171
+      }
+      new CorpusCase {
+        name = "v-show no expression"
+        kind = "test"
+        line = 182
+      }
+      new CorpusCase {
+        name = "v-show empty expression"
+        kind = "test"
+        line = 188
+      }
+      new CorpusCase {
+        name = "v-show on template"
+        kind = "test"
+        line = 194
+      }
+      new CorpusCase {
+        name = "v-slot misplaced on element"
+        kind = "test"
+        line = 205
+      }
+      new CorpusCase {
+        name = "v-slot default and named slots mixed"
+        kind = "test"
+        line = 212
+      }
+      new CorpusCase {
+        name = "v-slot duplicate slot names"
+        kind = "test"
+        line = 218
+      }
+      new CorpusCase {
+        name = "v-slot on native element"
+        kind = "test"
+        line = 225
+      }
+      new CorpusCase {
+        name = "v-slot named default in shorthand"
+        kind = "test"
+        line = 231
+      }
+      new CorpusCase {
+        name = "v-memo without array"
+        kind = "test"
+        line = 241
+      }
+      new CorpusCase {
+        name = "v-memo on v-for without key"
+        kind = "test"
+        line = 248
+      }
+      new CorpusCase {
+        name = "Teleport without to"
+        kind = "test"
+        line = 258
+      }
+      new CorpusCase {
+        name = "KeepAlive with multiple children"
+        kind = "test"
+        line = 265
+      }
+      new CorpusCase {
+        name = "Transition with multiple children"
+        kind = "test"
+        line = 272
+      }
+      new CorpusCase {
+        name = "reference to undefined variable"
+        kind = "test"
+        line = 283
+      }
+      new CorpusCase {
+        name = "reference to private property"
+        kind = "test"
+        line = 289
+      }
+      new CorpusCase {
+        name = "reference to $data directly"
+        kind = "test"
+        line = 296
+      }
+      new CorpusCase {
+        name = "invalid JavaScript expression"
+        kind = "test"
+        line = 307
+      }
+      new CorpusCase {
+        name = "unexpected token in expression"
+        kind = "test"
+        line = 313
+      }
+      new CorpusCase {
+        name = "assignment in expression"
+        kind = "test"
+        line = 320
+      }
+      new CorpusCase {
+        name = "increment in v-bind"
+        kind = "test"
+        line = 326
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/parser/attribute.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/attribute.toml"
+    bytes = 1415
+    sha256 = "274740fd51988fdd83676057922e9842043970669ca93071e05976c2a6517acf"
+    cases {
+      new CorpusCase {
+        name = "attribute with no value"
+        kind = "test"
+        line = 6
+      }
+      new CorpusCase {
+        name = "attribute with empty value, double quote"
+        kind = "test"
+        line = 10
+      }
+      new CorpusCase {
+        name = "attribute with empty value, single quote"
+        kind = "test"
+        line = 14
+      }
+      new CorpusCase {
+        name = "attribute with value, double quote"
+        kind = "test"
+        line = 18
+      }
+      new CorpusCase {
+        name = "attribute with value, single quote"
+        kind = "test"
+        line = 22
+      }
+      new CorpusCase {
+        name = "attribute with value, unquoted"
+        kind = "test"
+        line = 26
+      }
+      new CorpusCase {
+        name = "multiple attributes"
+        kind = "test"
+        line = 30
+      }
+      new CorpusCase {
+        name = "attribute with spaces"
+        kind = "test"
+        line = 34
+      }
+      new CorpusCase {
+        name = "attribute with equals in value"
+        kind = "test"
+        line = 38
+      }
+      new CorpusCase {
+        name = "attribute with special characters"
+        kind = "test"
+        line = 42
+      }
+      new CorpusCase {
+        name = "class attribute"
+        kind = "test"
+        line = 46
+      }
+      new CorpusCase {
+        name = "style attribute"
+        kind = "test"
+        line = 50
+      }
+      new CorpusCase {
+        name = "boolean attribute disabled"
+        kind = "test"
+        line = 54
+      }
+      new CorpusCase {
+        name = "boolean attribute readonly"
+        kind = "test"
+        line = 58
+      }
+      new CorpusCase {
+        name = "boolean attribute checked"
+        kind = "test"
+        line = 62
+      }
+      new CorpusCase {
+        name = "attribute with newline in value"
+        kind = "test"
+        line = 66
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/parser/comment.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/comment.toml"
+    bytes = 6445
+    sha256 = "cca746f6338d27cedb07a7bd138e53da284ef67d746445b0880cb89ee8c779a4"
+    cases {
+      new CorpusCase {
+        name = "empty comment"
+        kind = "test"
+        line = 10
+      }
+      new CorpusCase {
+        name = "simple comment"
+        kind = "test"
+        line = 14
+      }
+      new CorpusCase {
+        name = "comment with single word"
+        kind = "test"
+        line = 18
+      }
+      new CorpusCase {
+        name = "comment with whitespace"
+        kind = "test"
+        line = 22
+      }
+      new CorpusCase {
+        name = "comment with leading whitespace"
+        kind = "test"
+        line = 26
+      }
+      new CorpusCase {
+        name = "comment with trailing whitespace"
+        kind = "test"
+        line = 30
+      }
+      new CorpusCase {
+        name = "comment with no spaces"
+        kind = "test"
+        line = 34
+      }
+      new CorpusCase {
+        name = "two comments"
+        kind = "test"
+        line = 42
+      }
+      new CorpusCase {
+        name = "three comments"
+        kind = "test"
+        line = 46
+      }
+      new CorpusCase {
+        name = "comments with space between"
+        kind = "test"
+        line = 50
+      }
+      new CorpusCase {
+        name = "comments with text between"
+        kind = "test"
+        line = 54
+      }
+      new CorpusCase {
+        name = "comments with newline between"
+        kind = "test"
+        line = 58
+      }
+      new CorpusCase {
+        name = "comment in element"
+        kind = "test"
+        line = 67
+      }
+      new CorpusCase {
+        name = "comment at start of element"
+        kind = "test"
+        line = 71
+      }
+      new CorpusCase {
+        name = "comment at end of element"
+        kind = "test"
+        line = 75
+      }
+      new CorpusCase {
+        name = "comment between elements"
+        kind = "test"
+        line = 79
+      }
+      new CorpusCase {
+        name = "comment before element"
+        kind = "test"
+        line = 83
+      }
+      new CorpusCase {
+        name = "comment after element"
+        kind = "test"
+        line = 87
+      }
+      new CorpusCase {
+        name = "comment between text"
+        kind = "test"
+        line = 91
+      }
+      new CorpusCase {
+        name = "comment in nested element"
+        kind = "test"
+        line = 95
+      }
+      new CorpusCase {
+        name = "comment between v-if branches"
+        kind = "test"
+        line = 99
+      }
+      new CorpusCase {
+        name = "comment in sibling elements"
+        kind = "test"
+        line = 103
+      }
+      new CorpusCase {
+        name = "comment with special characters"
+        kind = "test"
+        line = 111
+      }
+      new CorpusCase {
+        name = "comment with HTML-like content"
+        kind = "test"
+        line = 115
+      }
+      new CorpusCase {
+        name = "comment with interpolation-like content"
+        kind = "test"
+        line = 119
+      }
+      new CorpusCase {
+        name = "comment with directive-like content"
+        kind = "test"
+        line = 123
+      }
+      new CorpusCase {
+        name = "comment with angle brackets"
+        kind = "test"
+        line = 127
+      }
+      new CorpusCase {
+        name = "comment with ampersand"
+        kind = "test"
+        line = 131
+      }
+      new CorpusCase {
+        name = "comment with quotes"
+        kind = "test"
+        line = 135
+      }
+      new CorpusCase {
+        name = "comment with equals"
+        kind = "test"
+        line = 139
+      }
+      new CorpusCase {
+        name = "comment with dashes"
+        kind = "test"
+        line = 143
+      }
+      new CorpusCase {
+        name = "comment with newlines"
+        kind = "test"
+        line = 151
+      }
+      new CorpusCase {
+        name = "comment with newline at start"
+        kind = "test"
+        line = 158
+      }
+      new CorpusCase {
+        name = "comment with newline at end"
+        kind = "test"
+        line = 163
+      }
+      new CorpusCase {
+        name = "comment with indentation"
+        kind = "test"
+        line = 168
+      }
+      new CorpusCase {
+        name = "comment with many lines"
+        kind = "test"
+        line = 175
+      }
+      new CorpusCase {
+        name = "todo comment"
+        kind = "test"
+        line = 189
+      }
+      new CorpusCase {
+        name = "fixme comment"
+        kind = "test"
+        line = 193
+      }
+      new CorpusCase {
+        name = "note comment"
+        kind = "test"
+        line = 197
+      }
+      new CorpusCase {
+        name = "comment with url"
+        kind = "test"
+        line = 201
+      }
+      new CorpusCase {
+        name = "comment with code"
+        kind = "test"
+        line = 205
+      }
+      new CorpusCase {
+        name = "jsdoc-like comment"
+        kind = "test"
+        line = 209
+      }
+      new CorpusCase {
+        name = "comment with emoji"
+        kind = "test"
+        line = 213
+      }
+      new CorpusCase {
+        name = "comment with unicode"
+        kind = "test"
+        line = 217
+      }
+      new CorpusCase {
+        name = "comment that looks like closing"
+        kind = "test"
+        line = 225
+      }
+      new CorpusCase {
+        name = "comment with multiple dashes"
+        kind = "test"
+        line = 229
+      }
+      new CorpusCase {
+        name = "very long comment"
+        kind = "test"
+        line = 233
+      }
+      new CorpusCase {
+        name = "comment only template"
+        kind = "test"
+        line = 237
+      }
+      new CorpusCase {
+        name = "nested comment markers (invalid but handled)"
+        kind = "test"
+        line = 241
+      }
+      new CorpusCase {
+        name = "comment in script-like context"
+        kind = "test"
+        line = 245
+      }
+      new CorpusCase {
+        name = "comment in style-like context"
+        kind = "test"
+        line = 249
+      }
+      new CorpusCase {
+        name = "IE conditional comment start"
+        kind = "test"
+        line = 257
+      }
+      new CorpusCase {
+        name = "comment with brackets"
+        kind = "test"
+        line = 261
+      }
+      new CorpusCase {
+        name = "comment between v-if and v-else"
+        kind = "test"
+        line = 269
+      }
+      new CorpusCase {
+        name = "comment between v-else-if branches"
+        kind = "test"
+        line = 275
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/parser/directive.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/directive.toml"
+    bytes = 15752
+    sha256 = "85a7d6c1ecb993e6148e61a6ec98f9deacdb117d34b887540f91f48f92e10163"
+    cases {
+      new CorpusCase {
+        name = "v-if directive"
+        kind = "test"
+        line = 10
+      }
+      new CorpusCase {
+        name = "v-if with no value"
+        kind = "test"
+        line = 14
+      }
+      new CorpusCase {
+        name = "v-if with complex expression"
+        kind = "test"
+        line = 18
+      }
+      new CorpusCase {
+        name = "v-if with method call"
+        kind = "test"
+        line = 22
+      }
+      new CorpusCase {
+        name = "v-if with negation"
+        kind = "test"
+        line = 26
+      }
+      new CorpusCase {
+        name = "v-if with comparison"
+        kind = "test"
+        line = 30
+      }
+      new CorpusCase {
+        name = "v-if with ternary"
+        kind = "test"
+        line = 34
+      }
+      new CorpusCase {
+        name = "v-if with member expression"
+        kind = "test"
+        line = 38
+      }
+      new CorpusCase {
+        name = "v-else directive"
+        kind = "test"
+        line = 42
+      }
+      new CorpusCase {
+        name = "v-else-if directive"
+        kind = "test"
+        line = 46
+      }
+      new CorpusCase {
+        name = "v-else-if with complex condition"
+        kind = "test"
+        line = 50
+      }
+      new CorpusCase {
+        name = "v-if with v-else chain"
+        kind = "test"
+        line = 54
+      }
+      new CorpusCase {
+        name = "v-if with v-else-if chain"
+        kind = "test"
+        line = 58
+      }
+      new CorpusCase {
+        name = "v-if on template"
+        kind = "test"
+        line = 62
+      }
+      new CorpusCase {
+        name = "v-for directive"
+        kind = "test"
+        line = 70
+      }
+      new CorpusCase {
+        name = "v-for with index"
+        kind = "test"
+        line = 74
+      }
+      new CorpusCase {
+        name = "v-for with key and index"
+        kind = "test"
+        line = 78
+      }
+      new CorpusCase {
+        name = "v-for with of keyword"
+        kind = "test"
+        line = 82
+      }
+      new CorpusCase {
+        name = "v-for with destructuring"
+        kind = "test"
+        line = 86
+      }
+      new CorpusCase {
+        name = "v-for with array destructuring"
+        kind = "test"
+        line = 90
+      }
+      new CorpusCase {
+        name = "v-for with nested destructuring"
+        kind = "test"
+        line = 94
+      }
+      new CorpusCase {
+        name = "v-for with default value"
+        kind = "test"
+        line = 98
+      }
+      new CorpusCase {
+        name = "v-for with rest operator"
+        kind = "test"
+        line = 102
+      }
+      new CorpusCase {
+        name = "v-for with range"
+        kind = "test"
+        line = 106
+      }
+      new CorpusCase {
+        name = "v-for with method call"
+        kind = "test"
+        line = 110
+      }
+      new CorpusCase {
+        name = "v-for with computed source"
+        kind = "test"
+        line = 114
+      }
+      new CorpusCase {
+        name = "v-for with chained methods"
+        kind = "test"
+        line = 118
+      }
+      new CorpusCase {
+        name = "v-for with inline array"
+        kind = "test"
+        line = 122
+      }
+      new CorpusCase {
+        name = "v-for with inline object"
+        kind = "test"
+        line = 126
+      }
+      new CorpusCase {
+        name = "v-for on template"
+        kind = "test"
+        line = 130
+      }
+      new CorpusCase {
+        name = "v-for with key attribute"
+        kind = "test"
+        line = 134
+      }
+      new CorpusCase {
+        name = "v-for with static key"
+        kind = "test"
+        line = 138
+      }
+      new CorpusCase {
+        name = "v-bind directive"
+        kind = "test"
+        line = 146
+      }
+      new CorpusCase {
+        name = "v-bind shorthand"
+        kind = "test"
+        line = 150
+      }
+      new CorpusCase {
+        name = "v-bind with no expression"
+        kind = "test"
+        line = 154
+      }
+      new CorpusCase {
+        name = "v-bind shorthand with no expression"
+        kind = "test"
+        line = 158
+      }
+      new CorpusCase {
+        name = "v-bind with dynamic arg"
+        kind = "test"
+        line = 162
+      }
+      new CorpusCase {
+        name = "v-bind shorthand with dynamic arg"
+        kind = "test"
+        line = 166
+      }
+      new CorpusCase {
+        name = "v-bind with complex dynamic arg"
+        kind = "test"
+        line = 170
+      }
+      new CorpusCase {
+        name = "v-bind with modifiers"
+        kind = "test"
+        line = 174
+      }
+      new CorpusCase {
+        name = "v-bind with .prop modifier"
+        kind = "test"
+        line = 178
+      }
+      new CorpusCase {
+        name = "v-bind with .attr modifier"
+        kind = "test"
+        line = 182
+      }
+      new CorpusCase {
+        name = "v-bind with .sync modifier (v2 compat)"
+        kind = "test"
+        line = 186
+      }
+      new CorpusCase {
+        name = "v-bind with multiple modifiers"
+        kind = "test"
+        line = 190
+      }
+      new CorpusCase {
+        name = "v-bind object"
+        kind = "test"
+        line = 194
+      }
+      new CorpusCase {
+        name = "v-bind object with other props"
+        kind = "test"
+        line = 198
+      }
+      new CorpusCase {
+        name = "v-bind class"
+        kind = "test"
+        line = 202
+      }
+      new CorpusCase {
+        name = "v-bind class array"
+        kind = "test"
+        line = 206
+      }
+      new CorpusCase {
+        name = "v-bind class mixed"
+        kind = "test"
+        line = 210
+      }
+      new CorpusCase {
+        name = "v-bind style object"
+        kind = "test"
+        line = 214
+      }
+      new CorpusCase {
+        name = "v-bind style array"
+        kind = "test"
+        line = 218
+      }
+      new CorpusCase {
+        name = "v-bind with expression"
+        kind = "test"
+        line = 222
+      }
+      new CorpusCase {
+        name = "v-bind with ternary"
+        kind = "test"
+        line = 226
+      }
+      new CorpusCase {
+        name = "v-on directive"
+        kind = "test"
+        line = 234
+      }
+      new CorpusCase {
+        name = "v-on shorthand"
+        kind = "test"
+        line = 238
+      }
+      new CorpusCase {
+        name = "v-on with dynamic arg"
+        kind = "test"
+        line = 242
+      }
+      new CorpusCase {
+        name = "v-on shorthand with dynamic arg"
+        kind = "test"
+        line = 246
+      }
+      new CorpusCase {
+        name = "v-on with complex dynamic arg"
+        kind = "test"
+        line = 250
+      }
+      new CorpusCase {
+        name = "v-on with modifiers"
+        kind = "test"
+        line = 254
+      }
+      new CorpusCase {
+        name = "v-on with multiple modifiers"
+        kind = "test"
+        line = 258
+      }
+      new CorpusCase {
+        name = "v-on with .once modifier"
+        kind = "test"
+        line = 262
+      }
+      new CorpusCase {
+        name = "v-on with .passive modifier"
+        kind = "test"
+        line = 266
+      }
+      new CorpusCase {
+        name = "v-on with .self modifier"
+        kind = "test"
+        line = 270
+      }
+      new CorpusCase {
+        name = "v-on with key modifier"
+        kind = "test"
+        line = 274
+      }
+      new CorpusCase {
+        name = "v-on with multiple key modifiers"
+        kind = "test"
+        line = 278
+      }
+      new CorpusCase {
+        name = "v-on with mouse button modifier"
+        kind = "test"
+        line = 282
+      }
+      new CorpusCase {
+        name = "v-on with .exact modifier"
+        kind = "test"
+        line = 286
+      }
+      new CorpusCase {
+        name = "v-on inline expression"
+        kind = "test"
+        line = 290
+      }
+      new CorpusCase {
+        name = "v-on multiple statements"
+        kind = "test"
+        line = 294
+      }
+      new CorpusCase {
+        name = "v-on arrow function"
+        kind = "test"
+        line = 298
+      }
+      new CorpusCase {
+        name = "v-on arrow function with event"
+        kind = "test"
+        line = 302
+      }
+      new CorpusCase {
+        name = "v-on with $event"
+        kind = "test"
+        line = 306
+      }
+      new CorpusCase {
+        name = "v-on object"
+        kind = "test"
+        line = 310
+      }
+      new CorpusCase {
+        name = "v-on with no handler"
+        kind = "test"
+        line = 314
+      }
+      new CorpusCase {
+        name = "multiple v-on directives"
+        kind = "test"
+        line = 318
+      }
+      new CorpusCase {
+        name = "v-model directive"
+        kind = "test"
+        line = 326
+      }
+      new CorpusCase {
+        name = "v-model with modifiers"
+        kind = "test"
+        line = 330
+      }
+      new CorpusCase {
+        name = "v-model with .number modifier"
+        kind = "test"
+        line = 334
+      }
+      new CorpusCase {
+        name = "v-model with .lazy modifier"
+        kind = "test"
+        line = 338
+      }
+      new CorpusCase {
+        name = "v-model with .trim modifier"
+        kind = "test"
+        line = 342
+      }
+      new CorpusCase {
+        name = "v-model on textarea"
+        kind = "test"
+        line = 346
+      }
+      new CorpusCase {
+        name = "v-model on select"
+        kind = "test"
+        line = 350
+      }
+      new CorpusCase {
+        name = "v-model on checkbox"
+        kind = "test"
+        line = 354
+      }
+      new CorpusCase {
+        name = "v-model on radio"
+        kind = "test"
+        line = 358
+      }
+      new CorpusCase {
+        name = "v-model with expression"
+        kind = "test"
+        line = 362
+      }
+      new CorpusCase {
+        name = "v-model with bracket notation"
+        kind = "test"
+        line = 366
+      }
+      new CorpusCase {
+        name = "v-model with multiline"
+        kind = "test"
+        line = 370
+      }
+      new CorpusCase {
+        name = "v-model with custom arg"
+        kind = "test"
+        line = 376
+      }
+      new CorpusCase {
+        name = "v-model with custom arg and modifiers"
+        kind = "test"
+        line = 380
+      }
+      new CorpusCase {
+        name = "multiple v-model"
+        kind = "test"
+        line = 384
+      }
+      new CorpusCase {
+        name = "v-slot directive"
+        kind = "test"
+        line = 392
+      }
+      new CorpusCase {
+        name = "v-slot shorthand"
+        kind = "test"
+        line = 396
+      }
+      new CorpusCase {
+        name = "v-slot default"
+        kind = "test"
+        line = 400
+      }
+      new CorpusCase {
+        name = "v-slot default shorthand"
+        kind = "test"
+        line = 404
+      }
+      new CorpusCase {
+        name = "v-slot with scope"
+        kind = "test"
+        line = 408
+      }
+      new CorpusCase {
+        name = "v-slot shorthand with scope"
+        kind = "test"
+        line = 412
+      }
+      new CorpusCase {
+        name = "v-slot with destructuring"
+        kind = "test"
+        line = 416
+      }
+      new CorpusCase {
+        name = "v-slot with nested destructuring"
+        kind = "test"
+        line = 420
+      }
+      new CorpusCase {
+        name = "v-slot with default value"
+        kind = "test"
+        line = 424
+      }
+      new CorpusCase {
+        name = "v-slot with rest"
+        kind = "test"
+        line = 428
+      }
+      new CorpusCase {
+        name = "v-slot with dynamic name"
+        kind = "test"
+        line = 432
+      }
+      new CorpusCase {
+        name = "v-slot shorthand with dynamic name"
+        kind = "test"
+        line = 436
+      }
+      new CorpusCase {
+        name = "v-slot on component"
+        kind = "test"
+        line = 440
+      }
+      new CorpusCase {
+        name = "v-slot named on component"
+        kind = "test"
+        line = 444
+      }
+      new CorpusCase {
+        name = "multiple slots"
+        kind = "test"
+        line = 448
+      }
+      new CorpusCase {
+        name = "v-show directive"
+        kind = "test"
+        line = 459
+      }
+      new CorpusCase {
+        name = "v-show with expression"
+        kind = "test"
+        line = 463
+      }
+      new CorpusCase {
+        name = "v-show with method"
+        kind = "test"
+        line = 467
+      }
+      new CorpusCase {
+        name = "v-show with negation"
+        kind = "test"
+        line = 471
+      }
+      new CorpusCase {
+        name = "v-pre directive"
+        kind = "test"
+        line = 479
+      }
+      new CorpusCase {
+        name = "v-pre with nested elements"
+        kind = "test"
+        line = 483
+      }
+      new CorpusCase {
+        name = "v-pre with directives"
+        kind = "test"
+        line = 487
+      }
+      new CorpusCase {
+        name = "v-cloak directive"
+        kind = "test"
+        line = 495
+      }
+      new CorpusCase {
+        name = "v-cloak with content"
+        kind = "test"
+        line = 499
+      }
+      new CorpusCase {
+        name = "v-once directive"
+        kind = "test"
+        line = 507
+      }
+      new CorpusCase {
+        name = "v-once with content"
+        kind = "test"
+        line = 511
+      }
+      new CorpusCase {
+        name = "v-once with children"
+        kind = "test"
+        line = 515
+      }
+      new CorpusCase {
+        name = "v-once on component"
+        kind = "test"
+        line = 519
+      }
+      new CorpusCase {
+        name = "v-memo directive"
+        kind = "test"
+        line = 527
+      }
+      new CorpusCase {
+        name = "v-memo with multiple dependencies"
+        kind = "test"
+        line = 531
+      }
+      new CorpusCase {
+        name = "v-memo empty array"
+        kind = "test"
+        line = 535
+      }
+      new CorpusCase {
+        name = "v-memo with v-for"
+        kind = "test"
+        line = 539
+      }
+      new CorpusCase {
+        name = "v-html directive"
+        kind = "test"
+        line = 547
+      }
+      new CorpusCase {
+        name = "v-html with expression"
+        kind = "test"
+        line = 551
+      }
+      new CorpusCase {
+        name = "v-text directive"
+        kind = "test"
+        line = 555
+      }
+      new CorpusCase {
+        name = "v-text with expression"
+        kind = "test"
+        line = 559
+      }
+      new CorpusCase {
+        name = "custom directive"
+        kind = "test"
+        line = 567
+      }
+      new CorpusCase {
+        name = "custom directive with value"
+        kind = "test"
+        line = 571
+      }
+      new CorpusCase {
+        name = "custom directive with arg"
+        kind = "test"
+        line = 575
+      }
+      new CorpusCase {
+        name = "custom directive with dynamic arg"
+        kind = "test"
+        line = 579
+      }
+      new CorpusCase {
+        name = "custom directive with modifiers"
+        kind = "test"
+        line = 583
+      }
+      new CorpusCase {
+        name = "custom directive with arg and modifiers"
+        kind = "test"
+        line = 587
+      }
+      new CorpusCase {
+        name = "custom directive with dynamic arg and modifiers"
+        kind = "test"
+        line = 591
+      }
+      new CorpusCase {
+        name = "custom directive without value"
+        kind = "test"
+        line = 595
+      }
+      new CorpusCase {
+        name = "custom directive with object value"
+        kind = "test"
+        line = 599
+      }
+      new CorpusCase {
+        name = "custom directive with array value"
+        kind = "test"
+        line = 603
+      }
+      new CorpusCase {
+        name = "v-if with v-for warning case"
+        kind = "test"
+        line = 611
+      }
+      new CorpusCase {
+        name = "v-bind with v-on"
+        kind = "test"
+        line = 615
+      }
+      new CorpusCase {
+        name = "v-model with v-bind"
+        kind = "test"
+        line = 619
+      }
+      new CorpusCase {
+        name = "v-show with v-bind"
+        kind = "test"
+        line = 623
+      }
+      new CorpusCase {
+        name = "multiple custom directives"
+        kind = "test"
+        line = 627
+      }
+      new CorpusCase {
+        name = "v-once with v-show"
+        kind = "test"
+        line = 631
+      }
+      new CorpusCase {
+        name = "all directive types"
+        kind = "test"
+        line = 635
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/parser/element.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/element.toml"
+    bytes = 2947
+    sha256 = "f31f7681f51d3c61bcd0d5e7578808f79eb5e4ba1811dd0a061217a3a6ceb3a4"
+    cases {
+      new CorpusCase {
+        name = "simple div"
+        kind = "test"
+        line = 7
+      }
+      new CorpusCase {
+        name = "simple div with hello text"
+        kind = "test"
+        line = 11
+      }
+      new CorpusCase {
+        name = "empty div"
+        kind = "test"
+        line = 15
+      }
+      new CorpusCase {
+        name = "self closing"
+        kind = "test"
+        line = 19
+      }
+      new CorpusCase {
+        name = "self-closing div"
+        kind = "test"
+        line = 23
+      }
+      new CorpusCase {
+        name = "void element - input"
+        kind = "test"
+        line = 27
+      }
+      new CorpusCase {
+        name = "void element - br"
+        kind = "test"
+        line = 31
+      }
+      new CorpusCase {
+        name = "void element - hr"
+        kind = "test"
+        line = 35
+      }
+      new CorpusCase {
+        name = "void element - img"
+        kind = "test"
+        line = 39
+      }
+      new CorpusCase {
+        name = "element with text"
+        kind = "test"
+        line = 43
+      }
+      new CorpusCase {
+        name = "nested elements"
+        kind = "test"
+        line = 47
+      }
+      new CorpusCase {
+        name = "element with multiple children"
+        kind = "test"
+        line = 51
+      }
+      new CorpusCase {
+        name = "deeply nested elements"
+        kind = "test"
+        line = 55
+      }
+      new CorpusCase {
+        name = "sibling elements"
+        kind = "test"
+        line = 59
+      }
+      new CorpusCase {
+        name = "element with class attribute"
+        kind = "test"
+        line = 63
+      }
+      new CorpusCase {
+        name = "element with id attribute"
+        kind = "test"
+        line = 67
+      }
+      new CorpusCase {
+        name = "element with multiple attributes"
+        kind = "test"
+        line = 71
+      }
+      new CorpusCase {
+        name = "element with boolean attribute"
+        kind = "test"
+        line = 75
+      }
+      new CorpusCase {
+        name = "component (capitalized)"
+        kind = "test"
+        line = 79
+      }
+      new CorpusCase {
+        name = "self-closing component"
+        kind = "test"
+        line = 83
+      }
+      new CorpusCase {
+        name = "slot element"
+        kind = "test"
+        line = 87
+      }
+      new CorpusCase {
+        name = "slot element with name"
+        kind = "test"
+        line = 91
+      }
+      new CorpusCase {
+        name = "template element with v-if"
+        kind = "test"
+        line = 95
+      }
+      new CorpusCase {
+        name = "SVG element"
+        kind = "test"
+        line = 99
+      }
+      new CorpusCase {
+        name = "SVG with attributes"
+        kind = "test"
+        line = 103
+      }
+      new CorpusCase {
+        name = "element with interpolation child"
+        kind = "test"
+        line = 107
+      }
+      new CorpusCase {
+        name = "element with mixed children"
+        kind = "test"
+        line = 111
+      }
+      new CorpusCase {
+        name = "pre element"
+        kind = "test"
+        line = 115
+      }
+      new CorpusCase {
+        name = "textarea element"
+        kind = "test"
+        line = 119
+      }
+      new CorpusCase {
+        name = "Teleport component"
+        kind = "test"
+        line = 123
+      }
+      new CorpusCase {
+        name = "KeepAlive component"
+        kind = "test"
+        line = 127
+      }
+      new CorpusCase {
+        name = "table elements"
+        kind = "test"
+        line = 131
+      }
+      new CorpusCase {
+        name = "list elements"
+        kind = "test"
+        line = 135
+      }
+      new CorpusCase {
+        name = "semantic elements"
+        kind = "test"
+        line = 139
+      }
+      new CorpusCase {
+        name = "heading elements h1-h6"
+        kind = "test"
+        line = 143
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/parser/interpolation.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/interpolation.toml"
+    bytes = 9064
+    sha256 = "da65c9717d77674924ef2299f5305de4aaf151bb821af6e8b63d3ae3e7eff750"
+    cases {
+      new CorpusCase {
+        name = "simple interpolation"
+        kind = "test"
+        line = 10
+      }
+      new CorpusCase {
+        name = "simple interpolation with spaces"
+        kind = "test"
+        line = 14
+      }
+      new CorpusCase {
+        name = "interpolation with extra whitespace"
+        kind = "test"
+        line = 18
+      }
+      new CorpusCase {
+        name = "interpolation with newlines"
+        kind = "test"
+        line = 22
+      }
+      new CorpusCase {
+        name = "interpolation with tabs"
+        kind = "test"
+        line = 26
+      }
+      new CorpusCase {
+        name = "interpolation with expression"
+        kind = "test"
+        line = 34
+      }
+      new CorpusCase {
+        name = "interpolation with subtraction"
+        kind = "test"
+        line = 38
+      }
+      new CorpusCase {
+        name = "interpolation with multiplication"
+        kind = "test"
+        line = 42
+      }
+      new CorpusCase {
+        name = "interpolation with division"
+        kind = "test"
+        line = 46
+      }
+      new CorpusCase {
+        name = "interpolation with modulo"
+        kind = "test"
+        line = 50
+      }
+      new CorpusCase {
+        name = "interpolation with method call"
+        kind = "test"
+        line = 54
+      }
+      new CorpusCase {
+        name = "interpolation with chained method calls"
+        kind = "test"
+        line = 58
+      }
+      new CorpusCase {
+        name = "interpolation with method call multiple args"
+        kind = "test"
+        line = 62
+      }
+      new CorpusCase {
+        name = "interpolation with ternary"
+        kind = "test"
+        line = 66
+      }
+      new CorpusCase {
+        name = "interpolation with nested ternary"
+        kind = "test"
+        line = 70
+      }
+      new CorpusCase {
+        name = "interpolation with logical and"
+        kind = "test"
+        line = 74
+      }
+      new CorpusCase {
+        name = "interpolation with logical or"
+        kind = "test"
+        line = 78
+      }
+      new CorpusCase {
+        name = "interpolation with nullish coalescing"
+        kind = "test"
+        line = 82
+      }
+      new CorpusCase {
+        name = "interpolation with optional chaining"
+        kind = "test"
+        line = 86
+      }
+      new CorpusCase {
+        name = "interpolation with optional method call"
+        kind = "test"
+        line = 90
+      }
+      new CorpusCase {
+        name = "interpolation with comparison"
+        kind = "test"
+        line = 94
+      }
+      new CorpusCase {
+        name = "interpolation with less than (tag-like)"
+        kind = "test"
+        line = 98
+      }
+      new CorpusCase {
+        name = "interpolation with equality"
+        kind = "test"
+        line = 102
+      }
+      new CorpusCase {
+        name = "interpolation with inequality"
+        kind = "test"
+        line = 106
+      }
+      new CorpusCase {
+        name = "interpolation with negation"
+        kind = "test"
+        line = 110
+      }
+      new CorpusCase {
+        name = "interpolation with double negation"
+        kind = "test"
+        line = 114
+      }
+      new CorpusCase {
+        name = "interpolation with typeof"
+        kind = "test"
+        line = 118
+      }
+      new CorpusCase {
+        name = "interpolation with object literal"
+        kind = "test"
+        line = 126
+      }
+      new CorpusCase {
+        name = "interpolation with nested object"
+        kind = "test"
+        line = 130
+      }
+      new CorpusCase {
+        name = "interpolation with object shorthand"
+        kind = "test"
+        line = 134
+      }
+      new CorpusCase {
+        name = "interpolation with computed property"
+        kind = "test"
+        line = 138
+      }
+      new CorpusCase {
+        name = "interpolation with array literal"
+        kind = "test"
+        line = 142
+      }
+      new CorpusCase {
+        name = "interpolation with nested array"
+        kind = "test"
+        line = 146
+      }
+      new CorpusCase {
+        name = "interpolation with spread operator"
+        kind = "test"
+        line = 150
+      }
+      new CorpusCase {
+        name = "interpolation with object spread"
+        kind = "test"
+        line = 154
+      }
+      new CorpusCase {
+        name = "interpolation with dot notation"
+        kind = "test"
+        line = 162
+      }
+      new CorpusCase {
+        name = "interpolation with deep dot notation"
+        kind = "test"
+        line = 166
+      }
+      new CorpusCase {
+        name = "interpolation with bracket notation"
+        kind = "test"
+        line = 170
+      }
+      new CorpusCase {
+        name = "interpolation with bracket string literal"
+        kind = "test"
+        line = 174
+      }
+      new CorpusCase {
+        name = "interpolation with mixed notation"
+        kind = "test"
+        line = 178
+      }
+      new CorpusCase {
+        name = "interpolation with array index"
+        kind = "test"
+        line = 182
+      }
+      new CorpusCase {
+        name = "interpolation with array slice"
+        kind = "test"
+        line = 186
+      }
+      new CorpusCase {
+        name = "interpolation with template literal"
+        kind = "test"
+        line = 194
+      }
+      new CorpusCase {
+        name = "interpolation with tagged template"
+        kind = "test"
+        line = 198
+      }
+      new CorpusCase {
+        name = "multiple interpolations"
+        kind = "test"
+        line = 206
+      }
+      new CorpusCase {
+        name = "three interpolations"
+        kind = "test"
+        line = 210
+      }
+      new CorpusCase {
+        name = "adjacent interpolations"
+        kind = "test"
+        line = 214
+      }
+      new CorpusCase {
+        name = "interpolations with same variable"
+        kind = "test"
+        line = 218
+      }
+      new CorpusCase {
+        name = "interpolation in element"
+        kind = "test"
+        line = 226
+      }
+      new CorpusCase {
+        name = "interpolation with text before"
+        kind = "test"
+        line = 230
+      }
+      new CorpusCase {
+        name = "interpolation with text after"
+        kind = "test"
+        line = 234
+      }
+      new CorpusCase {
+        name = "interpolation with text around"
+        kind = "test"
+        line = 238
+      }
+      new CorpusCase {
+        name = "interpolation in nested element"
+        kind = "test"
+        line = 242
+      }
+      new CorpusCase {
+        name = "interpolation with sibling text"
+        kind = "test"
+        line = 246
+      }
+      new CorpusCase {
+        name = "interpolation in multiple elements"
+        kind = "test"
+        line = 250
+      }
+      new CorpusCase {
+        name = "interpolation with element between"
+        kind = "test"
+        line = 254
+      }
+      new CorpusCase {
+        name = "interpolation with closing tag like content"
+        kind = "test"
+        line = 262
+      }
+      new CorpusCase {
+        name = "interpolation with less than and greater than"
+        kind = "test"
+        line = 266
+      }
+      new CorpusCase {
+        name = "interpolation with arrow function"
+        kind = "test"
+        line = 270
+      }
+      new CorpusCase {
+        name = "interpolation with object destructuring"
+        kind = "test"
+        line = 274
+      }
+      new CorpusCase {
+        name = "interpolation with regex"
+        kind = "test"
+        line = 278
+      }
+      new CorpusCase {
+        name = "interpolation with string quotes"
+        kind = "test"
+        line = 282
+      }
+      new CorpusCase {
+        name = "interpolation with escape"
+        kind = "test"
+        line = 286
+      }
+      new CorpusCase {
+        name = "interpolation with unicode"
+        kind = "test"
+        line = 290
+      }
+      new CorpusCase {
+        name = "interpolation with integer"
+        kind = "test"
+        line = 298
+      }
+      new CorpusCase {
+        name = "interpolation with float"
+        kind = "test"
+        line = 302
+      }
+      new CorpusCase {
+        name = "interpolation with negative number"
+        kind = "test"
+        line = 306
+      }
+      new CorpusCase {
+        name = "interpolation with scientific notation"
+        kind = "test"
+        line = 310
+      }
+      new CorpusCase {
+        name = "interpolation with hex"
+        kind = "test"
+        line = 314
+      }
+      new CorpusCase {
+        name = "interpolation with binary"
+        kind = "test"
+        line = 318
+      }
+      new CorpusCase {
+        name = "interpolation with octal"
+        kind = "test"
+        line = 322
+      }
+      new CorpusCase {
+        name = "interpolation with bigint"
+        kind = "test"
+        line = 326
+      }
+      new CorpusCase {
+        name = "interpolation with true"
+        kind = "test"
+        line = 334
+      }
+      new CorpusCase {
+        name = "interpolation with false"
+        kind = "test"
+        line = 338
+      }
+      new CorpusCase {
+        name = "interpolation with null"
+        kind = "test"
+        line = 342
+      }
+      new CorpusCase {
+        name = "interpolation with undefined"
+        kind = "test"
+        line = 346
+      }
+      new CorpusCase {
+        name = "interpolation with NaN"
+        kind = "test"
+        line = 350
+      }
+      new CorpusCase {
+        name = "interpolation with Infinity"
+        kind = "test"
+        line = 354
+      }
+      new CorpusCase {
+        name = "interpolation with complex expression"
+        kind = "test"
+        line = 362
+      }
+      new CorpusCase {
+        name = "interpolation with conditional chain"
+        kind = "test"
+        line = 366
+      }
+      new CorpusCase {
+        name = "interpolation with parentheses"
+        kind = "test"
+        line = 370
+      }
+      new CorpusCase {
+        name = "interpolation with nested parentheses"
+        kind = "test"
+        line = 374
+      }
+      new CorpusCase {
+        name = "interpolation with function in expression"
+        kind = "test"
+        line = 378
+      }
+      new CorpusCase {
+        name = "interpolation with Date"
+        kind = "test"
+        line = 382
+      }
+      new CorpusCase {
+        name = "interpolation with JSON"
+        kind = "test"
+        line = 386
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/parser/text.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/text.toml"
+    bytes = 7214
+    sha256 = "09b4db2b2058798b38291321430ba5a60a58ff51f2cfda5a0786c72fba78ded8"
+    cases {
+      new CorpusCase {
+        name = "simple text"
+        kind = "test"
+        line = 10
+      }
+      new CorpusCase {
+        name = "single word"
+        kind = "test"
+        line = 14
+      }
+      new CorpusCase {
+        name = "single character"
+        kind = "test"
+        line = 18
+      }
+      new CorpusCase {
+        name = "empty string between elements"
+        kind = "test"
+        line = 22
+      }
+      new CorpusCase {
+        name = "text with leading whitespace"
+        kind = "test"
+        line = 30
+      }
+      new CorpusCase {
+        name = "text with trailing whitespace"
+        kind = "test"
+        line = 34
+      }
+      new CorpusCase {
+        name = "text with whitespace"
+        kind = "test"
+        line = 38
+      }
+      new CorpusCase {
+        name = "text with multiple spaces"
+        kind = "test"
+        line = 42
+      }
+      new CorpusCase {
+        name = "text with newlines"
+        kind = "test"
+        line = 46
+      }
+      new CorpusCase {
+        name = "text with multiple newlines"
+        kind = "test"
+        line = 51
+      }
+      new CorpusCase {
+        name = "text with tabs"
+        kind = "test"
+        line = 57
+      }
+      new CorpusCase {
+        name = "text with mixed whitespace"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "only whitespace"
+        kind = "test"
+        line = 65
+      }
+      new CorpusCase {
+        name = "only newline"
+        kind = "test"
+        line = 69
+      }
+      new CorpusCase {
+        name = "only tabs"
+        kind = "test"
+        line = 73
+      }
+      new CorpusCase {
+        name = "text with interpolation"
+        kind = "test"
+        line = 81
+      }
+      new CorpusCase {
+        name = "text before interpolation"
+        kind = "test"
+        line = 85
+      }
+      new CorpusCase {
+        name = "text after interpolation"
+        kind = "test"
+        line = 89
+      }
+      new CorpusCase {
+        name = "text between interpolations"
+        kind = "test"
+        line = 93
+      }
+      new CorpusCase {
+        name = "text with multiple interpolations"
+        kind = "test"
+        line = 97
+      }
+      new CorpusCase {
+        name = "mixed text and interpolation complex"
+        kind = "test"
+        line = 101
+      }
+      new CorpusCase {
+        name = "text in element"
+        kind = "test"
+        line = 109
+      }
+      new CorpusCase {
+        name = "text in nested element"
+        kind = "test"
+        line = 113
+      }
+      new CorpusCase {
+        name = "text in deeply nested element"
+        kind = "test"
+        line = 117
+      }
+      new CorpusCase {
+        name = "text in sibling elements"
+        kind = "test"
+        line = 121
+      }
+      new CorpusCase {
+        name = "text with sibling element"
+        kind = "test"
+        line = 125
+      }
+      new CorpusCase {
+        name = "text between sibling elements"
+        kind = "test"
+        line = 129
+      }
+      new CorpusCase {
+        name = "multiple text nodes"
+        kind = "test"
+        line = 137
+      }
+      new CorpusCase {
+        name = "text nodes around void element"
+        kind = "test"
+        line = 141
+      }
+      new CorpusCase {
+        name = "text nodes around multiple elements"
+        kind = "test"
+        line = 145
+      }
+      new CorpusCase {
+        name = "text around self-closing"
+        kind = "test"
+        line = 149
+      }
+      new CorpusCase {
+        name = "text with entities"
+        kind = "test"
+        line = 157
+      }
+      new CorpusCase {
+        name = "text with nbsp"
+        kind = "test"
+        line = 161
+      }
+      new CorpusCase {
+        name = "text with amp"
+        kind = "test"
+        line = 165
+      }
+      new CorpusCase {
+        name = "text with quot"
+        kind = "test"
+        line = 169
+      }
+      new CorpusCase {
+        name = "text with apos"
+        kind = "test"
+        line = 173
+      }
+      new CorpusCase {
+        name = "text with numeric entity"
+        kind = "test"
+        line = 177
+      }
+      new CorpusCase {
+        name = "text with hex entity"
+        kind = "test"
+        line = 181
+      }
+      new CorpusCase {
+        name = "text with copyright symbol"
+        kind = "test"
+        line = 185
+      }
+      new CorpusCase {
+        name = "text with registered symbol"
+        kind = "test"
+        line = 189
+      }
+      new CorpusCase {
+        name = "text with euro symbol"
+        kind = "test"
+        line = 193
+      }
+      new CorpusCase {
+        name = "text with multiple entities"
+        kind = "test"
+        line = 197
+      }
+      new CorpusCase {
+        name = "text with mixed entities and text"
+        kind = "test"
+        line = 201
+      }
+      new CorpusCase {
+        name = "text with special characters"
+        kind = "test"
+        line = 209
+      }
+      new CorpusCase {
+        name = "text with unicode"
+        kind = "test"
+        line = 213
+      }
+      new CorpusCase {
+        name = "text with emoji"
+        kind = "test"
+        line = 217
+      }
+      new CorpusCase {
+        name = "text with accented characters"
+        kind = "test"
+        line = 221
+      }
+      new CorpusCase {
+        name = "text with cyrillic"
+        kind = "test"
+        line = 225
+      }
+      new CorpusCase {
+        name = "text with arabic"
+        kind = "test"
+        line = 229
+      }
+      new CorpusCase {
+        name = "text with japanese"
+        kind = "test"
+        line = 233
+      }
+      new CorpusCase {
+        name = "text with korean"
+        kind = "test"
+        line = 237
+      }
+      new CorpusCase {
+        name = "text with angle bracket followed by space"
+        kind = "test"
+        line = 245
+      }
+      new CorpusCase {
+        name = "text with lonely less than"
+        kind = "test"
+        line = 249
+      }
+      new CorpusCase {
+        name = "text that looks like tag"
+        kind = "test"
+        line = 253
+      }
+      new CorpusCase {
+        name = "text with curly braces not interpolation"
+        kind = "test"
+        line = 257
+      }
+      new CorpusCase {
+        name = "text with single curly"
+        kind = "test"
+        line = 261
+      }
+      new CorpusCase {
+        name = "text with triple curly"
+        kind = "test"
+        line = 265
+      }
+      new CorpusCase {
+        name = "very long text"
+        kind = "test"
+        line = 269
+      }
+      new CorpusCase {
+        name = "text with url"
+        kind = "test"
+        line = 273
+      }
+      new CorpusCase {
+        name = "text with email"
+        kind = "test"
+        line = 277
+      }
+      new CorpusCase {
+        name = "text with code-like content"
+        kind = "test"
+        line = 281
+      }
+      new CorpusCase {
+        name = "text with html-like but invalid"
+        kind = "test"
+        line = 285
+      }
+      new CorpusCase {
+        name = "text in pre element"
+        kind = "test"
+        line = 293
+      }
+      new CorpusCase {
+        name = "multiline text in pre"
+        kind = "test"
+        line = 297
+      }
+      new CorpusCase {
+        name = "text with code in pre"
+        kind = "test"
+        line = 303
+      }
+      new CorpusCase {
+        name = "text in textarea"
+        kind = "test"
+        line = 311
+      }
+      new CorpusCase {
+        name = "multiline text in textarea"
+        kind = "test"
+        line = 315
+      }
+      new CorpusCase {
+        name = "html-like text in textarea"
+        kind = "test"
+        line = 320
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/sfc/basic.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/basic.toml"
+    bytes = 2356
+    sha256 = "a980fec2668f156ff08e4bb48e9007c002a5ed72c8e6f47b530bc4cea18743e4"
+    cases {
+      new CorpusCase {
+        name = "script setup with template"
+        kind = "test"
+        line = 5
+      }
+      new CorpusCase {
+        name = "script setup with style"
+        kind = "test"
+        line = 18
+      }
+      new CorpusCase {
+        name = "script setup with scoped style"
+        kind = "test"
+        line = 34
+      }
+      new CorpusCase {
+        name = "options API component"
+        kind = "test"
+        line = 50
+      }
+      new CorpusCase {
+        name = "template only"
+        kind = "test"
+        line = 66
+      }
+      new CorpusCase {
+        name = "script and template"
+        kind = "test"
+        line = 74
+      }
+      new CorpusCase {
+        name = "multiple style blocks"
+        kind = "test"
+        line = 86
+      }
+      new CorpusCase {
+        name = "lang attributes"
+        kind = "test"
+        line = 102
+      }
+      new CorpusCase {
+        name = "custom blocks"
+        kind = "test"
+        line = 118
+      }
+      new CorpusCase {
+        name = "defineProps"
+        kind = "test"
+        line = 133
+      }
+      new CorpusCase {
+        name = "defineEmits"
+        kind = "test"
+        line = 145
+      }
+      new CorpusCase {
+        name = "computed and watch"
+        kind = "test"
+        line = 160
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/sfc/directives.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/directives.toml"
+    bytes = 1178
+    sha256 = "57c60a81e95fc686cc332eb151413a64d133fa813ba63bac04a8a0a1a4fbf66d"
+    cases {
+      new CorpusCase {
+        name = "docs directive stripped from output"
+        kind = "test"
+        line = 5
+      }
+      new CorpusCase {
+        name = "todo directive stripped from output"
+        kind = "test"
+        line = 18
+      }
+      new CorpusCase {
+        name = "multiple directive comments stripped"
+        kind = "test"
+        line = 31
+      }
+      new CorpusCase {
+        name = "regular comments preserved with directives"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "directive only child produces null children"
+        kind = "test"
+        line = 63
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/sfc/patches.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+    bytes = 19450
+    sha256 = "80e2a7c75662d4834f67d36bf91c6f6bddfa732714ed9da5f72c18731d1b5099"
+    cases {
+      new CorpusCase {
+        name = "ES6 shorthand in event handler object"
+        kind = "test"
+        line = 12
+      }
+      new CorpusCase {
+        name = "ES6 shorthand in computed style"
+        kind = "test"
+        line = 26
+      }
+      new CorpusCase {
+        name = "ES6 shorthand in v-bind object"
+        kind = "test"
+        line = 40
+      }
+      new CorpusCase {
+        name = "ES6 shorthand mixed with regular properties"
+        kind = "test"
+        line = 54
+      }
+      new CorpusCase {
+        name = "SetupLet assignment in click handler"
+        kind = "test"
+        line = 73
+      }
+      new CorpusCase {
+        name = "let variable increment in handler"
+        kind = "test"
+        line = 85
+      }
+      new CorpusCase {
+        name = "v-slot with hyphenated name"
+        kind = "test"
+        line = 103
+      }
+      new CorpusCase {
+        name = "v-slot with multiple hyphenated names"
+        kind = "test"
+        line = 119
+      }
+      new CorpusCase {
+        name = "v-slot mixed hyphenated and regular names"
+        kind = "test"
+        line = 135
+      }
+      new CorpusCase {
+        name = "v-if with v-model on input"
+        kind = "test"
+        line = 157
+      }
+      new CorpusCase {
+        name = "v-if with v-model on component"
+        kind = "test"
+        line = 171
+      }
+      new CorpusCase {
+        name = "v-if with component props"
+        kind = "test"
+        line = 192
+      }
+      new CorpusCase {
+        name = "v-if with v-bind object spread"
+        kind = "test"
+        line = 214
+      }
+      new CorpusCase {
+        name = "v-else-if with v-bind object spread"
+        kind = "test"
+        line = 231
+      }
+      new CorpusCase {
+        name = "v-for with v-click-outside"
+        kind = "test"
+        line = 254
+      }
+      new CorpusCase {
+        name = "v-for with custom directive on element"
+        kind = "test"
+        line = 272
+      }
+      new CorpusCase {
+        name = "props destructure with type-based defineProps and defaults"
+        kind = "test"
+        line = 290
+      }
+      new CorpusCase {
+        name = "complex type-based props destructure with defaults"
+        kind = "test"
+        line = 305
+      }
+      new CorpusCase {
+        name = "duplicate imports should be filtered"
+        kind = "test"
+        line = 339
+      }
+      new CorpusCase {
+        name = "duplicate named imports should be filtered"
+        kind = "test"
+        line = 355
+      }
+      new CorpusCase {
+        name = "top-level await generates async setup"
+        kind = "test"
+        line = 376
+      }
+      new CorpusCase {
+        name = "await in string literal should not trigger async"
+        kind = "test"
+        line = 389
+      }
+      new CorpusCase {
+        name = "default as prop name should not use shorthand"
+        kind = "test"
+        line = 408
+      }
+      new CorpusCase {
+        name = "type comparison should not be stripped"
+        kind = "test"
+        line = 426
+      }
+      new CorpusCase {
+        name = "type keyword in conditional"
+        kind = "test"
+        line = 441
+      }
+      new CorpusCase {
+        name = "static string with newline"
+        kind = "test"
+        line = 463
+      }
+      new CorpusCase {
+        name = "attribute with special characters"
+        kind = "test"
+        line = 477
+      }
+      new CorpusCase {
+        name = "v-model on native input with ref"
+        kind = "test"
+        line = 494
+      }
+      new CorpusCase {
+        name = "v-model on select with ref"
+        kind = "test"
+        line = 507
+      }
+      new CorpusCase {
+        name = "non-script-setup component with export default"
+        kind = "test"
+        line = 529
+      }
+      new CorpusCase {
+        name = "script with setup function"
+        kind = "test"
+        line = 551
+      }
+      new CorpusCase {
+        name = "generic function call should be stripped"
+        kind = "test"
+        line = 577
+      }
+      new CorpusCase {
+        name = "ref with generic type should be stripped"
+        kind = "test"
+        line = 595
+      }
+      new CorpusCase {
+        name = "arrow function with typed parameters in template"
+        kind = "test"
+        line = 621
+      }
+      new CorpusCase {
+        name = "callback with typed parameters"
+        kind = "test"
+        line = 636
+      }
+      new CorpusCase {
+        name = "multiline arrow function in event handler"
+        kind = "test"
+        line = 660
+      }
+      new CorpusCase {
+        name = "arrow function with multiple statements in v-for"
+        kind = "test"
+        line = 677
+      }
+      new CorpusCase {
+        name = "dynamic component with v-slot destructure"
+        kind = "test"
+        line = 702
+      }
+      new CorpusCase {
+        name = "transition inside v-if should use builtin"
+        kind = "test"
+        line = 722
+      }
+      new CorpusCase {
+        name = "keep-alive inside v-for should use builtin"
+        kind = "test"
+        line = 737
+      }
+      new CorpusCase {
+        name = "hyphenated component name in v-if"
+        kind = "test"
+        line = 759
+      }
+      new CorpusCase {
+        name = "hyphenated component in v-if v-else chain"
+        kind = "test"
+        line = 772
+      }
+      new CorpusCase {
+        name = "component should not receive scope_id in props"
+        kind = "test"
+        line = 792
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/sfc/script-setup.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+    bytes = 24984
+    sha256 = "bf2ecaaa419b14d3e64a6043f66b7e4fa30ed97da4dad34dcf83671adb927096"
+    cases {
+      new CorpusCase {
+        name = "basic script setup"
+        kind = "test"
+        line = 10
+      }
+      new CorpusCase {
+        name = "script setup with imports"
+        kind = "test"
+        line = 22
+      }
+      new CorpusCase {
+        name = "multiple variable declarations"
+        kind = "test"
+        line = 35
+      }
+      new CorpusCase {
+        name = "function declarations"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "class declarations"
+        kind = "test"
+        line = 64
+      }
+      new CorpusCase {
+        name = "defineProps array syntax"
+        kind = "test"
+        line = 82
+      }
+      new CorpusCase {
+        name = "defineProps object syntax"
+        kind = "test"
+        line = 94
+      }
+      new CorpusCase {
+        name = "defineProps without assignment"
+        kind = "test"
+        line = 109
+      }
+      new CorpusCase {
+        name = "defineProps with destructure"
+        kind = "test"
+        line = 121
+      }
+      new CorpusCase {
+        name = "defineEmits array syntax"
+        kind = "test"
+        line = 137
+      }
+      new CorpusCase {
+        name = "defineEmits without assignment"
+        kind = "test"
+        line = 152
+      }
+      new CorpusCase {
+        name = "defineModel basic"
+        kind = "test"
+        line = 168
+      }
+      new CorpusCase {
+        name = "defineModel with name"
+        kind = "test"
+        line = 180
+      }
+      new CorpusCase {
+        name = "defineModel with options"
+        kind = "test"
+        line = 192
+      }
+      new CorpusCase {
+        name = "defineExpose"
+        kind = "test"
+        line = 208
+      }
+      new CorpusCase {
+        name = "defineOptions"
+        kind = "test"
+        line = 227
+      }
+      new CorpusCase {
+        name = "defineSlots"
+        kind = "test"
+        line = 246
+      }
+      new CorpusCase {
+        name = "script before script setup"
+        kind = "test"
+        line = 262
+      }
+      new CorpusCase {
+        name = "script setup before script"
+        kind = "test"
+        line = 280
+      }
+      new CorpusCase {
+        name = "script with type definitions and script setup"
+        kind = "test"
+        line = 298
+      }
+      new CorpusCase {
+        name = "script with interfaces before script setup"
+        kind = "test"
+        line = 325
+      }
+      new CorpusCase {
+        name = "ref binding"
+        kind = "test"
+        line = 349
+      }
+      new CorpusCase {
+        name = "reactive binding"
+        kind = "test"
+        line = 362
+      }
+      new CorpusCase {
+        name = "computed binding"
+        kind = "test"
+        line = 375
+      }
+      new CorpusCase {
+        name = "watch and watchEffect"
+        kind = "test"
+        line = 389
+      }
+      new CorpusCase {
+        name = "template with v-model on ref"
+        kind = "test"
+        line = 408
+      }
+      new CorpusCase {
+        name = "template with event handler"
+        kind = "test"
+        line = 421
+      }
+      new CorpusCase {
+        name = "template with inline handler"
+        kind = "test"
+        line = 435
+      }
+      new CorpusCase {
+        name = "async script setup"
+        kind = "test"
+        line = 452
+      }
+      new CorpusCase {
+        name = "top-level await"
+        kind = "test"
+        line = 464
+      }
+      new CorpusCase {
+        name = "defineProps type-only with destructure defaults"
+        kind = "test"
+        line = 483
+      }
+      new CorpusCase {
+        name = "defineProps array syntax with destructure defaults"
+        kind = "test"
+        line = 498
+      }
+      new CorpusCase {
+        name = "multiline const with type annotation"
+        kind = "test"
+        line = 514
+      }
+      new CorpusCase {
+        name = "generic component basic"
+        kind = "test"
+        line = 543
+      }
+      new CorpusCase {
+        name = "generic component with extends"
+        kind = "test"
+        line = 558
+      }
+      new CorpusCase {
+        name = "generic component with multiple type params"
+        kind = "test"
+        line = 575
+      }
+      new CorpusCase {
+        name = "generic component with complex constraint"
+        kind = "test"
+        line = 590
+      }
+      new CorpusCase {
+        name = "generic component with default type"
+        kind = "test"
+        line = 611
+      }
+      new CorpusCase {
+        name = "props with nested object types"
+        kind = "test"
+        line = 629
+      }
+      new CorpusCase {
+        name = "props with arrow function types"
+        kind = "test"
+        line = 647
+      }
+      new CorpusCase {
+        name = "props with union types"
+        kind = "test"
+        line = 663
+      }
+      new CorpusCase {
+        name = "props with intersection types"
+        kind = "test"
+        line = 681
+      }
+      new CorpusCase {
+        name = "props with readonly arrays"
+        kind = "test"
+        line = 702
+      }
+      new CorpusCase {
+        name = "props with method signatures in object"
+        kind = "test"
+        line = 718
+      }
+      new CorpusCase {
+        name = "withDefaults with optional props"
+        kind = "test"
+        line = 740
+      }
+      new CorpusCase {
+        name = "withDefaults with function default"
+        kind = "test"
+        line = 761
+      }
+      new CorpusCase {
+        name = "multiple top-level await calls"
+        kind = "test"
+        line = 783
+      }
+      new CorpusCase {
+        name = "top-level await with destructuring"
+        kind = "test"
+        line = 796
+      }
+      new CorpusCase {
+        name = "top-level await in initialization"
+        kind = "test"
+        line = 809
+      }
+      new CorpusCase {
+        name = "defineEmits with typed function signatures"
+        kind = "test"
+        line = 831
+      }
+      new CorpusCase {
+        name = "defineEmits with Vue 3.3+ shorthand"
+        kind = "test"
+        line = 847
+      }
+      new CorpusCase {
+        name = "interface with callback function type"
+        kind = "test"
+        line = 867
+      }
+      new CorpusCase {
+        name = "interface with async callback"
+        kind = "test"
+        line = 882
+      }
+      new CorpusCase {
+        name = "array with as const"
+        kind = "test"
+        line = 902
+      }
+      new CorpusCase {
+        name = "withDefaults with Object type"
+        kind = "test"
+        line = 924
+      }
+      new CorpusCase {
+        name = "computed with route params"
+        kind = "test"
+        line = 950
+      }
+      new CorpusCase {
+        name = "reco RoundedBtn pattern"
+        kind = "test"
+        line = 969
+      }
+      new CorpusCase {
+        name = "reco GuidanceProgressLapInputBtn pattern"
+        kind = "test"
+        line = 1001
+      }
+      new CorpusCase {
+        name = "nested v-if with ref should not duplicate .value"
+        kind = "test"
+        line = 1041
+      }
+      new CorpusCase {
+        name = "v-else-if chain with ref bindings"
+        kind = "test"
+        line = 1063
+      }
+      new CorpusCase {
+        name = "v-for with imported values should use _unref"
+        kind = "test"
+        line = 1101
+      }
+      new CorpusCase {
+        name = "v-for with multiple imported values"
+        kind = "test"
+        line = 1115
+      }
+      new CorpusCase {
+        name = "v-for with imported and local values"
+        kind = "test"
+        line = 1134
+      }
+      new CorpusCase {
+        name = "v-model on component with ref binding should not duplicate .value"
+        kind = "test"
+        line = 1159
+      }
+      new CorpusCase {
+        name = "v-model with named prop on component with ref binding"
+        kind = "test"
+        line = 1173
+      }
+      new CorpusCase {
+        name = "multiple v-model bindings on component with refs"
+        kind = "test"
+        line = 1188
+      }
+      new CorpusCase {
+        name = "multiline union type definition"
+        kind = "test"
+        line = 1207
+      }
+      new CorpusCase {
+        name = "multiline intersection type definition"
+        kind = "test"
+        line = 1223
+      }
+      new CorpusCase {
+        name = "multiline string union type definition"
+        kind = "test"
+        line = 1239
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vapor/component.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/component.toml"
+    bytes = 2150
+    sha256 = "f046351c53233ed7b20a6caba35173ce32253011998fa2ce5b9fb010238a2d2a"
+    cases {
+      new CorpusCase {
+        name = "simple component"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "component with props"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "component with static prop"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "component with event"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "component with content"
+        kind = "test"
+        line = 29
+      }
+      new CorpusCase {
+        name = "named slot"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "scoped slot"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "Teleport"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "Suspense"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "KeepAlive"
+        kind = "test"
+        line = 53
+      }
+      new CorpusCase {
+        name = "dynamic component"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "dynamic with props"
+        kind = "test"
+        line = 65
+      }
+      new CorpusCase {
+        name = "component v-model"
+        kind = "test"
+        line = 73
+      }
+      new CorpusCase {
+        name = "named v-model"
+        kind = "test"
+        line = 77
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vapor/edge-cases.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/edge-cases.toml"
+    bytes = 788
+    sha256 = "146ed48a4cc26b6fd4379edc06a41d29bb48a31fec5baf9ecbb587c4860a397f"
+    cases {
+      new CorpusCase {
+        name = "text with quotes"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "text with single quotes"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "whitespace between elements"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "newline between elements"
+        kind = "test"
+        line = 25
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vapor/element.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/element.toml"
+    bytes = 2011
+    sha256 = "683abc43585318b87edfefa08ea4b8c338fa510bfd15c75dfc4c7d4e4a50af2d"
+    cases {
+      new CorpusCase {
+        name = "empty div"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "element with text"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "element with interpolation"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "nested elements"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "multiple children"
+        kind = "test"
+        line = 25
+      }
+      new CorpusCase {
+        name = "static class"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "static id"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "multiple attributes"
+        kind = "test"
+        line = 41
+      }
+      new CorpusCase {
+        name = "dynamic class"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "dynamic id"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "click handler"
+        kind = "test"
+        line = 57
+      }
+      new CorpusCase {
+        name = "inline handler"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "handler with event"
+        kind = "test"
+        line = 65
+      }
+      new CorpusCase {
+        name = "text and interpolation"
+        kind = "test"
+        line = 73
+      }
+      new CorpusCase {
+        name = "static and dynamic"
+        kind = "test"
+        line = 77
+      }
+      new CorpusCase {
+        name = "element with dynamic children"
+        kind = "test"
+        line = 81
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vapor/v-bind.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-bind.toml"
+    bytes = 2016
+    sha256 = "2177c88450ec0ee7ea06d13e24bb2be2487336f4b92d0ff0e8bbe57a8d007ec5"
+    cases {
+      new CorpusCase {
+        name = "v-bind id"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "v-bind class"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "v-bind style"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "class object"
+        kind = "test"
+        line = 25
+      }
+      new CorpusCase {
+        name = "class array"
+        kind = "test"
+        line = 29
+      }
+      new CorpusCase {
+        name = "class with static"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "style object"
+        kind = "test"
+        line = 41
+      }
+      new CorpusCase {
+        name = "style array"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "v-bind object"
+        kind = "test"
+        line = 53
+      }
+      new CorpusCase {
+        name = "dynamic attribute"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "v-bind.camel"
+        kind = "test"
+        line = 69
+      }
+      new CorpusCase {
+        name = "v-bind.prop"
+        kind = "test"
+        line = 73
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vapor/v-for.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-for.toml"
+    bytes = 1812
+    sha256 = "406d3eacd1a4184ce31f1aca16a3a0f68744eacd037fee3166489e9f800afc7d"
+    cases {
+      new CorpusCase {
+        name = "v-for array"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "v-for with key"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "v-for with index"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "v-for object"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "v-for range"
+        kind = "test"
+        line = 25
+      }
+      new CorpusCase {
+        name = "v-for on template"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "v-for destructure"
+        kind = "test"
+        line = 41
+      }
+      new CorpusCase {
+        name = "nested v-for"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "v-for with v-if"
+        kind = "test"
+        line = 53
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vapor/v-if.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-if.toml"
+    bytes = 1381
+    sha256 = "c2bda8820239ef6c268c1d058ffb75cda26d14175aacffc4e05431d886ed6f99"
+    cases {
+      new CorpusCase {
+        name = "simple v-if"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "v-if with content"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "v-if with interpolation"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "v-if with v-else"
+        kind = "test"
+        line = 25
+      }
+      new CorpusCase {
+        name = "v-if/v-else-if/v-else"
+        kind = "test"
+        line = 29
+      }
+      new CorpusCase {
+        name = "v-if on template"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "nested v-if"
+        kind = "test"
+        line = 45
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vapor/v-model.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-model.toml"
+    bytes = 2008
+    sha256 = "35dee15c9a296d683a8bdb71ad4c0e8f785fee6888d6694d872a1cb6ff87cec7"
+    cases {
+      new CorpusCase {
+        name = "input text"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "input number"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "input checkbox"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "input radio"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "textarea"
+        kind = "test"
+        line = 29
+      }
+      new CorpusCase {
+        name = "select"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "v-model.lazy"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "v-model.number"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "v-model.trim"
+        kind = "test"
+        line = 53
+      }
+      new CorpusCase {
+        name = "multiple modifiers"
+        kind = "test"
+        line = 57
+      }
+      new CorpusCase {
+        name = "component v-model"
+        kind = "test"
+        line = 65
+      }
+      new CorpusCase {
+        name = "named v-model"
+        kind = "test"
+        line = 69
+      }
+      new CorpusCase {
+        name = "v-model with modifier"
+        kind = "test"
+        line = 73
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vapor/v-on.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-on.toml"
+    bytes = 2164
+    sha256 = "4ac49a9d4a35d6cb5d5fe38ffac06a31fc989e461a49bad4c4b4687ec4cc7c28"
+    cases {
+      new CorpusCase {
+        name = "click handler"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "inline handler"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "method call"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "handler with $event"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "stop modifier"
+        kind = "test"
+        line = 29
+      }
+      new CorpusCase {
+        name = "prevent modifier"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "once modifier"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "multiple modifiers"
+        kind = "test"
+        line = 41
+      }
+      new CorpusCase {
+        name = "enter key"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "escape key"
+        kind = "test"
+        line = 53
+      }
+      new CorpusCase {
+        name = "multiple events"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "dynamic event name"
+        kind = "test"
+        line = 69
+      }
+      new CorpusCase {
+        name = "v-on object"
+        kind = "test"
+        line = 77
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vapor/v-show.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-show.toml"
+    bytes = 1143
+    sha256 = "53031dbdc6232d78b81ccac0017b7bb4925e44cf20736ecd8a1dff5b75b7cd6c"
+    cases {
+      new CorpusCase {
+        name = "simple v-show"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "v-show with content"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "v-show with comparison"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "v-show with negation"
+        kind = "test"
+        line = 25
+      }
+      new CorpusCase {
+        name = "v-show with v-for"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "v-show on component"
+        kind = "test"
+        line = 37
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vapor/v-slot.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-slot.toml"
+    bytes = 1645
+    sha256 = "0bcb17df87935d86710f1fe0252aa227e9a4f60af3262337921ec13aae96a84e"
+    cases {
+      new CorpusCase {
+        name = "default slot content"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "default slot with element"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "named slot"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "multiple named slots"
+        kind = "test"
+        line = 25
+      }
+      new CorpusCase {
+        name = "scoped slot"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "named scoped slot"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "scoped slot destructure"
+        kind = "test"
+        line = 41
+      }
+      new CorpusCase {
+        name = "dynamic slot name"
+        kind = "test"
+        line = 49
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vdom/component.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/component.toml"
+    bytes = 5033
+    sha256 = "8a8332039bb3317225e3bb26f54fa4975899c55e20cc1802fbb27a27705ff4ad"
+    cases {
+      new CorpusCase {
+        name = "simple component"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "component with closing tag"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "component with text content"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "PascalCase component"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "kebab-case component"
+        kind = "test"
+        line = 25
+      }
+      new CorpusCase {
+        name = "static prop"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "dynamic prop"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "boolean prop"
+        kind = "test"
+        line = 41
+      }
+      new CorpusCase {
+        name = "multiple props"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "v-bind object"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "v-bind object with extra props"
+        kind = "test"
+        line = 53
+      }
+      new CorpusCase {
+        name = "Teleport"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "Suspense"
+        kind = "test"
+        line = 65
+      }
+      new CorpusCase {
+        name = "KeepAlive"
+        kind = "test"
+        line = 69
+      }
+      new CorpusCase {
+        name = "Transition"
+        kind = "test"
+        line = 73
+      }
+      new CorpusCase {
+        name = "TransitionGroup"
+        kind = "test"
+        line = 77
+      }
+      new CorpusCase {
+        name = "keep-alive kebab-case"
+        kind = "test"
+        line = 85
+      }
+      new CorpusCase {
+        name = "transition kebab-case"
+        kind = "test"
+        line = 89
+      }
+      new CorpusCase {
+        name = "transition-group kebab-case"
+        kind = "test"
+        line = 93
+      }
+      new CorpusCase {
+        name = "teleport kebab-case"
+        kind = "test"
+        line = 97
+      }
+      new CorpusCase {
+        name = "suspense kebab-case"
+        kind = "test"
+        line = 101
+      }
+      new CorpusCase {
+        name = "dynamic component"
+        kind = "test"
+        line = 109
+      }
+      new CorpusCase {
+        name = "dynamic component with static is"
+        kind = "test"
+        line = 113
+      }
+      new CorpusCase {
+        name = "dynamic component with props"
+        kind = "test"
+        line = 117
+      }
+      new CorpusCase {
+        name = "v-model on component"
+        kind = "test"
+        line = 125
+      }
+      new CorpusCase {
+        name = "named v-model"
+        kind = "test"
+        line = 129
+      }
+      new CorpusCase {
+        name = "multiple v-model"
+        kind = "test"
+        line = 133
+      }
+      new CorpusCase {
+        name = "v-model with modifier"
+        kind = "test"
+        line = 137
+      }
+      new CorpusCase {
+        name = "v-model with multiple modifiers"
+        kind = "test"
+        line = 141
+      }
+      new CorpusCase {
+        name = "component with v-if"
+        kind = "test"
+        line = 149
+      }
+      new CorpusCase {
+        name = "component with v-else"
+        kind = "test"
+        line = 153
+      }
+      new CorpusCase {
+        name = "component with v-for"
+        kind = "test"
+        line = 157
+      }
+      new CorpusCase {
+        name = "component with v-show"
+        kind = "test"
+        line = 161
+      }
+      new CorpusCase {
+        name = "component with custom directive"
+        kind = "test"
+        line = 165
+      }
+      new CorpusCase {
+        name = "component event handler"
+        kind = "test"
+        line = 173
+      }
+      new CorpusCase {
+        name = "component event with argument"
+        kind = "test"
+        line = 177
+      }
+      new CorpusCase {
+        name = "component multiple events"
+        kind = "test"
+        line = 181
+      }
+      new CorpusCase {
+        name = "component event modifiers"
+        kind = "test"
+        line = 185
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vdom/directives.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/directives.toml"
+    bytes = 3546
+    sha256 = "6f5ee74dd6232799e971f0a98e2e7810cc574e7b8a3d4b8e8f46065091c2537d"
+    cases {
+      new CorpusCase {
+        name = "custom directive"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "custom directive with value"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "custom directive with literal"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "custom directive with object"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "directive with argument"
+        kind = "test"
+        line = 29
+      }
+      new CorpusCase {
+        name = "directive with dynamic argument"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "directive with modifier"
+        kind = "test"
+        line = 41
+      }
+      new CorpusCase {
+        name = "directive with multiple modifiers"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "directive with arg and modifiers"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "multiple custom directives"
+        kind = "test"
+        line = 57
+      }
+      new CorpusCase {
+        name = "custom with built-in"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "directive on component"
+        kind = "test"
+        line = 69
+      }
+      new CorpusCase {
+        name = "directive on component with props"
+        kind = "test"
+        line = 73
+      }
+      new CorpusCase {
+        name = "v-html"
+        kind = "test"
+        line = 81
+      }
+      new CorpusCase {
+        name = "v-text"
+        kind = "test"
+        line = 85
+      }
+      new CorpusCase {
+        name = "v-html with static"
+        kind = "test"
+        line = 89
+      }
+      new CorpusCase {
+        name = "v-cloak"
+        kind = "test"
+        line = 97
+      }
+      new CorpusCase {
+        name = "v-pre"
+        kind = "test"
+        line = 101
+      }
+      new CorpusCase {
+        name = "v-pre with children"
+        kind = "test"
+        line = 105
+      }
+      new CorpusCase {
+        name = "v-pre with on-prefixed attribute"
+        kind = "test"
+        line = 113
+      }
+      new CorpusCase {
+        name = "v-pre should not process shorthand directives"
+        kind = "test"
+        line = 117
+      }
+      new CorpusCase {
+        name = "v-pre nested elements preserve attributes"
+        kind = "test"
+        line = 121
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vdom/element.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/element.toml"
+    bytes = 3993
+    sha256 = "a70592c4ef286f396cdc169a0c1266add88fe65da04f934c93eda816f34d4290"
+    cases {
+      new CorpusCase {
+        name = "empty div"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "self-closing div"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "element with text"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "element with interpolation"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "element with mixed content"
+        kind = "test"
+        line = 25
+      }
+      new CorpusCase {
+        name = "multiple interpolations"
+        kind = "test"
+        line = 29
+      }
+      new CorpusCase {
+        name = "input element"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "br element"
+        kind = "test"
+        line = 41
+      }
+      new CorpusCase {
+        name = "img element"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "hr element"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "nested elements"
+        kind = "test"
+        line = 57
+      }
+      new CorpusCase {
+        name = "deeply nested"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "multiple children"
+        kind = "test"
+        line = 65
+      }
+      new CorpusCase {
+        name = "mixed children types"
+        kind = "test"
+        line = 69
+      }
+      new CorpusCase {
+        name = "static id"
+        kind = "test"
+        line = 77
+      }
+      new CorpusCase {
+        name = "static class"
+        kind = "test"
+        line = 81
+      }
+      new CorpusCase {
+        name = "multiple static attributes"
+        kind = "test"
+        line = 85
+      }
+      new CorpusCase {
+        name = "data attribute"
+        kind = "test"
+        line = 89
+      }
+      new CorpusCase {
+        name = "boolean attribute"
+        kind = "test"
+        line = 93
+      }
+      new CorpusCase {
+        name = "aria attribute"
+        kind = "test"
+        line = 97
+      }
+      new CorpusCase {
+        name = "dynamic id"
+        kind = "test"
+        line = 105
+      }
+      new CorpusCase {
+        name = "dynamic class"
+        kind = "test"
+        line = 109
+      }
+      new CorpusCase {
+        name = "dynamic style"
+        kind = "test"
+        line = 113
+      }
+      new CorpusCase {
+        name = "dynamic attribute"
+        kind = "test"
+        line = 117
+      }
+      new CorpusCase {
+        name = "mixed static and dynamic"
+        kind = "test"
+        line = 121
+      }
+      new CorpusCase {
+        name = "template element"
+        kind = "test"
+        line = 129
+      }
+      new CorpusCase {
+        name = "slot element"
+        kind = "test"
+        line = 133
+      }
+      new CorpusCase {
+        name = "slot with name"
+        kind = "test"
+        line = 137
+      }
+      new CorpusCase {
+        name = "slot with fallback"
+        kind = "test"
+        line = 141
+      }
+      new CorpusCase {
+        name = "svg element"
+        kind = "test"
+        line = 149
+      }
+      new CorpusCase {
+        name = "svg with namespace"
+        kind = "test"
+        line = 153
+      }
+      new CorpusCase {
+        name = "html comment"
+        kind = "test"
+        line = 161
+      }
+      new CorpusCase {
+        name = "comment between elements"
+        kind = "test"
+        line = 165
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vdom/hoisting.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/hoisting.toml"
+    bytes = 3044
+    sha256 = "7af6d0fe848bfdc2c3525fa62e046ad476a46fd7c819912aa42c22f19b3a9750"
+    cases {
+      new CorpusCase {
+        name = "static element"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "static with class"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "static with multiple attrs"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "static nested"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "deeply nested static"
+        kind = "test"
+        line = 25
+      }
+      new CorpusCase {
+        name = "static sibling of dynamic"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "static parent dynamic child"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "dynamic parent static children"
+        kind = "test"
+        line = 41
+      }
+      new CorpusCase {
+        name = "static object props"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "static array props"
+        kind = "test"
+        line = 53
+      }
+      new CorpusCase {
+        name = "static inside v-for"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "static sibling in v-for"
+        kind = "test"
+        line = 65
+      }
+      new CorpusCase {
+        name = "dynamic text"
+        kind = "test"
+        line = 73
+      }
+      new CorpusCase {
+        name = "dynamic attribute"
+        kind = "test"
+        line = 77
+      }
+      new CorpusCase {
+        name = "event handler"
+        kind = "test"
+        line = 81
+      }
+      new CorpusCase {
+        name = "v-if"
+        kind = "test"
+        line = 85
+      }
+      new CorpusCase {
+        name = "single static child optimization"
+        kind = "test"
+        line = 93
+      }
+      new CorpusCase {
+        name = "multiple static children"
+        kind = "test"
+        line = 97
+      }
+      new CorpusCase {
+        name = "static with comment"
+        kind = "test"
+        line = 101
+      }
+      new CorpusCase {
+        name = "whitespace handling"
+        kind = "test"
+        line = 105
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vdom/patch-flags.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/patch-flags.toml"
+    bytes = 4706
+    sha256 = "118502636a6c28e29e7bd03ab3d20b377e2b50951e2c1f3af66183a087b0ec93"
+    cases {
+      new CorpusCase {
+        name = "text patch flag"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "text in span"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "multiple interpolations"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "class patch flag"
+        kind = "test"
+        line = 25
+      }
+      new CorpusCase {
+        name = "class object"
+        kind = "test"
+        line = 29
+      }
+      new CorpusCase {
+        name = "class array"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "style patch flag"
+        kind = "test"
+        line = 41
+      }
+      new CorpusCase {
+        name = "style object"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "style array"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "props patch flag"
+        kind = "test"
+        line = 57
+      }
+      new CorpusCase {
+        name = "multiple dynamic props"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "dynamic data attribute"
+        kind = "test"
+        line = 65
+      }
+      new CorpusCase {
+        name = "v-bind object"
+        kind = "test"
+        line = 73
+      }
+      new CorpusCase {
+        name = "dynamic key"
+        kind = "test"
+        line = 77
+      }
+      new CorpusCase {
+        name = "event handler"
+        kind = "test"
+        line = 85
+      }
+      new CorpusCase {
+        name = "ref"
+        kind = "test"
+        line = 89
+      }
+      new CorpusCase {
+        name = "text and class"
+        kind = "test"
+        line = 97
+      }
+      new CorpusCase {
+        name = "class and style"
+        kind = "test"
+        line = 101
+      }
+      new CorpusCase {
+        name = "text and props"
+        kind = "test"
+        line = 105
+      }
+      new CorpusCase {
+        name = "all dynamic"
+        kind = "test"
+        line = 109
+      }
+      new CorpusCase {
+        name = "v-for with key"
+        kind = "test"
+        line = 117
+      }
+      new CorpusCase {
+        name = "v-for without key"
+        kind = "test"
+        line = 125
+      }
+      new CorpusCase {
+        name = "ref on element"
+        kind = "test"
+        line = 133
+      }
+      new CorpusCase {
+        name = "directive on static"
+        kind = "test"
+        line = 137
+      }
+      new CorpusCase {
+        name = "dynamic slot name"
+        kind = "test"
+        line = 145
+      }
+      new CorpusCase {
+        name = "slot with v-if"
+        kind = "test"
+        line = 149
+      }
+      new CorpusCase {
+        name = "slot with v-for"
+        kind = "test"
+        line = 153
+      }
+      new CorpusCase {
+        name = "component static props"
+        kind = "test"
+        line = 161
+      }
+      new CorpusCase {
+        name = "component dynamic props"
+        kind = "test"
+        line = 165
+      }
+      new CorpusCase {
+        name = "component mixed props"
+        kind = "test"
+        line = 169
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vdom/v-bind.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-bind.toml"
+    bytes = 4247
+    sha256 = "83ed914f692f6e1c8fd5f1245fe1c86495df228ba63b7efc0dc47b4ee18ab1ed"
+    cases {
+      new CorpusCase {
+        name = "v-bind attribute"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "v-bind shorthand"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "v-bind class"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "v-bind style"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "class object syntax"
+        kind = "test"
+        line = 29
+      }
+      new CorpusCase {
+        name = "class multiple objects"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "class array syntax"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "class array with object"
+        kind = "test"
+        line = 41
+      }
+      new CorpusCase {
+        name = "class with static"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "class ternary"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "style object syntax"
+        kind = "test"
+        line = 57
+      }
+      new CorpusCase {
+        name = "style multiple properties"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "style array syntax"
+        kind = "test"
+        line = 65
+      }
+      new CorpusCase {
+        name = "style with static"
+        kind = "test"
+        line = 69
+      }
+      new CorpusCase {
+        name = "style camelCase"
+        kind = "test"
+        line = 73
+      }
+      new CorpusCase {
+        name = "style kebab-case"
+        kind = "test"
+        line = 77
+      }
+      new CorpusCase {
+        name = "v-bind object"
+        kind = "test"
+        line = 85
+      }
+      new CorpusCase {
+        name = "v-bind object with other attrs"
+        kind = "test"
+        line = 89
+      }
+      new CorpusCase {
+        name = "v-bind object with dynamic"
+        kind = "test"
+        line = 93
+      }
+      new CorpusCase {
+        name = "v-bind $attrs"
+        kind = "test"
+        line = 97
+      }
+      new CorpusCase {
+        name = "v-bind $props"
+        kind = "test"
+        line = 101
+      }
+      new CorpusCase {
+        name = "dynamic attribute name"
+        kind = "test"
+        line = 109
+      }
+      new CorpusCase {
+        name = "dynamic attribute with prefix"
+        kind = "test"
+        line = 113
+      }
+      new CorpusCase {
+        name = "v-bind.camel"
+        kind = "test"
+        line = 121
+      }
+      new CorpusCase {
+        name = "v-bind.prop"
+        kind = "test"
+        line = 125
+      }
+      new CorpusCase {
+        name = "v-bind.attr"
+        kind = "test"
+        line = 129
+      }
+      new CorpusCase {
+        name = "v-bind key"
+        kind = "test"
+        line = 137
+      }
+      new CorpusCase {
+        name = "v-bind ref"
+        kind = "test"
+        line = 141
+      }
+      new CorpusCase {
+        name = "v-bind is"
+        kind = "test"
+        line = 145
+      }
+      new CorpusCase {
+        name = "boolean attribute binding"
+        kind = "test"
+        line = 153
+      }
+      new CorpusCase {
+        name = "boolean attribute expression"
+        kind = "test"
+        line = 157
+      }
+      new CorpusCase {
+        name = "boolean readonly"
+        kind = "test"
+        line = 161
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vdom/v-for.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-for.toml"
+    bytes = 4151
+    sha256 = "d30f3c78099d1a485ceb95d5c8baa029153e427784aa1fe6c7c74a4b6cc35225"
+    cases {
+      new CorpusCase {
+        name = "v-for array"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "v-for with key"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "v-for with index"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "v-for object"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "v-for object with index"
+        kind = "test"
+        line = 25
+      }
+      new CorpusCase {
+        name = "v-for range"
+        kind = "test"
+        line = 29
+      }
+      new CorpusCase {
+        name = "v-for of array"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "v-for of with index"
+        kind = "test"
+        line = 41
+      }
+      new CorpusCase {
+        name = "v-for on template"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "v-for on template with nested"
+        kind = "test"
+        line = 53
+      }
+      new CorpusCase {
+        name = "v-for on component"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "v-for on component with content"
+        kind = "test"
+        line = 65
+      }
+      new CorpusCase {
+        name = "nested v-for"
+        kind = "test"
+        line = 73
+      }
+      new CorpusCase {
+        name = "v-for with v-if"
+        kind = "test"
+        line = 77
+      }
+      new CorpusCase {
+        name = "template v-for with v-if inside"
+        kind = "test"
+        line = 81
+      }
+      new CorpusCase {
+        name = "v-for with destructure"
+        kind = "test"
+        line = 89
+      }
+      new CorpusCase {
+        name = "v-for with nested destructure"
+        kind = "test"
+        line = 93
+      }
+      new CorpusCase {
+        name = "v-for with default value"
+        kind = "test"
+        line = 97
+      }
+      new CorpusCase {
+        name = "v-for with rest"
+        kind = "test"
+        line = 101
+      }
+      new CorpusCase {
+        name = "v-for with method call"
+        kind = "test"
+        line = 109
+      }
+      new CorpusCase {
+        name = "v-for with computed"
+        kind = "test"
+        line = 113
+      }
+      new CorpusCase {
+        name = "v-for with filter"
+        kind = "test"
+        line = 117
+      }
+      new CorpusCase {
+        name = "v-for with nested property"
+        kind = "test"
+        line = 121
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vdom/v-if.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-if.toml"
+    bytes = 3553
+    sha256 = "4e3041c8b2ec318b055a5f68924fb9d3e9b760a079b766c7910ac59928571ae0"
+    cases {
+      new CorpusCase {
+        name = "simple v-if"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "v-if with content"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "v-if with interpolation"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "v-if on component"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "v-if with v-else"
+        kind = "test"
+        line = 29
+      }
+      new CorpusCase {
+        name = "v-if/v-else on components"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "v-if/v-else same element"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "v-if/v-else-if/v-else"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "multiple v-else-if"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "v-else-if without v-else"
+        kind = "test"
+        line = 53
+      }
+      new CorpusCase {
+        name = "v-if on template"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "v-if/v-else on template"
+        kind = "test"
+        line = 65
+      }
+      new CorpusCase {
+        name = "v-if on template with multiple children"
+        kind = "test"
+        line = 69
+      }
+      new CorpusCase {
+        name = "nested v-if"
+        kind = "test"
+        line = 77
+      }
+      new CorpusCase {
+        name = "v-if inside v-for"
+        kind = "test"
+        line = 81
+      }
+      new CorpusCase {
+        name = "v-if with key"
+        kind = "test"
+        line = 89
+      }
+      new CorpusCase {
+        name = "v-if with dynamic key"
+        kind = "test"
+        line = 93
+      }
+      new CorpusCase {
+        name = "v-if with logical expression"
+        kind = "test"
+        line = 101
+      }
+      new CorpusCase {
+        name = "v-if with comparison"
+        kind = "test"
+        line = 105
+      }
+      new CorpusCase {
+        name = "v-if with ternary in content"
+        kind = "test"
+        line = 109
+      }
+      new CorpusCase {
+        name = "v-if with method call"
+        kind = "test"
+        line = 113
+      }
+      new CorpusCase {
+        name = "v-if with negation"
+        kind = "test"
+        line = 117
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vdom/v-model.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-model.toml"
+    bytes = 4752
+    sha256 = "dc49ae8ac06cafcc6e1dcc4675bf0a24405fb958781ff00698150889575bdf3d"
+    cases {
+      new CorpusCase {
+        name = "input text"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "input number"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "input checkbox"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "input radio"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "input with id"
+        kind = "test"
+        line = 25
+      }
+      new CorpusCase {
+        name = "textarea"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "textarea with placeholder"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "select"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "select multiple"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "select with dynamic options"
+        kind = "test"
+        line = 53
+      }
+      new CorpusCase {
+        name = "v-model.lazy"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "v-model.number"
+        kind = "test"
+        line = 65
+      }
+      new CorpusCase {
+        name = "v-model.trim"
+        kind = "test"
+        line = 69
+      }
+      new CorpusCase {
+        name = "v-model multiple modifiers"
+        kind = "test"
+        line = 73
+      }
+      new CorpusCase {
+        name = "v-model.number.lazy"
+        kind = "test"
+        line = 77
+      }
+      new CorpusCase {
+        name = "component v-model"
+        kind = "test"
+        line = 85
+      }
+      new CorpusCase {
+        name = "component named v-model"
+        kind = "test"
+        line = 89
+      }
+      new CorpusCase {
+        name = "component multiple v-model"
+        kind = "test"
+        line = 93
+      }
+      new CorpusCase {
+        name = "component v-model with modifier"
+        kind = "test"
+        line = 97
+      }
+      new CorpusCase {
+        name = "component named v-model with modifier"
+        kind = "test"
+        line = 101
+      }
+      new CorpusCase {
+        name = "component custom modifier"
+        kind = "test"
+        line = 105
+      }
+      new CorpusCase {
+        name = "dynamic v-model name"
+        kind = "test"
+        line = 113
+      }
+      new CorpusCase {
+        name = "dynamic v-model with modifier"
+        kind = "test"
+        line = 117
+      }
+      new CorpusCase {
+        name = "checkbox array"
+        kind = "test"
+        line = 125
+      }
+      new CorpusCase {
+        name = "checkbox with true/false value"
+        kind = "test"
+        line = 129
+      }
+      new CorpusCase {
+        name = "radio group"
+        kind = "test"
+        line = 137
+      }
+      new CorpusCase {
+        name = "radio with dynamic value"
+        kind = "test"
+        line = 141
+      }
+      new CorpusCase {
+        name = "v-model nested property"
+        kind = "test"
+        line = 149
+      }
+      new CorpusCase {
+        name = "v-model computed"
+        kind = "test"
+        line = 153
+      }
+      new CorpusCase {
+        name = "v-model with array index"
+        kind = "test"
+        line = 157
+      }
+      new CorpusCase {
+        name = "v-model with bracket notation"
+        kind = "test"
+        line = 161
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vdom/v-on.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-on.toml"
+    bytes = 6099
+    sha256 = "25ce261995fae6559785cce88abc69c55cfd60fa8fe717453d41a1c83e666cde"
+    cases {
+      new CorpusCase {
+        name = "v-on handler"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "v-on shorthand"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "inline handler"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "inline with statement"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "method call"
+        kind = "test"
+        line = 25
+      }
+      new CorpusCase {
+        name = "method with args"
+        kind = "test"
+        line = 29
+      }
+      new CorpusCase {
+        name = "inline with $event"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "inline $event property"
+        kind = "test"
+        line = 41
+      }
+      new CorpusCase {
+        name = "arrow function with event"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "arrow function with multiple params"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "stop modifier"
+        kind = "test"
+        line = 57
+      }
+      new CorpusCase {
+        name = "prevent modifier"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "stop and prevent"
+        kind = "test"
+        line = 65
+      }
+      new CorpusCase {
+        name = "capture modifier"
+        kind = "test"
+        line = 69
+      }
+      new CorpusCase {
+        name = "once modifier"
+        kind = "test"
+        line = 73
+      }
+      new CorpusCase {
+        name = "passive modifier"
+        kind = "test"
+        line = 77
+      }
+      new CorpusCase {
+        name = "self modifier"
+        kind = "test"
+        line = 81
+      }
+      new CorpusCase {
+        name = "enter key"
+        kind = "test"
+        line = 89
+      }
+      new CorpusCase {
+        name = "escape key"
+        kind = "test"
+        line = 93
+      }
+      new CorpusCase {
+        name = "tab key"
+        kind = "test"
+        line = 97
+      }
+      new CorpusCase {
+        name = "delete key"
+        kind = "test"
+        line = 101
+      }
+      new CorpusCase {
+        name = "arrow keys"
+        kind = "test"
+        line = 105
+      }
+      new CorpusCase {
+        name = "key code"
+        kind = "test"
+        line = 109
+      }
+      new CorpusCase {
+        name = "ctrl modifier"
+        kind = "test"
+        line = 117
+      }
+      new CorpusCase {
+        name = "alt modifier"
+        kind = "test"
+        line = 121
+      }
+      new CorpusCase {
+        name = "shift modifier"
+        kind = "test"
+        line = 125
+      }
+      new CorpusCase {
+        name = "meta modifier"
+        kind = "test"
+        line = 129
+      }
+      new CorpusCase {
+        name = "exact modifier"
+        kind = "test"
+        line = 133
+      }
+      new CorpusCase {
+        name = "left click"
+        kind = "test"
+        line = 141
+      }
+      new CorpusCase {
+        name = "right click"
+        kind = "test"
+        line = 145
+      }
+      new CorpusCase {
+        name = "middle click"
+        kind = "test"
+        line = 149
+      }
+      new CorpusCase {
+        name = "multiple events"
+        kind = "test"
+        line = 157
+      }
+      new CorpusCase {
+        name = "same event different modifiers"
+        kind = "test"
+        line = 161
+      }
+      new CorpusCase {
+        name = "dynamic event name"
+        kind = "test"
+        line = 169
+      }
+      new CorpusCase {
+        name = "dynamic event with modifier"
+        kind = "test"
+        line = 173
+      }
+      new CorpusCase {
+        name = "v-on object"
+        kind = "test"
+        line = 181
+      }
+      new CorpusCase {
+        name = "v-on object with other events"
+        kind = "test"
+        line = 185
+      }
+      new CorpusCase {
+        name = "component event"
+        kind = "test"
+        line = 193
+      }
+      new CorpusCase {
+        name = "component native event"
+        kind = "test"
+        line = 197
+      }
+      new CorpusCase {
+        name = "inline handler (cacheHandlers)"
+        kind = "test"
+        line = 205
+      }
+      new CorpusCase {
+        name = "inline statement (cacheHandlers)"
+        kind = "test"
+        line = 211
+      }
+      new CorpusCase {
+        name = "method call (cacheHandlers)"
+        kind = "test"
+        line = 217
+      }
+      new CorpusCase {
+        name = "handler reference (cacheHandlers)"
+        kind = "test"
+        line = 223
+      }
+      new CorpusCase {
+        name = "multiple cached handlers"
+        kind = "test"
+        line = 229
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vdom/v-once.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-once.toml"
+    bytes = 2537
+    sha256 = "54b0683c76e6798cc94a4ca1326d0734569757baf20ce2bb04ec75ef12655fd9"
+    cases {
+      new CorpusCase {
+        name = "simple v-once"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "v-once with interpolation"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "v-once with binding"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "v-once on component"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "v-once on template"
+        kind = "test"
+        line = 29
+      }
+      new CorpusCase {
+        name = "v-once with nested dynamic"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "v-once inside v-for"
+        kind = "test"
+        line = 41
+      }
+      new CorpusCase {
+        name = "basic v-memo"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "v-memo multiple deps"
+        kind = "test"
+        line = 53
+      }
+      new CorpusCase {
+        name = "v-memo empty array"
+        kind = "test"
+        line = 57
+      }
+      new CorpusCase {
+        name = "v-memo on component"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "v-memo in v-for"
+        kind = "test"
+        line = 69
+      }
+      new CorpusCase {
+        name = "v-memo with complex expression"
+        kind = "test"
+        line = 73
+      }
+      new CorpusCase {
+        name = "v-memo on template"
+        kind = "test"
+        line = 81
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vdom/v-show.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-show.toml"
+    bytes = 2491
+    sha256 = "d05e14011073f1e63850ff223c4863ece3ba7f34208118629d238829dc238c56"
+    cases {
+      new CorpusCase {
+        name = "simple v-show"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "v-show with content"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "v-show false"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "v-show true"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "v-show on span"
+        kind = "test"
+        line = 29
+      }
+      new CorpusCase {
+        name = "v-show on input"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "v-show on component"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "v-show with comparison"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "v-show with logical and"
+        kind = "test"
+        line = 49
+      }
+      new CorpusCase {
+        name = "v-show with logical or"
+        kind = "test"
+        line = 53
+      }
+      new CorpusCase {
+        name = "v-show with negation"
+        kind = "test"
+        line = 57
+      }
+      new CorpusCase {
+        name = "v-show with method call"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "v-show with v-for"
+        kind = "test"
+        line = 69
+      }
+      new CorpusCase {
+        name = "v-show with v-bind"
+        kind = "test"
+        line = 73
+      }
+      new CorpusCase {
+        name = "v-show with v-on"
+        kind = "test"
+        line = 77
+      }
+      new CorpusCase {
+        name = "nested v-show"
+        kind = "test"
+        line = 85
+      }
+      new CorpusCase {
+        name = "v-show with v-if sibling"
+        kind = "test"
+        line = 89
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "tests/fixtures/vdom/v-slot.toml"
+    kind = "test"
+    copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-slot.toml"
+    bytes = 4287
+    sha256 = "9559419eb875760c993350277dfbb0381107abcad30997eec5c08fc9125073d4"
+    cases {
+      new CorpusCase {
+        name = "default slot content"
+        kind = "test"
+        line = 9
+      }
+      new CorpusCase {
+        name = "default slot with element"
+        kind = "test"
+        line = 13
+      }
+      new CorpusCase {
+        name = "default slot with interpolation"
+        kind = "test"
+        line = 17
+      }
+      new CorpusCase {
+        name = "default slot multiple children"
+        kind = "test"
+        line = 21
+      }
+      new CorpusCase {
+        name = "named slot"
+        kind = "test"
+        line = 29
+      }
+      new CorpusCase {
+        name = "named slot v-slot syntax"
+        kind = "test"
+        line = 33
+      }
+      new CorpusCase {
+        name = "multiple named slots"
+        kind = "test"
+        line = 37
+      }
+      new CorpusCase {
+        name = "named slot with default"
+        kind = "test"
+        line = 41
+      }
+      new CorpusCase {
+        name = "default slot explicit"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "scoped slot"
+        kind = "test"
+        line = 53
+      }
+      new CorpusCase {
+        name = "scoped slot with props"
+        kind = "test"
+        line = 57
+      }
+      new CorpusCase {
+        name = "named scoped slot"
+        kind = "test"
+        line = 61
+      }
+      new CorpusCase {
+        name = "scoped slot destructure"
+        kind = "test"
+        line = 65
+      }
+      new CorpusCase {
+        name = "scoped slot default value"
+        kind = "test"
+        line = 69
+      }
+      new CorpusCase {
+        name = "scoped slot nested destructure"
+        kind = "test"
+        line = 73
+      }
+      new CorpusCase {
+        name = "dynamic slot name"
+        kind = "test"
+        line = 81
+      }
+      new CorpusCase {
+        name = "dynamic slot name with scoped"
+        kind = "test"
+        line = 85
+      }
+      new CorpusCase {
+        name = "v-slot on component"
+        kind = "test"
+        line = 93
+      }
+      new CorpusCase {
+        name = "v-slot with props on component"
+        kind = "test"
+        line = 97
+      }
+      new CorpusCase {
+        name = "slot with v-if"
+        kind = "test"
+        line = 105
+      }
+      new CorpusCase {
+        name = "slot with v-for"
+        kind = "test"
+        line = 109
+      }
+      new CorpusCase {
+        name = "nested components with slots"
+        kind = "test"
+        line = 113
+      }
+      new CorpusCase {
+        name = "Transition slot"
+        kind = "test"
+        line = 121
+      }
+      new CorpusCase {
+        name = "KeepAlive slot"
+        kind = "test"
+        line = 125
+      }
+      new CorpusCase {
+        name = "Suspense slots"
+        kind = "test"
+        line = 129
+      }
+    }
+  }
+}

@@ -1,0 +1,99 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-top-level-await-with-destructuring"
+title = "Imported SFC input: top-level await with destructuring"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "top-level await with destructuring"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "top-level await with destructuring"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-top-level-await-with-destructuring.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  const { data, error } = await useFetch('/api/data')
+  </script>
+  
+  <template>
+    <div v-if="error">Error: {{ error }}</div>
+    <div v-else>{{ data }}</div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { withAsyncContext as _withAsyncContext, defineComponent as _defineComponent } from 'vue'
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-script-setup-top-level-await-with-destructuring',
+    async setup(__props, { expose: __expose }) {
+    __expose();
+  
+  let __temp: any, __restore: any
+  
+  const { data, error } = (
+    ([__temp,__restore] = _withAsyncContext(() => useFetch('/api/data'))),
+    __temp = await __temp,
+    __restore(),
+    __temp
+  )
+  
+  const __returned__ = { data, error }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock, createCommentVNode as _createCommentVNode } from "vue"
+  
+  const _hoisted_1 = { key: 0 }
+  const _hoisted_2 = { key: 1 }
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return ($setup.error)
+      ? (_openBlock(), _createElementBlock("div", _hoisted_1, "Error: " + _toDisplayString($setup.error), 1 /* TEXT */))
+      : (_openBlock(), _createElementBlock("div", _hoisted_2, _toDisplayString($setup.data), 1 /* TEXT */))
+  }
+  """#
+}

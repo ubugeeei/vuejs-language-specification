@@ -98,7 +98,7 @@ The initial benchmark suite covers:
 - SFC batch compilation throughput
 - reactivity computed fan-out pressure
 
-These workloads are derived from patterns used in `vuejs/core` benchmark files and `ubugeeei/vize` benchmark generators.
+These workloads are derived from patterns used in `vuejs/core` benchmark files and copied community benchmark generators.
 
 ## 7. Reproducibility Rules
 
@@ -117,6 +117,6 @@ Benchmark conformance in this repository is represented by the conjunction of:
 
 - executable local benchmark test suites under [`testsuites/benchmark/`](../testsuites/benchmark/)
 - reusable benchmark fixtures under [`fixtures/benchmarks/`](../fixtures/benchmarks/)
-- vendored upstream benchmark evidence under [`sources/copied/vuejs-core/`](../sources/copied/vuejs-core/) and [`sources/traceability/ubugeeei-vize.traceability.pkl`](../sources/traceability/ubugeeei-vize.traceability.pkl)
+- vendored upstream benchmark evidence under [`provenance/vendor/vuejs-core/`](../provenance/vendor/vuejs-core/) and [`provenance/traceability/ubugeeei-vize.traceability.pkl`](../provenance/traceability/ubugeeei-vize.traceability.pkl)
 
 The executable obligation today is intentionally limited to workload identity and result-shape stability, not cross-machine leaderboard ranking.

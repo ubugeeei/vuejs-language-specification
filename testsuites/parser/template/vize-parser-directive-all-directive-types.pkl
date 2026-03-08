@@ -1,0 +1,907 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-directive-all-directive-types"
+title = "Imported parser input: all directive types"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/directive.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.directive"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/directive.toml"
+  source = "tests/fixtures/parser/directive.toml"
+  caseName = "all directive types"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/directive.toml"
+    cases {
+      "all directive types"
+    }
+  }
+}
+
+input {
+  source = "<input v-model=\"text\" v-focus :id=\"inputId\" @input=\"onInput\" v-show=\"visible\">"
+}
+
+expect {
+  errorCount = 1
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<input v-model=\"text\" v-focus :id=\"inputId\" @input=\"onInput\" v-show=\"visible\">",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "input",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [
+          {
+            "type": "DIRECTIVE",
+            "name": "model",
+            "rawName": "v-model",
+            "exp": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 17,
+                  "line": 1,
+                  "offset": 16
+                },
+                "end": {
+                  "column": 21,
+                  "line": 1,
+                  "offset": 20
+                },
+                "source": "text"
+              },
+              "content": "text",
+              "isStatic": false,
+              "constType": "NOT_CONSTANT"
+            },
+            "modifiers": [],
+            "loc": {
+              "start": {
+                "column": 8,
+                "line": 1,
+                "offset": 7
+              },
+              "end": {
+                "column": 22,
+                "line": 1,
+                "offset": 21
+              },
+              "source": "v-model=\"text\""
+            }
+          },
+          {
+            "type": "DIRECTIVE",
+            "name": "focus",
+            "rawName": "v-focus",
+            "modifiers": [],
+            "loc": {
+              "start": {
+                "column": 23,
+                "line": 1,
+                "offset": 22
+              },
+              "end": {
+                "column": 30,
+                "line": 1,
+                "offset": 29
+              },
+              "source": "v-focus"
+            }
+          },
+          {
+            "type": "DIRECTIVE",
+            "name": "bind",
+            "rawName": ":id",
+            "exp": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 36,
+                  "line": 1,
+                  "offset": 35
+                },
+                "end": {
+                  "column": 43,
+                  "line": 1,
+                  "offset": 42
+                },
+                "source": "inputId"
+              },
+              "content": "inputId",
+              "isStatic": false,
+              "constType": "NOT_CONSTANT"
+            },
+            "arg": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 32,
+                  "line": 1,
+                  "offset": 31
+                },
+                "end": {
+                  "column": 34,
+                  "line": 1,
+                  "offset": 33
+                },
+                "source": "id"
+              },
+              "content": "id",
+              "isStatic": true,
+              "constType": "CAN_STRINGIFY"
+            },
+            "modifiers": [],
+            "loc": {
+              "start": {
+                "column": 31,
+                "line": 1,
+                "offset": 30
+              },
+              "end": {
+                "column": 44,
+                "line": 1,
+                "offset": 43
+              },
+              "source": ":id=\"inputId\""
+            }
+          },
+          {
+            "type": "DIRECTIVE",
+            "name": "on",
+            "rawName": "@input",
+            "exp": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 53,
+                  "line": 1,
+                  "offset": 52
+                },
+                "end": {
+                  "column": 60,
+                  "line": 1,
+                  "offset": 59
+                },
+                "source": "onInput"
+              },
+              "content": "onInput",
+              "isStatic": false,
+              "constType": "NOT_CONSTANT"
+            },
+            "arg": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 46,
+                  "line": 1,
+                  "offset": 45
+                },
+                "end": {
+                  "column": 51,
+                  "line": 1,
+                  "offset": 50
+                },
+                "source": "input"
+              },
+              "content": "input",
+              "isStatic": true,
+              "constType": "CAN_STRINGIFY"
+            },
+            "modifiers": [],
+            "loc": {
+              "start": {
+                "column": 45,
+                "line": 1,
+                "offset": 44
+              },
+              "end": {
+                "column": 61,
+                "line": 1,
+                "offset": 60
+              },
+              "source": "@input=\"onInput\""
+            }
+          },
+          {
+            "type": "DIRECTIVE",
+            "name": "show",
+            "rawName": "v-show",
+            "exp": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 70,
+                  "line": 1,
+                  "offset": 69
+                },
+                "end": {
+                  "column": 77,
+                  "line": 1,
+                  "offset": 76
+                },
+                "source": "visible"
+              },
+              "content": "visible",
+              "isStatic": false,
+              "constType": "NOT_CONSTANT"
+            },
+            "modifiers": [],
+            "loc": {
+              "start": {
+                "column": 62,
+                "line": 1,
+                "offset": 61
+              },
+              "end": {
+                "column": 78,
+                "line": 1,
+                "offset": 77
+              },
+              "source": "v-show=\"visible\""
+            }
+          }
+        ],
+        "children": [],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 79,
+            "line": 1,
+            "offset": 78
+          },
+          "source": "<input v-model=\"text\" v-focus :id=\"inputId\" @input=\"onInput\" v-show=\"visible\">"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 79,
+        "line": 1,
+        "offset": 78
+      },
+      "source": "<input v-model=\"text\" v-focus :id=\"inputId\" @input=\"onInput\" v-show=\"visible\">"
+    }
+  }
+  """#
+  normalizedErrors = #"""
+  [
+    {
+      "code": "X_MISSING_END_TAG",
+      "loc": {
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        },
+        "end": {
+          "column": 1,
+          "line": 1,
+          "offset": 0
+        },
+        "source": ""
+      }
+    }
+  ]
+  """#
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 79
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 78
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<input v-model=\"text\" v-focus :id=\"inputId\" @input=\"onInput\" v-show=\"visible\">"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/content"
+      equals = "text"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/column"
+      equals = 21
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/offset"
+      equals = 20
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/source"
+      equals = "text"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/column"
+      equals = 17
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/offset"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/column"
+      equals = 22
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/offset"
+      equals = 21
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/source"
+      equals = "v-model=\"text\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/column"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/offset"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "model"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/rawName"
+      equals = "v-model"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/end/column"
+      equals = 30
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/end/offset"
+      equals = 29
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/source"
+      equals = "v-focus"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/start/column"
+      equals = 23
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/start/offset"
+      equals = 22
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/name"
+      equals = "focus"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/rawName"
+      equals = "v-focus"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/arg/constType"
+      equals = "CAN_STRINGIFY"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/arg/content"
+      equals = "id"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/arg/isStatic"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/arg/loc/end/column"
+      equals = 34
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/arg/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/arg/loc/end/offset"
+      equals = 33
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/arg/loc/source"
+      equals = "id"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/arg/loc/start/column"
+      equals = 32
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/arg/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/arg/loc/start/offset"
+      equals = 31
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/arg/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/exp/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/exp/content"
+      equals = "inputId"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/exp/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/exp/loc/end/column"
+      equals = 43
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/exp/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/exp/loc/end/offset"
+      equals = 42
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/exp/loc/source"
+      equals = "inputId"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/exp/loc/start/column"
+      equals = 36
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/exp/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/exp/loc/start/offset"
+      equals = 35
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/exp/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/loc/end/column"
+      equals = 44
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/loc/end/offset"
+      equals = 43
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/loc/source"
+      equals = ":id=\"inputId\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/loc/start/column"
+      equals = 31
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/loc/start/offset"
+      equals = 30
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/name"
+      equals = "bind"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/rawName"
+      equals = ":id"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/2/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/arg/constType"
+      equals = "CAN_STRINGIFY"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/arg/content"
+      equals = "input"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/arg/isStatic"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/arg/loc/end/column"
+      equals = 51
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/arg/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/arg/loc/end/offset"
+      equals = 50
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/arg/loc/source"
+      equals = "input"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/arg/loc/start/column"
+      equals = 46
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/arg/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/arg/loc/start/offset"
+      equals = 45
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/arg/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/exp/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/exp/content"
+      equals = "onInput"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/exp/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/exp/loc/end/column"
+      equals = 60
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/exp/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/exp/loc/end/offset"
+      equals = 59
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/exp/loc/source"
+      equals = "onInput"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/exp/loc/start/column"
+      equals = 53
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/exp/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/exp/loc/start/offset"
+      equals = 52
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/exp/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/loc/end/column"
+      equals = 61
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/loc/end/offset"
+      equals = 60
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/loc/source"
+      equals = "@input=\"onInput\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/loc/start/column"
+      equals = 45
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/loc/start/offset"
+      equals = 44
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/name"
+      equals = "on"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/rawName"
+      equals = "@input"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/3/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/exp/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/exp/content"
+      equals = "visible"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/exp/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/exp/loc/end/column"
+      equals = 77
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/exp/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/exp/loc/end/offset"
+      equals = 76
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/exp/loc/source"
+      equals = "visible"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/exp/loc/start/column"
+      equals = 70
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/exp/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/exp/loc/start/offset"
+      equals = 69
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/exp/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/loc/end/column"
+      equals = 78
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/loc/end/offset"
+      equals = 77
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/loc/source"
+      equals = "v-show=\"visible\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/loc/start/column"
+      equals = 62
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/loc/start/offset"
+      equals = 61
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/name"
+      equals = "show"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/rawName"
+      equals = "v-show"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/4/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "input"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 79
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 78
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<input v-model=\"text\" v-focus :id=\"inputId\" @input=\"onInput\" v-show=\"visible\">"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<input v-model=\"text\" v-focus :id=\"inputId\" @input=\"onInput\" v-show=\"visible\">"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+  errors {
+    new PointerAssertion {
+      pointer = "/0/code"
+      equals = "X_MISSING_END_TAG"
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/source"
+      equals = ""
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/offset"
+      equals = 0
+    }
+  }
+}

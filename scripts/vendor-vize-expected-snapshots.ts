@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { copyFileSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { packageRoot, walkFiles } from "../src/fs.ts";
+import { vendoredVizeSnapshotRoot } from "../src/layout.ts";
 
 interface VendoredEntry {
   suite: string;
@@ -53,7 +54,7 @@ function main(): void {
   const root = packageRoot(import.meta.url);
   const upstreamRoot = resolve(process.argv[2] ?? "/tmp/vize-spec-ref");
   const upstreamExpectedRoot = join(upstreamRoot, "tests", "expected");
-  const vendoredRoot = join(root, "sources", "copied", "vize");
+  const vendoredRoot = vendoredVizeSnapshotRoot(root);
   const vendoredExpectedRoot = join(vendoredRoot, "tests", "expected");
   const manifestPath = join(vendoredRoot, "expected-snapshots.pkl");
   const originCommit = spawnSync("git", ["-C", upstreamRoot, "rev-parse", "HEAD"], {
@@ -70,7 +71,7 @@ function main(): void {
 
   const entries = snapshotFiles.map((file) => {
     const originPath = relative(upstreamRoot, file).replaceAll("\\", "/");
-    const copiedPath = join("sources", "copied", "vize", originPath).replaceAll("\\", "/");
+    const copiedPath = join("provenance", "vendor", "vize", originPath).replaceAll("\\", "/");
     const target = join(root, copiedPath);
     const content = readFileSync(file);
     const suite = originPath.split("/")[2] ?? "unknown";

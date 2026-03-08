@@ -1,0 +1,176 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-comment-comment-with-many-lines"
+title = "Imported parser input: comment with many lines"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/comment.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.comment"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/comment.toml"
+  source = "tests/fixtures/parser/comment.toml"
+  caseName = "comment with many lines"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/comment.toml"
+    cases {
+      "comment with many lines"
+    }
+  }
+}
+
+input {
+  source = #"""
+  <!--
+  line 1
+  line 2
+  line 3
+  line 4
+  line 5
+  -->
+  """#
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<!--\nline 1\nline 2\nline 3\nline 4\nline 5\n-->",
+    "children": [
+      {
+        "type": "COMMENT",
+        "content": "\nline 1\nline 2\nline 3\nline 4\nline 5\n",
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 4,
+            "line": 7,
+            "offset": 43
+          },
+          "source": "<!--\nline 1\nline 2\nline 3\nline 4\nline 5\n-->"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 4,
+        "line": 7,
+        "offset": 43
+      },
+      "source": "<!--\nline 1\nline 2\nline 3\nline 4\nline 5\n-->"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/content"
+      equals = "\nline 1\nline 2\nline 3\nline 4\nline 5\n"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 4
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 43
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<!--\nline 1\nline 2\nline 3\nline 4\nline 5\n-->"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "COMMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 4
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 43
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<!--\nline 1\nline 2\nline 3\nline 4\nline 5\n-->"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<!--\nline 1\nline 2\nline 3\nline 4\nline 5\n-->"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

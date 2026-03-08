@@ -1,0 +1,117 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-nested-v-if-with-ref-should-not-duplicate-value"
+title = "Imported SFC input: nested v-if with ref should not duplicate .value"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "nested v-if with ref should not duplicate .value"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "nested v-if with ref should not duplicate .value"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-nested-v-if-with-ref-should-not-duplicate-value.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  import { ref } from 'vue';
+  const mode = ref<'a' | 'b'>('a');
+  </script>
+  
+  <template>
+    <div>
+      <template v-if="true">
+        <div v-if="true">
+          <button :class="{ active: mode === 'a' }" @click="mode = 'b'">Test</button>
+        </div>
+        <div v-else-if="false">
+          <span>Alt</span>
+        </div>
+      </template>
+    </div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  import { ref } from 'vue';
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-script-setup-nested-v-if-with-ref-should-not-duplicate-value',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const mode = ref<'a' | 'b'>('a');
+  
+  const __returned__ = { mode }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { normalizeClass as _normalizeClass, createElementVNode as _createElementVNode, openBlock as _openBlock, createElementBlock as _createElementBlock, createCommentVNode as _createCommentVNode, Fragment as _Fragment } from "vue"
+  
+  const _hoisted_1 = { key: 0 }
+  const _hoisted_2 = { key: 1 }
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, [
+      true
+        ? (_openBlock(), _createElementBlock(_Fragment, { key: 0 }, [
+            true
+              ? (_openBlock(), _createElementBlock("div", _hoisted_1, [
+                  _createElementVNode("button", {
+                    class: _normalizeClass({ active: $setup.mode === 'a' }),
+                    onClick: _cache[0] || (_cache[0] = $event => ($setup.mode = 'b'))
+                  }, "Test", 2 /* CLASS */)
+                ]))
+              : false
+                ? (_openBlock(), _createElementBlock("div", _hoisted_2, [...(_cache[1] || (_cache[1] = [
+                    _createElementVNode("span", null, "Alt", -1 /* CACHED */)
+                  ]))]))
+                : _createCommentVNode("v-if", true)
+          ], 64 /* STABLE_FRAGMENT */))
+        : _createCommentVNode("v-if", true)
+    ]))
+  }
+  """#
+}

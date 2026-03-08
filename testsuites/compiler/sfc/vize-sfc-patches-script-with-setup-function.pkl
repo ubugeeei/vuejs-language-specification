@@ -1,0 +1,89 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-script-with-setup-function"
+title = "Imported SFC input: script with setup function"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "script with setup function"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "script with setup function"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-script-with-setup-function.vue"
+  sfc = #"""
+  <script>
+  import { ref } from 'vue'
+  
+  export default {
+    name: 'SetupFunctionComponent',
+    setup() {
+      const count = ref(0)
+      return { count }
+    }
+  }
+  </script>
+  
+  <template>
+    <div>{{ count }}</div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = true
+      scriptSetup = false
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  
+  import { ref } from 'vue'
+  
+  export default {
+    name: 'SetupFunctionComponent',
+    setup() {
+      const count = ref(0)
+      return { count }
+    }
+  }
+  
+  """#
+  templateCode = #"""
+  import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, _toDisplayString($setup.count), 1 /* TEXT */))
+  }
+  """#
+}

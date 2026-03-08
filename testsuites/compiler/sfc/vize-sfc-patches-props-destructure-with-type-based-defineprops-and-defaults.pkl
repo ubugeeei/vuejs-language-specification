@@ -1,0 +1,95 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-props-destructure-with-type-based-defineprops-and-defaults"
+title = "Imported SFC input: props destructure with type-based defineProps and defaults"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "props destructure with type-based defineProps and defaults"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "props destructure with type-based defineProps and defaults"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-props-destructure-with-type-based-defineprops-and-defaults.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  const { color = "primary", size = "medium" } = defineProps<{
+    color?: "primary" | "secondary";
+    size?: "small" | "medium" | "large";
+  }>();
+  </script>
+  
+  <template>
+    <div :class="[color, size]">Styled</div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-patches-props-destructure-with-type-based-defineprops-and-defaults',
+    props: {
+      color: { type: String, required: false, default: "primary" },
+      size: { type: String, required: false, default: "medium" }
+    },
+    setup(__props: any, { expose: __expose }) {
+    __expose();
+  
+  
+  
+  const __returned__ = {  }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { normalizeClass as _normalizeClass, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", {
+      class: _normalizeClass([$props.color, $props.size])
+    }, "Styled", 2 /* CLASS */))
+  }
+  """#
+}

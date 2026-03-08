@@ -1,0 +1,73 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.edge-cases-template-literals"
+title = "Edge-case SFC: template literal bindings remain stable through lowering"
+kind = "sfc-full-compile"
+summary = "Script setup lowering must preserve template literal initialization and expose the computed binding to template compilation without rewriting it to a different expression form."
+
+features {
+  "compiler.sfc"
+  "script-setup.javascript"
+  "javascript.template-literal"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/edge-cases.test.ts"
+    cases {
+      "should handle template literals"
+    }
+  }
+}
+
+input {
+  filename = "templateLiterals.vue"
+  sfc = #"""
+  <script setup>
+  const name = 'World'
+  const greeting = `Hello, ${name}!`
+  </script>
+
+  <template>
+    <div>{{ greeting }}</div>
+  </template>
+  """#
+}
+
+expect {
+  descriptor {
+    template = true
+    script = false
+    scriptSetup = true
+    styles = 0
+    customBlocks = 0
+    scriptLang = null
+    scriptSetupLang = null
+    scopedStyles = 0
+  }
+  normalizedCode = #"""
+  const name = 'World'
+
+  export default {
+    __name: 'templateLiterals',
+    setup(__props, { expose: __expose }) {
+    __expose();
+
+  const greeting = `Hello, ${name}!`
+
+  const __returned__ = { name, greeting }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+
+  }
+  """#
+  templateCode = #"""
+  import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, _toDisplayString($setup.greeting)))
+  }
+  """#
+}

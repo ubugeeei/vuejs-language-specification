@@ -1,0 +1,528 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-errors-parse-errors-duplicate-attribute"
+title = "Imported parser input: duplicate attribute"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/errors/parse-errors.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.errors"
+  "imported.input.parse-errors"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/errors/parse-errors.toml"
+  source = "tests/fixtures/errors/parse-errors.toml"
+  caseName = "duplicate attribute"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/errors/parse-errors.toml"
+    cases {
+      "duplicate attribute"
+    }
+  }
+}
+
+input {
+  source = "<div id=\"a\" id=\"b\"></div>"
+}
+
+expect {
+  errorCount = 1
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<div id=\"a\" id=\"b\"></div>",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "div",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [
+          {
+            "type": "ATTRIBUTE",
+            "name": "id",
+            "nameLoc": {
+              "start": {
+                "column": 6,
+                "line": 1,
+                "offset": 5
+              },
+              "end": {
+                "column": 8,
+                "line": 1,
+                "offset": 7
+              },
+              "source": "id"
+            },
+            "value": {
+              "type": "TEXT",
+              "content": "a",
+              "loc": {
+                "start": {
+                  "column": 9,
+                  "line": 1,
+                  "offset": 8
+                },
+                "end": {
+                  "column": 12,
+                  "line": 1,
+                  "offset": 11
+                },
+                "source": "\"a\""
+              }
+            },
+            "loc": {
+              "start": {
+                "column": 6,
+                "line": 1,
+                "offset": 5
+              },
+              "end": {
+                "column": 12,
+                "line": 1,
+                "offset": 11
+              },
+              "source": "id=\"a\""
+            }
+          },
+          {
+            "type": "ATTRIBUTE",
+            "name": "id",
+            "nameLoc": {
+              "start": {
+                "column": 13,
+                "line": 1,
+                "offset": 12
+              },
+              "end": {
+                "column": 15,
+                "line": 1,
+                "offset": 14
+              },
+              "source": "id"
+            },
+            "value": {
+              "type": "TEXT",
+              "content": "b",
+              "loc": {
+                "start": {
+                  "column": 16,
+                  "line": 1,
+                  "offset": 15
+                },
+                "end": {
+                  "column": 19,
+                  "line": 1,
+                  "offset": 18
+                },
+                "source": "\"b\""
+              }
+            },
+            "loc": {
+              "start": {
+                "column": 13,
+                "line": 1,
+                "offset": 12
+              },
+              "end": {
+                "column": 19,
+                "line": 1,
+                "offset": 18
+              },
+              "source": "id=\"b\""
+            }
+          }
+        ],
+        "children": [],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 26,
+            "line": 1,
+            "offset": 25
+          },
+          "source": "<div id=\"a\" id=\"b\"></div>"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 26,
+        "line": 1,
+        "offset": 25
+      },
+      "source": "<div id=\"a\" id=\"b\"></div>"
+    }
+  }
+  """#
+  normalizedErrors = #"""
+  [
+    {
+      "code": "DUPLICATE_ATTRIBUTE",
+      "loc": {
+        "start": {
+          "column": 13,
+          "line": 1,
+          "offset": 12
+        },
+        "end": {
+          "column": 13,
+          "line": 1,
+          "offset": 12
+        },
+        "source": ""
+      }
+    }
+  ]
+  """#
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 26
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 25
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<div id=\"a\" id=\"b\"></div>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/column"
+      equals = 12
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/offset"
+      equals = 11
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/source"
+      equals = "id=\"a\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/column"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/offset"
+      equals = 5
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "id"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/end/column"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/end/offset"
+      equals = 7
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/source"
+      equals = "id"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/start/column"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/nameLoc/start/offset"
+      equals = 5
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "ATTRIBUTE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/content"
+      equals = "a"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/end/column"
+      equals = 12
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/end/offset"
+      equals = 11
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/source"
+      equals = "\"a\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/start/column"
+      equals = 9
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/loc/start/offset"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/end/column"
+      equals = 19
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/end/offset"
+      equals = 18
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/source"
+      equals = "id=\"b\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/start/column"
+      equals = 13
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/start/offset"
+      equals = 12
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/name"
+      equals = "id"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/nameLoc/end/column"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/nameLoc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/nameLoc/end/offset"
+      equals = 14
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/nameLoc/source"
+      equals = "id"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/nameLoc/start/column"
+      equals = 13
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/nameLoc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/nameLoc/start/offset"
+      equals = 12
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/type"
+      equals = "ATTRIBUTE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/content"
+      equals = "b"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/loc/end/column"
+      equals = 19
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/loc/end/offset"
+      equals = 18
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/loc/source"
+      equals = "\"b\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/loc/start/column"
+      equals = 16
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/loc/start/offset"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/value/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "div"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 26
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 25
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<div id=\"a\" id=\"b\"></div>"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<div id=\"a\" id=\"b\"></div>"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+  errors {
+    new PointerAssertion {
+      pointer = "/0/code"
+      equals = "DUPLICATE_ATTRIBUTE"
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/column"
+      equals = 13
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/end/offset"
+      equals = 12
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/source"
+      equals = ""
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/column"
+      equals = 13
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/offset"
+      equals = 12
+    }
+  }
+}

@@ -1,0 +1,73 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-if-v-if-on-component"
+title = "Imported template input: v-if on component"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-if.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-if"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-if.toml"
+  source = "tests/fixtures/vdom/v-if.toml"
+  caseName = "v-if on component"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-if.toml"
+    cases {
+      "v-if on component"
+    }
+  }
+}
+
+input {
+  source = "<MyComponent v-if=\"show\" />"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "RESOLVE_COMPONENT"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_COMMENT"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { resolveComponent: _resolveComponent, openBlock: _openBlock, createBlock: _createBlock, createCommentVNode: _createCommentVNode } = _Vue
+  
+      const _component_MyComponent = _resolveComponent("MyComponent")
+  
+      return show
+        ? (_openBlock(), _createBlock(_component_MyComponent, { key: 0 }))
+        : _createCommentVNode("v-if", true)
+    }
+  }
+  """#
+}

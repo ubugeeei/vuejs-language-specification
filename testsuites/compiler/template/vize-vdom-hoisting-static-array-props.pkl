@@ -1,0 +1,68 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-hoisting-static-array-props"
+title = "Imported template input: static array props"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/hoisting.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.hoisting"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/hoisting.toml"
+  source = "tests/fixtures/vdom/hoisting.toml"
+  caseName = "static array props"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/hoisting.toml"
+    cases {
+      "static array props"
+    }
+  }
+}
+
+input {
+  source = "<div :class=\"['a', 'b']\">content</div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "NORMALIZE_CLASS"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { normalizeClass: _normalizeClass, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return (_openBlock(), _createElementBlock("div", {
+        class: _normalizeClass(['a', 'b'])
+      }, "content", 2 /* CLASS */))
+    }
+  }
+  """#
+}

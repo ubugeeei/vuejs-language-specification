@@ -7,7 +7,7 @@ This chapter defines the machine-readable artifact contract for local executable
 It covers:
 
 - Pkl executable test suites under [`testsuites/`](../testsuites/)
-- JavaScript runtime test suites under [`src/runtime/testsuites/`](../src/runtime/testsuites/)
+- JavaScript runtime test suites under [`runtime/testsuites/`](../runtime/testsuites/)
 - repository-level validation obligations enforced by [`src/validate.ts`](../src/validate.ts) and [`test/validation.spec.ts`](../test/validation.spec.ts)
 
 It does not redefine the semantic obligations of parser, compiler, type-evaluation, runtime, or benchmark behavior. Those remain defined by the target-specific chapters.
@@ -19,7 +19,7 @@ The local artifact layer is modeled by:
 
 ```text
 PklSuitePath     ::= "testsuites/" SuiteName "/" Group "/" Name ".pkl"
-RuntimeSuitePath ::= "src/runtime/testsuites/" Name ".ts"
+RuntimeSuitePath ::= "runtime/testsuites/" Name ".ts"
 
 PklSuiteId       ::= SuiteName "." Group "." Name
 RuntimeSuiteId   ::= "runtime." Segment ("." Segment)+
@@ -36,8 +36,11 @@ LocalExecutableArtifact ::= PklExecutableTestSuite | RuntimeExecutableTestSuite
 where:
 
 ```text
-PklExecutableTestSuite     ::= ⟨id, suite, kind, title, summary, features*, upstream*, profile?⟩
-RuntimeExecutableTestSuite ::= ⟨id, title, summary, environment, features*, upstream*, run⟩
+PklExecutableTestSuite     ::= ⟨id, suite, kind, title, summary, features*, inputOrigin?, oracle?, upstream*, profile?, vendoredSnapshot?⟩
+RuntimeExecutableTestSuite ::= ⟨id, title, summary, environment, features*, upstream*, input, run⟩
+RuntimeSourceInput         ::= SfcRuntimeInput
+SfcRuntimeInput            ::= ⟨kind = "sfc", filename, source⟩
+VendoredSnapshot           ::= ⟨output, options?⟩
 ```
 
 ## 3. Well-Formedness
@@ -63,8 +66,41 @@ WellFormedPklSuite(p, t) ⇔
   t.features ≠ ∅ ∧
   Distinct(t.features) ∧
   t.upstream ≠ ∅ ∧
-  ∀ u ∈ t.upstream. WellFormedUpstreamSelector(u)
+  ∀ u ∈ t.upstream. WellFormedUpstreamSelector(u) ∧
+  WellFormedImportedOracle(t) ∧
+  WellFormedVendoredSnapshot(t)
 ```
+
+where:
+
+```text
+WellFormedImportedOracle(t) ⇔
+  t.inputOrigin = ⊥ ∧ t.oracle = ⊥
+    ∨
+  NonEmpty(t.inputOrigin.copiedPath) ∧
+  NonEmpty(t.inputOrigin.source) ∧
+  NonEmpty(t.inputOrigin.caseName) ∧
+  FileExists(t.inputOrigin.copiedPath) ∧
+  NonEmpty(t.oracle.repository) ∧
+  NonEmpty(t.oracle.moduleName) ∧
+  NonEmpty(t.oracle.operation)
+```
+
+where:
+
+```text
+WellFormedVendoredSnapshot(t) ⇔
+  t.expect.vendoredSnapshotOutput = ⊥
+    ∨
+  ∃ u ∈ t.upstream.
+    u.repository = "ubugeeei/vize" ∧
+    Prefix(u.source, "tests/fixtures/") ∧
+    CopiedSnapshotExists(u.source, Head(u.cases)) ∧
+    SnapshotInputEq(t, u.source, Head(u.cases)) ∧
+    SnapshotOutputEq(t, u.source, Head(u.cases))
+```
+
+Additionally, if `t.oracle.repository = "vuejs/core"` and `t.oracle.provisional ≠ true`, then `t.kind` MUST NOT be a snapshot-only kind and `t.expect.vendoredSnapshotOutput` MUST be `⊥`.
 
 Additionally, the first non-blank line of every Pkl test suite MUST amend the canonical suite schema:
 
@@ -88,10 +124,22 @@ WellFormedRuntimeSuite(r) ⇔
   r.features ≠ ∅ ∧
   Distinct(r.features) ∧
   r.upstream ≠ ∅ ∧
-  ∀ u ∈ r.upstream. WellFormedUpstreamSelector(u)
+  ∀ u ∈ r.upstream. WellFormedUpstreamSelector(u) ∧
+  WellFormedRuntimeInput(r.input)
 ```
 
-Each runtime test-suite module under [`src/runtime/testsuites/`](../src/runtime/testsuites/) MUST export exactly one canonical binding named `*TestSuite` whose value satisfies `WellFormedRuntimeSuite`.
+where:
+
+```text
+WellFormedRuntimeInput(i) ⇔
+  i.kind = "sfc" ∧
+  NonEmpty(i.filename) ∧
+  Suffix(i.filename, ".vue") ∧
+  NonEmpty(i.source) ∧
+  Contains(i.source, "<template>")
+```
+
+Each runtime test-suite module under [`runtime/testsuites/`](../runtime/testsuites/) MUST export exactly one canonical binding named `*TestSuite` whose value satisfies `WellFormedRuntimeSuite`.
 
 ### 3.3. Upstream Selectors
 
@@ -147,6 +195,8 @@ The reference validator MUST reject any repository state that violates:
 - canonical schema amendment
 - local executable id uniqueness
 - canonical local naming rules
+- copied snapshot equality for snapshot-backed suites
+- runtime source-input well-formedness
 
 Those checks are operationalized by:
 

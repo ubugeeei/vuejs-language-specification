@@ -1,0 +1,72 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-on-enter-key"
+title = "Imported vapor input: enter key"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-on.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-on"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-on.toml"
+  source = "tests/fixtures/vapor/v-on.toml"
+  caseName = "enter key"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-on.toml"
+    cases {
+      "enter key"
+    }
+  }
+}
+
+input {
+  source = "<input @keyup.enter=\"submit\">"
+}
+
+expect {
+  normalizedCode = #"""
+  import { createInvoker as _createInvoker, withKeys as _withKeys, delegateEvents as _delegateEvents, template as _template } from 'vue';
+  const t0 = _template("<input>", true)
+  _delegateEvents("keyup")
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    n0.$evtkeyup = _createInvoker(_withKeys(e => _ctx.submit(e), ["enter"]))
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { createInvoker as _createInvoker, withKeys as _withKeys, delegateEvents as _delegateEvents, template as _template } from 'vue';
+  const t0 = _template("<input>", true)
+  _delegateEvents("keyup")
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    n0.$evtkeyup = _createInvoker(_withKeys(e => _ctx.submit(e), ["enter"]))
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

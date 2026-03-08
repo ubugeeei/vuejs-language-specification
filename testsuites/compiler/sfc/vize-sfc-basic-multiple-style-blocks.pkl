@@ -1,0 +1,88 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-basic-multiple-style-blocks"
+title = "Imported SFC input: multiple style blocks"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/basic.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.basic"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/basic.toml"
+  source = "tests/fixtures/sfc/basic.toml"
+  caseName = "multiple style blocks"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/basic.toml"
+    cases {
+      "multiple style blocks"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-basic-multiple-style-blocks.vue"
+  sfc = #"""
+  <template>
+    <div class="a b">Test</div>
+  </template>
+
+  <style scoped>
+  .b { color: blue; }
+  </style>
+
+  <style>
+  .a { color: red; }
+  </style>
+
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = false
+      styles = 2
+      customBlocks = 0
+      scopedStyles = 1
+    }
+  templateCode = #"""
+  import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  const _hoisted_1 = { class: "a b" }
+  
+  export function render(_ctx, _cache) {
+    return (_openBlock(), _createElementBlock("div", _hoisted_1, "Test"))
+  }
+  """#
+  styleCodes {
+    #"""
+
+    .b[data-v-compiler.sfc.vize-sfc-basic-multiple-style-blocks-style-0] { color: blue;
+    }
+
+    """#
+    #"""
+
+    .a { color: red;
+    }
+
+    """#
+  }
+}

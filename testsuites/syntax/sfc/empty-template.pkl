@@ -1,0 +1,38 @@
+amends "../../../schemas/SyntaxTestSuite.pkl"
+
+id = "syntax.sfc.empty-template"
+title = "Descriptor preserves an explicit empty template block"
+summary = "An explicit empty template block must remain observable in the SFC descriptor even when it contains no authored content."
+
+features {
+  "sfc.template-block"
+  "descriptor.empty-template"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/edge-cases.test.ts"
+    cases {
+      "should handle empty template"
+    }
+  }
+}
+
+input {
+  filename = "EmptyTemplate.vue"
+  source = "<template></template>\n"
+}
+
+expect {
+  descriptor {
+    template = true
+    script = false
+    scriptSetup = false
+    styles = 0
+    customBlocks = 0
+    scriptLang = null
+    scriptSetupLang = null
+    scopedStyles = 0
+  }
+}

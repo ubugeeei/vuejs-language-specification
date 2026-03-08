@@ -1,0 +1,74 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-model-named-v-model"
+title = "Imported vapor input: named v-model"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-model.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-model"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-model.toml"
+  source = "tests/fixtures/vapor/v-model.toml"
+  caseName = "named v-model"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-model.toml"
+    cases {
+      "named v-model"
+    }
+  }
+}
+
+input {
+  source = "<MyComponent v-model:title=\"pageTitle\" />"
+}
+
+expect {
+  normalizedCode = #"""
+  import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback } from 'vue';
+  
+  export function render(_ctx) {
+    const _component_MyComponent = _resolveComponent("MyComponent")
+    const n0 = _createComponentWithFallback(_component_MyComponent, {
+      title: () => (_ctx.pageTitle),
+      "onUpdate:title": () => _value => (_ctx.pageTitle = _value)
+    }, null, true)
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback } from 'vue';
+  
+  export function render(_ctx) {
+    const _component_MyComponent = _resolveComponent("MyComponent")
+    const n0 = _createComponentWithFallback(_component_MyComponent, {
+      title: () => (_ctx.pageTitle),
+      "onUpdate:title": () => _value => (_ctx.pageTitle = _value)
+    }, null, true)
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

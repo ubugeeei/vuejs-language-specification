@@ -1,0 +1,48 @@
+amends "../../../schemas/SyntaxTestSuite.pkl"
+
+id = "syntax.sfc.empty-script-setup"
+title = "Descriptor drops an empty script setup block while preserving the template"
+summary = "An empty script setup block must not manufacture runtime content, while the authored template block remains observable in the descriptor."
+
+features {
+  "sfc.script-setup"
+  "descriptor.empty-script-setup"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/edge-cases.test.ts"
+    cases {
+      "should handle empty script setup"
+    }
+  }
+}
+
+input {
+  filename = "EmptyScriptSetup.vue"
+  source = #"""
+    <script setup>
+    </script>
+
+    <template>
+      <div>Hello</div>
+    </template>
+    """#
+}
+
+expect {
+  descriptor {
+    template = true
+    script = false
+    scriptSetup = false
+    styles = 0
+    customBlocks = 0
+    scriptLang = null
+    scriptSetupLang = null
+    scopedStyles = 0
+  }
+  templateContentIncludes {
+    "Hello"
+  }
+}

@@ -1,0 +1,279 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-text-text-with-triple-curly"
+title = "Imported parser input: text with triple curly"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/text.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.text"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/text.toml"
+  source = "tests/fixtures/parser/text.toml"
+  caseName = "text with triple curly"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/text.toml"
+    cases {
+      "text with triple curly"
+    }
+  }
+}
+
+input {
+  source = "{{{ not interpolation }}}"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "{{{ not interpolation }}}",
+    "children": [
+      {
+        "type": "INTERPOLATION",
+        "content": {
+          "type": "SIMPLE_EXPRESSION",
+          "loc": {
+            "start": {
+              "column": 3,
+              "line": 1,
+              "offset": 2
+            },
+            "end": {
+              "column": 22,
+              "line": 1,
+              "offset": 21
+            },
+            "source": "{ not interpolation"
+          },
+          "content": "{ not interpolation",
+          "isStatic": false,
+          "constType": "NOT_CONSTANT"
+        },
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 25,
+            "line": 1,
+            "offset": 24
+          },
+          "source": "{{{ not interpolation }}"
+        }
+      },
+      {
+        "type": "TEXT",
+        "content": "}",
+        "loc": {
+          "start": {
+            "column": 25,
+            "line": 1,
+            "offset": 24
+          },
+          "end": {
+            "column": 26,
+            "line": 1,
+            "offset": 25
+          },
+          "source": "}"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 26,
+        "line": 1,
+        "offset": 25
+      },
+      "source": "{{{ not interpolation }}}"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/content/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/content"
+      equals = "{ not interpolation"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/end/column"
+      equals = 22
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/end/offset"
+      equals = 21
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/source"
+      equals = "{ not interpolation"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/start/column"
+      equals = 3
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/loc/start/offset"
+      equals = 2
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 25
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 24
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "{{{ not interpolation }}"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "INTERPOLATION"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/content"
+      equals = "}"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/column"
+      equals = 26
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/offset"
+      equals = 25
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/source"
+      equals = "}"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/column"
+      equals = 25
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/offset"
+      equals = 24
+    }
+    new PointerAssertion {
+      pointer = "/children/1/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 26
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 25
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "{{{ not interpolation }}}"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "{{{ not interpolation }}}"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

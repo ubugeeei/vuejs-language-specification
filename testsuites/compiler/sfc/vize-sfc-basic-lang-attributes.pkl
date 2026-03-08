@@ -1,0 +1,93 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-basic-lang-attributes"
+title = "Imported SFC input: lang attributes"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/basic.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.basic"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/basic.toml"
+  source = "tests/fixtures/sfc/basic.toml"
+  caseName = "lang attributes"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/basic.toml"
+    cases {
+      "lang attributes"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-basic-lang-attributes.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  const count: number = 0
+  </script>
+  
+  <template>
+    <div>{{ count }}</div>
+  </template>
+  
+  <style lang="scss">
+  .text { color: red; }
+  </style>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 1
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      styleLangs {
+        "scss"
+      }
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  const count: number = 0
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-basic-lang-attributes',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  
+  const __returned__ = { count }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, _toDisplayString($setup.count)))
+  }
+  """#
+}

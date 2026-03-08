@@ -1,0 +1,97 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-interface-with-callback-function-type"
+title = "Imported SFC input: interface with callback function type"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "interface with callback function type"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "interface with callback function type"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-interface-with-callback-function-type.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  interface Props {
+    refreshMethod: (loaded: Function) => Promise<void> | void;
+  }
+  const props = defineProps<Props>();
+  </script>
+  
+  <template>
+    <div @click="props.refreshMethod(() => {})">Refresh</div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  interface Props {
+    refreshMethod: (loaded: Function) => Promise<void> | void;
+  }
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-script-setup-interface-with-callback-function-type',
+    props: {
+      refreshMethod: { type: Function, required: true }
+    },
+    setup(__props: any, { expose: __expose }) {
+    __expose();
+  
+  const props = __props;
+  
+  const __returned__ = { props }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", {
+      onClick: _cache[0] || (_cache[0] = $event => ($setup.props.refreshMethod(() => {})))
+    }, "Refresh"))
+  }
+  """#
+}

@@ -1,0 +1,60 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-element-slot-with-name"
+title = "Imported template input: slot with name"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/element.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.element"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/element.toml"
+  source = "tests/fixtures/vdom/element.toml"
+  caseName = "slot with name"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/element.toml"
+    cases {
+      "slot with name"
+    }
+  }
+}
+
+input {
+  source = "<slot name=\"header\"></slot>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "RENDER_SLOT"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { renderSlot: _renderSlot } = _Vue
+  
+      return _renderSlot($slots, "header")
+    }
+  }
+  """#
+}

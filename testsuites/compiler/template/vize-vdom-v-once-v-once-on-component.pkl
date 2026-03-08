@@ -1,0 +1,73 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-once-v-once-on-component"
+title = "Imported template input: v-once on component"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-once.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-once"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-once.toml"
+  source = "tests/fixtures/vdom/v-once.toml"
+  caseName = "v-once on component"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-once.toml"
+    cases {
+      "v-once on component"
+    }
+  }
+}
+
+input {
+  source = "<MyComponent v-once />"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "SET_BLOCK_TRACKING"
+    }
+    new HelperExpectation {
+      name = "RESOLVE_COMPONENT"
+    }
+    new HelperExpectation {
+      name = "CREATE_VNODE"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { setBlockTracking: _setBlockTracking, resolveComponent: _resolveComponent, createVNode: _createVNode } = _Vue
+  
+      const _component_MyComponent = _resolveComponent("MyComponent")
+  
+      return _cache[0] || (
+        _setBlockTracking(-1, true),
+        (_cache[0] = _createVNode(_component_MyComponent)).cacheIndex = 0,
+        _setBlockTracking(1),
+        _cache[0]
+      )
+    }
+  }
+  """#
+}

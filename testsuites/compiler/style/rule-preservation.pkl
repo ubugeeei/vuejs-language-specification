@@ -1,0 +1,59 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.style.rule-preservation"
+title = "Style compilation preserves authored selector and rule structure"
+kind = "sfc-style-compile"
+summary = "Portable style compilation must preserve basic selectors, multiple top-level rules, and nested descendant selectors without introducing unrelated rewrites."
+
+features {
+  "compiler.style"
+  "style.selectors"
+  "style.rules"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/css-compile.test.ts"
+    cases {
+      "should compile basic CSS"
+      "should compile multiple rules"
+      "should handle nested selectors"
+    }
+  }
+}
+
+input {
+  filename = "rule-preservation.css"
+  source = #"""
+  .container { display: flex; }
+  .header { font-size: 24px; }
+  .content { padding: 16px; }
+  .footer { margin-top: 20px; }
+  .parent {
+    color: black;
+  }
+  .parent .child {
+    color: blue;
+  }
+  """#
+}
+
+expect {
+  normalizedCode = #"""
+  .container { display: flex;
+  }
+  .header { font-size: 24px;
+  }
+  .content { padding: 16px;
+  }
+  .footer { margin-top: 20px;
+  }
+  .parent {
+    color: black;
+  }
+  .parent .child {
+    color: blue;
+  }
+  """#
+}

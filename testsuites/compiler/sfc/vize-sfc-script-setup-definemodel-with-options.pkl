@@ -1,0 +1,95 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-definemodel-with-options"
+title = "Imported SFC input: defineModel with options"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "defineModel with options"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "defineModel with options"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-definemodel-with-options.vue"
+  sfc = #"""
+  <script setup>
+  const count = defineModel({ type: Number, default: 0 })
+  </script>
+  
+  <template>
+    <input v-model="count" type="number">
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { useModel as _useModel } from 'vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-script-setup-definemodel-with-options',
+    props: {
+      "modelValue": { type: Number, default: 0 },
+      "modelModifiers": {},
+    },
+    emits: ["update:modelValue"],
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const count = _useModel(__props, "modelValue")
+  
+  const __returned__ = { count }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { vModelText as _vModelText, withDirectives as _withDirectives, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return _withDirectives((_openBlock(), _createElementBlock("input", {
+      "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => (($setup.count) = $event)),
+      type: "number"
+    }, null, 512 /* NEED_PATCH */)), [
+      [_vModelText, $setup.count]
+    ])
+  }
+  """#
+}

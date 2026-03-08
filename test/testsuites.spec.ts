@@ -1,5 +1,6 @@
 /* oxlint-disable jest/expect-expect, jest/valid-title */
 
+import { readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
 import {
   loadGenericTestSuites,
@@ -18,6 +19,12 @@ import type {
 } from "../src/types.ts";
 import { runBenchmarkTestSuite } from "../src/benchmark.ts";
 
+function loadStableIds(file: string): string[] {
+  return readFileSync(new URL(file, import.meta.url), "utf8")
+    .split(/\r?\n/u)
+    .filter((line) => line.length > 0);
+}
+
 function isSuite<T extends GenericTestSuite["suite"]>(
   suite: T,
   value: GenericTestSuite,
@@ -27,9 +34,10 @@ function isSuite<T extends GenericTestSuite["suite"]>(
 
 describe("generic test suites", () => {
   const testSuites = loadGenericTestSuites().map((entry) => entry.data);
+  const stableCatalogIds = loadStableIds("../provenance/stability/stable-catalog-ids.txt");
 
   test("loads the expected seed test-suite count", () => {
-    expect(testSuites).toHaveLength(106);
+    expect(testSuites).toHaveLength(stableCatalogIds.length);
   });
 
   for (const testSuite of testSuites.filter((value) => isSuite("parser", value))) {

@@ -1,0 +1,79 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-slot-default-slot-content"
+title = "Imported template input: default slot content"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-slot.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-slot"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-slot.toml"
+  source = "tests/fixtures/vdom/v-slot.toml"
+  caseName = "default slot content"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-slot.toml"
+    cases {
+      "default slot content"
+    }
+  }
+}
+
+input {
+  source = "<MyComponent>content</MyComponent>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "CREATE_TEXT"
+    }
+    new HelperExpectation {
+      name = "RESOLVE_COMPONENT"
+    }
+    new HelperExpectation {
+      name = "WITH_CTX"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { createTextVNode: _createTextVNode, resolveComponent: _resolveComponent, withCtx: _withCtx, openBlock: _openBlock, createBlock: _createBlock } = _Vue
+  
+      const _component_MyComponent = _resolveComponent("MyComponent")
+  
+      return (_openBlock(), _createBlock(_component_MyComponent, null, {
+        default: _withCtx(() => [
+          _createTextVNode("content")
+        ]),
+        _: 1 /* STABLE */
+      }))
+    }
+  }
+  """#
+}

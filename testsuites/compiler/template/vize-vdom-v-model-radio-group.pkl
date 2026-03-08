@@ -1,0 +1,90 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-model-radio-group"
+title = "Imported template input: radio group"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-model.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-model"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-model.toml"
+  source = "tests/fixtures/vdom/v-model.toml"
+  caseName = "radio group"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-model.toml"
+    cases {
+      "radio group"
+    }
+  }
+}
+
+input {
+  source = "<input type=\"radio\" v-model=\"picked\" value=\"one\"><input type=\"radio\" v-model=\"picked\" value=\"two\">"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "V_MODEL_RADIO"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_VNODE"
+    }
+    new HelperExpectation {
+      name = "WITH_DIRECTIVES"
+    }
+    new HelperExpectation {
+      name = "FRAGMENT"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { vModelRadio: _vModelRadio, createElementVNode: _createElementVNode, withDirectives: _withDirectives, Fragment: _Fragment, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return (_openBlock(), _createElementBlock(_Fragment, null, [
+        _withDirectives(_createElementVNode("input", {
+          type: "radio",
+          "onUpdate:modelValue": $event => ((picked) = $event),
+          value: "one"
+        }, null, 8 /* PROPS */, ["onUpdate:modelValue"]), [
+          [_vModelRadio, picked]
+        ]),
+        _withDirectives(_createElementVNode("input", {
+          type: "radio",
+          "onUpdate:modelValue": $event => ((picked) = $event),
+          value: "two"
+        }, null, 8 /* PROPS */, ["onUpdate:modelValue"]), [
+          [_vModelRadio, picked]
+        ])
+      ], 64 /* STABLE_FRAGMENT */))
+    }
+  }
+  """#
+}

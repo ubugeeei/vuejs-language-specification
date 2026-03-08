@@ -1,0 +1,68 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-element-multiple-children"
+title = "Imported vapor input: multiple children"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/element.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.element"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/element.toml"
+  source = "tests/fixtures/vapor/element.toml"
+  caseName = "multiple children"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/element.toml"
+    cases {
+      "multiple children"
+    }
+  }
+}
+
+input {
+  source = "<div><span></span><p></p></div>"
+}
+
+expect {
+  normalizedCode = #"""
+  import { template as _template } from 'vue';
+  const t0 = _template("<div><span></span><p></p></div>", true)
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { template as _template } from 'vue';
+  const t0 = _template("<div><span></span><p></p></div>", true)
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

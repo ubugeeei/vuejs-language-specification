@@ -1,0 +1,82 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-for-v-for-on-component"
+title = "Imported template input: v-for on component"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-for.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-for"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-for.toml"
+  source = "tests/fixtures/vdom/v-for.toml"
+  caseName = "v-for on component"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-for.toml"
+    cases {
+      "v-for on component"
+    }
+  }
+}
+
+input {
+  source = "<MyComponent v-for=\"item in items\" :key=\"item.id\" :item=\"item\" />"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "RENDER_LIST"
+    }
+    new HelperExpectation {
+      name = "FRAGMENT"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+    new HelperExpectation {
+      name = "RESOLVE_COMPONENT"
+    }
+    new HelperExpectation {
+      name = "CREATE_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { renderList: _renderList, Fragment: _Fragment, openBlock: _openBlock, createElementBlock: _createElementBlock, resolveComponent: _resolveComponent, createBlock: _createBlock } = _Vue
+  
+      const _component_MyComponent = _resolveComponent("MyComponent")
+  
+      return (_openBlock(true), _createElementBlock(_Fragment, null, _renderList(items, (item) => {
+        return (_openBlock(), _createBlock(_component_MyComponent, {
+          key: item.id,
+          item: item
+        }, null, 8 /* PROPS */, ["item"]))
+      }), 128 /* KEYED_FRAGMENT */))
+    }
+  }
+  """#
+}

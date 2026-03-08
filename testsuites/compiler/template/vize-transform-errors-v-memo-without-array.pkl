@@ -1,0 +1,66 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-transform-errors-v-memo-without-array"
+title = "Imported transform input: v-memo without array"
+kind = "template-dom-compile"
+summary = "Static compiler conformance derived from copied input tests/fixtures/errors/transform-errors.toml and the official vuejs/core compiler oracle, including exact diagnostics when emitted."
+
+features {
+  "compiler.template"
+  "compiler.errors"
+  "imported.input"
+  "imported.input.transform-errors"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/errors/transform-errors.toml"
+  source = "tests/fixtures/errors/transform-errors.toml"
+  caseName = "v-memo without array"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/errors/transform-errors.toml"
+    cases {
+      "v-memo without array"
+    }
+  }
+}
+
+input {
+  source = "<div v-memo=\"foo\"></div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+    new HelperExpectation {
+      name = "WITH_MEMO"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { openBlock: _openBlock, createElementBlock: _createElementBlock, withMemo: _withMemo } = _Vue
+  
+      return _withMemo(foo, () => (_openBlock(), _createElementBlock("div")), _cache, 0)
+    }
+  }
+  """#
+}

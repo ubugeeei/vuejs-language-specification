@@ -1,0 +1,102 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-v-else-if-with-v-bind-object-spread"
+title = "Imported SFC input: v-else-if with v-bind object spread"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "v-else-if with v-bind object spread"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "v-else-if with v-bind object spread"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-v-else-if-with-v-bind-object-spread.vue"
+  sfc = #"""
+  <script setup>
+  import { ref } from 'vue'
+  import Icon from './Icon.vue'
+  const mode = ref('edit')
+  const iconProps = { size: 24, color: 'blue' }
+  </script>
+  
+  <template>
+    <Icon v-if="mode === 'view'" name="eye" />
+    <Icon v-else-if="mode === 'edit'" v-bind="iconProps" name="pencil" />
+    <Icon v-else name="default" />
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { ref } from 'vue'
+  import Icon from './Icon.vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-v-else-if-with-v-bind-object-spread',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const mode = ref('edit')
+  const iconProps = { size: 24, color: 'blue' }
+  
+  const __returned__ = { mode, iconProps, ref, Icon }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { openBlock as _openBlock, createBlock as _createBlock, createCommentVNode as _createCommentVNode, mergeProps as _mergeProps } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return ($setup.mode === 'view')
+      ? (_openBlock(), _createBlock($setup["Icon"], {
+          key: 0,
+          name: "eye"
+        }))
+      : ($setup.mode === 'edit')
+        ? (_openBlock(), _createBlock($setup["Icon"], _mergeProps({ key: 1 }, $setup.iconProps, { name: "pencil" }), null, 16 /* FULL_PROPS */))
+        : (_openBlock(), _createBlock($setup["Icon"], {
+            key: 2,
+            name: "default"
+          }))
+  }
+  """#
+}

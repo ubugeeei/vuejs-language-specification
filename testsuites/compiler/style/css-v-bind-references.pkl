@@ -1,0 +1,56 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.style.css-v-bind-references"
+title = "Style compilation lowers v-bind expressions into stable CSS variable references"
+kind = "sfc-style-compile"
+summary = "Portable style compilation must rewrite simple identifiers, multiple bindings, and quoted member expressions in v-bind() to the emitted CSS variable reference form."
+
+features {
+  "compiler.style"
+  "style.v-bind"
+  "style.css-vars"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/css-compile.test.ts"
+    cases {
+      "should detect v-bind() usage"
+      "should detect multiple v-bind() usages"
+      "should handle v-bind with expressions"
+    }
+  }
+}
+
+input {
+  filename = "css-v-bind-references.css"
+  source = #"""
+  .dynamic {
+    color: v-bind(textColor);
+    background: v-bind(bgColor);
+    font-size: v-bind(fontSize);
+    border-color: v-bind('theme.primary');
+  }
+  """#
+  styleOptions {
+    id = "data-v-test"
+  }
+}
+
+expect {
+  normalizedCode = #"""
+  .dynamic {
+    color: var(--test-textColor);
+    background: var(--test-bgColor);
+    font-size: var(--test-fontSize);
+    border-color: var(--test-theme\.primary);
+  }
+  """#
+  cssVars {
+    "textColor"
+    "bgColor"
+    "fontSize"
+    "theme.primary"
+  }
+}

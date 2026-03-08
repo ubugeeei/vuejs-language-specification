@@ -1,0 +1,90 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-es6-shorthand-in-computed-style"
+title = "Imported SFC input: ES6 shorthand in computed style"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "ES6 shorthand in computed style"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "ES6 shorthand in computed style"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-es6-shorthand-in-computed-style.vue"
+  sfc = #"""
+  <script setup>
+  import { ref } from 'vue'
+  const width = ref(100)
+  const height = ref(50)
+  </script>
+  
+  <template>
+    <div :style="{ width, height }">Styled</div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { ref } from 'vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-es6-shorthand-in-computed-style',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const width = ref(100)
+  const height = ref(50)
+  
+  const __returned__ = { width, height, ref }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { normalizeStyle as _normalizeStyle, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", {
+      style: _normalizeStyle({ width: $setup.width, height: $setup.height })
+    }, "Styled", 4 /* STYLE */))
+  }
+  """#
+}

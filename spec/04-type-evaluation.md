@@ -124,8 +124,8 @@ When a construct is outside the curated suite:
 Type-evaluation conformance in this repository is represented by the conjunction of:
 
 - executable local type test suites under [`testsuites/type-evaluation/`](../testsuites/type-evaluation/)
-- vendored `vuejs/core` macro and type-resolution source files under [`sources/copied/vuejs-core/packages/compiler-sfc/__tests__/compileScript/`](../sources/copied/vuejs-core/packages/compiler-sfc/__tests__/compileScript/) and [`sources/copied/vuejs-core/packages/compiler-sfc/__tests__/compileScript.spec.ts`](../sources/copied/vuejs-core/packages/compiler-sfc/__tests__/compileScript.spec.ts)
-- upstream tooling traceability under [`sources/traceability/vuejs-core.traceability.pkl`](../sources/traceability/vuejs-core.traceability.pkl) and [`sources/traceability/vuejs-language-tools.traceability.pkl`](../sources/traceability/vuejs-language-tools.traceability.pkl)
+- vendored `vuejs/core` macro and type-resolution source files under [`provenance/vendor/vuejs-core/packages/compiler-sfc/__tests__/compileScript/`](../provenance/vendor/vuejs-core/packages/compiler-sfc/__tests__/compileScript/) and [`provenance/vendor/vuejs-core/packages/compiler-sfc/__tests__/compileScript.spec.ts`](../provenance/vendor/vuejs-core/packages/compiler-sfc/__tests__/compileScript.spec.ts)
+- upstream tooling traceability under [`provenance/traceability/vuejs-core.traceability.pkl`](../provenance/traceability/vuejs-core.traceability.pkl) and [`provenance/traceability/vuejs-language-tools.traceability.pkl`](../provenance/traceability/vuejs-language-tools.traceability.pkl)
 
 `covered` entries define the current executable obligation. `planned` entries define the remaining normalization backlog for type-level behavior and MUST remain visible in provenance review.
 

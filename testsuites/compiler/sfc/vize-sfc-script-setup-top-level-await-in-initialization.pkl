@@ -1,0 +1,108 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-top-level-await-in-initialization"
+title = "Imported SFC input: top-level await in initialization"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "top-level await in initialization"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "top-level await in initialization"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-top-level-await-in-initialization.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  import { ref } from 'vue'
+  
+  await initializeApp()
+  const store = useStore()
+  await store.loadData()
+  
+  const count = ref(0)
+  </script>
+  
+  <template>
+    <div>{{ count }}</div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { withAsyncContext as _withAsyncContext, defineComponent as _defineComponent } from 'vue'
+  import { ref } from 'vue'
+  
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-script-setup-top-level-await-in-initialization',
+    async setup(__props, { expose: __expose }) {
+    __expose();
+  
+  let __temp: any, __restore: any
+  
+  ;(
+    ([__temp,__restore] = _withAsyncContext(() => initializeApp())),
+    await __temp,
+    __restore()
+  )
+  const store = useStore()
+  ;(
+    ([__temp,__restore] = _withAsyncContext(() => store.loadData())),
+    await __temp,
+    __restore()
+  )
+  
+  const count = ref(0)
+  
+  const __returned__ = { store, count }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, _toDisplayString($setup.count), 1 /* TEXT */))
+  }
+  """#
+}

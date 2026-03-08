@@ -1,0 +1,78 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-if-v-if-on-template"
+title = "Imported vapor input: v-if on template"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-if.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-if"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-if.toml"
+  source = "tests/fixtures/vapor/v-if.toml"
+  caseName = "v-if on template"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-if.toml"
+    cases {
+      "v-if on template"
+    }
+  }
+}
+
+input {
+  source = "<template v-if=\"show\"><div>A</div><div>B</div></template>"
+}
+
+expect {
+  normalizedCode = #"""
+  import { createIf as _createIf, template as _template } from 'vue';
+  const t0 = _template("<div>A</div>")
+  const t1 = _template("<div>B</div>")
+  
+  export function render(_ctx) {
+    const n0 = _createIf(() => (_ctx.show), () => {
+      const n2 = t0()
+      const n3 = t1()
+      return [n2, n3]
+    })
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { createIf as _createIf, template as _template } from 'vue';
+  const t0 = _template("<div>A</div>")
+  const t1 = _template("<div>B</div>")
+  
+  export function render(_ctx) {
+    const n0 = _createIf(() => (_ctx.show), () => {
+      const n2 = t0()
+      const n3 = t1()
+      return [n2, n3]
+    })
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

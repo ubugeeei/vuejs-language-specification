@@ -1,0 +1,71 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-on-same-event-different-modifiers"
+title = "Imported template input: same event different modifiers"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-on.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-on"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-on.toml"
+  source = "tests/fixtures/vdom/v-on.toml"
+  caseName = "same event different modifiers"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-on.toml"
+    cases {
+      "same event different modifiers"
+    }
+  }
+}
+
+input {
+  source = "<button @click=\"a\" @click.ctrl=\"b\"></button>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "V_ON_WITH_MODIFIERS"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { withModifiers: _withModifiers, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return (_openBlock(), _createElementBlock("button", {
+        onClick: [
+          a,
+          _withModifiers(b, ["ctrl"])
+        ]
+      }, null, 8 /* PROPS */, ["onClick"]))
+    }
+  }
+  """#
+}

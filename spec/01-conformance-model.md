@@ -39,17 +39,17 @@ Normative authority is ordered as follows:
 
 1. machine-readable test suites under [`testsuites/`](../testsuites/)
 2. normative requirements under [`spec/`](./README.md)
-3. vendored upstream artifacts under [`sources/copied/`](../sources/copied/)
-4. traceability manifests under [`sources/traceability/`](../sources/traceability/)
-5. provenance inventories under [`sources/upstream/`](../sources/upstream/)
+3. vendored upstream artifacts under [`provenance/vendor/`](../provenance/vendor/)
+4. traceability manifests under [`provenance/traceability/`](../provenance/traceability/)
+5. provenance inventories under [`provenance/inventories/`](../provenance/inventories/)
 
 Upstream repositories are evidence sources. They are not normative by themselves after curation into this repository.
 
 ## 2.1. Upstream Representation Completeness
 
-Every inventoried upstream test or benchmark MUST be represented by exactly one generated traceability entry under [`sources/traceability/`](../sources/traceability/).
+Every inventoried upstream test or benchmark MUST be represented by exactly one generated traceability entry under [`provenance/traceability/`](../provenance/traceability/).
 
-When a repository has a vendored corpus under [`sources/copied/`](../sources/copied/), that corpus MUST preserve the exact upstream commit, file path, case title inventory, and raw source bytes for the copied evidence.
+When a repository has a vendored corpus under [`provenance/vendor/`](../provenance/vendor/), that corpus MUST preserve the exact upstream commit, file path, case title inventory, and raw source bytes for the copied evidence.
 
 Each traceability entry MUST declare exactly one status:
 
@@ -120,5 +120,5 @@ The runtime suite MAY use the JavaScript reference harness, but its assertions M
 | `syntax`          | [`02-sfc-syntax.md`](./02-sfc-syntax.md)                       | [`testsuites/syntax/sfc/`](../testsuites/syntax/sfc/)           |
 | `compiler`        | [`03-template-and-compiler.md`](./03-template-and-compiler.md) | [`testsuites/compiler/`](../testsuites/compiler/)               |
 | `type-evaluation` | [`04-type-evaluation.md`](./04-type-evaluation.md)             | [`testsuites/type-evaluation/`](../testsuites/type-evaluation/) |
-| `runtime`         | [`05-runtime-conformance.md`](./05-runtime-conformance.md)     | [`src/runtime/testsuites/`](../src/runtime/testsuites/)         |
+| `runtime`         | [`05-runtime-conformance.md`](./05-runtime-conformance.md)     | [`runtime/testsuites/`](../runtime/testsuites/)                 |
 | `benchmark`       | [`06-benchmark-methodology.md`](./06-benchmark-methodology.md) | [`testsuites/benchmark/`](../testsuites/benchmark/)             |

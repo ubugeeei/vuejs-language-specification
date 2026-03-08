@@ -1,0 +1,108 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-v-for-with-multiple-imported-values"
+title = "Imported SFC input: v-for with multiple imported values"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "v-for with multiple imported values"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "v-for with multiple imported values"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-v-for-with-multiple-imported-values.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  import { ITEMS, CATEGORIES } from './data'
+  </script>
+  
+  <template>
+    <div>
+      <section v-for="category in CATEGORIES" :key="category.id">
+        <h2>{{ category.name }}</h2>
+        <ul>
+          <li v-for="item in ITEMS" :key="item.id">{{ item.name }}</li>
+        </ul>
+      </section>
+    </div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  import { ITEMS, CATEGORIES } from './data'
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-script-setup-v-for-with-multiple-imported-values',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  
+  const __returned__ = { get ITEMS() { return ITEMS }, get CATEGORIES() { return CATEGORIES } }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { renderList as _renderList, Fragment as _Fragment, openBlock as _openBlock, createElementBlock as _createElementBlock, toDisplayString as _toDisplayString, createElementVNode as _createElementVNode } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, [
+      (_openBlock(true), _createElementBlock(_Fragment, null, _renderList($setup.CATEGORIES, (category) => {
+        return (_openBlock(), _createElementBlock("section", {
+          key: category.id
+        }, [
+          _createElementVNode("h2", null, _toDisplayString(category.name), 1 /* TEXT */),
+          _createElementVNode("ul", null, [
+            (_openBlock(true), _createElementBlock(_Fragment, null, _renderList($setup.ITEMS, (item) => {
+              return (_openBlock(), _createElementBlock("li", {
+                key: item.id
+              }, _toDisplayString(item.name), 1 /* TEXT */))
+            }), 128 /* KEYED_FRAGMENT */))
+          ])
+        ]))
+      }), 128 /* KEYED_FRAGMENT */))
+    ]))
+  }
+  """#
+}

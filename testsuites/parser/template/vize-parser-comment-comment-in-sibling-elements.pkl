@@ -1,0 +1,472 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-comment-comment-in-sibling-elements"
+title = "Imported parser input: comment in sibling elements"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/comment.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.comment"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/comment.toml"
+  source = "tests/fixtures/parser/comment.toml"
+  caseName = "comment in sibling elements"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/comment.toml"
+    cases {
+      "comment in sibling elements"
+    }
+  }
+}
+
+input {
+  source = "<ul><li>1</li><!-- comment --><li>2</li></ul>"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<ul><li>1</li><!-- comment --><li>2</li></ul>",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "ul",
+        "ns": "HTML",
+        "tagType": "ELEMENT",
+        "props": [],
+        "children": [
+          {
+            "type": "ELEMENT",
+            "tag": "li",
+            "ns": "HTML",
+            "tagType": "ELEMENT",
+            "props": [],
+            "children": [
+              {
+                "type": "TEXT",
+                "content": "1",
+                "loc": {
+                  "start": {
+                    "column": 9,
+                    "line": 1,
+                    "offset": 8
+                  },
+                  "end": {
+                    "column": 10,
+                    "line": 1,
+                    "offset": 9
+                  },
+                  "source": "1"
+                }
+              }
+            ],
+            "loc": {
+              "start": {
+                "column": 5,
+                "line": 1,
+                "offset": 4
+              },
+              "end": {
+                "column": 15,
+                "line": 1,
+                "offset": 14
+              },
+              "source": "<li>1</li>"
+            }
+          },
+          {
+            "type": "COMMENT",
+            "content": " comment ",
+            "loc": {
+              "start": {
+                "column": 15,
+                "line": 1,
+                "offset": 14
+              },
+              "end": {
+                "column": 31,
+                "line": 1,
+                "offset": 30
+              },
+              "source": "<!-- comment -->"
+            }
+          },
+          {
+            "type": "ELEMENT",
+            "tag": "li",
+            "ns": "HTML",
+            "tagType": "ELEMENT",
+            "props": [],
+            "children": [
+              {
+                "type": "TEXT",
+                "content": "2",
+                "loc": {
+                  "start": {
+                    "column": 35,
+                    "line": 1,
+                    "offset": 34
+                  },
+                  "end": {
+                    "column": 36,
+                    "line": 1,
+                    "offset": 35
+                  },
+                  "source": "2"
+                }
+              }
+            ],
+            "loc": {
+              "start": {
+                "column": 31,
+                "line": 1,
+                "offset": 30
+              },
+              "end": {
+                "column": 41,
+                "line": 1,
+                "offset": 40
+              },
+              "source": "<li>2</li>"
+            }
+          }
+        ],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 46,
+            "line": 1,
+            "offset": 45
+          },
+          "source": "<ul><li>1</li><!-- comment --><li>2</li></ul>"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 46,
+        "line": 1,
+        "offset": 45
+      },
+      "source": "<ul><li>1</li><!-- comment --><li>2</li></ul>"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/content"
+      equals = "1"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/loc/end/column"
+      equals = 10
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/loc/end/offset"
+      equals = 9
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/loc/source"
+      equals = "1"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/loc/start/column"
+      equals = 9
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/loc/start/offset"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/column"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/offset"
+      equals = 14
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/source"
+      equals = "<li>1</li>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/column"
+      equals = 5
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/offset"
+      equals = 4
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/tag"
+      equals = "li"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/1/content"
+      equals = " comment "
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/1/loc/end/column"
+      equals = 31
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/1/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/1/loc/end/offset"
+      equals = 30
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/1/loc/source"
+      equals = "<!-- comment -->"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/1/loc/start/column"
+      equals = 15
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/1/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/1/loc/start/offset"
+      equals = 14
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/1/type"
+      equals = "COMMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/children/0/content"
+      equals = "2"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/children/0/loc/end/column"
+      equals = 36
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/children/0/loc/end/offset"
+      equals = 35
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/children/0/loc/source"
+      equals = "2"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/children/0/loc/start/column"
+      equals = 35
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/children/0/loc/start/offset"
+      equals = 34
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/children/0/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/loc/end/column"
+      equals = 41
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/loc/end/offset"
+      equals = 40
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/loc/source"
+      equals = "<li>2</li>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/loc/start/column"
+      equals = 31
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/loc/start/offset"
+      equals = 30
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/tag"
+      equals = "li"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/2/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 46
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 45
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<ul><li>1</li><!-- comment --><li>2</li></ul>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "ul"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 46
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 45
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<ul><li>1</li><!-- comment --><li>2</li></ul>"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<ul><li>1</li><!-- comment --><li>2</li></ul>"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

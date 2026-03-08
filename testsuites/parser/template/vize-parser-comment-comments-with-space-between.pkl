@@ -1,0 +1,221 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-parser-comment-comments-with-space-between"
+title = "Imported parser input: comments with space between"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/parser/comment.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.parser"
+  "imported.input.comment"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/parser/comment.toml"
+  source = "tests/fixtures/parser/comment.toml"
+  caseName = "comments with space between"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/parser/comment.toml"
+    cases {
+      "comments with space between"
+    }
+  }
+}
+
+input {
+  source = "<!--a--> <!--b-->"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<!--a--> <!--b-->",
+    "children": [
+      {
+        "type": "COMMENT",
+        "content": "a",
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 9,
+            "line": 1,
+            "offset": 8
+          },
+          "source": "<!--a-->"
+        }
+      },
+      {
+        "type": "COMMENT",
+        "content": "b",
+        "loc": {
+          "start": {
+            "column": 10,
+            "line": 1,
+            "offset": 9
+          },
+          "end": {
+            "column": 18,
+            "line": 1,
+            "offset": 17
+          },
+          "source": "<!--b-->"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 18,
+        "line": 1,
+        "offset": 17
+      },
+      "source": "<!--a--> <!--b-->"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/content"
+      equals = "a"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 9
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 8
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<!--a-->"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "COMMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/content"
+      equals = "b"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/column"
+      equals = 18
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/end/offset"
+      equals = 17
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/source"
+      equals = "<!--b-->"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/column"
+      equals = 10
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/1/loc/start/offset"
+      equals = 9
+    }
+    new PointerAssertion {
+      pointer = "/children/1/type"
+      equals = "COMMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 18
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 17
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<!--a--> <!--b-->"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<!--a--> <!--b-->"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

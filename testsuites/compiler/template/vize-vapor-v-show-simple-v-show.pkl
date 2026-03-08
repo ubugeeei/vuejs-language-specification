@@ -1,0 +1,70 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-show-simple-v-show"
+title = "Imported vapor input: simple v-show"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-show.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-show"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-show.toml"
+  source = "tests/fixtures/vapor/v-show.toml"
+  caseName = "simple v-show"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-show.toml"
+    cases {
+      "simple v-show"
+    }
+  }
+}
+
+input {
+  source = "<div v-show=\"visible\"></div>"
+}
+
+expect {
+  normalizedCode = #"""
+  import { applyVShow as _applyVShow, template as _template } from 'vue';
+  const t0 = _template("<div></div>", true)
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    _applyVShow(n0, () => (_ctx.visible))
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { applyVShow as _applyVShow, template as _template } from 'vue';
+  const t0 = _template("<div></div>", true)
+  
+  export function render(_ctx) {
+    const n0 = t0()
+    _applyVShow(n0, () => (_ctx.visible))
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

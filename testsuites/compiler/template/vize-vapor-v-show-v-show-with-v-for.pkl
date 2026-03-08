@@ -1,0 +1,80 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-show-v-show-with-v-for"
+title = "Imported vapor input: v-show with v-for"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-show.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-show"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-show.toml"
+  source = "tests/fixtures/vapor/v-show.toml"
+  caseName = "v-show with v-for"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-show.toml"
+    cases {
+      "v-show with v-for"
+    }
+  }
+}
+
+input {
+  source = "<div v-for=\"item in items\" :key=\"item.id\" v-show=\"item.visible\">{{ item }}</div>"
+}
+
+expect {
+  normalizedCode = #"""
+  import { txt as _txt, applyVShow as _applyVShow, toDisplayString as _toDisplayString, setText as _setText, renderEffect as _renderEffect, createFor as _createFor, template as _template } from 'vue';
+  const t0 = _template("<div> </div>")
+  
+  export function render(_ctx) {
+    const n0 = _createFor(() => (_ctx.items), (_for_item0) => {
+      const n2 = t0()
+      const x2 = _txt(n2)
+      _applyVShow(n2, () => (_for_item0.value.visible))
+      _renderEffect(() => _setText(x2, _toDisplayString(_for_item0.value)))
+      return n2
+    }, (item) => (item.id))
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { txt as _txt, applyVShow as _applyVShow, toDisplayString as _toDisplayString, setText as _setText, renderEffect as _renderEffect, createFor as _createFor, template as _template } from 'vue';
+  const t0 = _template("<div> </div>")
+  
+  export function render(_ctx) {
+    const n0 = _createFor(() => (_ctx.items), (_for_item0) => {
+      const n2 = t0()
+      const x2 = _txt(n2)
+      _applyVShow(n2, () => (_for_item0.value.visible))
+      _renderEffect(() => _setText(x2, _toDisplayString(_for_item0.value)))
+      return n2
+    }, (item) => (item.id))
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

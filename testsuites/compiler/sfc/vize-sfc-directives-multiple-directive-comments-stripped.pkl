@@ -1,0 +1,96 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-directives-multiple-directive-comments-stripped"
+title = "Imported SFC input: multiple directive comments stripped"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/directives.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.directives"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/directives.toml"
+  source = "tests/fixtures/sfc/directives.toml"
+  caseName = "multiple directive comments stripped"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/directives.toml"
+    cases {
+      "multiple directive comments stripped"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-directives-multiple-directive-comments-stripped.vue"
+  sfc = #"""
+  <script setup>
+  const a = 1
+  const b = 2
+  </script>
+  
+  <template>
+    <div>
+      <!-- @vize:docs Section A -->
+      <span>{{ a }}</span>
+      <!-- @vize:fixme broken alignment -->
+      <span>{{ b }}</span>
+    </div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  const a = 1
+  const b = 2
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-directives-multiple-directive-comments-stripped',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  
+  const __returned__ = { a, b }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { createCommentVNode as _createCommentVNode, toDisplayString as _toDisplayString, createElementVNode as _createElementVNode, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, [
+      _createCommentVNode(" @vize:docs Section A "),
+      _createElementVNode("span", null, _toDisplayString($setup.a)),
+      _createCommentVNode(" @vize:fixme broken alignment "),
+      _createElementVNode("span", null, _toDisplayString($setup.b))
+    ]))
+  }
+  """#
+}

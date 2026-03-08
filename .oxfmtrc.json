@@ -3,5 +3,5 @@
   "semi": true,
   "singleQuote": false,
   "trailingComma": "all",
-  "ignorePatterns": ["sources/copied/vuejs-core/**"]
+  "ignorePatterns": ["provenance/vendor/vuejs-core/**", "provenance/vendor/ubugeeei-vize/**"]
 }

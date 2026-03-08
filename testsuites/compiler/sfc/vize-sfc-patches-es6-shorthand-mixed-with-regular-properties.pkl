@@ -1,0 +1,90 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-es6-shorthand-mixed-with-regular-properties"
+title = "Imported SFC input: ES6 shorthand mixed with regular properties"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "ES6 shorthand mixed with regular properties"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "ES6 shorthand mixed with regular properties"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-es6-shorthand-mixed-with-regular-properties.vue"
+  sfc = #"""
+  <script setup>
+  import { ref } from 'vue'
+  const name = ref('test')
+  </script>
+  
+  <template>
+    <MyComponent :options="{ name, extra: 'value' }" />
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { ref } from 'vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-es6-shorthand-mixed-with-regular-properties',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const name = ref('test')
+  
+  const __returned__ = { name, ref }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { resolveComponent as _resolveComponent, openBlock as _openBlock, createBlock as _createBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_MyComponent = _resolveComponent("MyComponent")
+  
+    return (_openBlock(), _createBlock(_component_MyComponent, {
+      options: { name: $setup.name, extra: 'value' }
+    }, null, 8 /* PROPS */, ["options"]))
+  }
+  """#
+}

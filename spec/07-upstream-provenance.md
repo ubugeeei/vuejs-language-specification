@@ -7,7 +7,7 @@ This repository does not invent test suites in a vacuum. Every curated test suit
 - `vuejs/core` test
 - `vuejs/language-tools` test
 - issue reference embedded in an upstream test
-- `ubugeeei/vize` test or benchmark
+- copied community test, fixture, or benchmark source
 
 The provenance relation is modeled as:
 
@@ -24,14 +24,15 @@ Curated test-suite metadata MUST use repository-local selectors (`repository`, `
 
 Generated inventories live in:
 
-- `sources/upstream/vuejs-core.inventory.pkl`
-- `sources/upstream/vuejs-language-tools.inventory.pkl`
-- `sources/upstream/vize.inventory.pkl`
-- `sources/copied/vuejs-core/test-corpus.pkl`
-- `sources/traceability/vuejs-core.traceability.pkl`
-- `sources/traceability/vuejs-language-tools.traceability.pkl`
-- `sources/traceability/ubugeeei-vize.traceability.pkl`
-- `sources/copied/vize/expected-snapshots.pkl`
+- `provenance/inventories/vuejs-core.inventory.pkl`
+- `provenance/inventories/vuejs-language-tools.inventory.pkl`
+- `provenance/inventories/vize.inventory.pkl`
+- `provenance/vendor/vuejs-core/test-corpus.pkl`
+- `provenance/vendor/ubugeeei-vize/test-corpus.pkl`
+- `provenance/traceability/vuejs-core.traceability.pkl`
+- `provenance/traceability/vuejs-language-tools.traceability.pkl`
+- `provenance/traceability/ubugeeei-vize.traceability.pkl`
+- `provenance/vendor/vize/expected-snapshots.pkl`
 
 They record:
 
@@ -41,6 +42,7 @@ They record:
 - extracted test titles and line locations
 - extracted issue references
 - vendored `vuejs/core` raw test and benchmark source files with exact byte hashes
+- copied community raw test, fixture, and benchmark source files with exact byte hashes
 - vendored snapshot files that this repository intentionally owns
 
 Coverage is computed from local `upstream` metadata against those inventories. The CLI command `vue-language-spec coverage` reports:
@@ -67,7 +69,9 @@ When promoting an upstream behavior into this repository:
 - keep JavaScript-specific assumptions inside the runtime suite
 - record profile boundaries explicitly
 - vendor `vuejs/core` test source instead of relying on external repository URLs when the repository wants local-first provenance
+- vendor copied community fixture/test source instead of relying on external repository URLs when the repository wants local-first provenance
 - vendor upstream snapshots instead of linking to them when this repository intends to evolve them into the primary source of truth
+- generate imported parser/compiler suites from vendored local fixture corpora rather than from ad hoc external checkouts, and use copied snapshots only where an official oracle is not yet available
 
 ## 4. Vapor Provenance
 

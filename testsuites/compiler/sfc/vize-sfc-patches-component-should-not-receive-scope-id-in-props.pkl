@@ -1,0 +1,90 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-component-should-not-receive-scope-id-in-props"
+title = "Imported SFC input: component should not receive scope_id in props"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "component should not receive scope_id in props"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "component should not receive scope_id in props"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-component-should-not-receive-scope-id-in-props.vue"
+  sfc = #"""
+  <script setup>
+  import MyComponent from './MyComponent.vue'
+  </script>
+  
+  <template>
+    <div class="wrapper">
+      <MyComponent class="child" />
+    </div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import MyComponent from './MyComponent.vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-component-should-not-receive-scope-id-in-props',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  
+  const __returned__ = { MyComponent }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { createVNode as _createVNode, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  const _hoisted_1 = { class: "wrapper" }
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", _hoisted_1, [
+      _createVNode($setup["MyComponent"], { class: "child" })
+    ]))
+  }
+  """#
+}

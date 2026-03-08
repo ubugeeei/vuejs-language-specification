@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { copyFileSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { packageRoot } from "../src/fs.ts";
+import { provenanceVendorRoot } from "../src/layout.ts";
 import { evaluatePklFile } from "../src/pkl.ts";
 import type { UpstreamInventory } from "../src/types.ts";
 
@@ -113,7 +114,7 @@ function main(): void {
   const inventory = evaluatePklFile<UpstreamInventory>(inventoryFile);
   const repositorySlug = slugifyRepository(inventory.repository);
   const outputDirectory = resolve(
-    args.outputDir ?? join(root, "sources", "copied", repositorySlug),
+    args.outputDir ?? join(provenanceVendorRoot(root), repositorySlug),
   );
   const manifestFile = join(outputDirectory, "test-corpus.pkl");
   const commit = spawnSync("git", ["-C", upstreamRoot, "rev-parse", "HEAD"], {
@@ -136,7 +137,10 @@ function main(): void {
 
   const files = inventory.files.map((entry) => {
     const sourceFile = join(upstreamRoot, entry.path);
-    const copiedPath = join("sources", "copied", repositorySlug, entry.path).replaceAll("\\", "/");
+    const copiedPath = join("provenance", "vendor", repositorySlug, entry.path).replaceAll(
+      "\\",
+      "/",
+    );
     const targetFile = join(root, copiedPath);
     const content = readFileSync(sourceFile);
 

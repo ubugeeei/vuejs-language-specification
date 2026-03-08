@@ -1,0 +1,43 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.style.scoped-multiple-selectors"
+title = "Scoped style compilation rewrites each top-level selector independently"
+kind = "sfc-style-compile"
+summary = "When scoped style compilation receives multiple top-level selectors, each emitted selector must receive the stable scope attribute."
+
+features {
+  "compiler.style"
+  "style.scoped"
+  "style.multiple-selectors"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/css-compile.test.ts"
+    cases {
+      "should scope multiple selectors"
+    }
+  }
+}
+
+input {
+  filename = "scoped-multiple-selectors.css"
+  source = #"""
+  .header { font-size: 24px; }
+  .content { padding: 16px; }
+  """#
+  styleOptions {
+    id = "data-v-test"
+    scoped = true
+  }
+}
+
+expect {
+  normalizedCode = #"""
+  .header[data-v-test] { font-size: 24px;
+  }
+  .content[data-v-test] { padding: 16px;
+  }
+  """#
+}

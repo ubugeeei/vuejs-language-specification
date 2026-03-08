@@ -1,0 +1,74 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-component-component-with-v-else"
+title = "Imported template input: component with v-else"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/component.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.component"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/component.toml"
+  source = "tests/fixtures/vdom/component.toml"
+  caseName = "component with v-else"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/component.toml"
+    cases {
+      "component with v-else"
+    }
+  }
+}
+
+input {
+  source = "<MyComponent v-if=\"a\" /><OtherComponent v-else />"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "RESOLVE_COMPONENT"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_COMMENT"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { resolveComponent: _resolveComponent, openBlock: _openBlock, createBlock: _createBlock, createCommentVNode: _createCommentVNode } = _Vue
+  
+      const _component_MyComponent = _resolveComponent("MyComponent")
+      const _component_OtherComponent = _resolveComponent("OtherComponent")
+  
+      return a
+        ? (_openBlock(), _createBlock(_component_MyComponent, { key: 0 }))
+        : (_openBlock(), _createBlock(_component_OtherComponent, { key: 1 }))
+    }
+  }
+  """#
+}

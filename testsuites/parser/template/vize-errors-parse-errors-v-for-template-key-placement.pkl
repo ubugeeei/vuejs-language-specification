@@ -1,0 +1,687 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.vize-errors-parse-errors-v-for-template-key-placement"
+title = "Imported parser input: v-for template key placement"
+kind = "template-base-parse"
+summary = "Static parser conformance derived from copied input tests/fixtures/errors/parse-errors.toml and the official vuejs/core parser oracle."
+
+features {
+  "parser.template"
+  "imported.input"
+  "imported.input.errors"
+  "imported.input.parse-errors"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/errors/parse-errors.toml"
+  source = "tests/fixtures/errors/parse-errors.toml"
+  caseName = "v-for template key placement"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-core"
+  operation = "baseParse"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/errors/parse-errors.toml"
+    cases {
+      "v-for template key placement"
+    }
+  }
+}
+
+input {
+  source = "<template v-for=\"item in items\" :key=\"item.id\"><div></div></template>"
+}
+
+expect {
+  errorCount = 0
+  normalizedAst = #"""
+  {
+    "type": "ROOT",
+    "source": "<template v-for=\"item in items\" :key=\"item.id\"><div></div></template>",
+    "children": [
+      {
+        "type": "ELEMENT",
+        "tag": "template",
+        "ns": "HTML",
+        "tagType": "TEMPLATE",
+        "props": [
+          {
+            "type": "DIRECTIVE",
+            "name": "for",
+            "rawName": "v-for",
+            "exp": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 18,
+                  "line": 1,
+                  "offset": 17
+                },
+                "end": {
+                  "column": 31,
+                  "line": 1,
+                  "offset": 30
+                },
+                "source": "item in items"
+              },
+              "content": "item in items",
+              "isStatic": false,
+              "constType": "NOT_CONSTANT"
+            },
+            "modifiers": [],
+            "loc": {
+              "start": {
+                "column": 11,
+                "line": 1,
+                "offset": 10
+              },
+              "end": {
+                "column": 32,
+                "line": 1,
+                "offset": 31
+              },
+              "source": "v-for=\"item in items\""
+            },
+            "forParseResult": {
+              "source": {
+                "type": "SIMPLE_EXPRESSION",
+                "loc": {
+                  "start": {
+                    "column": 26,
+                    "line": 1,
+                    "offset": 25
+                  },
+                  "end": {
+                    "column": 31,
+                    "line": 1,
+                    "offset": 30
+                  },
+                  "source": "items"
+                },
+                "content": "items",
+                "isStatic": false,
+                "constType": "NOT_CONSTANT"
+              },
+              "value": {
+                "type": "SIMPLE_EXPRESSION",
+                "loc": {
+                  "start": {
+                    "column": 18,
+                    "line": 1,
+                    "offset": 17
+                  },
+                  "end": {
+                    "column": 22,
+                    "line": 1,
+                    "offset": 21
+                  },
+                  "source": "item"
+                },
+                "content": "item",
+                "isStatic": false,
+                "constType": "NOT_CONSTANT"
+              },
+              "finalized": false
+            }
+          },
+          {
+            "type": "DIRECTIVE",
+            "name": "bind",
+            "rawName": ":key",
+            "exp": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 39,
+                  "line": 1,
+                  "offset": 38
+                },
+                "end": {
+                  "column": 46,
+                  "line": 1,
+                  "offset": 45
+                },
+                "source": "item.id"
+              },
+              "content": "item.id",
+              "isStatic": false,
+              "constType": "NOT_CONSTANT"
+            },
+            "arg": {
+              "type": "SIMPLE_EXPRESSION",
+              "loc": {
+                "start": {
+                  "column": 34,
+                  "line": 1,
+                  "offset": 33
+                },
+                "end": {
+                  "column": 37,
+                  "line": 1,
+                  "offset": 36
+                },
+                "source": "key"
+              },
+              "content": "key",
+              "isStatic": true,
+              "constType": "CAN_STRINGIFY"
+            },
+            "modifiers": [],
+            "loc": {
+              "start": {
+                "column": 33,
+                "line": 1,
+                "offset": 32
+              },
+              "end": {
+                "column": 47,
+                "line": 1,
+                "offset": 46
+              },
+              "source": ":key=\"item.id\""
+            }
+          }
+        ],
+        "children": [
+          {
+            "type": "ELEMENT",
+            "tag": "div",
+            "ns": "HTML",
+            "tagType": "ELEMENT",
+            "props": [],
+            "children": [],
+            "loc": {
+              "start": {
+                "column": 48,
+                "line": 1,
+                "offset": 47
+              },
+              "end": {
+                "column": 59,
+                "line": 1,
+                "offset": 58
+              },
+              "source": "<div></div>"
+            }
+          }
+        ],
+        "loc": {
+          "start": {
+            "column": 1,
+            "line": 1,
+            "offset": 0
+          },
+          "end": {
+            "column": 70,
+            "line": 1,
+            "offset": 69
+          },
+          "source": "<template v-for=\"item in items\" :key=\"item.id\"><div></div></template>"
+        }
+      }
+    ],
+    "helpers": {},
+    "components": [],
+    "directives": [],
+    "hoists": [],
+    "imports": [],
+    "cached": [],
+    "temps": 0,
+    "loc": {
+      "start": {
+        "column": 1,
+        "line": 1,
+        "offset": 0
+      },
+      "end": {
+        "column": 70,
+        "line": 1,
+        "offset": 69
+      },
+      "source": "<template v-for=\"item in items\" :key=\"item.id\"><div></div></template>"
+    }
+  }
+  """#
+  normalizedErrors = "[]"
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/column"
+      equals = 59
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/end/offset"
+      equals = 58
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/source"
+      equals = "<div></div>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/column"
+      equals = 48
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/start/offset"
+      equals = 47
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/tag"
+      equals = "div"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/column"
+      equals = 70
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/end/offset"
+      equals = 69
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<template v-for=\"item in items\" :key=\"item.id\"><div></div></template>"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "HTML"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/content"
+      equals = "item in items"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/column"
+      equals = 31
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/end/offset"
+      equals = 30
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/source"
+      equals = "item in items"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/column"
+      equals = 18
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/loc/start/offset"
+      equals = 17
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/finalized"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/content"
+      equals = "items"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/loc/end/column"
+      equals = 31
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/loc/end/offset"
+      equals = 30
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/loc/source"
+      equals = "items"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/loc/start/column"
+      equals = 26
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/loc/start/offset"
+      equals = 25
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/source/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/content"
+      equals = "item"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/loc/end/column"
+      equals = 22
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/loc/end/offset"
+      equals = 21
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/loc/source"
+      equals = "item"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/loc/start/column"
+      equals = 18
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/loc/start/offset"
+      equals = 17
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/forParseResult/value/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/column"
+      equals = 32
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/end/offset"
+      equals = 31
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/source"
+      equals = "v-for=\"item in items\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/column"
+      equals = 11
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/loc/start/offset"
+      equals = 10
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "for"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/rawName"
+      equals = "v-for"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/constType"
+      equals = "CAN_STRINGIFY"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/content"
+      equals = "key"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/isStatic"
+      equals = true
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/loc/end/column"
+      equals = 37
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/loc/end/offset"
+      equals = 36
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/loc/source"
+      equals = "key"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/loc/start/column"
+      equals = 34
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/loc/start/offset"
+      equals = 33
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/arg/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/constType"
+      equals = "NOT_CONSTANT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/content"
+      equals = "item.id"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/isStatic"
+      equals = false
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/loc/end/column"
+      equals = 46
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/loc/end/offset"
+      equals = 45
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/loc/source"
+      equals = "item.id"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/loc/start/column"
+      equals = 39
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/loc/start/offset"
+      equals = 38
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/end/column"
+      equals = 47
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/end/offset"
+      equals = 46
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/source"
+      equals = ":key=\"item.id\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/start/column"
+      equals = 33
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/loc/start/offset"
+      equals = 32
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/name"
+      equals = "bind"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/rawName"
+      equals = ":key"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "template"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "TEMPLATE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/column"
+      equals = 70
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/end/offset"
+      equals = 69
+    }
+    new PointerAssertion {
+      pointer = "/loc/source"
+      equals = "<template v-for=\"item in items\" :key=\"item.id\"><div></div></template>"
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/column"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/loc/start/offset"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/source"
+      equals = "<template v-for=\"item in items\" :key=\"item.id\"><div></div></template>"
+    }
+    new PointerAssertion {
+      pointer = "/temps"
+      equals = 0
+    }
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+  }
+}

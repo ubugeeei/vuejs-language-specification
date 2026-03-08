@@ -1,0 +1,86 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-await-in-string-literal-should-not-trigger-async"
+title = "Imported SFC input: await in string literal should not trigger async"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "await in string literal should not trigger async"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "await in string literal should not trigger async"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-await-in-string-literal-should-not-trigger-async.vue"
+  sfc = #"""
+  <script setup>
+  const message = "please await for response"
+  const code = 'await is a keyword'
+  </script>
+  
+  <template>
+    <div>{{ message }}</div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  const message = "please await for response"
+  const code = 'await is a keyword'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-await-in-string-literal-should-not-trigger-async',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  
+  const __returned__ = { message, code }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, _toDisplayString($setup.message)))
+  }
+  """#
+}

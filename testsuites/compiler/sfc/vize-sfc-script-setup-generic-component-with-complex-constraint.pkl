@@ -1,0 +1,107 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-generic-component-with-complex-constraint"
+title = "Imported SFC input: generic component with complex constraint"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "generic component with complex constraint"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "generic component with complex constraint"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-generic-component-with-complex-constraint.vue"
+  sfc = #"""
+  <script setup lang="ts" generic="FormShape extends object">
+  import { ref } from 'vue'
+  
+  defineProps<{
+    initialState: FormShape
+    onSubmit: (data: FormShape) => void
+  }>()
+  
+  const formData = ref<FormShape | null>(null)
+  </script>
+  
+  <template>
+    <form @submit.prevent>
+      <slot :data="formData" />
+    </form>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  import { ref } from 'vue'
+  
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-script-setup-generic-component-with-complex-constraint',
+    props: {
+      initialState: { type: null, required: true },
+      onSubmit: { type: Function, required: true }
+    },
+    setup(__props: any, { expose: __expose }) {
+    __expose();
+  
+  
+  
+  const formData = ref<FormShape | null>(null)
+  
+  const __returned__ = { formData }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { renderSlot as _renderSlot, withModifiers as _withModifiers, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("form", {
+      onSubmit: _cache[0] || (_cache[0] = _withModifiers(() => {}, ["prevent"]))
+    }, [
+      _renderSlot(_ctx.$slots, "default", { data: $setup.formData })
+    ], 32 /* NEED_HYDRATION */))
+  }
+  """#
+}

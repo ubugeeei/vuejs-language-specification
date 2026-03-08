@@ -1,0 +1,129 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-script-setup-reco-roundedbtn-pattern"
+title = "Imported SFC input: reco RoundedBtn pattern"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.script-setup"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/script-setup.toml"
+  source = "tests/fixtures/sfc/script-setup.toml"
+  caseName = "reco RoundedBtn pattern"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/script-setup.toml"
+    cases {
+      "reco RoundedBtn pattern"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-script-setup-reco-roundedbtn-pattern.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  interface Props {
+    outlined?: boolean;
+    isWide?: boolean;
+    mini?: boolean;
+    disabled?: boolean;
+    on?: Object;
+    height?: number | string;
+    color?: string;
+  }
+  
+  withDefaults(defineProps<Props>(), {
+    outlined: false,
+    isWide: false,
+    isMini: false,
+    disabled: false,
+    on: undefined,
+    height: '2rem',
+    color: 'primary'
+  });
+  </script>
+  
+  <template>
+    <button :disabled="disabled">
+      <slot />
+    </button>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  interface Props {
+    outlined?: boolean;
+    isWide?: boolean;
+    mini?: boolean;
+    disabled?: boolean;
+    on?: Object;
+    height?: number | string;
+    color?: string;
+  }
+  
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-script-setup-reco-roundedbtn-pattern',
+    props: {
+      outlined: { type: Boolean, required: false, default: false },
+      isWide: { type: Boolean, required: false, default: false },
+      mini: { type: Boolean, required: false },
+      disabled: { type: Boolean, required: false, default: false },
+      on: { type: Object, required: false, default: undefined },
+      height: { type: [Number, String], required: false, default: '2rem' },
+      color: { type: String, required: false, default: 'primary' }
+    },
+    setup(__props: any, { expose: __expose }) {
+    __expose();
+  
+  
+  
+  const __returned__ = {  }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { renderSlot as _renderSlot, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  const _hoisted_1 = ["disabled"]
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("button", { disabled: $props.disabled }, [
+      _renderSlot(_ctx.$slots, "default")
+    ], 8 /* PROPS */, _hoisted_1))
+  }
+  """#
+}

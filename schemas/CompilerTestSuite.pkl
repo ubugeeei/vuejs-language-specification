@@ -6,6 +6,21 @@ class UpstreamReference {
   issues: Listing<String> = new Listing {}
 }
 
+class ImportedInputOrigin {
+  copiedPath: String
+  source: String
+  caseName: String
+  originRepository: String?
+}
+
+class ReferenceOracle {
+  repository: String
+  moduleName: String
+  operation: String
+  profile: String?
+  provisional: Boolean? = null
+}
+
 suite = "compiler"
 
 class CompilerOptions {
@@ -80,7 +95,20 @@ class WarningExpectation {
   message: String
 }
 
+class DescriptorExpectation {
+  template: Boolean
+  script: Boolean
+  scriptSetup: Boolean
+  styles: Int
+  customBlocks: Int
+  scriptLang: String? = null
+  scriptSetupLang: String? = null
+  styleLangs: Listing<String> = new Listing {}
+  scopedStyles: Int? = null
+}
+
 class Expectation {
+  descriptor: DescriptorExpectation?
   ast: Listing<PointerAssertion> = new Listing {}
   helpers: Listing<HelperExpectation> = new Listing {}
   hoistCount: Int?
@@ -92,17 +120,24 @@ class Expectation {
   emits: Listing<String> = new Listing {}
   literals: Listing<LiteralExpectation> = new Listing {}
   normalizedCode: String?
+  templateCode: String?
+  styleCodes: Listing<String> = new Listing {}
   cssVars: Listing<String> = new Listing {}
   error: ErrorExpectation?
+  diagnostics: Listing<ErrorExpectation> = new Listing {}
   warnings: Listing<WarningExpectation> = new Listing {}
+  vendoredSnapshotOutput: String?
+  vendoredSnapshotOptions: String?
 }
 
 id: String
 title: String
-kind: String
+kind: "template-dom-compile"|"template-expected-snapshot"|"sfc-script-compile"|"sfc-style-compile"|"sfc-full-compile"|"sfc-expected-snapshot"
 summary: String
 features: Listing<String>
 profile: String?
+inputOrigin: ImportedInputOrigin?
+oracle: ReferenceOracle?
 upstream: Listing<UpstreamReference>
 input: Input
 expect: Expectation

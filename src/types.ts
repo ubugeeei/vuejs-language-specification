@@ -17,6 +17,21 @@ export interface UpstreamReference {
   issues?: string[];
 }
 
+export interface ImportedInputOrigin {
+  copiedPath: string;
+  source: string;
+  caseName: string;
+  originRepository?: string;
+}
+
+export interface ReferenceOracle {
+  repository: string;
+  moduleName: string;
+  operation: string;
+  profile?: string;
+  provisional?: boolean;
+}
+
 export interface BaseTestSuite {
   $schema: string;
   id: string;
@@ -26,7 +41,21 @@ export interface BaseTestSuite {
   summary: string;
   features: string[];
   profile?: string;
+  inputOrigin?: ImportedInputOrigin;
+  oracle?: ReferenceOracle;
   upstream: UpstreamReference[];
+}
+
+export interface SfcDescriptorExpectation {
+  template: boolean;
+  script: boolean;
+  scriptSetup: boolean;
+  styles: number;
+  customBlocks: number;
+  scriptLang?: string | null;
+  scriptSetupLang?: string | null;
+  styleLangs?: string[];
+  scopedStyles?: number;
 }
 
 export interface SyntaxTestSuite extends BaseTestSuite {
@@ -37,17 +66,7 @@ export interface SyntaxTestSuite extends BaseTestSuite {
     source: string;
   };
   expect: {
-    descriptor: {
-      template: boolean;
-      script: boolean;
-      scriptSetup: boolean;
-      styles: number;
-      customBlocks: number;
-      scriptLang?: string | null;
-      scriptSetupLang?: string | null;
-      styleLangs?: string[];
-      scopedStyles?: number;
-    };
+    descriptor: SfcDescriptorExpectation;
     templateContentIncludes?: string[];
   };
 }
@@ -101,6 +120,10 @@ export interface ParserTestSuite extends BaseTestSuite {
     errorCount: number;
     ast?: PointerAssertion[];
     errors?: PointerAssertion[];
+    normalizedAst?: string | null;
+    normalizedErrors?: string | null;
+    vendoredSnapshotOutput?: string | null;
+    vendoredSnapshotOptions?: string | null;
   };
 }
 
@@ -166,7 +189,13 @@ export interface WarningExpectation {
 
 export interface CompilerTestSuite extends BaseTestSuite {
   suite: "compiler";
-  kind: "template-dom-compile" | "sfc-script-compile" | "sfc-style-compile";
+  kind:
+    | "template-dom-compile"
+    | "template-expected-snapshot"
+    | "sfc-script-compile"
+    | "sfc-style-compile"
+    | "sfc-full-compile"
+    | "sfc-expected-snapshot";
   input: {
     filename?: string;
     source?: string;
@@ -176,6 +205,7 @@ export interface CompilerTestSuite extends BaseTestSuite {
     styleOptions?: StyleOptionsInput;
   };
   expect: {
+    descriptor?: SfcDescriptorExpectation;
     ast?: PointerAssertion[];
     helpers?: HelperExpectation[];
     hoistCount?: number;
@@ -187,9 +217,14 @@ export interface CompilerTestSuite extends BaseTestSuite {
     emits?: string[];
     literals?: LiteralExpectation[];
     normalizedCode?: string | null;
+    templateCode?: string | null;
+    styleCodes?: string[];
     cssVars?: string[];
     error?: ErrorExpectation;
+    diagnostics?: ErrorExpectation[];
     warnings?: WarningExpectation[];
+    vendoredSnapshotOutput?: string | null;
+    vendoredSnapshotOptions?: string | null;
   };
 }
 

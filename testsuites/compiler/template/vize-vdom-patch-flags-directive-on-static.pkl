@@ -1,0 +1,78 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-patch-flags-directive-on-static"
+title = "Imported template input: directive on static"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/patch-flags.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.patch-flags"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/patch-flags.toml"
+  source = "tests/fixtures/vdom/patch-flags.toml"
+  caseName = "directive on static"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/patch-flags.toml"
+    cases {
+      "directive on static"
+    }
+  }
+}
+
+input {
+  source = "<div v-focus>content</div>"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "CREATE_TEXT"
+    }
+    new HelperExpectation {
+      name = "RESOLVE_DIRECTIVE"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+    new HelperExpectation {
+      name = "WITH_DIRECTIVES"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { createTextVNode: _createTextVNode, resolveDirective: _resolveDirective, openBlock: _openBlock, createElementBlock: _createElementBlock, withDirectives: _withDirectives } = _Vue
+  
+      const _directive_focus = _resolveDirective("focus")
+  
+      return _withDirectives((_openBlock(), _createElementBlock("div", null, [
+        _createTextVNode("content")
+      ])), [
+        [_directive_focus]
+      ])
+    }
+  }
+  """#
+}

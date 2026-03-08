@@ -1,0 +1,78 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-if-v-if-with-interpolation"
+title = "Imported vapor input: v-if with interpolation"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-if.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-if"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-if.toml"
+  source = "tests/fixtures/vapor/v-if.toml"
+  caseName = "v-if with interpolation"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-if.toml"
+    cases {
+      "v-if with interpolation"
+    }
+  }
+}
+
+input {
+  source = "<div v-if=\"show\">{{ msg }}</div>"
+}
+
+expect {
+  normalizedCode = #"""
+  import { txt as _txt, toDisplayString as _toDisplayString, setText as _setText, renderEffect as _renderEffect, createIf as _createIf, template as _template } from 'vue';
+  const t0 = _template("<div> </div>", true)
+  
+  export function render(_ctx) {
+    const n0 = _createIf(() => (_ctx.show), () => {
+      const n2 = t0()
+      const x2 = _txt(n2)
+      _renderEffect(() => _setText(x2, _toDisplayString(_ctx.msg)))
+      return n2
+    })
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { txt as _txt, toDisplayString as _toDisplayString, setText as _setText, renderEffect as _renderEffect, createIf as _createIf, template as _template } from 'vue';
+  const t0 = _template("<div> </div>", true)
+  
+  export function render(_ctx) {
+    const n0 = _createIf(() => (_ctx.show), () => {
+      const n2 = t0()
+      const x2 = _txt(n2)
+      _renderEffect(() => _setText(x2, _toDisplayString(_ctx.msg)))
+      return n2
+    })
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

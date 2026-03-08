@@ -1,0 +1,71 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-basic-custom-blocks"
+title = "Imported SFC input: custom blocks"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/basic.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.basic"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/basic.toml"
+  source = "tests/fixtures/sfc/basic.toml"
+  caseName = "custom blocks"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/basic.toml"
+    cases {
+      "custom blocks"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-basic-custom-blocks.vue"
+  sfc = #"""
+  <template>
+    <div>Test</div>
+  </template>
+  
+  <i18n>
+  {
+    "en": { "hello": "Hello" },
+    "ja": { "hello": "こんにちは" }
+  }
+  </i18n>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = false
+      styles = 0
+      customBlocks = 1
+      scopedStyles = 0
+    }
+  templateCode = #"""
+  import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache) {
+    return (_openBlock(), _createElementBlock("div", null, "Test"))
+  }
+  """#
+}

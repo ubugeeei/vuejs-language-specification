@@ -1,0 +1,73 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vdom-v-model-v-model-nested-property"
+title = "Imported template input: v-model nested property"
+kind = "template-dom-compile"
+summary = "Static template compiler conformance derived from copied input tests/fixtures/vdom/v-model.toml and the official vuejs/core compiler oracle."
+
+features {
+  "compiler.template"
+  "imported.input"
+  "imported.input.vdom"
+  "imported.input.v-model"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vdom/v-model.toml"
+  source = "tests/fixtures/vdom/v-model.toml"
+  caseName = "v-model nested property"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-dom"
+  operation = "compile"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vdom/v-model.toml"
+    cases {
+      "v-model nested property"
+    }
+  }
+}
+
+input {
+  source = "<input v-model=\"form.user.name\">"
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "V_MODEL_TEXT"
+    }
+    new HelperExpectation {
+      name = "WITH_DIRECTIVES"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 0
+  normalizedCode = #"""
+  const _Vue = Vue
+  
+  return function render(_ctx, _cache) {
+    with (_ctx) {
+      const { vModelText: _vModelText, withDirectives: _withDirectives, openBlock: _openBlock, createElementBlock: _createElementBlock } = _Vue
+  
+      return _withDirectives((_openBlock(), _createElementBlock("input", {
+        "onUpdate:modelValue": $event => ((form.user.name) = $event)
+      }, null, 8 /* PROPS */, ["onUpdate:modelValue"])), [
+        [_vModelText, form.user.name]
+      ])
+    }
+  }
+  """#
+}

@@ -13,22 +13,23 @@ The project has two equally important outputs:
 - Provide cross-implementation conformance test suites for parsers, compilers, type evaluators, and tooling.
 - Keep non-runtime suites language-neutral so Rust, Go, Zig, Java, and JavaScript implementations can share the same source of truth.
 - Preserve runtime coverage with a JavaScript reference harness for DOM-observable behavior.
-- Track upstream evidence from `vuejs/core` tests, issue references, and `ubugeeei/vize` tests.
+- Track upstream evidence from `vuejs/core` tests, issue references, and copied community fixture corpora.
 
 ## Normative Map
 
-| Area                  | Specification                                                                    | Primary Test Suites                                                                                                                            |
-| --------------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Formal notation       | [`spec/00-formal-notation.md`](./spec/00-formal-notation.md)                     | [`spec/`](./spec/)                                                                                                                             |
-| Conformance model     | [`spec/01-conformance-model.md`](./spec/01-conformance-model.md)                 | [`testsuites/`](./testsuites/)                                                                                                                 |
-| SFC syntax and parser | [`spec/02-sfc-syntax.md`](./spec/02-sfc-syntax.md)                               | [`testsuites/syntax/sfc/`](./testsuites/syntax/sfc/), [`testsuites/parser/template/`](./testsuites/parser/template/)                           |
-| Compiler semantics    | [`spec/03-template-and-compiler.md`](./spec/03-template-and-compiler.md)         | [`testsuites/compiler/`](./testsuites/compiler/)                                                                                               |
-| Type evaluation       | [`spec/04-type-evaluation.md`](./spec/04-type-evaluation.md)                     | [`testsuites/type-evaluation/`](./testsuites/type-evaluation/)                                                                                 |
-| Runtime conformance   | [`spec/05-runtime-conformance.md`](./spec/05-runtime-conformance.md)             | [`src/runtime/testsuites/`](./src/runtime/testsuites/)                                                                                         |
-| Benchmark methodology | [`spec/06-benchmark-methodology.md`](./spec/06-benchmark-methodology.md)         | [`testsuites/benchmark/`](./testsuites/benchmark/)                                                                                             |
-| Upstream provenance   | [`spec/07-upstream-provenance.md`](./spec/07-upstream-provenance.md)             | [`sources/copied/`](./sources/copied/), [`sources/traceability/`](./sources/traceability/)                                                     |
-| Artifact model        | [`spec/08-test-suite-artifact-model.md`](./spec/08-test-suite-artifact-model.md) | [`testsuites/`](./testsuites/), [`src/runtime/testsuites/`](./src/runtime/testsuites/), [`test/validation.spec.ts`](./test/validation.spec.ts) |
-| Requirement matrix    | [`spec/09-requirement-matrix-model.md`](./spec/09-requirement-matrix-model.md)   | [`spec/`](./spec/), [`testsuites/`](./testsuites/), [`src/runtime/testsuites/`](./src/runtime/testsuites/)                                     |
+| Area                  | Specification                                                                                                                                                                      | Primary Test Suites                                                                                                                                                                          |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Formal notation       | [`spec/00-formal-notation.md`](./spec/00-formal-notation.md)                                                                                                                       | [`spec/`](./spec/)                                                                                                                                                                           |
+| Conformance model     | [`spec/01-conformance-model.md`](./spec/01-conformance-model.md)                                                                                                                   | [`testsuites/`](./testsuites/)                                                                                                                                                               |
+| SFC syntax and parser | [`spec/02-sfc-syntax.md`](./spec/02-sfc-syntax.md)                                                                                                                                 | [`testsuites/syntax/sfc/`](./testsuites/syntax/sfc/), [`testsuites/parser/template/`](./testsuites/parser/template/)                                                                         |
+| Compiler semantics    | [`spec/03-template-and-compiler.md`](./spec/03-template-and-compiler.md)                                                                                                           | [`testsuites/compiler/`](./testsuites/compiler/)                                                                                                                                             |
+| Type evaluation       | [`spec/04-type-evaluation.md`](./spec/04-type-evaluation.md)                                                                                                                       | [`testsuites/type-evaluation/`](./testsuites/type-evaluation/)                                                                                                                               |
+| Runtime conformance   | [`spec/05-runtime-conformance.md`](./spec/05-runtime-conformance.md)                                                                                                               | [`runtime/testsuites/`](./runtime/testsuites/)                                                                                                                                               |
+| Benchmark methodology | [`spec/06-benchmark-methodology.md`](./spec/06-benchmark-methodology.md)                                                                                                           | [`testsuites/benchmark/`](./testsuites/benchmark/)                                                                                                                                           |
+| Upstream provenance   | [`spec/07-upstream-provenance.md`](./spec/07-upstream-provenance.md)                                                                                                               | [`provenance/vendor/`](./provenance/vendor/), [`provenance/traceability/`](./provenance/traceability/)                                                                                       |
+| Artifact model        | [`spec/08-test-suite-artifact-model.md`](./spec/08-test-suite-artifact-model.md)                                                                                                   | [`testsuites/`](./testsuites/), [`runtime/testsuites/`](./runtime/testsuites/), [`test/validation.spec.ts`](./test/validation.spec.ts)                                                       |
+| Requirement matrix    | [`spec/09-requirement-matrix-model.md`](./spec/09-requirement-matrix-model.md)                                                                                                     | [`spec/`](./spec/), [`testsuites/`](./testsuites/), [`runtime/testsuites/`](./runtime/testsuites/)                                                                                           |
+| Imported input corpus | [`spec/10-imported-parser-input-corpus.md`](./spec/10-imported-parser-input-corpus.md), [`spec/11-imported-compiler-input-corpus.md`](./spec/11-imported-compiler-input-corpus.md) | [`testsuites/parser/template/`](./testsuites/parser/template/), [`testsuites/compiler/template/`](./testsuites/compiler/template/), [`testsuites/compiler/sfc/`](./testsuites/compiler/sfc/) |
 
 Each normative chapter uses explicit `MUST`/`MAY` requirements and links to the corresponding test suites that operationalize that requirement.
 Those links are part of the maintained artifact surface and are validated against local executable test suites.
@@ -72,21 +73,25 @@ The base specification in this repository is therefore:
 - `spec/`
   - normative and semi-normative documents
 - `testsuites/`
-  - machine-readable conformance test suites written in Pkl, including parser, syntax, compiler, type, runtime, and benchmark coverage
+  - machine-readable conformance test suites written in Pkl for syntax, parser, compiler, type evaluation, and benchmark coverage
+- `runtime/`
+  - JavaScript-only runtime harness modules and source-first runtime test suites
 - `schemas/`
   - Pkl schema modules that define every machine-readable suite
-- `sources/upstream/`
+- `provenance/inventories/`
   - generated inventories derived from upstream tests and issue references
-- `sources/copied/vuejs-core/`
+- `provenance/vendor/vuejs-core/`
   - vendored raw `vuejs/core` test and benchmark source files plus a manifest that keeps provenance local to this repository
-- `sources/traceability/`
+- `provenance/vendor/ubugeeei-vize/`
+  - copied community fixture/test source files and manifests used as local input corpora
+- `provenance/traceability/`
   - generated Pkl manifests that represent every inventoried upstream test or benchmark with status `covered`, `planned`, or `tracked`
-- `sources/copied/vize/`
-  - vendored `ubugeeei/vize` snapshot assets copied into this repository
+- `provenance/vendor/vize/`
+  - copied snapshot assets retained for provisional/profile-specific or historical provenance
 - `fixtures/benchmarks/`
   - reusable benchmark inputs
 - `src/`
-  - package API, CLI, validators, benchmark harness, and runtime reference suite
+  - package API, CLI, validators, and benchmark orchestration
 - `test/`
   - repository verification for schemas, reference execution, and smoke benchmarks
 
@@ -94,7 +99,7 @@ The base specification in this repository is therefore:
 
 The npm package ships:
 
-- raw specification assets (`spec/`, `testsuites/`, `schemas/`, `sources/`)
+- raw specification assets (`spec/`, `testsuites/`, `runtime/`, `schemas/`, `provenance/`)
 - a CLI for Pkl-backed validation, catalog generation, and smoke benchmarking
 - a JavaScript reference harness for runtime-only suites
 - Vitest Browser Mode runtime tests for DOM-observable conformance
@@ -123,12 +128,16 @@ The initial suite is curated from:
 - `vuejs/core` compiler, runtime, reactivity, and SFC tests
 - `vuejs/language-tools` component-meta, language server, and type-check oriented tests
 - issue references embedded in those upstream tests
-- `ubugeeei/vize` SFC, CSS, playground, and benchmark-oriented tests
+- copied community SFC, CSS, playground, and benchmark-oriented tests
 
-Generated inventories are committed under `sources/upstream/` and can be refreshed with `scripts/generate-upstream-inventory.ts`.
-Vendored `vuejs/core` test and benchmark source files are committed under `sources/copied/vuejs-core/` and can be refreshed with `npm run vendor:vue-core:tests`.
-Generated traceability manifests are committed under `sources/traceability/` and can be refreshed with `npm run generate:traceability`.
-Vendored `vize` snapshots are committed under `sources/copied/vize/tests/expected/` and can be refreshed with `npm run vendor:vize:snapshots`.
+Generated inventories are committed under `provenance/inventories/` and can be refreshed with `scripts/generate-upstream-inventory.ts`.
+Vendored `vuejs/core` test and benchmark source files are committed under `provenance/vendor/vuejs-core/` and can be refreshed with `npm run vendor:vue-core:tests`.
+Copied community test and fixture source files are committed under `provenance/vendor/ubugeeei-vize/` and can be refreshed with `npm run vendor:vize:tests`.
+Imported parser/compiler suites can be refreshed with `npm run generate:imported:testsuites`.
+That generator consumes the copied local corpus under [`provenance/vendor/ubugeeei-vize/`](./provenance/vendor/ubugeeei-vize/). Default-profile parser/compiler expectations are derived from the official `vuejs/core` implementation and stored statically; copied snapshots under [`provenance/vendor/vize/tests/expected/`](./provenance/vendor/vize/tests/expected/) remain only for provisional Vapor coverage and provenance.
+Generated traceability manifests are committed under `provenance/traceability/` and can be refreshed with `npm run generate:traceability`.
+Copied snapshot assets are committed under `provenance/vendor/vize/tests/expected/` and can be refreshed with `npm run vendor:vize:snapshots`.
+Stable catalog and requirement id manifests are committed under `provenance/stability/` and can be refreshed with `npm run generate:stability`.
 `npm run coverage:upstream` reports which inventoried upstream cases are already covered by executable local test suites.
 `npm run traceability:upstream` summarizes how every inventoried upstream case is represented:
 
@@ -152,3 +161,4 @@ This repository is structured to be publishable and extensible now. The current 
 - Browser Mode runtime validation for DOM-observable behavior, including `v-model` text, checkbox, radio, and select coverage
 
 The next increments should continue expanding upstream-derived coverage, especially for issue regressions and profile-specific suites such as Vapor.
+The current imported fixture lift already includes parser suites, base compiler suites, SFC suites, and profile-scoped Vapor compiler suites. Default-profile expectations come from the official `vuejs/core` oracle; Vapor remains provisional until an official oracle is vendored.

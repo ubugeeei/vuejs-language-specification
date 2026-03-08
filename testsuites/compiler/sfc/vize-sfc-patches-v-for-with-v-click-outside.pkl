@@ -1,0 +1,104 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-v-for-with-v-click-outside"
+title = "Imported SFC input: v-for with v-click-outside"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "v-for with v-click-outside"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "v-for with v-click-outside"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-v-for-with-v-click-outside.vue"
+  sfc = #"""
+  <script setup>
+  import { ref } from 'vue'
+  const items = ref([{ id: 1, name: 'Item 1' }])
+  function closeItem(id) {
+    console.log('close', id)
+  }
+  </script>
+  
+  <template>
+    <div v-for="item in items" :key="item.id" v-click-outside="() => closeItem(item.id)">
+      {{ item.name }}
+    </div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { ref } from 'vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-v-for-with-v-click-outside',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const items = ref([{ id: 1, name: 'Item 1' }])
+  function closeItem(id) {
+    console.log('close', id)
+  }
+  
+  const __returned__ = { items, closeItem, ref }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { renderList as _renderList, Fragment as _Fragment, openBlock as _openBlock, createElementBlock as _createElementBlock, toDisplayString as _toDisplayString, createTextVNode as _createTextVNode, resolveDirective as _resolveDirective, withDirectives as _withDirectives } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    const _directive_click_outside = _resolveDirective("click-outside")
+  
+    return (_openBlock(true), _createElementBlock(_Fragment, null, _renderList($setup.items, (item) => {
+      return _withDirectives((_openBlock(), _createElementBlock("div", {
+        key: item.id
+      }, [
+        _createTextVNode(_toDisplayString(item.name), 1 /* TEXT */)
+      ])), [
+        [_directive_click_outside, () => $setup.closeItem(item.id)]
+      ])
+    }), 128 /* KEYED_FRAGMENT */))
+  }
+  """#
+}

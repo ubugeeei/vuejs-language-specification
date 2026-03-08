@@ -1,0 +1,70 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.vize-vapor-v-show-v-show-on-component"
+title = "Imported vapor input: v-show on component"
+kind = "template-expected-snapshot"
+summary = "Provisional Vapor compiler conformance derived from copied input tests/fixtures/vapor/v-show.toml. This suite remains snapshot-backed until an official vuejs/core Vapor oracle is vendored."
+
+features {
+  "compiler.template"
+  "compiler.snapshot"
+  "compiler.profile.vapor"
+  "imported.input"
+  "imported.input.vapor"
+  "imported.input.v-show"
+}
+
+profile = "vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/vapor/v-show.toml"
+  source = "tests/fixtures/vapor/v-show.toml"
+  caseName = "v-show on component"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "minor/vapor compiler snapshot"
+  operation = "copied snapshot oracle"
+  profile = "vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/vapor/v-show.toml"
+    cases {
+      "v-show on component"
+    }
+  }
+}
+
+input {
+  source = "<MyComponent v-show=\"visible\" />"
+}
+
+expect {
+  normalizedCode = #"""
+  import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback, applyVShow as _applyVShow } from 'vue';
+  
+  export function render(_ctx) {
+    const _component_MyComponent = _resolveComponent("MyComponent")
+    const n0 = _createComponentWithFallback(_component_MyComponent, null, null, true)
+    _applyVShow(n0, () => (_ctx.visible))
+    return n0
+  }
+  """#
+  vendoredSnapshotOutput = #"""
+  import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback, applyVShow as _applyVShow } from 'vue';
+  
+  export function render(_ctx) {
+    const _component_MyComponent = _resolveComponent("MyComponent")
+    const n0 = _createComponentWithFallback(_component_MyComponent, null, null, true)
+    _applyVShow(n0, () => (_ctx.visible))
+    return n0
+  }
+  """#
+  vendoredSnapshotOptions = "vapor"
+}

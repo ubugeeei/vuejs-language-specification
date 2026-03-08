@@ -18,7 +18,12 @@ export default defineConfig({
         extends: true,
         test: {
           name: "node",
-          include: ["test/testsuites.spec.ts", "test/runtime.spec.ts", "test/validation.spec.ts"],
+          include: [
+            "test/testsuites.spec.ts",
+            "test/runtime.spec.ts",
+            "test/validation.spec.ts",
+            "test/vize-snapshots.spec.ts",
+          ],
         },
       },
       {

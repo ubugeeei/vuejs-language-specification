@@ -1,0 +1,85 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-basic-defineprops"
+title = "Imported SFC input: defineProps"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/basic.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.basic"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/basic.toml"
+  source = "tests/fixtures/sfc/basic.toml"
+  caseName = "defineProps"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/basic.toml"
+    cases {
+      "defineProps"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-basic-defineprops.vue"
+  sfc = #"""
+  <script setup>
+  const props = defineProps(['msg'])
+  </script>
+  
+  <template>
+    <div>{{ props.msg }}</div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-basic-defineprops',
+    props: ['msg'],
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const props = __props
+  
+  const __returned__ = { props }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, _toDisplayString($setup.props.msg), 1 /* TEXT */))
+  }
+  """#
+}

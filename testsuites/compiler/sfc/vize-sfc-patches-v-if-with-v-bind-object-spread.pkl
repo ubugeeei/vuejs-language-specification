@@ -1,0 +1,99 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-v-if-with-v-bind-object-spread"
+title = "Imported SFC input: v-if with v-bind object spread"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "v-if with v-bind object spread"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "v-if with v-bind object spread"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-v-if-with-v-bind-object-spread.vue"
+  sfc = #"""
+  <script setup>
+  import { ref, computed } from 'vue'
+  import Button from './Button.vue'
+  const isActive = ref(true)
+  const buttonProps = computed(() => ({ disabled: false, type: 'primary' }))
+  </script>
+  
+  <template>
+    <Button v-if="isActive" v-bind="buttonProps" @click="handleClick">
+      Click me
+    </Button>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { ref, computed } from 'vue'
+  import Button from './Button.vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-v-if-with-v-bind-object-spread',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const isActive = ref(true)
+  const buttonProps = computed(() => ({ disabled: false, type: 'primary' }))
+  
+  const __returned__ = { isActive, buttonProps, ref, computed, Button }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { createTextVNode as _createTextVNode, mergeProps as _mergeProps, withCtx as _withCtx, openBlock as _openBlock, createBlock as _createBlock, createCommentVNode as _createCommentVNode } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return ($setup.isActive)
+      ? (_openBlock(), _createBlock($setup["Button"], _mergeProps({ key: 0 }, $setup.buttonProps, { onClick: _ctx.handleClick }), {
+          default: _withCtx(() => [...(_cache[0] || (_cache[0] = [
+            _createTextVNode(" Click me ", -1 /* CACHED */)
+          ]))]),
+          _: 1 /* STABLE */
+        }, 16 /* FULL_PROPS */, ["onClick"]))
+      : _createCommentVNode("v-if", true)
+  }
+  """#
+}

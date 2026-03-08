@@ -1,0 +1,69 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-attribute-with-special-characters"
+title = "Imported SFC input: attribute with special characters"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "attribute with special characters"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "attribute with special characters"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-attribute-with-special-characters.vue"
+  sfc = #"""
+  <script setup>
+  </script>
+  
+  <template>
+    <div title="Hello &quot;World&quot;">Content</div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = false
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  templateCode = #"""
+  import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  const _hoisted_1 = { title: "Hello \"World\"" }
+  
+  export function render(_ctx, _cache) {
+    return (_openBlock(), _createElementBlock("div", _hoisted_1, "Content"))
+  }
+  """#
+}
