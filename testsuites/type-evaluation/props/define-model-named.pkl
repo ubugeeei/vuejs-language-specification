@@ -1,0 +1,62 @@
+amends "../../../schemas/TypeEvaluationTestSuite.pkl"
+
+id = "type-evaluation.props.define-model-named"
+title = "Named defineModel lowers to the named prop and modifiers prop"
+summary = "A named defineModel declaration must contribute the named model prop and its modifiers prop to runtime props while preserving numeric constructor inference."
+
+features {
+  "type-eval.defineModel"
+  "type-eval.named-model"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/defineModel.spec.ts"
+    cases {
+      "basic usage"
+      "w/ defineProps and defineEmits"
+    }
+  }
+  new UpstreamReference {
+    repository = "vuejs/language-tools"
+    source = "packages/component-meta/tests/index.spec.ts"
+    cases {
+      "reference-type-model"
+    }
+  }
+}
+
+input {
+  filename = "DefineNamedModel.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    const count = defineModel<number>("count", { default: 0 })
+    </script>
+    """#
+  scriptOptions {
+    id = "define-model-named"
+  }
+}
+
+expect {
+  runtimeProps {
+    new RuntimePropsExpectation {
+      name = "count"
+      types {
+        "Number"
+      }
+      required = false
+    }
+    new RuntimePropsExpectation {
+      name = "countModifiers"
+      required = false
+    }
+  }
+  bindings {
+    new BindingExpectation {
+      name = "count"
+      kind = "setup-ref"
+    }
+  }
+}

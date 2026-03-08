@@ -2,7 +2,7 @@ amends "../../schemas/UpstreamTraceabilityManifest.pkl"
 
 repository = "vuejs/language-tools"
 commit = "6141ef516c21fc6202b690a9b921bebfdff3057b"
-generatedAt = "2026-03-08T09:39:52.150Z"
+generatedAt = "2026-03-08T10:20:37.164Z"
 
 counts {
   total = 95
@@ -20,7 +20,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -34,7 +34,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -48,7 +48,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -62,7 +62,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -76,7 +76,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -90,7 +90,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -104,7 +104,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -118,7 +118,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -132,7 +132,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -146,7 +146,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -160,7 +160,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -174,7 +174,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -188,7 +188,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -202,7 +202,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -216,7 +216,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -230,7 +230,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -244,12 +244,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -259,12 +259,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -274,12 +274,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -289,12 +289,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -304,12 +304,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -319,12 +319,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -334,12 +334,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -349,12 +349,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -364,13 +364,13 @@ entries {
     classification = "portable-language"
     status = "covered"
     profile = null
-    localCases {
+    localTestSuites {
       "compiler.script.define-emits-array"
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -380,12 +380,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -395,12 +395,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -410,14 +410,14 @@ entries {
     classification = "portable-language"
     status = "covered"
     profile = null
-    localCases {
+    localTestSuites {
       "type-evaluation.props.define-model-basic"
       "type-evaluation.props.define-model-named"
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -427,13 +427,13 @@ entries {
     classification = "portable-language"
     status = "covered"
     profile = null
-    localCases {
+    localTestSuites {
       "type-evaluation.props.basic-type-literal"
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -443,12 +443,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -458,12 +458,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -473,12 +473,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -488,13 +488,13 @@ entries {
     classification = "portable-language"
     status = "covered"
     profile = null
-    localCases {
+    localTestSuites {
       "compiler.template.component-named-slot"
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -504,12 +504,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -519,12 +519,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -534,12 +534,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -549,12 +549,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/component-meta/tests/index.spec.ts"
@@ -564,12 +564,12 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5546"
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/language-plugin-pug/tests/baseParse.spec.ts"
@@ -579,11 +579,11 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/language-plugin-pug/tests/baseParse.spec.ts"
@@ -593,11 +593,11 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/language-plugin-pug/tests/baseParse.spec.ts"
@@ -607,11 +607,11 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/language-plugin-pug/tests/baseParse.spec.ts"
@@ -621,11 +621,11 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/language-plugin-pug/tests/baseParse.spec.ts"
@@ -635,11 +635,11 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/language-plugin-pug/tests/baseParse.spec.ts"
@@ -649,11 +649,11 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/language-plugin-pug/tests/baseParse.spec.ts"
@@ -663,11 +663,11 @@ entries {
     classification = "portable-language"
     status = "planned"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
-    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case."
+    rationale = "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite."
   }
   new TraceabilityEntry {
     source = "packages/language-server/tests/completions.spec.ts"
@@ -677,7 +677,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -699,7 +699,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -721,7 +721,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -743,7 +743,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -765,7 +765,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -787,7 +787,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -809,7 +809,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -831,7 +831,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -853,7 +853,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -875,7 +875,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -897,7 +897,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -919,7 +919,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -941,7 +941,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -963,7 +963,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -985,7 +985,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -1007,7 +1007,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -1029,7 +1029,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -1051,7 +1051,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -1073,7 +1073,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2454"
@@ -1095,7 +1095,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2600"
@@ -1110,7 +1110,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2600"
@@ -1125,7 +1125,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2600"
@@ -1140,7 +1140,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -1154,7 +1154,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#4720"
@@ -1170,7 +1170,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#4720"
@@ -1186,7 +1186,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#4720"
@@ -1202,7 +1202,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#4720"
@@ -1218,7 +1218,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#4720"
@@ -1234,7 +1234,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#4720"
@@ -1250,7 +1250,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5818"
@@ -1265,7 +1265,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -1279,7 +1279,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -1293,7 +1293,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -1307,7 +1307,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -1321,7 +1321,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2410"
@@ -1337,7 +1337,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2410"
@@ -1353,7 +1353,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2410"
@@ -1369,7 +1369,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2410"
@@ -1385,7 +1385,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2410"
@@ -1401,7 +1401,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2410"
@@ -1417,7 +1417,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2410"
@@ -1433,7 +1433,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2410"
@@ -1449,7 +1449,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2410"
@@ -1465,7 +1465,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2410"
@@ -1481,7 +1481,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2410"
@@ -1497,7 +1497,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2410"
@@ -1513,7 +1513,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#2410"
@@ -1529,7 +1529,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "#5572"
@@ -1544,7 +1544,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
     }
@@ -1558,7 +1558,7 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
-    localCases {
+    localTestSuites {
     }
     fileIssues {
       "tsc/_failed_#3632"

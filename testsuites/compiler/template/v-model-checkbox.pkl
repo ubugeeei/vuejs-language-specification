@@ -1,0 +1,60 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.v-model-checkbox"
+title = "Checkbox-input v-model lowers to vModelCheckbox"
+kind = "template-dom-compile"
+summary = "A checkbox input bound through v-model must lower to the vModelCheckbox runtime directive with an onUpdate:modelValue listener."
+
+features {
+  "template.v-model"
+  "compiler.dom"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-dom/__tests__/transforms/vModel.spec.ts"
+    cases {
+      "simple expression for input (checkbox)"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <input type="checkbox" v-model="model" />
+    """#
+  compilerOptions {
+    mode = "module"
+    prefixIdentifiers = true
+  }
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "V_MODEL_CHECKBOX"
+    }
+    new HelperExpectation {
+      name = "WITH_DIRECTIVES"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  normalizedCode = #"""
+    import { vModelCheckbox as _vModelCheckbox, withDirectives as _withDirectives, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+    export function render(_ctx, _cache) {
+      return _withDirectives((_openBlock(), _createElementBlock("input", {
+        type: "checkbox",
+        "onUpdate:modelValue": $event => ((_ctx.model) = $event)
+      }, null, 8 /* PROPS */, ["onUpdate:modelValue"])), [
+        [_vModelCheckbox, _ctx.model]
+      ])
+    }
+    """#
+}

@@ -1,0 +1,69 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.script.define-props-destructure-multi-variable-declaration-fix-7422"
+title = "Reactive props destructure preserves subsequent declarators across multiline const declarations"
+kind = "sfc-script-compile"
+summary = "When defineProps destructure is followed by multiple declarators in the same statement, macro erasure must preserve each residual declarator and its initialization."
+
+features {
+  "script-setup.defineProps"
+  "script-setup.destructure"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/definePropsDestructure.spec.ts"
+    cases {
+      "multi-variable declaration fix #7422"
+    }
+  }
+}
+
+input {
+  filename = "definePropsDestructureMultiVariableDeclarationFix7422.vue"
+  sfc = #"""
+    <script setup>
+    const { item } = defineProps(["item"]),
+          a = 0,
+          b = 0;
+    </script>
+    """#
+  scriptOptions {
+    id = "define-props-destructure-multi-variable-declaration-fix-7422"
+    inlineTemplate = true
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "a"
+      kind = "literal-const"
+    }
+    new BindingExpectation {
+      name = "b"
+      kind = "literal-const"
+    }
+    new BindingExpectation {
+      name = "item"
+      kind = "props"
+    }
+  }
+  normalizedCode = #"""
+
+    export default {
+      __name: 'definePropsDestructureMultiVariableDeclarationFix7422',
+      props: ["item"],
+      setup(__props) {
+
+    const a = 0,
+          b = 0;
+
+    return () => {}
+    }
+
+    }
+    """#
+}

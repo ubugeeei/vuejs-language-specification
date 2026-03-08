@@ -1,0 +1,55 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.script.define-props-destructure-local-ref-error"
+title = "defineProps destructure rejects local captures in defaults"
+kind = "sfc-script-compile"
+summary = "Reactive props destructure defaults must not capture locally declared variables because the props declaration is hoisted."
+
+features {
+  "script-setup.defineProps"
+  "script-setup.destructure"
+  "compiler.script"
+  "compiler.error"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/definePropsDestructure.spec.ts"
+    cases {
+      "should error if destructure reference local vars"
+    }
+  }
+}
+
+input {
+  filename = "DefinePropsDestructureLocalRefError.vue"
+  sfc = #"""
+    <script setup>
+    let x = 1
+    const {
+      foo = () => x
+    } = defineProps(["foo"])
+    </script>
+    """#
+  scriptOptions {
+    id = "define-props-destructure-local-ref-error"
+  }
+}
+
+expect {
+  error {
+    name = "Error"
+    message = #"""
+      [@vue/compiler-sfc] `defineProps()` in <script setup> cannot reference locally declared variables because it will be hoisted outside of the setup() function. If your component options require initialization in the module scope, use a separate normal <script> to export the options instead.
+
+      DefinePropsDestructureLocalRefError.vue
+      2  |  let x = 1
+      3  |  const {
+      4  |    foo = () => x
+         |                ^
+      5  |  } = defineProps(["foo"])
+      6  |  </script>
+      """#
+  }
+}

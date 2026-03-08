@@ -2,7 +2,7 @@
 
 ## 1. Source Policy
 
-This repository does not invent cases in a vacuum. Every curated case should point back to at least one upstream source:
+This repository does not invent test suites in a vacuum. Every curated test suite should point back to at least one upstream source:
 
 - `vuejs/core` test
 - `vuejs/language-tools` test
@@ -16,7 +16,7 @@ UpstreamRef = ⟨repository, source, cases*, issues*, kind⟩
 InventoryEntry = ⟨repository, commit, source, kind, line, caseName, issueLabels*⟩
 ```
 
-Curated case metadata MUST use repository-local selectors (`repository`, `source`, `case name`, `line`) rather than external blob URLs.
+Curated test-suite metadata MUST use repository-local selectors (`repository`, `source`, `case name`, `line`) rather than external blob URLs.
 
 ## 2. Inventories
 
@@ -43,8 +43,8 @@ They record:
 
 Coverage is computed from local `upstream` metadata against those inventories. The CLI command `vue-language-spec coverage` reports:
 
-- covered upstream cases
-- uncovered upstream cases
+- covered upstream test cases
+- uncovered upstream test cases
 - dangling local provenance references that do not match any inventoried upstream case
 
 The generated traceability manifests classify every inventoried upstream test or benchmark as exactly one of:
@@ -59,7 +59,7 @@ The CLI command `vue-language-spec traceability` reports repository-level totals
 
 When promoting an upstream behavior into this repository:
 
-- preserve provenance in the case metadata
+- preserve provenance in the test-suite metadata
 - mark non-test evidence with an explicit `kind`, e.g. `snapshot` or `artifact`
 - translate implementation-specific assertions into portable assertions when possible
 - keep JavaScript-specific assumptions inside the runtime suite

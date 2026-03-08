@@ -1,0 +1,69 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.script.define-props-destructure-function-parameter-shadowing"
+title = "Reactive props destructure preserves function-parameter shadowing"
+kind = "sfc-script-compile"
+summary = "A function parameter that reuses the destructured prop name must remain local to that function while outer-scope reads continue to target __props."
+
+features {
+  "script-setup.defineProps"
+  "script-setup.destructure"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/definePropsDestructure.spec.ts"
+    cases {
+      "handle function parameters with same name as destructured props"
+    }
+  }
+}
+
+input {
+  filename = "definePropsDestructureFunctionParameterShadowing.vue"
+  sfc = #"""
+    <script setup>
+    const { value } = defineProps()
+    function test(value) {
+      try {
+      } catch {
+      }
+    }
+    console.log(value)
+    </script>
+    """#
+  scriptOptions {
+    id = "define-props-destructure-function-parameter-shadowing"
+    inlineTemplate = true
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "test"
+      kind = "setup-const"
+    }
+  }
+  normalizedCode = #"""
+
+    export default {
+      __name: 'definePropsDestructureFunctionParameterShadowing',
+      setup(__props) {
+
+
+    function test(value) {
+      try {
+      } catch {
+      }
+    }
+    console.log(__props.value)
+
+    return () => {}
+    }
+
+    }
+    """#
+}

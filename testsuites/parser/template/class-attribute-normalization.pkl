@@ -1,0 +1,61 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.class-attribute-normalization"
+title = "Class attribute values normalize parser-level ASCII whitespace"
+summary = "Class attributes are parsed as plain attributes while collapsing parser-level ASCII whitespace in the retained text value."
+
+features {
+  "parser.attribute"
+  "parser.class-normalization"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/parse.spec.ts"
+    cases {
+      "class attribute should ignore whitespace when parsed"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "ubugeeei/vize"
+    source = "tests/expected/parser/attribute.snap"
+    cases {
+      "class attribute"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <div class="
+      foo   bar  baz " />
+    """#
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "ATTRIBUTE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "class"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/content"
+      equals = "foo bar baz"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/isSelfClosing"
+      equals = true
+    }
+  }
+}

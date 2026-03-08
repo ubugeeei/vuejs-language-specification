@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { packageRoot, walkFiles } from "./fs.ts";
-import { discoverCaseFiles } from "./catalog.ts";
+import { discoverTestSuiteFiles } from "./catalog.ts";
 import { evaluatePklFile } from "./pkl.ts";
 import {
   buildUpstreamCoverage,
@@ -48,8 +48,10 @@ function normalizeTraceabilityManifest(
   };
 }
 
-export function validateCases(root: string = packageRoot(import.meta.url)): ValidationMessage[] {
-  return discoverCaseFiles(root).map((file) => {
+export function validateTestSuites(
+  root: string = packageRoot(import.meta.url),
+): ValidationMessage[] {
+  return discoverTestSuiteFiles(root).map((file) => {
     try {
       const data = evaluatePklFile<{ id: string }>(file);
       return {
@@ -67,6 +69,8 @@ export function validateCases(root: string = packageRoot(import.meta.url)): Vali
     }
   });
 }
+
+export const validateCases = validateTestSuites;
 
 export function validateUpstreamInventories(
   root: string = packageRoot(import.meta.url),
@@ -323,7 +327,7 @@ export function validateUpstreamReferences(
   const snapshotManifestFile = join(root, "sources", "copied", "vize", "expected-snapshots.pkl");
   const errors: string[] = report.danglingReferences.map(
     (reference) =>
-      `Unresolved ${reference.kind} reference: ${reference.repository} ${reference.source} :: ${reference.caseName} <- ${reference.localCaseId}`,
+      `Unresolved ${reference.kind} reference: ${reference.repository} ${reference.source} :: ${reference.caseName} <- ${reference.localTestSuiteId}`,
   );
 
   try {
@@ -344,14 +348,14 @@ export function validateUpstreamReferences(
       const snapshotNames = snapshotNameIndex.get(reference.source);
       if (!snapshotNames) {
         errors.push(
-          `Snapshot source is not vendored: ${reference.repository} ${reference.source} <- ${reference.localCaseId}`,
+          `Snapshot source is not vendored: ${reference.repository} ${reference.source} <- ${reference.localTestSuiteId}`,
         );
         continue;
       }
 
       if (!snapshotNames.has(reference.caseName)) {
         errors.push(
-          `Snapshot case is missing: ${reference.repository} ${reference.source} :: ${reference.caseName} <- ${reference.localCaseId}`,
+          `Snapshot case is missing: ${reference.repository} ${reference.source} :: ${reference.caseName} <- ${reference.localTestSuiteId}`,
         );
       }
     }

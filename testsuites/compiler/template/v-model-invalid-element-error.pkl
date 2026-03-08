@@ -1,0 +1,40 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.v-model-invalid-element-error"
+title = "v-model rejects non-form plain elements"
+kind = "template-dom-compile"
+summary = "A plain element outside the input/textarea/select set must reject v-model with the stable compiler-dom diagnostic code."
+
+features {
+  "template.v-model"
+  "compiler.dom"
+  "compiler.error"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-dom/__tests__/transforms/vModel.spec.ts"
+    cases {
+      "invalid element"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <span v-model="model" />
+    """#
+  compilerOptions {
+    mode = "module"
+    prefixIdentifiers = true
+  }
+}
+
+expect {
+  error {
+    name = "SyntaxError"
+    message = "v-model can only be used on <input>, <textarea> and <select> elements."
+    code = "X_V_MODEL_ON_INVALID_ELEMENT"
+  }
+}

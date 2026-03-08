@@ -1,0 +1,40 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.v-model-file-input-error"
+title = "v-model rejects file inputs"
+kind = "template-dom-compile"
+summary = "File inputs must reject v-model because their value is read-only and controlled via change events."
+
+features {
+  "template.v-model"
+  "compiler.dom"
+  "compiler.error"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-dom/__tests__/transforms/vModel.spec.ts"
+    cases {
+      "should raise error if used file input element"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <input type="file" v-model="test" />
+    """#
+  compilerOptions {
+    mode = "module"
+    prefixIdentifiers = true
+  }
+}
+
+expect {
+  error {
+    name = "SyntaxError"
+    message = "v-model cannot be used on file inputs since they are read-only. Use a v-on:change listener instead."
+    code = "X_V_MODEL_ON_FILE_INPUT_ELEMENT"
+  }
+}

@@ -1,0 +1,49 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.script.define-options-expose-error"
+title = "defineOptions rejects expose declarations"
+kind = "sfc-script-compile"
+summary = "defineOptions must not be used to declare expose and must emit the stable compiler-sfc diagnostic that redirects the author to defineExpose."
+
+features {
+  "script-setup.defineOptions"
+  "compiler.script"
+  "compiler.error"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/defineOptions.spec.ts"
+    cases {
+      "should emit an error with props or emits property"
+    }
+  }
+}
+
+input {
+  filename = "DefineOptionsExposeError.vue"
+  sfc = #"""
+    <script setup>
+    defineOptions({ expose: ["foo"] })
+    </script>
+    """#
+  scriptOptions {
+    id = "define-options-expose-error"
+  }
+}
+
+expect {
+  error {
+    name = "Error"
+    message = #"""
+      [@vue/compiler-sfc] defineOptions() cannot be used to declare expose. Use defineExpose() instead.
+
+      DefineOptionsExposeError.vue
+      1  |  <script setup>
+      2  |  defineOptions({ expose: ["foo"] })
+         |                  ^^^^^^^^^^^^^^^
+      3  |  </script>
+      """#
+  }
+}

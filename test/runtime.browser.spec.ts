@@ -2,16 +2,16 @@
 
 import { afterEach, describe, test } from "vitest";
 import { cleanupDom } from "../src/runtime/dom.ts";
-import { browserRuntimeCases } from "../src/runtime/index.ts";
+import { browserRuntimeTestSuites } from "../src/runtime/index.ts";
 
-describe("browser runtime cases", () => {
+describe("browser runtime test suites", () => {
   afterEach(() => {
     cleanupDom();
   });
 
-  for (const runtimeCase of browserRuntimeCases) {
-    test(runtimeCase.id, async () => {
-      await runtimeCase.run();
+  for (const runtimeTestSuite of browserRuntimeTestSuites) {
+    test(runtimeTestSuite.id, async () => {
+      await runtimeTestSuite.run();
     });
   }
 });

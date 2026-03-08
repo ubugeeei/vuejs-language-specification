@@ -1,0 +1,46 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.script.define-props-destructure-computed-key-error"
+title = "defineProps destructure rejects computed keys"
+kind = "sfc-script-compile"
+summary = "Reactive props destructure must reject computed property keys and surface the stable compiler-sfc diagnostic."
+
+features {
+  "script-setup.defineProps"
+  "script-setup.destructure"
+  "compiler.script"
+  "compiler.error"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/definePropsDestructure.spec.ts"
+    cases {
+      "should error on computed key"
+    }
+  }
+}
+
+input {
+  filename = "DefinePropsDestructureComputedKeyError.vue"
+  sfc = #"""
+    <script setup>const { [foo]: bar } = defineProps(["foo"])</script>
+    """#
+  scriptOptions {
+    id = "define-props-destructure-computed-key-error"
+  }
+}
+
+expect {
+  error {
+    name = "Error"
+    message = #"""
+      [@vue/compiler-sfc] defineProps() destructure cannot use computed key.
+
+      DefinePropsDestructureComputedKeyError.vue
+      1  |  <script setup>const { [foo]: bar } = defineProps(["foo"])</script>
+         |                         ^^^
+      """#
+  }
+}

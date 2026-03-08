@@ -1,0 +1,63 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.script.define-props-destructure-multi-variable-declaration-fix-6757"
+title = "Reactive props destructure preserves leading declarators in a shared const declaration"
+kind = "sfc-script-compile"
+summary = "When defineProps destructure appears after a non-macro declarator in the same const statement, macro erasure must preserve the earlier declarator."
+
+features {
+  "script-setup.defineProps"
+  "script-setup.destructure"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/definePropsDestructure.spec.ts"
+    cases {
+      "multi-variable declaration fix #6757 "
+    }
+  }
+}
+
+input {
+  filename = "definePropsDestructureMultiVariableDeclarationFix6757.vue"
+  sfc = #"""
+    <script setup>
+    const a = 1,
+      { item } = defineProps(["item"]);
+    </script>
+    """#
+  scriptOptions {
+    id = "define-props-destructure-multi-variable-declaration-fix-6757"
+    inlineTemplate = true
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "a"
+      kind = "literal-const"
+    }
+    new BindingExpectation {
+      name = "item"
+      kind = "props"
+    }
+  }
+  normalizedCode = #"""
+
+    export default {
+      __name: 'definePropsDestructureMultiVariableDeclarationFix6757',
+      props: ["item"],
+      setup(__props) {
+
+    const a = 1;
+
+    return () => {}
+    }
+
+    }
+    """#
+}

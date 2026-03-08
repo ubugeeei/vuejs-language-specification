@@ -1,12 +1,12 @@
 /* oxlint-disable jest/expect-expect, jest/valid-title */
 
 import { describe, test } from "vitest";
-import { nodeRuntimeCases } from "../src/runtime/index.ts";
+import { nodeRuntimeTestSuites } from "../src/runtime/index.ts";
 
-describe("runtime cases", () => {
-  for (const runtimeCase of nodeRuntimeCases) {
-    test(runtimeCase.id, async () => {
-      await runtimeCase.run();
+describe("runtime test suites", () => {
+  for (const runtimeTestSuite of nodeRuntimeTestSuites) {
+    test(runtimeTestSuite.id, async () => {
+      await runtimeTestSuite.run();
     });
   }
 });

@@ -1,0 +1,45 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.script.define-props-destructure-deep-array-error"
+title = "Reactive props destructure rejects nested array patterns"
+kind = "sfc-script-compile"
+summary = "defineProps destructure must reject nested array patterns with the stable compiler-sfc diagnostic class and codeframe."
+
+features {
+  "script-setup.defineProps"
+  "script-setup.destructure"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/definePropsDestructure.spec.ts"
+    cases {
+      "should error on deep destructure"
+    }
+  }
+}
+
+input {
+  filename = "definePropsDestructureDeepArrayError.vue"
+  sfc = #"""
+    <script setup>const { foo: [bar] } = defineProps(["foo"])</script>
+    """#
+  scriptOptions {
+    id = "define-props-destructure-deep-array-error"
+  }
+}
+
+expect {
+  error {
+    name = "Error"
+    message = #"""
+      [@vue/compiler-sfc] defineProps() destructure does not support nested patterns.
+
+      definePropsDestructureDeepArrayError.vue
+      1  |  <script setup>const { foo: [bar] } = defineProps(["foo"])</script>
+         |                             ^^^^^
+      """#
+  }
+}

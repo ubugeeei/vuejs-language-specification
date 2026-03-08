@@ -2,7 +2,7 @@ import type { UpstreamReference } from "../types.ts";
 
 export type RuntimeEnvironment = "browser" | "node";
 
-export interface RuntimeCase {
+export interface RuntimeTestSuite {
   id: string;
   title: string;
   summary: string;
@@ -11,3 +11,5 @@ export interface RuntimeCase {
   upstream: UpstreamReference[];
   run(): Promise<void>;
 }
+
+export type RuntimeCase = RuntimeTestSuite;

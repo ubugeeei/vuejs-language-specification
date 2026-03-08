@@ -1,0 +1,70 @@
+amends "../../../schemas/SyntaxTestSuite.pkl"
+
+id = "syntax.sfc.script-setup-and-scoped-style"
+title = "Descriptor preserves script setup and scoped style facts"
+summary = "Descriptor parsing must retain script setup language metadata and scoped style declarations without normalizing them away."
+
+features {
+  "sfc.script-setup"
+  "sfc.style.scoped"
+  "descriptor.lang"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/parse.spec.ts"
+    cases {
+      "style block"
+    }
+  }
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript.spec.ts"
+    cases {
+      "<script setup> only w/ ts"
+    }
+  }
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/css-compile.test.ts"
+    cases {
+      "should compile SFC with scoped style"
+    }
+  }
+}
+
+input {
+  filename = "ScopedCounter.vue"
+  source = #"""
+    <script setup lang="ts">
+    import { ref } from 'vue'
+    const count = ref(0)
+    </script>
+
+    <template>
+      <button class="count">{{ count }}</button>
+    </template>
+
+    <style scoped>
+    .count { color: red; }
+    </style>
+    """#
+}
+
+expect {
+  descriptor {
+    template = true
+    script = false
+    scriptSetup = true
+    styles = 1
+    customBlocks = 0
+    scriptLang = null
+    scriptSetupLang = "ts"
+    scopedStyles = 1
+  }
+  templateContentIncludes {
+    "{{ count }}"
+    "class=\"count\""
+  }
+}

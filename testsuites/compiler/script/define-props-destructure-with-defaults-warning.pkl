@@ -1,0 +1,85 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.script.define-props-destructure-with-defaults-warning"
+title = "Reactive props destructure with withDefaults emits the stable warning and disables destructure rewrites"
+kind = "sfc-script-compile"
+summary = "When withDefaults wraps defineProps before destructure, compilation must emit the stable warning text and lower the binding as a plain setup local rather than reactive destructure."
+
+features {
+  "script-setup.defineProps"
+  "script-setup.withDefaults"
+  "script-setup.destructure"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/definePropsDestructure.spec.ts"
+    cases {
+      "should warn when used with withDefaults"
+    }
+  }
+}
+
+input {
+  filename = "definePropsDestructureWithDefaultsWarning.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    const { foo } = withDefaults(defineProps<{ foo: string }>(), { foo: 'foo' })
+    </script>
+    """#
+  scriptOptions {
+    id = "define-props-destructure-with-defaults-warning"
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "foo"
+      kind = "setup-const"
+    }
+  }
+  warnings {
+    new WarningExpectation {
+      message = #"""
+        [@vue/compiler-sfc] withDefaults() is unnecessary when using destructure with defineProps().
+        Reactive destructure will be disabled when using withDefaults().
+        Prefer using destructure default values, e.g. const { foo = 1 } = defineProps(...). 
+
+        definePropsDestructureWithDefaultsWarning.vue
+        1  |  <script setup lang="ts">
+        2  |  const { foo } = withDefaults(defineProps<{ foo: string }>(), { foo: 'foo' })
+           |                  ^^^^^^^^^^^^
+        3  |  </script>
+        """#
+    }
+  }
+  propConstructors {
+    new PropConstructorExpectation {
+      name = "foo"
+      constructor = "String"
+    }
+  }
+  normalizedCode = #"""
+    import { defineComponent as _defineComponent } from 'vue'
+
+    export default /*@__PURE__*/_defineComponent({
+      __name: 'definePropsDestructureWithDefaultsWarning',
+      props: {
+        foo: { type: String, required: true, default: 'foo' }
+      },
+      setup(__props: any, { expose: __expose }) {
+      __expose();
+
+    const { foo } = __props
+
+    const __returned__ = { foo }
+    Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+    return __returned__
+    }
+
+    })
+    """#
+}

@@ -1,9 +1,9 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { loadGenericCases } from "./catalog.ts";
+import { loadGenericTestSuites } from "./catalog.ts";
 import { packageRoot, walkFiles } from "./fs.ts";
 import { evaluatePklFile } from "./pkl.ts";
-import { runtimeCases } from "./runtime/index.ts";
+import { runtimeTestSuites } from "./runtime/index.ts";
 import type {
   DanglingUpstreamReference,
   UpstreamCoverageEntry,
@@ -20,7 +20,7 @@ import type {
 } from "./types.ts";
 
 export interface LocalUpstreamReference {
-  localCaseId: string;
+  localTestSuiteId: string;
   kind: UpstreamEvidenceKind;
   repository: string;
   source: string;
@@ -40,12 +40,12 @@ export function normalizeUpstreamEvidenceKind(
 }
 
 function expandUpstreamReferences(args: {
-  localCaseId: string;
+  localTestSuiteId: string;
   upstream: UpstreamReference[];
 }): LocalUpstreamReference[] {
   return args.upstream.flatMap((reference) =>
     reference.cases.map((caseName) => ({
-      localCaseId: args.localCaseId,
+      localTestSuiteId: args.localTestSuiteId,
       kind: normalizeUpstreamEvidenceKind(reference),
       repository: reference.repository,
       source: reference.source,
@@ -57,17 +57,17 @@ function expandUpstreamReferences(args: {
 export function loadLocalUpstreamReferences(
   root: string = packageRoot(import.meta.url),
 ): LocalUpstreamReference[] {
-  const genericReferences = loadGenericCases(root).flatMap((entry) =>
+  const genericReferences = loadGenericTestSuites(root).flatMap((entry) =>
     expandUpstreamReferences({
-      localCaseId: entry.data.id,
+      localTestSuiteId: entry.data.id,
       upstream: entry.data.upstream,
     }),
   );
 
-  const runtimeReferences = runtimeCases.flatMap((runtimeCase) =>
+  const runtimeReferences = runtimeTestSuites.flatMap((runtimeTestSuite) =>
     expandUpstreamReferences({
-      localCaseId: runtimeCase.id,
-      upstream: runtimeCase.upstream,
+      localTestSuiteId: runtimeTestSuite.id,
+      upstream: runtimeTestSuite.upstream,
     }),
   );
 
@@ -84,7 +84,7 @@ function buildCoverageMap(localReferences: LocalUpstreamReference[]): Map<string
 
     const key = createCoverageKey(reference.repository, reference.source, reference.caseName);
     const coveredBy = coverageMap.get(key) ?? new Set<string>();
-    coveredBy.add(reference.localCaseId);
+    coveredBy.add(reference.localTestSuiteId);
     coverageMap.set(key, coveredBy);
   }
 
@@ -121,7 +121,7 @@ function classifyUpstreamEntry(args: {
     return {
       classification: "benchmark-harness",
       rationale:
-        "Benchmark-oriented upstream coverage is tracked as workload evidence and promoted selectively into curated benchmark cases.",
+        "Benchmark-oriented upstream coverage is tracked as workload evidence and promoted selectively into curated benchmark test suites.",
     };
   }
 
@@ -133,7 +133,7 @@ function classifyUpstreamEntry(args: {
       return {
         classification: "portable-language",
         rationale:
-          "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance case.",
+          "This upstream case describes portable Vue metadata or preprocessing behavior that should eventually become a local executable conformance test suite.",
       };
     }
 
@@ -162,7 +162,7 @@ function classifyUpstreamEntry(args: {
       return {
         classification: "integration-host",
         rationale:
-          "This upstream case depends on application fixtures, playground wiring, or environment-specific integration and is therefore tracked rather than normalized into a portable case.",
+          "This upstream case depends on application fixtures, playground wiring, or environment-specific integration and is therefore tracked rather than normalized into a portable test suite.",
       };
     }
 
@@ -177,7 +177,7 @@ function classifyUpstreamEntry(args: {
     return {
       classification: "portable-language",
       rationale:
-        "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance case.",
+        "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite.",
     };
   }
 
@@ -198,7 +198,7 @@ function classifyUpstreamEntry(args: {
       return {
         classification: "portable-language",
         rationale:
-          "This upstream case describes compiler, parser, SFC, or shared observable behavior that should eventually be curated into a portable conformance case.",
+          "This upstream case describes compiler, parser, SFC, or shared observable behavior that should eventually be curated into a portable conformance test suite.",
       };
     }
 
@@ -368,7 +368,7 @@ export function buildUpstreamTraceability(
     const entries: UpstreamTraceabilityEntry[] = inventory.files
       .flatMap((file) =>
         file.cases.map((entry) => {
-          const localCases = [
+          const localTestSuites = [
             ...(coverageMap.get(createCoverageKey(inventory.repository, file.path, entry.name)) ??
               new Set<string>()),
           ].sort();
@@ -380,7 +380,7 @@ export function buildUpstreamTraceability(
             kind: entry.kind,
           });
           const status =
-            localCases.length > 0 ? "covered" : defaultStatusForClassification(classification);
+            localTestSuites.length > 0 ? "covered" : defaultStatusForClassification(classification);
 
           return {
             source: file.path,
@@ -390,7 +390,7 @@ export function buildUpstreamTraceability(
             classification,
             status,
             profile,
-            localCases,
+            localTestSuites,
             fileIssues: [...new Set(file.issues.map((issue) => issue.label))].sort(),
             rationale,
           };

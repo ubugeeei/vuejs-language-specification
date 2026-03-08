@@ -5,30 +5,30 @@
 The project has two equally important outputs:
 
 1. A written specification that defines observable behavior and portability boundaries.
-2. A distributable npm package that ships machine-readable conformance cases, Pkl schema modules, provenance metadata, and a JavaScript reference harness.
+2. A distributable npm package that ships machine-readable conformance test suites, Pkl schema modules, provenance metadata, and a JavaScript reference harness.
 
 ## Goals
 
 - Define Vue.js behavior in a form that is reviewable without reading a specific implementation.
-- Provide cross-implementation conformance cases for parsers, compilers, type evaluators, and tooling.
+- Provide cross-implementation conformance test suites for parsers, compilers, type evaluators, and tooling.
 - Keep non-runtime suites language-neutral so Rust, Go, Zig, Java, and JavaScript implementations can share the same source of truth.
 - Preserve runtime coverage with a JavaScript reference harness for DOM-observable behavior.
 - Track upstream evidence from `vuejs/core` tests, issue references, and `ubugeeei/vize` tests.
 
 ## Normative Map
 
-| Area                  | Specification                                                            | Primary cases                                                                                    |
-| --------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| Formal notation       | [`spec/00-formal-notation.md`](./spec/00-formal-notation.md)             | [`spec/`](./spec/)                                                                               |
-| Conformance model     | [`spec/01-conformance-model.md`](./spec/01-conformance-model.md)         | [`cases/`](./cases/)                                                                             |
-| SFC syntax and parser | [`spec/02-sfc-syntax.md`](./spec/02-sfc-syntax.md)                       | [`cases/syntax/sfc/`](./cases/syntax/sfc/), [`cases/parser/template/`](./cases/parser/template/) |
-| Compiler semantics    | [`spec/03-template-and-compiler.md`](./spec/03-template-and-compiler.md) | [`cases/compiler/`](./cases/compiler/)                                                           |
-| Type evaluation       | [`spec/04-type-evaluation.md`](./spec/04-type-evaluation.md)             | [`cases/type-evaluation/`](./cases/type-evaluation/)                                             |
-| Runtime conformance   | [`spec/05-runtime-conformance.md`](./spec/05-runtime-conformance.md)     | [`src/runtime/cases/`](./src/runtime/cases/)                                                     |
-| Benchmark methodology | [`spec/06-benchmark-methodology.md`](./spec/06-benchmark-methodology.md) | [`cases/benchmark/`](./cases/benchmark/)                                                         |
-| Upstream provenance   | [`spec/07-upstream-provenance.md`](./spec/07-upstream-provenance.md)     | [`sources/copied/`](./sources/copied/), [`sources/traceability/`](./sources/traceability/)       |
+| Area                  | Specification                                                            | Primary Test Suites                                                                                                  |
+| --------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| Formal notation       | [`spec/00-formal-notation.md`](./spec/00-formal-notation.md)             | [`spec/`](./spec/)                                                                                                   |
+| Conformance model     | [`spec/01-conformance-model.md`](./spec/01-conformance-model.md)         | [`testsuites/`](./testsuites/)                                                                                       |
+| SFC syntax and parser | [`spec/02-sfc-syntax.md`](./spec/02-sfc-syntax.md)                       | [`testsuites/syntax/sfc/`](./testsuites/syntax/sfc/), [`testsuites/parser/template/`](./testsuites/parser/template/) |
+| Compiler semantics    | [`spec/03-template-and-compiler.md`](./spec/03-template-and-compiler.md) | [`testsuites/compiler/`](./testsuites/compiler/)                                                                     |
+| Type evaluation       | [`spec/04-type-evaluation.md`](./spec/04-type-evaluation.md)             | [`testsuites/type-evaluation/`](./testsuites/type-evaluation/)                                                       |
+| Runtime conformance   | [`spec/05-runtime-conformance.md`](./spec/05-runtime-conformance.md)     | [`src/runtime/testsuites/`](./src/runtime/testsuites/)                                                               |
+| Benchmark methodology | [`spec/06-benchmark-methodology.md`](./spec/06-benchmark-methodology.md) | [`testsuites/benchmark/`](./testsuites/benchmark/)                                                                   |
+| Upstream provenance   | [`spec/07-upstream-provenance.md`](./spec/07-upstream-provenance.md)     | [`sources/copied/`](./sources/copied/), [`sources/traceability/`](./sources/traceability/)                           |
 
-Each normative chapter uses explicit `MUST`/`MAY` requirements and links to the corresponding cases that operationalize that requirement.
+Each normative chapter uses explicit `MUST`/`MAY` requirements and links to the corresponding test suites that operationalize that requirement.
 
 ## Scope
 
@@ -59,14 +59,14 @@ The base specification in this repository is therefore:
 
 - normative for the shared Vue language surface backed by `vuejs/core` mainline behavior
 - extensible for additional profiles such as Vapor
-- explicit about which cases are profile-specific
+- explicit about which test suites are profile-specific
 
 ## Repository Layout
 
 - `spec/`
   - normative and semi-normative documents
-- `cases/`
-  - machine-readable conformance cases written in Pkl, including parser, syntax, compiler, type, runtime, and benchmark coverage
+- `testsuites/`
+  - machine-readable conformance test suites written in Pkl, including parser, syntax, compiler, type, runtime, and benchmark coverage
 - `schemas/`
   - Pkl schema modules that define every machine-readable suite
 - `sources/upstream/`
@@ -88,7 +88,7 @@ The base specification in this repository is therefore:
 
 The npm package ships:
 
-- raw specification assets (`spec/`, `cases/`, `schemas/`, `sources/`)
+- raw specification assets (`spec/`, `testsuites/`, `schemas/`, `sources/`)
 - a CLI for Pkl-backed validation, catalog generation, and smoke benchmarking
 - a JavaScript reference harness for runtime-only suites
 - Vitest Browser Mode runtime tests for DOM-observable conformance
@@ -122,11 +122,11 @@ Generated inventories are committed under `sources/upstream/` and can be refresh
 Vendored `vuejs/core` test and benchmark source files are committed under `sources/copied/vuejs-core/` and can be refreshed with `npm run vendor:vue-core:tests`.
 Generated traceability manifests are committed under `sources/traceability/` and can be refreshed with `npm run generate:traceability`.
 Vendored `vize` snapshots are committed under `sources/copied/vize/tests/expected/` and can be refreshed with `npm run vendor:vize:snapshots`.
-`npm run coverage:upstream` reports which inventoried upstream cases are already covered by executable local cases.
+`npm run coverage:upstream` reports which inventoried upstream cases are already covered by executable local test suites.
 `npm run traceability:upstream` summarizes how every inventoried upstream case is represented:
 
 - `covered`
-  - backed by one or more executable local cases
+  - backed by one or more executable local test suites
 - `planned`
   - within scope for eventual executable conformance coverage
 - `tracked`

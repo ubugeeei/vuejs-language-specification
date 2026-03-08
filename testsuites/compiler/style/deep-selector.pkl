@@ -1,0 +1,36 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.style.deep-selector"
+title = "Scoped :deep selectors stop scope injection at the deep boundary"
+kind = "sfc-style-compile"
+summary = "Scoped CSS must scope the ancestor selector while preserving the deep target selector outside the scope attribute boundary."
+
+features {
+  "style.scoped"
+  "style.deep"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/css-compile.test.ts"
+    cases {
+      "should handle :deep() pseudo-selector"
+    }
+  }
+}
+
+input {
+  filename = "DeepSelector.vue"
+  source = #"""
+    .wrapper :deep(.button) { color: red; }
+    """#
+  styleOptions {
+    id = "data-v-test"
+    scoped = true
+  }
+}
+
+expect {
+  normalizedCode = ".wrapper[data-v-test] .button { color: red;\n}"
+}

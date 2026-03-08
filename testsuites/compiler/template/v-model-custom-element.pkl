@@ -1,0 +1,62 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.v-model-custom-element"
+title = "Custom elements admit v-model without plain-element rejection"
+kind = "template-dom-compile"
+summary = "A configured custom element using v-model must compile without plain-element rejection and lower through the text-model helper."
+
+features {
+  "template.v-model"
+  "compiler.dom"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-dom/__tests__/transforms/vModel.spec.ts"
+    cases {
+      "should allow usage on custom element"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <my-input v-model="model" />
+    """#
+  compilerOptions {
+    mode = "module"
+    prefixIdentifiers = true
+    customElementTags {
+      "my-input"
+    }
+  }
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "V_MODEL_TEXT"
+    }
+    new HelperExpectation {
+      name = "WITH_DIRECTIVES"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  normalizedCode = #"""
+    import { vModelText as _vModelText, withDirectives as _withDirectives, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+    export function render(_ctx, _cache) {
+      return _withDirectives((_openBlock(), _createElementBlock("my-input", {
+        "onUpdate:modelValue": $event => ((_ctx.model) = $event)
+      }, null, 8 /* PROPS */, ["onUpdate:modelValue"])), [
+        [_vModelText, _ctx.model]
+      ])
+    }
+    """#
+}

@@ -1,0 +1,60 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.v-model-dynamic-type"
+title = "Dynamic-type input v-model lowers to vModelDynamic"
+kind = "template-dom-compile"
+summary = "An input with a dynamic type bound through v-model must lower to the vModelDynamic runtime directive."
+
+features {
+  "template.v-model"
+  "compiler.dom"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-dom/__tests__/transforms/vModel.spec.ts"
+    cases {
+      "simple expression for input (dynamic type)"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <input :type="foo" v-model="model" />
+    """#
+  compilerOptions {
+    mode = "module"
+    prefixIdentifiers = true
+  }
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "V_MODEL_DYNAMIC"
+    }
+    new HelperExpectation {
+      name = "WITH_DIRECTIVES"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  normalizedCode = #"""
+    import { vModelDynamic as _vModelDynamic, withDirectives as _withDirectives, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+    export function render(_ctx, _cache) {
+      return _withDirectives((_openBlock(), _createElementBlock("input", {
+        type: _ctx.foo,
+        "onUpdate:modelValue": $event => ((_ctx.model) = $event)
+      }, null, 8 /* PROPS */, ["type", "onUpdate:modelValue"])), [
+        [_vModelDynamic, _ctx.model]
+      ])
+    }
+    """#
+}

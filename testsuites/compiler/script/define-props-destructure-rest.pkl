@@ -1,0 +1,73 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.script.define-props-destructure-rest"
+title = "Reactive props destructure rest bindings lower to a props rest proxy"
+kind = "sfc-script-compile"
+summary = "Rest bindings in defineProps destructure must lower into createPropsRestProxy over the residual prop surface."
+
+features {
+  "script-setup.defineProps"
+  "script-setup.destructure"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/definePropsDestructure.spec.ts"
+    cases {
+      "rest spread"
+    }
+  }
+}
+
+input {
+  filename = "definePropsDestructureRest.vue"
+  sfc = #"""
+    <script setup>
+    const { foo, bar, ...rest } = defineProps(["foo", "bar", "baz"])
+    </script>
+    """#
+  scriptOptions {
+    id = "define-props-destructure-rest"
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "foo"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "bar"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "baz"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "rest"
+      kind = "setup-reactive-const"
+    }
+  }
+  normalizedCode = #"""
+    import { createPropsRestProxy as _createPropsRestProxy } from 'vue'
+
+    export default {
+      __name: 'definePropsDestructureRest',
+      props: ["foo", "bar", "baz"],
+      setup(__props, { expose: __expose }) {
+      __expose();
+
+    const rest = _createPropsRestProxy(__props, ["foo","bar"])
+
+    const __returned__ = { rest }
+    Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+    return __returned__
+    }
+
+    }
+    """#
+}

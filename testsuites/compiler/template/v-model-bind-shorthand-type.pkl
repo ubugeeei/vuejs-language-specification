@@ -1,0 +1,60 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.v-model-bind-shorthand-type"
+title = "Shorthand dynamic type after v-model still lowers to vModelDynamic"
+kind = "template-dom-compile"
+summary = "An input using v-model together with shorthand dynamic type binding must still lower to the dynamic-model helper."
+
+features {
+  "template.v-model"
+  "compiler.dom"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-dom/__tests__/transforms/vModel.spec.ts"
+    cases {
+      "input with v-bind shorthand type after v-model should use dynamic model"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <input v-model="model" :type />
+    """#
+  compilerOptions {
+    mode = "module"
+    prefixIdentifiers = true
+  }
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "V_MODEL_DYNAMIC"
+    }
+    new HelperExpectation {
+      name = "WITH_DIRECTIVES"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  normalizedCode = #"""
+    import { vModelDynamic as _vModelDynamic, withDirectives as _withDirectives, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+    export function render(_ctx, _cache) {
+      return _withDirectives((_openBlock(), _createElementBlock("input", {
+        "onUpdate:modelValue": $event => ((_ctx.model) = $event),
+        type: _ctx.type
+      }, null, 8 /* PROPS */, ["onUpdate:modelValue", "type"])), [
+        [_vModelDynamic, _ctx.model]
+      ])
+    }
+    """#
+}

@@ -29,13 +29,13 @@ ValidClaim(I) ⇔
   ∀ T ∈ Targets. ∀ P ∈ Profiles(T). I ⊨target T under profile P
 ```
 
-An implementation MUST NOT claim `I ⊨target T` unless every `covered` case for `T` and the claimed profile set passes.
+An implementation MUST NOT claim `I ⊨target T` unless every `covered` test suite for `T` and the claimed profile set passes.
 
 ## 2. Normative Order
 
 Normative authority is ordered as follows:
 
-1. machine-readable cases under [`cases/`](../cases/)
+1. machine-readable test suites under [`testsuites/`](../testsuites/)
 2. normative requirements under [`spec/`](./README.md)
 3. vendored upstream artifacts under [`sources/copied/`](../sources/copied/)
 4. traceability manifests under [`sources/traceability/`](../sources/traceability/)
@@ -55,8 +55,8 @@ Each traceability entry MUST declare exactly one status:
 - `planned`
 - `tracked`
 
-`covered` means the upstream behavior is backed by one or more executable local cases.
-`planned` means the upstream behavior is within the intended executable suite but has not yet been normalized into a local case.
+`covered` means the upstream behavior is backed by one or more executable local test suites.
+`planned` means the upstream behavior is within the intended executable suite but has not yet been normalized into a local test suite.
 `tracked` means the upstream behavior is intentionally represented only as provenance because it depends on host, editor, application, or visual-regression context.
 
 ## 3. Profiles
@@ -67,7 +67,7 @@ A profile:
 
 - MUST declare `profile`
 - MUST identify the upstream branch or snapshot it was derived from
-- MUST NOT silently override the meaning of a base-language case
+- MUST NOT silently override the meaning of a base-language test suite
 
 `Vapor` is modeled as a profile, not as part of the default base line, because its upstream source of truth lives on Vue minor branches rather than the default stable mainline.
 
@@ -82,19 +82,19 @@ This repository only standardizes observable outcomes. A conforming implementati
 - DOM-observable runtime behavior
 - benchmark workload definitions and result shape
 
-Implementation-private details remain non-normative unless promoted into observable output by a curated case.
+Implementation-private details remain non-normative unless promoted into observable output by a curated test suite.
 
-Formally, for any executable case `c`, only the asserted projection `Proj(c)` is normative:
+Formally, for any executable test suite `t`, only the asserted projection `Proj(t)` is normative:
 
 ```text
-Pass(I, c) ⇔ Proj_actual(I, c) = Proj_expected(c)
+Pass(I, t) ⇔ Proj_actual(I, t) = Proj_expected(t)
 ```
 
-No additional implementation state is normative unless `Proj(c)` names it.
+No additional implementation state is normative unless `Proj(t)` names it.
 
 ## 5. Diagnostics
 
-Diagnostics do not need byte-for-byte identical text. When a case asserts diagnostics, a conforming implementation MUST preserve:
+Diagnostics do not need byte-for-byte identical text. When a test suite asserts diagnostics, a conforming implementation MUST preserve:
 
 - severity
 - stable error code, when the case names one
@@ -104,7 +104,7 @@ Diagnostics do not need byte-for-byte identical text. When a case asserts diagno
 
 All non-runtime suites MUST remain language-neutral:
 
-- source-of-truth case data MUST be stored as Pkl modules, text fixtures, or copied source artifacts
+- source-of-truth test-suite data MUST be stored as Pkl modules, text fixtures, or copied source artifacts
 - expectations MUST target structured observables rather than engine-specific object identity
 - copied upstream artifacts MUST be committed into this repository when they are part of the curated source of truth
 
@@ -112,11 +112,11 @@ The runtime suite MAY use the JavaScript reference harness, but its assertions M
 
 ## 7. Suite Map
 
-| Target            | Normative document                                             | Primary case roots                                    |
-| ----------------- | -------------------------------------------------------------- | ----------------------------------------------------- |
-| `parser`          | [`02-sfc-syntax.md`](./02-sfc-syntax.md)                       | [`cases/parser/template/`](../cases/parser/template/) |
-| `syntax`          | [`02-sfc-syntax.md`](./02-sfc-syntax.md)                       | [`cases/syntax/sfc/`](../cases/syntax/sfc/)           |
-| `compiler`        | [`03-template-and-compiler.md`](./03-template-and-compiler.md) | [`cases/compiler/`](../cases/compiler/)               |
-| `type-evaluation` | [`04-type-evaluation.md`](./04-type-evaluation.md)             | [`cases/type-evaluation/`](../cases/type-evaluation/) |
-| `runtime`         | [`05-runtime-conformance.md`](./05-runtime-conformance.md)     | [`src/runtime/cases/`](../src/runtime/cases/)         |
-| `benchmark`       | [`06-benchmark-methodology.md`](./06-benchmark-methodology.md) | [`cases/benchmark/`](../cases/benchmark/)             |
+| Target            | Normative document                                             | Primary Test-Suite Roots                                        |
+| ----------------- | -------------------------------------------------------------- | --------------------------------------------------------------- |
+| `parser`          | [`02-sfc-syntax.md`](./02-sfc-syntax.md)                       | [`testsuites/parser/template/`](../testsuites/parser/template/) |
+| `syntax`          | [`02-sfc-syntax.md`](./02-sfc-syntax.md)                       | [`testsuites/syntax/sfc/`](../testsuites/syntax/sfc/)           |
+| `compiler`        | [`03-template-and-compiler.md`](./03-template-and-compiler.md) | [`testsuites/compiler/`](../testsuites/compiler/)               |
+| `type-evaluation` | [`04-type-evaluation.md`](./04-type-evaluation.md)             | [`testsuites/type-evaluation/`](../testsuites/type-evaluation/) |
+| `runtime`         | [`05-runtime-conformance.md`](./05-runtime-conformance.md)     | [`src/runtime/testsuites/`](../src/runtime/testsuites/)         |
+| `benchmark`       | [`06-benchmark-methodology.md`](./06-benchmark-methodology.md) | [`testsuites/benchmark/`](../testsuites/benchmark/)             |

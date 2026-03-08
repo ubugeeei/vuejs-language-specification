@@ -1,0 +1,40 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.v-model-unnecessary-value-error"
+title = "Dynamic value bindings alongside v-model are rejected"
+kind = "template-dom-compile"
+summary = "A dynamic value binding used together with v-model on a plain element must be rejected with the stable compiler-dom diagnostic code."
+
+features {
+  "template.v-model"
+  "compiler.dom"
+  "compiler.error"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-dom/__tests__/transforms/vModel.spec.ts"
+    cases {
+      "should error on dynamic value binding alongside v-model"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <input v-model="test" :value="test" />
+    """#
+  compilerOptions {
+    mode = "module"
+    prefixIdentifiers = true
+  }
+}
+
+expect {
+  error {
+    name = "SyntaxError"
+    message = "Unnecessary value binding used alongside v-model. It will interfere with v-model's behavior."
+    code = "X_V_MODEL_UNNECESSARY_VALUE"
+  }
+}

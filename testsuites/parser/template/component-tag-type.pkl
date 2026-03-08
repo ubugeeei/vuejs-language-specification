@@ -1,0 +1,57 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.component-tag-type"
+title = "Component and template slot containers keep distinct tag kinds"
+summary = "Template parsing must distinguish component tags from plain elements and retain slot template containers as TEMPLATE nodes with slot directives."
+
+features {
+  "parser.component"
+  "parser.slot-template"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/parse.spec.ts"
+    cases {
+      "slot element"
+      "template element with directives"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "ubugeeei/vize"
+    source = "tests/expected/parser/element.snap"
+    cases {
+      "component (capitalized)"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <Foo><template #default>ok</template></Foo>
+    """#
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "COMPONENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/tagType"
+      equals = "TEMPLATE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/name"
+      equals = "slot"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/arg/content"
+      equals = "default"
+    }
+  }
+}

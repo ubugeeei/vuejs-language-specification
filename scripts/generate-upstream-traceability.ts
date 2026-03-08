@@ -41,9 +41,9 @@ function formatManifest(manifest: UpstreamTraceabilityManifest): string {
     } else {
       lines.push(`    profile = ${escapeString(entry.profile)}`);
     }
-    lines.push("    localCases {");
-    for (const localCaseId of entry.localCases) {
-      lines.push(`      ${escapeString(localCaseId)}`);
+    lines.push("    localTestSuites {");
+    for (const localTestSuiteId of entry.localTestSuites) {
+      lines.push(`      ${escapeString(localTestSuiteId)}`);
     }
     lines.push("    }");
     lines.push("    fileIssues {");

@@ -1,0 +1,52 @@
+amends "../../../schemas/SyntaxTestSuite.pkl"
+
+id = "syntax.sfc.basic-template-only"
+title = "Template-only SFC produces a minimal descriptor"
+summary = "A template-only single file component retains its template block and does not synthesize script or style blocks."
+
+features {
+  "sfc.template-block"
+  "descriptor.minimal"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/parse.spec.ts"
+    cases {
+      "template block with lang + indent"
+    }
+  }
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/sfc-compile.test.ts"
+    cases {
+      "should compile template-only SFC"
+    }
+  }
+}
+
+input {
+  filename = "BasicTemplate.vue"
+  source = #"""
+    <template>
+      <div>Hello World</div>
+    </template>
+    """#
+}
+
+expect {
+  descriptor {
+    template = true
+    script = false
+    scriptSetup = false
+    styles = 0
+    customBlocks = 0
+    scriptLang = null
+    scriptSetupLang = null
+    scopedStyles = 0
+  }
+  templateContentIncludes {
+    "Hello World"
+  }
+}

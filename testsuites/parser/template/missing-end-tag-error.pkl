@@ -1,0 +1,66 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.missing-end-tag-error"
+title = "Recoverable parse errors expose stable error codes and source locations"
+summary = "Template parsing may recover from malformed HTML, but it must still surface stable parser error codes and precise primary locations."
+
+features {
+  "parser.error"
+  "parser.recovery"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/parse.spec.ts"
+    cases {
+      "invalid html"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "ubugeeei/vize"
+    source = "tests/expected/errors/parse-errors.snap"
+    cases {
+      "missing end tag"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <div><span></div>
+    """#
+}
+
+expect {
+  errorCount = 1
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "div"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/tag"
+      equals = "span"
+    }
+  }
+  errors {
+    new PointerAssertion {
+      pointer = "/0/code"
+      equals = "X_MISSING_END_TAG"
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/line"
+      equals = 1
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/column"
+      equals = 6
+    }
+    new PointerAssertion {
+      pointer = "/0/loc/start/offset"
+      equals = 5
+    }
+  }
+}

@@ -13,7 +13,7 @@ class TraceabilityEntry {
   classification: String
   status: "covered"|"planned"|"tracked"
   profile: String?
-  localCases: Listing<String> = new Listing {}
+  localTestSuites: Listing<String> = new Listing {}
   fileIssues: Listing<String> = new Listing {}
   rationale: String
 }

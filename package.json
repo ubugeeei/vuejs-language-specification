@@ -1,7 +1,7 @@
 {
   "name": "@ubugeeei/vuejs-language-specification",
   "version": "0.1.0",
-  "description": "Vue.js language specification, conformance cases, runtime tests, and benchmark workloads.",
+  "description": "Vue.js language specification, conformance test suites, runtime tests, and benchmark workloads.",
   "keywords": [
     "benchmark",
     "compiler",
@@ -16,7 +16,7 @@
   },
   "files": [
     "dist",
-    "cases",
+    "testsuites",
     "fixtures",
     "schemas",
     "sources",

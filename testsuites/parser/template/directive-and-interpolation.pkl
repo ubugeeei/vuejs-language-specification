@@ -1,0 +1,99 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.directive-and-interpolation"
+title = "Directive nodes and interpolation nodes retain normalized expression metadata"
+summary = "Template parsing must distinguish directives from plain attributes and preserve interpolation expressions as typed simple-expression children."
+
+features {
+  "parser.directive"
+  "parser.interpolation"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/parse.spec.ts"
+    cases {
+      "directive with argument"
+      "directive with value"
+      "simple interpolation"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "ubugeeei/vize"
+    source = "tests/expected/parser/directive.snap"
+    cases {
+      "v-bind shorthand"
+      "v-if directive"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "ubugeeei/vize"
+    source = "tests/expected/parser/interpolation.snap"
+    cases {
+      "simple interpolation"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <div :id="foo" v-if="ok">{{ msg }}</div>
+    """#
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/props/0/type"
+      equals = "DIRECTIVE"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "bind"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/content"
+      equals = "id"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/arg/constType"
+      equals = "CAN_STRINGIFY"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/exp/content"
+      equals = "foo"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/name"
+      equals = "if"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/exp/content"
+      equals = "ok"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/type"
+      equals = "INTERPOLATION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/content/type"
+      equals = "SIMPLE_EXPRESSION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/content/content"
+      equals = "msg"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/content/constType"
+      equals = "NOT_CONSTANT"
+    }
+  }
+}

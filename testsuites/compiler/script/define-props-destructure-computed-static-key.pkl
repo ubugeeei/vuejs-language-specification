@@ -1,0 +1,65 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.script.define-props-destructure-computed-static-key"
+title = "Reactive props destructure admits computed keys when they normalize to a static string"
+kind = "sfc-script-compile"
+summary = "A computed destructure key that statically resolves to a string literal must remain admissible and rewrite reads to the corresponding props slot."
+
+features {
+  "script-setup.defineProps"
+  "script-setup.destructure"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/definePropsDestructure.spec.ts"
+    cases {
+      "computed static key"
+    }
+  }
+}
+
+input {
+  filename = "definePropsDestructureComputedStaticKey.vue"
+  sfc = #"""
+    <script setup>
+    const { ["foo"]: foo } = defineProps(["foo"])
+    console.log(foo)
+    </script>
+    <template>{{ foo }}</template>
+    """#
+  scriptOptions {
+    id = "define-props-destructure-computed-static-key"
+    inlineTemplate = true
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "foo"
+      kind = "props"
+    }
+  }
+  normalizedCode = #"""
+    import { toDisplayString as _toDisplayString } from "vue"
+
+
+    export default {
+      __name: 'definePropsDestructureComputedStaticKey',
+      props: ["foo"],
+      setup(__props) {
+
+
+    console.log(__props.foo)
+
+    return (_ctx, _cache) => {
+      return _toDisplayString(__props.foo)
+    }
+    }
+
+    }
+    """#
+}

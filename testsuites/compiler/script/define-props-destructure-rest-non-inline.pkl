@@ -1,0 +1,71 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.script.define-props-destructure-rest-non-inline"
+title = "Reactive props destructure rest proxy remains observable without inline template compilation"
+kind = "sfc-script-compile"
+summary = "Rest destructure over defineProps must still lower into createPropsRestProxy when template compilation is not inlined into the script pass."
+
+features {
+  "script-setup.defineProps"
+  "script-setup.destructure"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/definePropsDestructure.spec.ts"
+    cases {
+      "rest spread non-inline"
+    }
+  }
+}
+
+input {
+  filename = "definePropsDestructureRestNonInline.vue"
+  sfc = #"""
+    <script setup>
+    const { foo, ...rest } = defineProps(["foo", "bar"])
+    </script>
+    <template>{{ rest.bar }}</template>
+    """#
+  scriptOptions {
+    id = "define-props-destructure-rest-non-inline"
+    inlineTemplate = false
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "bar"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "foo"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "rest"
+      kind = "setup-reactive-const"
+    }
+  }
+  normalizedCode = #"""
+    import { createPropsRestProxy as _createPropsRestProxy } from 'vue'
+
+    export default {
+      __name: 'definePropsDestructureRestNonInline',
+      props: ["foo", "bar"],
+      setup(__props, { expose: __expose }) {
+      __expose();
+
+    const rest = _createPropsRestProxy(__props, ["foo"])
+
+    const __returned__ = { rest }
+    Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+    return __returned__
+    }
+
+    }
+    """#
+}

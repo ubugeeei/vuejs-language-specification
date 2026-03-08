@@ -1,0 +1,60 @@
+amends "../../../schemas/TypeEvaluationTestSuite.pkl"
+
+id = "type-evaluation.props.unknown-any-null-runtime-type"
+title = "Unknown-like props lower to null runtime constructor slots"
+summary = "When a prop type cannot be narrowed to a runtime constructor family, type evaluation must preserve the prop while emitting no runtime constructors."
+
+features {
+  "type-eval.unknown"
+  "type-eval.any"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/resolveType.spec.ts"
+    cases {
+      "intersection type"
+      "TSPropertySignature with ignore"
+      "should not error on unresolved type when inferring runtime type"
+    }
+  }
+}
+
+input {
+  filename = "UnknownSkipCheck.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    defineProps<{
+      payload: unknown
+      metadata?: any
+    }>()
+    </script>
+    """#
+  scriptOptions {
+    id = "unknown-skip-check"
+  }
+}
+
+expect {
+  runtimeProps {
+    new RuntimePropsExpectation {
+      name = "payload"
+      required = true
+    }
+    new RuntimePropsExpectation {
+      name = "metadata"
+      required = false
+    }
+  }
+  bindings {
+    new BindingExpectation {
+      name = "payload"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "metadata"
+      kind = "props"
+    }
+  }
+}

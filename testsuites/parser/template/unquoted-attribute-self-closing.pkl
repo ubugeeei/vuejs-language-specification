@@ -1,0 +1,59 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.unquoted-attribute-self-closing"
+title = "Unquoted attribute values remain text values on self-closing elements"
+summary = "An unquoted attribute value on a self-closing element must be preserved as TEXT while boolean attributes remain valueless attributes."
+
+features {
+  "parser.attribute"
+  "parser.unquoted-attribute"
+  "parser.self-closing"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/parse.spec.ts"
+    cases {
+      "attribute with value, unquoted"
+      "self closing single tag"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "ubugeeei/vize"
+    source = "tests/expected/parser/attribute.snap"
+    cases {
+      "attribute with value, unquoted"
+      "boolean attribute disabled"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <input value=hello disabled />
+    """#
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "value"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/content"
+      equals = "hello"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/1/name"
+      equals = "disabled"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/isSelfClosing"
+      equals = true
+    }
+  }
+}

@@ -1,0 +1,69 @@
+amends "../../../schemas/TypeEvaluationTestSuite.pkl"
+
+id = "type-evaluation.props.interface-extends"
+title = "Extended interfaces flatten into runtime props"
+summary = "Type evaluation must include inherited members from extended interfaces when generating runtime props."
+
+features {
+  "type-eval.interface"
+  "type-eval.inheritance"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/resolveType.spec.ts"
+    cases {
+      "reference interface extends"
+    }
+  }
+}
+
+input {
+  filename = "InterfaceExtends.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    interface BaseProps {
+      id: string
+    }
+
+    interface ExtendedProps extends BaseProps {
+      disabled?: boolean
+    }
+
+    defineProps<ExtendedProps>()
+    </script>
+    """#
+  scriptOptions {
+    id = "interface-extends"
+  }
+}
+
+expect {
+  runtimeProps {
+    new RuntimePropsExpectation {
+      name = "disabled"
+      types {
+        "Boolean"
+      }
+      required = false
+    }
+    new RuntimePropsExpectation {
+      name = "id"
+      types {
+        "String"
+      }
+      required = true
+    }
+  }
+  bindings {
+    new BindingExpectation {
+      name = "disabled"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "id"
+      kind = "props"
+    }
+  }
+}

@@ -1,27 +1,31 @@
 import { join, relative } from "node:path";
 import { packageRoot, walkFiles } from "./fs.ts";
 import { evaluatePklFile } from "./pkl.ts";
-import type { CatalogEntry, GenericCase, SuiteName } from "./types.ts";
+import type { CatalogEntry, GenericTestSuite, SuiteName } from "./types.ts";
 
-export function discoverCaseFiles(root: string = packageRoot(import.meta.url)): string[] {
-  return walkFiles(join(root, "cases"), (file) => file.endsWith(".pkl"));
+export function discoverTestSuiteFiles(root: string = packageRoot(import.meta.url)): string[] {
+  return walkFiles(join(root, "testsuites"), (file) => file.endsWith(".pkl"));
 }
 
-export function loadGenericCases(root: string = packageRoot(import.meta.url)): Array<{
+export const discoverCaseFiles = discoverTestSuiteFiles;
+
+export function loadGenericTestSuites(root: string = packageRoot(import.meta.url)): Array<{
   file: string;
-  data: GenericCase;
+  data: GenericTestSuite;
 }> {
-  return discoverCaseFiles(root).map((file) => ({
+  return discoverTestSuiteFiles(root).map((file) => ({
     file,
-    data: evaluatePklFile<GenericCase>(file),
+    data: evaluatePklFile<GenericTestSuite>(file),
   }));
 }
+
+export const loadGenericCases = loadGenericTestSuites;
 
 export function buildCatalog(
   root: string = packageRoot(import.meta.url),
   suite?: SuiteName,
 ): CatalogEntry[] {
-  return loadGenericCases(root)
+  return loadGenericTestSuites(root)
     .filter((entry) => (suite ? entry.data.suite === suite : true))
     .map((entry) => {
       const catalogEntry: CatalogEntry = {

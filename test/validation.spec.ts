@@ -3,7 +3,7 @@ import {
   buildCatalog,
   buildUpstreamCoverage,
   buildUpstreamTraceability,
-  validateCases,
+  validateTestSuites,
   validateUpstreamInventories,
   validateUpstreamReferences,
   validateUpstreamTraceability,
@@ -38,13 +38,23 @@ describe("catalog and validation", () => {
       "compiler.script.define-props-destructure-assign-error",
       "compiler.script.define-props-destructure-basic",
       "compiler.script.define-props-destructure-computed-key-error",
+      "compiler.script.define-props-destructure-computed-static-key",
+      "compiler.script.define-props-destructure-deep-array-error",
+      "compiler.script.define-props-destructure-deep-object-error",
       "compiler.script.define-props-destructure-defaults",
       "compiler.script.define-props-destructure-for-of-shadowing",
       "compiler.script.define-props-destructure-for-shadowing",
+      "compiler.script.define-props-destructure-function-parameter-shadowing",
       "compiler.script.define-props-destructure-local-ref-error",
+      "compiler.script.define-props-destructure-multi-variable-declaration",
+      "compiler.script.define-props-destructure-multi-variable-declaration-fix-6757",
+      "compiler.script.define-props-destructure-multi-variable-declaration-fix-7422",
       "compiler.script.define-props-destructure-non-identifier-key",
       "compiler.script.define-props-destructure-rest",
+      "compiler.script.define-props-destructure-rest-non-inline",
       "compiler.script.define-props-destructure-watch-error",
+      "compiler.script.define-props-destructure-with-defaults-warning",
+      "compiler.script.define-props-emits-multi-variable",
       "compiler.script.define-props-runtime-options",
       "compiler.script.define-slots-basic",
       "compiler.script.define-slots-erased-unused",
@@ -60,7 +70,22 @@ describe("catalog and validation", () => {
       "compiler.template.v-for-keyed-list",
       "compiler.template.v-html-basic",
       "compiler.template.v-if-basic",
+      "compiler.template.v-model-arg-error",
+      "compiler.template.v-model-bind-shorthand-type",
+      "compiler.template.v-model-checkbox",
+      "compiler.template.v-model-custom-element",
+      "compiler.template.v-model-dynamic-type",
+      "compiler.template.v-model-file-input-error",
+      "compiler.template.v-model-invalid-element-error",
+      "compiler.template.v-model-lazy",
+      "compiler.template.v-model-number",
+      "compiler.template.v-model-radio",
+      "compiler.template.v-model-select",
+      "compiler.template.v-model-static-value",
       "compiler.template.v-model-text",
+      "compiler.template.v-model-textarea",
+      "compiler.template.v-model-trim",
+      "compiler.template.v-model-unnecessary-value-error",
       "compiler.template.v-on-click-handler",
       "compiler.template.v-once-cached-subtree",
       "compiler.template.v-text-basic",
@@ -91,8 +116,8 @@ describe("catalog and validation", () => {
     ]);
   });
 
-  test("all pkl cases validate", () => {
-    expect(validateCases().every((result) => result.valid)).toBe(true);
+  test("all pkl test suites validate", () => {
+    expect(validateTestSuites().every((result) => result.valid)).toBe(true);
   });
 
   test("all upstream inventories validate", () => {

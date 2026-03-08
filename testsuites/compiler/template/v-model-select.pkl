@@ -1,0 +1,59 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.v-model-select"
+title = "Select v-model lowers to vModelSelect"
+kind = "template-dom-compile"
+summary = "A select element bound through v-model must lower to the vModelSelect runtime directive."
+
+features {
+  "template.v-model"
+  "compiler.dom"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-dom/__tests__/transforms/vModel.spec.ts"
+    cases {
+      "simple expression for select"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <select v-model="model" />
+    """#
+  compilerOptions {
+    mode = "module"
+    prefixIdentifiers = true
+  }
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "V_MODEL_SELECT"
+    }
+    new HelperExpectation {
+      name = "WITH_DIRECTIVES"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  normalizedCode = #"""
+    import { vModelSelect as _vModelSelect, withDirectives as _withDirectives, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+    export function render(_ctx, _cache) {
+      return _withDirectives((_openBlock(), _createElementBlock("select", {
+        "onUpdate:modelValue": $event => ((_ctx.model) = $event)
+      }, null, 8 /* PROPS */, ["onUpdate:modelValue"])), [
+        [_vModelSelect, _ctx.model]
+      ])
+    }
+    """#
+}

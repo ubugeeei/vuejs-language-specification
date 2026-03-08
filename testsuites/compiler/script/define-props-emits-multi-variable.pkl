@@ -1,0 +1,72 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.script.define-props-emits-multi-variable"
+title = "defineProps and defineEmits erase cleanly inside a shared variable declaration"
+kind = "sfc-script-compile"
+summary = "When defineProps and defineEmits share a multi-variable declaration, compilation must lower both macros and preserve the emitted runtime aliases."
+
+features {
+  "script-setup.defineProps"
+  "script-setup.defineEmits"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/definePropsDestructure.spec.ts"
+    cases {
+      "defineProps/defineEmits in multi-variable declaration (full removal)"
+    }
+  }
+}
+
+input {
+  filename = "definePropsEmitsMultiVariable.vue"
+  sfc = #"""
+    <script setup>
+    const props = defineProps(["item"]),
+          emit = defineEmits(["a"]);
+    </script>
+    """#
+  scriptOptions {
+    id = "define-props-emits-multi-variable"
+    inlineTemplate = true
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "emit"
+      kind = "setup-const"
+    }
+    new BindingExpectation {
+      name = "item"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "props"
+      kind = "setup-reactive-const"
+    }
+  }
+  emits {
+    "a"
+  }
+  normalizedCode = #"""
+
+    export default {
+      __name: 'definePropsEmitsMultiVariable',
+      props: ["item"],
+      emits: ["a"],
+      setup(__props, { emit: __emit }) {
+
+    const props = __props,
+          emit = __emit;
+
+    return () => {}
+    }
+
+    }
+    """#
+}

@@ -18,7 +18,7 @@ export default defineConfig({
         extends: true,
         test: {
           name: "node",
-          include: ["test/cases.spec.ts", "test/runtime.spec.ts", "test/validation.spec.ts"],
+          include: ["test/testsuites.spec.ts", "test/runtime.spec.ts", "test/validation.spec.ts"],
         },
       },
       {

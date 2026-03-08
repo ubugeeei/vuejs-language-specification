@@ -1,0 +1,69 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.hoisted-static-props"
+title = "Static props hoist into a stable object literal"
+kind = "template-dom-compile"
+summary = "Static element props must be hoisted when hoistStatic is enabled, and the generated render function must reuse that hoisted object."
+
+features {
+  "template.static-hoist"
+  "compiler.codegen"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/codegen.spec.ts"
+    cases {
+      "hoists"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "ubugeeei/vize"
+    source = "tests/expected/vdom/hoisting.snap"
+    cases {
+      "static with multiple attrs"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <div class="hero" aria-hidden="true"><span>Ready</span></div>
+    """#
+  compilerOptions {
+    mode = "module"
+    prefixIdentifiers = true
+    hoistStatic = true
+  }
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_VNODE"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  hoistCount = 1
+  normalizedCode = #"""
+    import { createElementVNode as _createElementVNode, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+    const _hoisted_1 = {
+      class: "hero",
+      "aria-hidden": "true"
+    }
+
+    export function render(_ctx, _cache) {
+      return (_openBlock(), _createElementBlock("div", _hoisted_1, [...(_cache[0] || (_cache[0] = [
+        _createElementVNode("span", null, "Ready", -1 /* CACHED */)
+      ]))]))
+    }
+    """#
+}

@@ -1,0 +1,60 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.v-model-static-value"
+title = "Static value attributes remain admissible alongside v-model"
+kind = "template-dom-compile"
+summary = "A static value attribute used together with v-model must not trigger the unnecessary-value rejection and must remain in generated props."
+
+features {
+  "template.v-model"
+  "compiler.dom"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-dom/__tests__/transforms/vModel.spec.ts"
+    cases {
+      "should NOT error on static value binding alongside v-model"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <input v-model="test" value="test" />
+    """#
+  compilerOptions {
+    mode = "module"
+    prefixIdentifiers = true
+  }
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "V_MODEL_TEXT"
+    }
+    new HelperExpectation {
+      name = "WITH_DIRECTIVES"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  normalizedCode = #"""
+    import { vModelText as _vModelText, withDirectives as _withDirectives, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+    export function render(_ctx, _cache) {
+      return _withDirectives((_openBlock(), _createElementBlock("input", {
+        "onUpdate:modelValue": $event => ((_ctx.test) = $event),
+        value: "test"
+      }, null, 8 /* PROPS */, ["onUpdate:modelValue"])), [
+        [_vModelText, _ctx.test]
+      ])
+    }
+    """#
+}

@@ -170,7 +170,7 @@ interface ExpressionNode extends PortableNode {
 
 ## Code Generation Nodes
 
-The portable suite only standardizes the minimum codegen surface needed by curated compiler cases:
+The portable suite only standardizes the minimum codegen surface needed by curated compiler test suites:
 
 ```ts
 type CodegenNode =
@@ -211,7 +211,7 @@ interface ProfileAugmentedNode extends PortableNode {
 }
 ```
 
-The base suite does not require any `vapor` fields. Vapor-only conformance must be declared by profile-specific cases tied to the correct Vue minor branch snapshot.
+The base suite does not require any `vapor` fields. Vapor-only conformance must be declared by profile-specific test suites tied to the correct Vue minor branch snapshot.
 props: [ AttributeNode | DirectiveNode ];
 children: [ TemplateChildNode ];
 isSelfClosing: boolean | null;

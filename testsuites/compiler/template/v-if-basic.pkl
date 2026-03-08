@@ -1,0 +1,58 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.v-if-basic"
+title = "v-if emits conditional control flow and preserves the branch condition"
+kind = "template-dom-compile"
+summary = "A basic v-if chain becomes a conditional code path with prefixed identifiers in module mode."
+
+features {
+  "template.v-if"
+  "compiler.control-flow"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/transforms/vIf.spec.ts"
+    cases {
+      "basic v-if"
+    }
+  }
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/sfc-compile.test.ts"
+    cases {
+      "should compile v-if directive"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <div v-if="ok">Visible</div>
+    """#
+  compilerOptions {
+    mode = "module"
+    prefixIdentifiers = true
+  }
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_COMMENT"
+    }
+  }
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/branches/0/condition/content"
+      equals = "_ctx.ok"
+    }
+  }
+}

@@ -1,0 +1,108 @@
+class UpstreamReference {
+  kind: "test"|"benchmark"|"issue"|"snapshot"|"artifact" = "test"
+  repository: String
+  source: String
+  cases: Listing<String>
+  issues: Listing<String> = new Listing {}
+}
+
+suite = "compiler"
+
+class CompilerOptions {
+  mode: String?
+  prefixIdentifiers: Boolean?
+  hoistStatic: Boolean?
+  cacheHandlers: Boolean?
+  customElementTags: Listing<String> = new Listing {}
+}
+
+class ScriptOptions {
+  id: String?
+  inlineTemplate: Boolean?
+  isProd: Boolean?
+}
+
+class StyleOptions {
+  id: String?
+  scoped: Boolean?
+}
+
+class Input {
+  filename: String?
+  source: String?
+  sfc: String?
+  compilerOptions: CompilerOptions = new CompilerOptions {}
+  scriptOptions: ScriptOptions = new ScriptOptions {}
+  styleOptions: StyleOptions = new StyleOptions {}
+}
+
+class PointerAssertion {
+  pointer: String
+  equals: String|Int|Boolean|Null
+}
+
+class BindingExpectation {
+  name: String
+  kind: String
+}
+
+class HelperExpectation {
+  name: String
+}
+
+class PropConstructorExpectation {
+  name: String
+  constructor: String
+}
+
+class AliasExpectation {
+  localName: String
+  source: String
+}
+
+class LiteralExpectation {
+  name: String
+  value: String|Int|Boolean|Null
+}
+
+class DefaultKindExpectation {
+  name: String
+  kind: String
+}
+
+class ErrorExpectation {
+  name: String
+  message: String
+  code: String|Int? = null
+}
+
+class WarningExpectation {
+  message: String
+}
+
+class Expectation {
+  ast: Listing<PointerAssertion> = new Listing {}
+  helpers: Listing<HelperExpectation> = new Listing {}
+  hoistCount: Int?
+  bindings: Listing<BindingExpectation> = new Listing {}
+  propConstructors: Listing<PropConstructorExpectation> = new Listing {}
+  propDefaults: Listing<LiteralExpectation> = new Listing {}
+  propDefaultKinds: Listing<DefaultKindExpectation> = new Listing {}
+  aliases: Listing<AliasExpectation> = new Listing {}
+  emits: Listing<String> = new Listing {}
+  literals: Listing<LiteralExpectation> = new Listing {}
+  normalizedCode: String?
+  cssVars: Listing<String> = new Listing {}
+  error: ErrorExpectation?
+  warnings: Listing<WarningExpectation> = new Listing {}
+}
+
+id: String
+title: String
+kind: String
+summary: String
+features: Listing<String>
+profile: String?
+upstream: Listing<UpstreamReference>
+input: Input
+expect: Expectation

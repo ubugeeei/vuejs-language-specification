@@ -1,5 +1,11 @@
-export { buildCatalog, discoverCaseFiles, loadGenericCases } from "./catalog.ts";
-export { runBenchmarkCase } from "./benchmark.ts";
+export {
+  buildCatalog,
+  discoverCaseFiles,
+  discoverTestSuiteFiles,
+  loadGenericCases,
+  loadGenericTestSuites,
+} from "./catalog.ts";
+export { runBenchmarkCase, runBenchmarkTestSuite } from "./benchmark.ts";
 export {
   buildUpstreamCoverage,
   buildUpstreamTraceability,
@@ -11,12 +17,17 @@ export {
 export type { LocalUpstreamReference } from "./upstream.ts";
 export {
   runCompilerReferenceCase,
+  runCompilerReferenceTestSuite,
   runParserReferenceCase,
+  runParserReferenceTestSuite,
   runSyntaxReferenceCase,
+  runSyntaxReferenceTestSuite,
   runTypeEvaluationReferenceCase,
+  runTypeEvaluationReferenceTestSuite,
 } from "./reference.ts";
 export {
   validateCases,
+  validateTestSuites,
   validateUpstreamInventories,
   validateUpstreamReferences,
   validateUpstreamTraceability,
@@ -24,14 +35,19 @@ export {
   validateVendoredUpstreamCorpora,
 } from "./validate.ts";
 export type {
+  BenchmarkTestSuite,
   BenchmarkCase,
   BenchmarkResult,
   DanglingUpstreamReference,
   BindingExpectation,
   CatalogEntry,
+  CompilerTestSuite,
   CompilerCase,
+  GenericTestSuite,
   GenericCase,
+  ParserTestSuite,
   ParserCase,
+  SyntaxTestSuite,
   SyntaxCase,
   UpstreamEvidenceKind,
   UpstreamCoverageReport,
@@ -41,7 +57,10 @@ export type {
   UpstreamTraceabilityEntry,
   UpstreamTraceabilityManifest,
   UpstreamTraceabilityStatus,
+  TypeEvaluationTestSuite,
   TypeEvaluationCase,
+  BaseTestSuite,
+  BaseCase,
   UpstreamInventory,
   ValidationMessage,
   VendoredSnapshotManifest,

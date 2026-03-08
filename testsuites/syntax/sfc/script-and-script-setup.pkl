@@ -1,0 +1,63 @@
+amends "../../../schemas/SyntaxTestSuite.pkl"
+
+id = "syntax.sfc.script-and-script-setup"
+title = "Descriptor retains both script and script setup blocks"
+summary = "When standard script and script setup coexist, descriptor parsing must preserve both blocks and their shared language metadata without dropping either block."
+
+features {
+  "sfc.script"
+  "sfc.script-setup"
+  "descriptor.dual-script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/parse.spec.ts"
+    cases {
+      "should not warn script & script setup"
+    }
+  }
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript.spec.ts"
+    cases {
+      "<script> + <script setup> w/ ts"
+    }
+  }
+}
+
+input {
+  filename = "DualScript.vue"
+  source = #"""
+    <script lang="ts">
+    export default {
+      inheritAttrs: false,
+    }
+    </script>
+
+    <script setup lang="ts">
+    const message = "hello"
+    </script>
+
+    <template>
+      <p>{{ message }}</p>
+    </template>
+    """#
+}
+
+expect {
+  descriptor {
+    template = true
+    script = true
+    scriptSetup = true
+    styles = 0
+    customBlocks = 0
+    scriptLang = "ts"
+    scriptSetupLang = "ts"
+    scopedStyles = 0
+  }
+  templateContentIncludes {
+    "{{ message }}"
+  }
+}

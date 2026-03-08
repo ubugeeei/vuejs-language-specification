@@ -1,0 +1,72 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.template.v-for-keyed-list"
+title = "v-for keeps iterable source and alias information while emitting renderList"
+kind = "template-dom-compile"
+summary = "A keyed v-for preserves value alias metadata and emits a renderList-based loop in module mode."
+
+features {
+  "template.v-for"
+  "compiler.list-rendering"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/transforms/vFor.spec.ts"
+    cases {
+      "basic v-for"
+      "keyed v-for"
+    }
+    issues {
+      "#2085"
+    }
+  }
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/sfc-compile.test.ts"
+    cases {
+      "should compile v-for directive"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <div v-for="item in items" :key="item.id">{{ item.label }}</div>
+    """#
+  compilerOptions {
+    mode = "module"
+    prefixIdentifiers = true
+  }
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+    new HelperExpectation {
+      name = "RENDER_LIST"
+    }
+    new HelperExpectation {
+      name = "TO_DISPLAY_STRING"
+    }
+    new HelperExpectation {
+      name = "FRAGMENT"
+    }
+  }
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/source/content"
+      equals = "_ctx.items"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/valueAlias/content"
+      equals = "item"
+    }
+  }
+}

@@ -17,7 +17,7 @@ export interface UpstreamReference {
   issues?: string[];
 }
 
-export interface BaseCase {
+export interface BaseTestSuite {
   $schema: string;
   id: string;
   title: string;
@@ -29,7 +29,9 @@ export interface BaseCase {
   upstream: UpstreamReference[];
 }
 
-export interface SyntaxCase extends BaseCase {
+export type BaseCase = BaseTestSuite;
+
+export interface SyntaxTestSuite extends BaseTestSuite {
   suite: "syntax";
   kind: "sfc-descriptor";
   input: {
@@ -52,6 +54,8 @@ export interface SyntaxCase extends BaseCase {
   };
 }
 
+export type SyntaxCase = SyntaxTestSuite;
+
 export interface PointerAssertion {
   pointer: string;
   equals: string | number | boolean | null;
@@ -66,7 +70,7 @@ export interface ParserOptionsInput {
   comments?: boolean;
 }
 
-export interface ParserCase extends BaseCase {
+export interface ParserTestSuite extends BaseTestSuite {
   suite: "parser";
   kind: "template-base-parse";
   input: {
@@ -80,11 +84,14 @@ export interface ParserCase extends BaseCase {
   };
 }
 
+export type ParserCase = ParserTestSuite;
+
 export interface CompilerOptionsInput {
   mode?: string;
   prefixIdentifiers?: boolean;
   hoistStatic?: boolean;
   cacheHandlers?: boolean;
+  customElementTags?: string[];
 }
 
 export interface ScriptOptionsInput {
@@ -132,9 +139,14 @@ export interface RuntimePropExpectation {
 export interface ErrorExpectation {
   name: string;
   message: string;
+  code?: string | number;
 }
 
-export interface CompilerCase extends BaseCase {
+export interface WarningExpectation {
+  message: string;
+}
+
+export interface CompilerTestSuite extends BaseTestSuite {
   suite: "compiler";
   kind: "template-dom-compile" | "sfc-script-compile" | "sfc-style-compile";
   input: {
@@ -159,10 +171,13 @@ export interface CompilerCase extends BaseCase {
     normalizedCode?: string | null;
     cssVars?: string[];
     error?: ErrorExpectation;
+    warnings?: WarningExpectation[];
   };
 }
 
-export interface TypeEvaluationCase extends BaseCase {
+export type CompilerCase = CompilerTestSuite;
+
+export interface TypeEvaluationTestSuite extends BaseTestSuite {
   suite: "type-evaluation";
   kind: "script-setup-runtime-props";
   input: {
@@ -176,7 +191,9 @@ export interface TypeEvaluationCase extends BaseCase {
   };
 }
 
-export interface BenchmarkCase extends BaseCase {
+export type TypeEvaluationCase = TypeEvaluationTestSuite;
+
+export interface BenchmarkTestSuite extends BaseTestSuite {
   suite: "benchmark";
   kind: "compiler-sfc-batch" | "reactivity-computed-fanout";
   input: Record<string, unknown>;
@@ -189,6 +206,8 @@ export interface BenchmarkCase extends BaseCase {
     };
   };
 }
+
+export type BenchmarkCase = BenchmarkTestSuite;
 
 export interface UpstreamInventoryFileCase {
   name: string;
@@ -295,7 +314,7 @@ export interface DanglingUpstreamReference {
   repository: string;
   source: string;
   caseName: string;
-  localCaseId: string;
+  localTestSuiteId: string;
 }
 
 export interface UpstreamCoverageReport {
@@ -313,7 +332,7 @@ export interface UpstreamTraceabilityEntry {
   classification: UpstreamTraceabilityClassification;
   status: UpstreamTraceabilityStatus;
   profile?: string | null;
-  localCases: string[];
+  localTestSuites: string[];
   fileIssues: string[];
   rationale: string;
 }
@@ -331,12 +350,14 @@ export interface UpstreamTraceabilityManifest {
   entries: UpstreamTraceabilityEntry[];
 }
 
-export type GenericCase =
-  | SyntaxCase
-  | ParserCase
-  | CompilerCase
-  | TypeEvaluationCase
-  | BenchmarkCase;
+export type GenericTestSuite =
+  | SyntaxTestSuite
+  | ParserTestSuite
+  | CompilerTestSuite
+  | TypeEvaluationTestSuite
+  | BenchmarkTestSuite;
+
+export type GenericCase = GenericTestSuite;
 
 export interface CatalogEntry {
   id: string;

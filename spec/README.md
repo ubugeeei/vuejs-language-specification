@@ -9,7 +9,7 @@ The specification uses the following document classes:
 - explanatory
   - rationale, boundaries, and design guidance for readers and implementers
 - registry
-  - indices that connect the written specification to machine-readable cases and upstream evidence
+  - indices that connect the written specification to machine-readable test suites and upstream evidence
 
 ## Document Set
 
@@ -36,6 +36,6 @@ The specification uses the following document classes:
 
 - `MUST`, `MUST NOT`, `SHOULD`, `SHOULD NOT`, and `MAY` are used with their RFC 2119 meaning.
 - Symbolic judgments and algebraic definitions use the notation defined in `00-formal-notation.md`.
-- The machine-readable suites under `cases/` are normative whenever a document explicitly references them.
+- The machine-readable suites under `testsuites/` are normative whenever a document explicitly references them.
 - Implementation internals are non-normative unless an observable output depends on them.
-- Experimental profiles, including Vapor, are only normative when a case or document explicitly marks them as part of that profile.
+- Experimental profiles, including Vapor, are only normative when a test suite or document explicitly marks them as part of that profile.

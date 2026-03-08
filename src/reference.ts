@@ -29,14 +29,14 @@ import { getByJsonPointer } from "./pointers.ts";
 import type {
   AliasExpectation,
   BindingExpectation,
-  CompilerCase,
+  CompilerTestSuite,
   DefaultKindExpectation,
   LiteralExpectation,
-  ParserCase,
+  ParserTestSuite,
   PropConstructorExpectation,
   RuntimePropExpectation,
-  SyntaxCase,
-  TypeEvaluationCase,
+  SyntaxTestSuite,
+  TypeEvaluationTestSuite,
 } from "./types.ts";
 
 interface ExtractedRuntimeProp {
@@ -49,6 +49,7 @@ interface ExtractedRuntimeProp {
 type ScriptCompileOptions = NonNullable<Parameters<typeof compileScript>[1]>;
 type TemplateDomCompileOptions = Parameters<typeof compileTemplate>[1];
 type ParserOptions = NonNullable<Parameters<typeof CompilerCore.baseParse>[1]>;
+const ansiPattern = new RegExp(`${String.fromCharCode(27)}\\[[0-?]*[ -/]*[@-~]`, "g");
 
 const helperSymbolNames = new Map<symbol, string>(
   [...Object.entries(CompilerCore), ...Object.entries(CompilerDom)].flatMap(([name, value]) =>
@@ -70,6 +71,14 @@ function normalizeBindingType(value: unknown): string {
 
 function normalizeNewlines(value: string): string {
   return value.replace(/\r\n?/g, "\n");
+}
+
+function stripAnsi(value: string): string {
+  return value.replace(ansiPattern, "");
+}
+
+function normalizeDiagnosticText(value: string): string {
+  return normalizeNewlines(stripAnsi(value)).trimEnd();
 }
 
 function normalizeEnumField(key: string, value: unknown): unknown {
@@ -158,9 +167,17 @@ function normalizeHelperName(value: symbol): string {
   return name;
 }
 
+function normalizeCompilerErrorCode(value: unknown): string | number | undefined {
+  if (typeof value !== "number") {
+    return typeof value === "string" ? value : undefined;
+  }
+
+  return CompilerDom.DOMErrorCodes[value] ?? CompilerCore.ErrorCodes[value] ?? value;
+}
+
 function assertHelpers(
   actualHelpers: Iterable<symbol>,
-  expectedHelpers: CompilerCase["expect"]["helpers"],
+  expectedHelpers: CompilerTestSuite["expect"]["helpers"],
 ): void {
   if ((expectedHelpers?.length ?? 0) === 0) {
     return;
@@ -172,16 +189,51 @@ function assertHelpers(
   assert.deepEqual(actual, expected);
 }
 
-function assertExactError(error: unknown, expected: CompilerCase["expect"]["error"]): void {
+function assertExactError(error: unknown, expected: CompilerTestSuite["expect"]["error"]): void {
   assert.ok(expected, "Expected compiler error expectation");
   assert.ok(error instanceof Error, "Expected thrown value to be an Error");
   assert.equal(error.name, expected.name);
-  assert.equal(normalizeNewlines(error.message), normalizeNewlines(expected.message));
+  assert.equal(normalizeDiagnosticText(error.message), normalizeDiagnosticText(expected.message));
+  if (expected.code !== undefined) {
+    const actualCode = normalizeCompilerErrorCode(
+      error && typeof error === "object" && "code" in error ? error.code : undefined,
+    );
+    assert.equal(actualCode, expected.code);
+  }
 }
 
-function createDescriptor(caseData: SyntaxCase): SFCDescriptor {
-  const { descriptor } = parseSfc(caseData.input.source, {
-    filename: caseData.input.filename,
+function assertWarnings(
+  actualWarnings: string[],
+  expectedWarnings: CompilerTestSuite["expect"]["warnings"],
+): void {
+  const actual = actualWarnings.map((warning) => normalizeDiagnosticText(warning));
+  const expected = (expectedWarnings ?? []).map((warning) =>
+    normalizeDiagnosticText(warning.message),
+  );
+
+  assert.deepEqual(actual, expected);
+}
+
+function captureWarnings<T>(run: () => T): { result: T; warnings: string[] } {
+  const warnings: string[] = [];
+  const originalWarn = console.warn;
+  console.warn = (...args: unknown[]) => {
+    warnings.push(args.map((entry) => String(entry)).join(" "));
+  };
+
+  try {
+    return {
+      result: run(),
+      warnings,
+    };
+  } finally {
+    console.warn = originalWarn;
+  }
+}
+
+function createDescriptor(testSuite: SyntaxTestSuite): SFCDescriptor {
+  const { descriptor } = parseSfc(testSuite.input.source, {
+    filename: testSuite.input.filename,
   });
   return descriptor;
 }
@@ -969,33 +1021,33 @@ function assertRuntimeProps(
   assert.deepEqual(actual, expected);
 }
 
-export function runSyntaxReferenceCase(caseData: SyntaxCase): void {
-  const descriptor = createDescriptor(caseData);
-  assert.equal(Boolean(descriptor.template), caseData.expect.descriptor.template);
-  assert.equal(Boolean(descriptor.script), caseData.expect.descriptor.script);
-  assert.equal(Boolean(descriptor.scriptSetup), caseData.expect.descriptor.scriptSetup);
-  assert.equal(descriptor.styles.length, caseData.expect.descriptor.styles);
-  assert.equal(descriptor.customBlocks.length, caseData.expect.descriptor.customBlocks);
-  assert.equal(descriptor.script?.lang ?? null, caseData.expect.descriptor.scriptLang ?? null);
+export function runSyntaxReferenceTestSuite(testSuite: SyntaxTestSuite): void {
+  const descriptor = createDescriptor(testSuite);
+  assert.equal(Boolean(descriptor.template), testSuite.expect.descriptor.template);
+  assert.equal(Boolean(descriptor.script), testSuite.expect.descriptor.script);
+  assert.equal(Boolean(descriptor.scriptSetup), testSuite.expect.descriptor.scriptSetup);
+  assert.equal(descriptor.styles.length, testSuite.expect.descriptor.styles);
+  assert.equal(descriptor.customBlocks.length, testSuite.expect.descriptor.customBlocks);
+  assert.equal(descriptor.script?.lang ?? null, testSuite.expect.descriptor.scriptLang ?? null);
   assert.equal(
     descriptor.scriptSetup?.lang ?? null,
-    caseData.expect.descriptor.scriptSetupLang ?? null,
+    testSuite.expect.descriptor.scriptSetupLang ?? null,
   );
   assert.deepEqual(
     descriptor.styles.map((style) => style.lang).filter((value): value is string => Boolean(value)),
-    caseData.expect.descriptor.styleLangs ?? [],
+    testSuite.expect.descriptor.styleLangs ?? [],
   );
   assert.equal(
     descriptor.styles.filter((style) => style.scoped).length,
-    caseData.expect.descriptor.scopedStyles ?? 0,
+    testSuite.expect.descriptor.scopedStyles ?? 0,
   );
 
-  for (const fragment of caseData.expect.templateContentIncludes ?? []) {
+  for (const fragment of testSuite.expect.templateContentIncludes ?? []) {
     assert.match(descriptor.template?.content ?? "", new RegExp(escapeRegExp(fragment)));
   }
 }
 
-export function runParserReferenceCase(caseData: ParserCase): void {
+export function runParserReferenceTestSuite(testSuite: ParserTestSuite): void {
   const errors: CompilerCore.CompilerError[] = [];
   const parserOptions: ParserOptions = {
     onError: (error) => {
@@ -1003,46 +1055,48 @@ export function runParserReferenceCase(caseData: ParserCase): void {
     },
   };
 
-  if (caseData.input.comments !== undefined) {
-    parserOptions.comments = caseData.input.comments;
+  if (testSuite.input.comments !== undefined) {
+    parserOptions.comments = testSuite.input.comments;
   }
 
-  const ast = CompilerCore.baseParse(caseData.input.source, parserOptions);
+  const ast = CompilerCore.baseParse(testSuite.input.source, parserOptions);
 
-  assert.equal(errors.length, caseData.expect.errorCount);
-  assertPointerAssertions(normalizeStructuredArtifact(ast), caseData.expect.ast);
-  assertPointerAssertions(normalizeStructuredArtifact(errors), caseData.expect.errors);
+  assert.equal(errors.length, testSuite.expect.errorCount);
+  assertPointerAssertions(normalizeStructuredArtifact(ast), testSuite.expect.ast);
+  assertPointerAssertions(normalizeStructuredArtifact(errors), testSuite.expect.errors);
 }
 
-export function runCompilerReferenceCase(caseData: CompilerCase): void {
-  if (caseData.expect.error) {
+export function runCompilerReferenceTestSuite(testSuite: CompilerTestSuite): void {
+  if (testSuite.expect.error) {
     let thrown: unknown;
 
     try {
-      switch (caseData.kind) {
+      switch (testSuite.kind) {
         case "template-dom-compile":
           compileTemplate(
-            caseData.input.source ?? "",
-            caseData.input.compilerOptions as TemplateDomCompileOptions,
+            testSuite.input.source ?? "",
+            testSuite.input.compilerOptions as TemplateDomCompileOptions,
           );
           break;
         case "sfc-script-compile": {
-          const { descriptor } = parseSfc(caseData.input.sfc ?? "", {
-            filename: caseData.input.filename ?? `${caseData.id}.vue`,
+          const { descriptor } = parseSfc(testSuite.input.sfc ?? "", {
+            filename: testSuite.input.filename ?? `${testSuite.id}.vue`,
           });
-          const scriptOptions = caseData.input.scriptOptions;
-          compileScript(descriptor, {
-            ...scriptOptions,
-            id: scriptOptions?.id ?? caseData.id,
-          } as ScriptCompileOptions);
+          const scriptOptions = testSuite.input.scriptOptions;
+          captureWarnings(() =>
+            compileScript(descriptor, {
+              ...scriptOptions,
+              id: scriptOptions?.id ?? testSuite.id,
+            } as ScriptCompileOptions),
+          );
           break;
         }
         case "sfc-style-compile":
           compileStyle({
-            source: caseData.input.source ?? "",
-            filename: caseData.input.filename ?? `${caseData.id}.css`,
-            id: caseData.input.styleOptions?.id ?? caseData.id,
-            scoped: Boolean(caseData.input.styleOptions?.scoped),
+            source: testSuite.input.source ?? "",
+            filename: testSuite.input.filename ?? `${testSuite.id}.css`,
+            id: testSuite.input.styleOptions?.id ?? testSuite.id,
+            scoped: Boolean(testSuite.input.styleOptions?.scoped),
           });
           break;
       }
@@ -1050,79 +1104,86 @@ export function runCompilerReferenceCase(caseData: CompilerCase): void {
       thrown = error;
     }
 
-    assertExactError(thrown, caseData.expect.error);
+    assertExactError(thrown, testSuite.expect.error);
     return;
   }
 
-  switch (caseData.kind) {
+  switch (testSuite.kind) {
     case "template-dom-compile": {
-      const result = compileTemplate(
-        caseData.input.source ?? "",
-        caseData.input.compilerOptions as TemplateDomCompileOptions,
-      );
+      const compilerOptions = {
+        ...(testSuite.input.compilerOptions as TemplateDomCompileOptions | undefined),
+      };
+      const customElementTags = new Set(testSuite.input.compilerOptions?.customElementTags ?? []);
+      if (customElementTags.size > 0) {
+        compilerOptions.isCustomElement = (tag: string) => customElementTags.has(tag);
+      }
+      const result = compileTemplate(testSuite.input.source ?? "", compilerOptions);
 
-      assertHelpers(result.ast.helpers, caseData.expect.helpers);
-      assertPointerAssertions(normalizeStructuredArtifact(result.ast), caseData.expect.ast);
+      assertHelpers(result.ast.helpers, testSuite.expect.helpers);
+      assertPointerAssertions(normalizeStructuredArtifact(result.ast), testSuite.expect.ast);
 
-      if (caseData.expect.hoistCount != null) {
-        assert.equal(result.ast.hoists.length, caseData.expect.hoistCount);
+      if (testSuite.expect.hoistCount != null) {
+        assert.equal(result.ast.hoists.length, testSuite.expect.hoistCount);
       }
 
-      if (caseData.expect.normalizedCode != null) {
+      if (testSuite.expect.normalizedCode != null) {
         assert.equal(
           normalizeNewlines(result.code),
-          normalizeNewlines(caseData.expect.normalizedCode),
+          normalizeNewlines(testSuite.expect.normalizedCode),
         );
       }
 
       break;
     }
     case "sfc-script-compile": {
-      const { descriptor } = parseSfc(caseData.input.sfc ?? "", {
-        filename: caseData.input.filename ?? `${caseData.id}.vue`,
+      const { descriptor } = parseSfc(testSuite.input.sfc ?? "", {
+        filename: testSuite.input.filename ?? `${testSuite.id}.vue`,
       });
-      const scriptOptions = caseData.input.scriptOptions;
-      const result = compileScript(descriptor, {
-        ...scriptOptions,
-        id: scriptOptions?.id ?? caseData.id,
-      } as ScriptCompileOptions);
+      const scriptOptions = testSuite.input.scriptOptions;
+      const { result, warnings } = captureWarnings(() =>
+        compileScript(descriptor, {
+          ...scriptOptions,
+          id: scriptOptions?.id ?? testSuite.id,
+        } as ScriptCompileOptions),
+      );
       const generatedFile = parseGeneratedScript(result.content);
       const componentOptions = getDefaultExportObject(generatedFile);
       const setupStatements = getSetupStatements(componentOptions);
 
-      assertPointerAssertions(normalizeStructuredArtifact(generatedFile), caseData.expect.ast);
-      assertBindings(result.bindings, caseData.expect.bindings);
-      assertPropConstructors(componentOptions, caseData.expect.propConstructors);
-      assertPropDefaults(componentOptions, caseData.expect.propDefaults);
-      assertPropDefaultKinds(componentOptions, caseData.expect.propDefaultKinds);
-      assertAliases(setupStatements, caseData.expect.aliases);
-      assertEmits(componentOptions, caseData.expect.emits);
-      assertLiterals([generatedFile.program.body, setupStatements], caseData.expect.literals);
+      assertPointerAssertions(normalizeStructuredArtifact(generatedFile), testSuite.expect.ast);
+      assertBindings(result.bindings, testSuite.expect.bindings);
+      assertWarnings(warnings, testSuite.expect.warnings);
+      assertPropConstructors(componentOptions, testSuite.expect.propConstructors);
+      assertPropDefaults(componentOptions, testSuite.expect.propDefaults);
+      assertPropDefaultKinds(componentOptions, testSuite.expect.propDefaultKinds);
+      assertAliases(setupStatements, testSuite.expect.aliases);
+      assertEmits(componentOptions, testSuite.expect.emits);
+      assertLiterals([generatedFile.program.body, setupStatements], testSuite.expect.literals);
 
-      if (caseData.expect.normalizedCode != null) {
+      if (testSuite.expect.normalizedCode != null) {
         assert.equal(
           normalizeNewlines(result.content),
-          normalizeNewlines(caseData.expect.normalizedCode),
+          normalizeNewlines(testSuite.expect.normalizedCode),
         );
       }
       break;
     }
     case "sfc-style-compile": {
-      const styleOptions = caseData.input.styleOptions;
+      const styleOptions = testSuite.input.styleOptions;
       const result = compileStyle({
-        source: caseData.input.source ?? "",
-        filename: caseData.input.filename ?? `${caseData.id}.css`,
-        id: styleOptions?.id ?? caseData.id,
+        source: testSuite.input.source ?? "",
+        filename: testSuite.input.filename ?? `${testSuite.id}.css`,
+        id: styleOptions?.id ?? testSuite.id,
         scoped: Boolean(styleOptions?.scoped),
       });
 
-      assert.equal(result.errors.length, 0, `Expected no style errors for ${caseData.id}`);
-      assert.deepEqual(caseData.expect.cssVars ?? [], []);
+      assert.equal(result.errors.length, 0, `Expected no style errors for ${testSuite.id}`);
+      assert.deepEqual(testSuite.expect.cssVars ?? [], []);
 
-      if (caseData.expect.normalizedCode != null) {
+      if (testSuite.expect.normalizedCode != null) {
         assert.equal(
           normalizeNewlines(result.code),
-          normalizeNewlines(caseData.expect.normalizedCode),
+          normalizeNewlines(testSuite.expect.normalizedCode),
         );
       }
       break;
@@ -1130,18 +1191,23 @@ export function runCompilerReferenceCase(caseData: CompilerCase): void {
   }
 }
 
-export function runTypeEvaluationReferenceCase(caseData: TypeEvaluationCase): void {
-  const { descriptor } = parseSfc(caseData.input.sfc, {
-    filename: caseData.input.filename,
+export function runTypeEvaluationReferenceTestSuite(testSuite: TypeEvaluationTestSuite): void {
+  const { descriptor } = parseSfc(testSuite.input.sfc, {
+    filename: testSuite.input.filename,
   });
-  const scriptOptions = caseData.input.scriptOptions;
+  const scriptOptions = testSuite.input.scriptOptions;
   const result = compileScript(descriptor, {
     ...scriptOptions,
-    id: scriptOptions?.id ?? caseData.id,
+    id: scriptOptions?.id ?? testSuite.id,
   } as ScriptCompileOptions);
   const generatedFile = parseGeneratedScript(result.content);
   const componentOptions = getDefaultExportObject(generatedFile);
 
-  assertBindings(result.bindings, caseData.expect.bindings);
-  assertRuntimeProps(componentOptions, caseData.expect.runtimeProps);
+  assertBindings(result.bindings, testSuite.expect.bindings);
+  assertRuntimeProps(componentOptions, testSuite.expect.runtimeProps);
 }
+
+export const runSyntaxReferenceCase = runSyntaxReferenceTestSuite;
+export const runParserReferenceCase = runParserReferenceTestSuite;
+export const runCompilerReferenceCase = runCompilerReferenceTestSuite;
+export const runTypeEvaluationReferenceCase = runTypeEvaluationReferenceTestSuite;

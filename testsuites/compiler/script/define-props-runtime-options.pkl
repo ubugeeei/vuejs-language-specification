@@ -1,0 +1,73 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.script.define-props-runtime-options"
+title = "defineProps runtime declaration is hoisted into component options"
+kind = "sfc-script-compile"
+summary = "Script setup compilation erases defineProps while preserving runtime options and setup bindings."
+
+features {
+  "script-setup.defineProps"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/defineProps.spec.ts"
+    cases {
+      "basic usage"
+      "defineProps w/ runtime options"
+    }
+    issues {
+      "#4764"
+    }
+  }
+}
+
+input {
+  filename = "DefinePropsRuntime.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    const props = defineProps({ foo: String })
+    const bar = 1
+    </script>
+    """#
+  scriptOptions {
+    id = "define-props-runtime"
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "foo"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "props"
+      kind = "setup-reactive-const"
+    }
+    new BindingExpectation {
+      name = "bar"
+      kind = "literal-const"
+    }
+  }
+  propConstructors {
+    new PropConstructorExpectation {
+      name = "foo"
+      constructor = "String"
+    }
+  }
+  aliases {
+    new AliasExpectation {
+      localName = "props"
+      source = "__props"
+    }
+  }
+  literals {
+    new LiteralExpectation {
+      name = "bar"
+      value = 1
+    }
+  }
+}

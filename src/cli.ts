@@ -1,16 +1,16 @@
-import { buildCatalog, loadGenericCases } from "./catalog.ts";
-import { runBenchmarkCase } from "./benchmark.ts";
+import { buildCatalog, loadGenericTestSuites } from "./catalog.ts";
+import { runBenchmarkTestSuite } from "./benchmark.ts";
 import { packageRoot } from "./fs.ts";
 import { buildUpstreamCoverage, buildUpstreamTraceability } from "./upstream.ts";
 import {
-  validateCases,
+  validateTestSuites,
   validateUpstreamInventories,
   validateUpstreamReferences,
   validateUpstreamTraceability,
   validateVendoredSnapshots,
   validateVendoredUpstreamCorpora,
 } from "./validate.ts";
-import type { BenchmarkCase, SuiteName } from "./types.ts";
+import type { BenchmarkTestSuite, SuiteName } from "./types.ts";
 
 function parseArgs(argv: string[]): {
   command: string;
@@ -44,7 +44,7 @@ function printHelp() {
 Commands:
   validate [--json]
   catalog [--suite <suite>] [--json]
-  benchmark [case-id] [--smoke] [--json]
+  benchmark [test-suite-id] [--smoke] [--json]
   coverage [--repository <repo>] [--json]
   traceability [--repository <repo>] [--json]
 `);
@@ -58,7 +58,7 @@ async function main() {
   switch (command) {
     case "validate": {
       const messages = [
-        ...validateCases(root),
+        ...validateTestSuites(root),
         ...validateUpstreamInventories(root),
         ...validateUpstreamReferences(root),
         ...validateUpstreamTraceability(root),
@@ -91,16 +91,24 @@ async function main() {
       return;
     }
     case "benchmark": {
-      const caseId = rest[0];
+      const testSuiteId = rest[0];
       const smoke = flags.has("--smoke");
-      const benchmarks = loadGenericCases(root)
+      const benchmarks = loadGenericTestSuites(root)
         .map((entry) => entry.data)
-        .filter((entry): entry is BenchmarkCase => entry.suite === "benchmark");
-      const selected = caseId ? benchmarks.filter((entry) => entry.id === caseId) : benchmarks;
+        .filter((entry): entry is BenchmarkTestSuite => entry.suite === "benchmark");
+      const selected = testSuiteId
+        ? benchmarks.filter((entry) => entry.id === testSuiteId)
+        : benchmarks;
       if (selected.length === 0) {
-        throw new Error(caseId ? `Unknown benchmark case: ${caseId}` : "No benchmark cases found");
+        throw new Error(
+          testSuiteId
+            ? `Unknown benchmark test suite: ${testSuiteId}`
+            : "No benchmark test suites found",
+        );
       }
-      const results = selected.map((caseData) => runBenchmarkCase(caseData, { root, smoke }));
+      const results = selected.map((testSuite) =>
+        runBenchmarkTestSuite(testSuite, { root, smoke }),
+      );
       console.log(
         json
           ? JSON.stringify(results, null, 2)
@@ -157,7 +165,7 @@ async function main() {
         repository ? danglingReferences.length : 25,
       )) {
         console.log(
-          `  - ${entry.repository} ${entry.source} :: ${entry.caseName} <- ${entry.localCaseId}`,
+          `  - ${entry.repository} ${entry.source} :: ${entry.caseName} <- ${entry.localTestSuiteId}`,
         );
       }
       return;

@@ -1,0 +1,55 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.script.define-model-basic"
+title = "defineModel creates model props and update emits"
+kind = "sfc-script-compile"
+summary = "Script setup compilation must lower defineModel into model props, a modifiers companion prop, and the matching update emit."
+
+features {
+  "script-setup.defineModel"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/defineModel.spec.ts"
+    cases {
+      "basic usage"
+    }
+  }
+}
+
+input {
+  filename = "DefineModel.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    const model = defineModel<string>({ required: true })
+    </script>
+    """#
+  scriptOptions {
+    id = "define-model-basic"
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "modelValue"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "model"
+      kind = "setup-ref"
+    }
+  }
+  propConstructors {
+    new PropConstructorExpectation {
+      name = "modelValue"
+      constructor = "String"
+    }
+  }
+  emits {
+    "update:modelValue"
+  }
+}

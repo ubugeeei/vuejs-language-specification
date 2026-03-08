@@ -10,9 +10,9 @@ They exist to answer:
 - are two runs comparable under the same declared scenario?
 - can regressions be tracked against a stable workload definition?
 
-## 2. Benchmark Case Shape
+## 2. Benchmark Test-Suite Shape
 
-Each benchmark case declares:
+Each benchmark test suite declares:
 
 - workload kind
 - input dataset or graph description
@@ -25,7 +25,7 @@ Each benchmark case declares:
 
 Reference runners must report:
 
-- case id
+- test-suite id
 - samples
 - mean
 - min
@@ -36,7 +36,7 @@ Optional fields may include standard deviation, throughput, bytes processed, or 
 
 ## 4. Pass/Fail Semantics
 
-Benchmarks are informational unless a case opts into a budget.
+Benchmarks are informational unless a test suite opts into a budget.
 
 If a budget is present, it must be explicit and reproducible. Relative budgets are preferred over absolute hardware-dependent ceilings.
 

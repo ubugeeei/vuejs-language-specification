@@ -1,0 +1,82 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.script.with-defaults-typed-props"
+title = "withDefaults applies literal defaults to typed props"
+kind = "sfc-script-compile"
+summary = "Typed defineProps wrapped by withDefaults must lower to runtime props that retain both constructor information and literal defaults."
+
+features {
+  "script-setup.withDefaults"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/defineProps.spec.ts"
+    cases {
+      "withDefaults (static)"
+    }
+  }
+}
+
+input {
+  filename = "WithDefaults.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    const props = withDefaults(defineProps<{
+      label?: string
+      count?: number
+    }>(), {
+      label: "ready",
+      count: 1,
+    })
+    </script>
+    """#
+  scriptOptions {
+    id = "with-defaults-typed-props"
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "props"
+      kind = "setup-const"
+    }
+    new BindingExpectation {
+      name = "label"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "count"
+      kind = "props"
+    }
+  }
+  propConstructors {
+    new PropConstructorExpectation {
+      name = "label"
+      constructor = "String"
+    }
+    new PropConstructorExpectation {
+      name = "count"
+      constructor = "Number"
+    }
+  }
+  propDefaults {
+    new LiteralExpectation {
+      name = "label"
+      value = "ready"
+    }
+    new LiteralExpectation {
+      name = "count"
+      value = 1
+    }
+  }
+  aliases {
+    new AliasExpectation {
+      localName = "props"
+      source = "__props"
+    }
+  }
+}
