@@ -2,10 +2,10 @@
 
 `@ubugeeei/vuejs-language-specification` is a specification-first repository for Vue.js syntax, compiler behavior, type evaluation, runtime conformance, and benchmark workloads.
 
-The project has two equally important outputs:
+The project has two complementary outputs:
 
-1. A written specification that defines observable behavior and portability boundaries.
-2. A distributable npm package that ships machine-readable conformance test suites, Pkl schema modules, provenance metadata, and a JavaScript reference harness.
+1. A canonical repository snapshot, versioned by immutable Git tags, that defines observable behavior, portability boundaries, machine-readable conformance suites, schemas, and provenance.
+2. A secondary npm package that ships JavaScript-oriented tooling for validation, cataloging, smoke benchmarking, and the runtime reference harness.
 
 ## Goals
 
@@ -68,6 +68,26 @@ The base specification in this repository is therefore:
 - extensible for additional profiles such as Vapor
 - explicit about which test suites are profile-specific
 
+## Distribution Model
+
+This repository should be consumed like a conformance corpus, not like an npm-first library.
+
+- The canonical distribution unit is a tagged repository snapshot or release tarball.
+- Implementations should pin a specific tag and vendor or unpack the snapshot locally.
+- The canonical release manifest lives at [`provenance/releases/current.json`](./provenance/releases/current.json).
+- The npm package is a convenience channel for JavaScript consumers. It is not the normative source of truth for suite contents or repository structure.
+
+The canonical snapshot includes these roots:
+
+- `spec/`
+- `testsuites/`
+- `runtime/`
+- `schemas/`
+- `provenance/`
+- `fixtures/`
+
+That structure is summarized by the release manifest and validated in repository tests so downstream implementations can consume a stable snapshot contract.
+
 ## Repository Layout
 
 - `spec/`
@@ -97,12 +117,13 @@ The base specification in this repository is therefore:
 
 ## Package Model
 
-The npm package ships:
+The npm package is the secondary transport for JavaScript ecosystems. It ships:
 
 - raw specification assets (`spec/`, `testsuites/`, `runtime/`, `schemas/`, `provenance/`)
 - a CLI for Pkl-backed validation, catalog generation, and smoke benchmarking
 - a JavaScript reference harness for runtime-only suites
 - Vitest Browser Mode runtime tests for DOM-observable conformance
+- the canonical release manifest at `./release-manifest.json`
 
 Install:
 
@@ -114,6 +135,7 @@ Examples:
 
 ```bash
 npx vue-language-spec validate
+npx vue-language-spec manifest
 npx vue-language-spec catalog --suite compiler
 npx vue-language-spec requirements
 npx vue-language-spec coverage --repository vuejs/language-tools
@@ -150,7 +172,7 @@ Stable catalog and requirement id manifests are committed under `provenance/stab
 
 ## Status
 
-This repository is structured to be publishable and extensible now. The current version focuses on:
+This repository is structured to be released as a canonical conformance snapshot now, with npm as a secondary tooling channel. The current version focuses on:
 
 - a durable suite format
 - strong provenance

@@ -2,6 +2,12 @@ export { buildCatalog, discoverTestSuiteFiles, loadGenericTestSuites } from "./c
 export { runBenchmarkTestSuite } from "./benchmark.ts";
 export { discoverRequirementMatrixFiles, loadRequirementMatrixEntries } from "./requirements.ts";
 export {
+  buildReleaseManifest,
+  canonicalReleaseManifestPath,
+  loadReleaseManifest,
+  releaseManifestFile,
+} from "./release.ts";
+export {
   buildUpstreamCoverage,
   buildUpstreamTraceability,
   loadLocalUpstreamReferences,
@@ -18,6 +24,7 @@ export {
 } from "./reference.ts";
 export {
   validateNormativeChapterStructure,
+  validateReleaseManifest,
   validateRequirementMatrices,
   validateRepositoryConventions,
   validateRuntimeTestSuites,
@@ -39,6 +46,10 @@ export type {
   ParserTestSuite,
   RequirementMatrixEntry,
   RequirementMatrixReference,
+  ReleaseManifest,
+  ReleaseManifestChannel,
+  ReleaseManifestProfile,
+  ReleaseManifestTarget,
   SyntaxTestSuite,
   UpstreamEvidenceKind,
   UpstreamCoverageReport,

@@ -397,6 +397,75 @@ export interface UpstreamTraceabilityManifest {
   entries: UpstreamTraceabilityEntry[];
 }
 
+export interface ReleaseManifestChannel {
+  kind: "npm-package";
+  identifier: string;
+  purpose: string[];
+}
+
+export interface ReleaseManifestProfile {
+  name: string;
+  default: boolean;
+  stability: "stable" | "provisional";
+  upstreamRepository: string;
+  upstreamLine: string;
+  isolation: "base" | "opt-in";
+}
+
+export interface ReleaseManifestTarget {
+  name: "syntax" | "parser" | "compiler" | "type-evaluation" | "runtime" | "benchmark";
+  root: string;
+  executableFormat: "pkl" | "typescript";
+}
+
+export interface ReleaseManifest {
+  schemaVersion: 1;
+  packageName: string;
+  version: string;
+  tagFormat: string;
+  distribution: {
+    canonical: {
+      kind: "repository-snapshot";
+      manifestPath: string;
+      consumption: string;
+      requiredRoots: string[];
+    };
+    secondaryChannels: ReleaseManifestChannel[];
+  };
+  baseline: {
+    repository: string;
+    packageRanges: Record<string, string>;
+    evidenceRepositories: string[];
+  };
+  profiles: ReleaseManifestProfile[];
+  artifacts: {
+    targets: ReleaseManifestTarget[];
+    roots: {
+      spec: string;
+      testsuites: string;
+      runtime: string;
+      schemas: string;
+      provenance: string;
+      fixtures: string;
+    };
+    jsTooling: {
+      cliCommand: string;
+      cliEntrypoint: string;
+      moduleEntrypoints: string[];
+    };
+    counts: {
+      pklTestSuites: number;
+      runtimeTestSuites: number;
+      requirementMatrixEntries: number;
+      normativeChapters: number;
+      schemas: number;
+      upstreamInventories: number;
+      traceabilityManifests: number;
+      vendoredCorpora: number;
+    };
+  };
+}
+
 export type GenericTestSuite =
   | SyntaxTestSuite
   | ParserTestSuite

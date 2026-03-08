@@ -6,10 +6,13 @@ import * as specificationApi from "../src/index.ts";
 import * as runtimeApi from "../src/runtime/index.ts";
 import {
   buildCatalog,
+  buildReleaseManifest,
   buildUpstreamCoverage,
   buildUpstreamTraceability,
+  loadReleaseManifest,
   loadRequirementMatrixEntries,
   validateNormativeChapterStructure,
+  validateReleaseManifest,
   validateRequirementMatrices,
   validateRepositoryConventions,
   validateRuntimeTestSuites,
@@ -74,6 +77,14 @@ describe("catalog and validation", () => {
     REPOSITORY_TIMEOUT_MS,
   );
 
+  test("release manifest stays in sync with the canonical repository snapshot", () => {
+    expect(loadReleaseManifest()).toEqual(buildReleaseManifest());
+  });
+
+  test("release manifest validates", () => {
+    expect(validateReleaseManifest().every((result) => result.valid)).toBe(true);
+  });
+
   test(
     "repository naming conventions stay on canonical test-suite terms",
     () => {
@@ -133,9 +144,12 @@ describe("catalog and validation", () => {
   test("public api exposes canonical test-suite names only", () => {
     expect(specificationApi).toHaveProperty("discoverTestSuiteFiles");
     expect(specificationApi).toHaveProperty("discoverRequirementMatrixFiles");
+    expect(specificationApi).toHaveProperty("buildReleaseManifest");
     expect(specificationApi).toHaveProperty("loadGenericTestSuites");
     expect(specificationApi).toHaveProperty("loadRequirementMatrixEntries");
+    expect(specificationApi).toHaveProperty("loadReleaseManifest");
     expect(specificationApi).toHaveProperty("validateNormativeChapterStructure");
+    expect(specificationApi).toHaveProperty("validateReleaseManifest");
     expect(specificationApi).toHaveProperty("validateRequirementMatrices");
     expect(specificationApi).toHaveProperty("validateRepositoryConventions");
     expect(specificationApi).toHaveProperty("validateTestSuites");

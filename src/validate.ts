@@ -6,6 +6,7 @@ import { parse as parseSfc } from "@vue/compiler-sfc";
 import { packageRoot, walkFiles } from "./fs.ts";
 import {
   provenanceInventoriesRoot,
+  provenanceReleasesRoot,
   provenanceTraceabilityRoot,
   runtimeTestSuitesRoot,
   vendoredRepositoryRoot,
@@ -13,6 +14,7 @@ import {
 } from "./layout.ts";
 import { discoverTestSuiteFiles } from "./catalog.ts";
 import { evaluatePklFile } from "./pkl.ts";
+import { buildReleaseManifest, loadReleaseManifest } from "./release.ts";
 import { loadRequirementMatrixEntries, requiredRequirementMatrixFiles } from "./requirements.ts";
 import { runtimeTestSuites } from "./runtime/index.ts";
 import {
@@ -35,6 +37,7 @@ import type {
   ValidationMessage,
   VendoredSnapshotManifest,
   VendoredUpstreamCorpusManifest,
+  ReleaseManifest,
 } from "./types.ts";
 
 function repositoryToTraceabilityFile(root: string, repository: string): string {
@@ -1140,6 +1143,49 @@ function normalizeVendoredCorpusForInventoryComparison(
   };
 }
 
+function normalizeReleaseManifest(manifest: ReleaseManifest): ReleaseManifest {
+  return {
+    ...manifest,
+    distribution: {
+      ...manifest.distribution,
+      canonical: {
+        ...manifest.distribution.canonical,
+        requiredRoots: [...manifest.distribution.canonical.requiredRoots].sort((left, right) =>
+          left.localeCompare(right),
+        ),
+      },
+      secondaryChannels: [...manifest.distribution.secondaryChannels].map((channel) => ({
+        ...channel,
+        purpose: [...channel.purpose].sort((left, right) => left.localeCompare(right)),
+      })),
+    },
+    baseline: {
+      ...manifest.baseline,
+      evidenceRepositories: [...manifest.baseline.evidenceRepositories].sort((left, right) =>
+        left.localeCompare(right),
+      ),
+      packageRanges: Object.fromEntries(
+        Object.entries(manifest.baseline.packageRanges).sort(([left], [right]) =>
+          left.localeCompare(right),
+        ),
+      ),
+    },
+    profiles: [...manifest.profiles].sort((left, right) => left.name.localeCompare(right.name)),
+    artifacts: {
+      ...manifest.artifacts,
+      targets: [...manifest.artifacts.targets].sort((left, right) =>
+        left.name.localeCompare(right.name),
+      ),
+      jsTooling: {
+        ...manifest.artifacts.jsTooling,
+        moduleEntrypoints: [...manifest.artifacts.jsTooling.moduleEntrypoints].sort((left, right) =>
+          left.localeCompare(right),
+        ),
+      },
+    },
+  };
+}
+
 export function validateVendoredUpstreamCorpora(
   root: string = packageRoot(import.meta.url),
 ): ValidationMessage[] {
@@ -1362,4 +1408,54 @@ export function validateUpstreamTraceability(
   }
 
   return messages.sort((left, right) => left.file.localeCompare(right.file));
+}
+
+export function validateReleaseManifest(
+  root: string = packageRoot(import.meta.url),
+): ValidationMessage[] {
+  const manifestFile = join(provenanceReleasesRoot(root), "current.json");
+  const errors: string[] = [];
+
+  if (!existsSync(manifestFile)) {
+    return [
+      {
+        file: manifestFile,
+        valid: false,
+        errors: ["Missing release manifest: provenance/releases/current.json"],
+      },
+    ];
+  }
+
+  try {
+    const actual = normalizeReleaseManifest(loadReleaseManifest(root));
+    const expected = normalizeReleaseManifest(buildReleaseManifest(root));
+
+    try {
+      assert.deepStrictEqual(actual, expected);
+    } catch {
+      errors.push("Release manifest is out of date");
+    }
+
+    for (const relativeRoot of actual.distribution.canonical.requiredRoots) {
+      if (!existsSync(join(root, relativeRoot))) {
+        errors.push(`Release manifest references missing canonical root: ${relativeRoot}`);
+      }
+    }
+
+    return [
+      {
+        file: manifestFile,
+        valid: errors.length === 0,
+        errors,
+      },
+    ];
+  } catch (error) {
+    return [
+      {
+        file: manifestFile,
+        valid: false,
+        errors: [error instanceof Error ? error.message : String(error)],
+      },
+    ];
+  }
 }

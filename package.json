@@ -1,7 +1,7 @@
 {
   "name": "@ubugeeei/vuejs-language-specification",
   "version": "0.1.0",
-  "description": "Vue.js language specification, conformance test suites, runtime tests, and benchmark workloads.",
+  "description": "Canonical Vue.js language corpus with conformance suites, provenance manifests, and JavaScript tooling.",
   "keywords": [
     "benchmark",
     "compiler",
@@ -12,7 +12,7 @@
     "vue"
   ],
   "bin": {
-    "vue-language-spec": "./dist/cli.js"
+    "vue-language-spec": "./dist/cli.mjs"
   },
   "files": [
     "dist",
@@ -27,13 +27,14 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
     },
     "./runtime": {
-      "types": "./dist/runtime/index.d.ts",
-      "import": "./dist/runtime/index.js"
+      "types": "./dist/runtime/index.d.mts",
+      "import": "./dist/runtime/index.mjs"
     },
+    "./release-manifest.json": "./provenance/releases/current.json",
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -45,11 +46,13 @@
     "fmt": "oxfmt .",
     "fmt:check": "oxfmt --check .",
     "lint": "oxlint --type-aware --type-check --vitest-plugin --node-plugin .",
+    "manifest": "node --strip-types src/cli.ts manifest",
     "validate": "node --strip-types src/cli.ts validate",
     "catalog": "node --strip-types src/cli.ts catalog",
     "coverage:upstream": "node --strip-types src/cli.ts coverage",
     "traceability:upstream": "node --strip-types src/cli.ts traceability",
     "benchmark:smoke": "node --strip-types src/cli.ts benchmark --smoke",
+    "generate:release-manifest": "node --strip-types scripts/generate-release-manifest.ts",
     "generate:traceability": "node --strip-types scripts/generate-upstream-traceability.ts",
     "generate:stability": "node --strip-types scripts/generate-stability-manifests.ts",
     "generate:imported:testsuites": "node --strip-types scripts/generate-vize-language-testsuites.ts",

@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "packageName": "@ubugeeei/vuejs-language-specification",
+  "version": "0.1.0",
+  "tagFormat": "v{version}",
+  "distribution": {
+    "canonical": {
+      "kind": "repository-snapshot",
+      "manifestPath": "provenance/releases/current.json",
+      "consumption": "pin a git tag or vendor a release tarball",
+      "requiredRoots": [
+        "spec",
+        "testsuites",
+        "runtime",
+        "schemas",
+        "provenance",
+        "fixtures"
+      ]
+    },
+    "secondaryChannels": [
+      {
+        "kind": "npm-package",
+        "identifier": "@ubugeeei/vuejs-language-specification",
+        "purpose": [
+          "cli",
+          "programmatic-api",
+          "javascript-runtime-harness"
+        ]
+      }
+    ]
+  },
+  "baseline": {
+    "repository": "vuejs/core",
+    "packageRanges": {
+      "vue": "^3.5.0",
+      "@vue/compiler-core": "^3.5.0",
+      "@vue/compiler-dom": "^3.5.0",
+      "@vue/compiler-sfc": "^3.5.0",
+      "@vue/reactivity": "^3.5.0"
+    },
+    "evidenceRepositories": [
+      "ubugeeei/vize",
+      "vuejs/core",
+      "vuejs/language-tools"
+    ]
+  },
+  "profiles": [
+    {
+      "name": "base",
+      "default": true,
+      "stability": "stable",
+      "upstreamRepository": "vuejs/core",
+      "upstreamLine": "mainline",
+      "isolation": "base"
+    },
+    {
+      "name": "vapor",
+      "default": false,
+      "stability": "provisional",
+      "upstreamRepository": "vuejs/core",
+      "upstreamLine": "minor-branch snapshot",
+      "isolation": "opt-in"
+    }
+  ],
+  "artifacts": {
+    "targets": [
+      {
+        "name": "syntax",
+        "root": "testsuites/syntax",
+        "executableFormat": "pkl"
+      },
+      {
+        "name": "parser",
+        "root": "testsuites/parser",
+        "executableFormat": "pkl"
+      },
+      {
+        "name": "compiler",
+        "root": "testsuites/compiler",
+        "executableFormat": "pkl"
+      },
+      {
+        "name": "type-evaluation",
+        "root": "testsuites/type-evaluation",
+        "executableFormat": "pkl"
+      },
+      {
+        "name": "runtime",
+        "root": "runtime/testsuites",
+        "executableFormat": "typescript"
+      },
+      {
+        "name": "benchmark",
+        "root": "testsuites/benchmark",
+        "executableFormat": "pkl"
+      }
+    ],
+    "roots": {
+      "spec": "spec",
+      "testsuites": "testsuites",
+      "runtime": "runtime",
+      "schemas": "schemas",
+      "provenance": "provenance",
+      "fixtures": "fixtures"
+    },
+    "jsTooling": {
+      "cliCommand": "vue-language-spec",
+      "cliEntrypoint": "dist/cli.mjs",
+      "moduleEntrypoints": []
+    },
+    "counts": {
+      "pklTestSuites": 1180,
+      "runtimeTestSuites": 41,
+      "requirementMatrixEntries": 115,
+      "normativeChapters": 12,
+      "schemas": 9,
+      "upstreamInventories": 3,
+      "traceabilityManifests": 3,
+      "vendoredCorpora": 2
+    }
+  }
+}

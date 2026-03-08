@@ -1,10 +1,12 @@
 import { buildCatalog, loadGenericTestSuites } from "./catalog.ts";
 import { runBenchmarkTestSuite } from "./benchmark.ts";
 import { packageRoot } from "./fs.ts";
+import { buildReleaseManifest } from "./release.ts";
 import { loadRequirementMatrixEntries } from "./requirements.ts";
 import { buildUpstreamCoverage, buildUpstreamTraceability } from "./upstream.ts";
 import {
   validateNormativeChapterStructure,
+  validateReleaseManifest,
   validateRequirementMatrices,
   validateRepositoryConventions,
   validateRuntimeTestSuites,
@@ -48,6 +50,7 @@ function printHelp() {
 
 Commands:
   validate [--json]
+  manifest [--json]
   catalog [--suite <suite>] [--json]
   requirements [--json]
   benchmark [test-suite-id] [--smoke] [--json]
@@ -74,6 +77,7 @@ async function main() {
         ...validateUpstreamTraceability(root),
         ...validateVendoredUpstreamCorpora(root),
         ...validateVendoredSnapshots(root),
+        ...validateReleaseManifest(root),
       ];
       const hasErrors = messages.some((message) => !message.valid);
       if (json) {
@@ -88,6 +92,29 @@ async function main() {
         }
       }
       process.exitCode = hasErrors ? 1 : 0;
+      return;
+    }
+    case "manifest": {
+      const manifest = buildReleaseManifest(root);
+      if (json) {
+        console.log(JSON.stringify(manifest, null, 2));
+        return;
+      }
+
+      console.log(`${manifest.packageName}@${manifest.version}`);
+      console.log(`canonical=${manifest.distribution.canonical.kind}`);
+      console.log(`manifest=${manifest.distribution.canonical.manifestPath}`);
+      console.log(`consume=${manifest.distribution.canonical.consumption}`);
+      console.log(
+        `targets=${manifest.artifacts.targets
+          .map((entry) => `${entry.name}:${entry.root}`)
+          .join(", ")}`,
+      );
+      console.log(
+        `secondary=${manifest.distribution.secondaryChannels
+          .map((entry) => `${entry.kind}:${entry.identifier}`)
+          .join(", ")}`,
+      );
       return;
     }
     case "catalog": {

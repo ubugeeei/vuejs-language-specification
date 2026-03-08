@@ -16,6 +16,10 @@ export function provenanceTraceabilityRoot(root: string): string {
   return join(provenanceRoot(root), "traceability");
 }
 
+export function provenanceReleasesRoot(root: string): string {
+  return join(provenanceRoot(root), "releases");
+}
+
 export function provenanceStabilityRoot(root: string): string {
   return join(provenanceRoot(root), "stability");
 }
