@@ -127,6 +127,11 @@ export interface RuntimePropExpectation {
   skipCheck?: boolean;
 }
 
+export interface ErrorExpectation {
+  name: string;
+  message: string;
+}
+
 export interface CompilerCase extends BaseCase {
   suite: "compiler";
   kind: "template-dom-compile" | "sfc-script-compile" | "sfc-style-compile";
@@ -151,6 +156,7 @@ export interface CompilerCase extends BaseCase {
     literals?: LiteralExpectation[];
     normalizedCode?: string | null;
     cssVars?: string[];
+    error?: ErrorExpectation;
   };
 }
 

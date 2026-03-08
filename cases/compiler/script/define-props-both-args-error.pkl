@@ -1,0 +1,50 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.script.define-props-both-args-error"
+title = "defineProps rejects simultaneous type and runtime arguments"
+kind = "sfc-script-compile"
+summary = "defineProps must reject programs that provide both a type argument and runtime props options in the same macro call."
+
+features {
+  "script-setup.defineProps"
+  "compiler.script"
+  "compiler.error"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/defineProps.spec.ts"
+    cases {
+      "w/ both type and non-type args"
+    }
+  }
+}
+
+input {
+  filename = "DefinePropsBothError.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    defineProps<{}>({})
+    </script>
+    """#
+  scriptOptions {
+    id = "define-props-both-args-error"
+  }
+}
+
+expect {
+  error {
+    name = "Error"
+    message = #"""
+      [@vue/compiler-sfc] defineProps() cannot accept both type and non-type arguments at the same time. Use one or the other.
+
+      DefinePropsBothError.vue
+      1  |  <script setup lang="ts">
+         |                           ^
+      2  |  defineProps<{}>({})
+         |  ^^^^^^^^^^^^^^^^^^^
+      3  |  </script>
+      """#
+  }
+}

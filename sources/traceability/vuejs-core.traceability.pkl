@@ -2,12 +2,12 @@ amends "../../schemas/UpstreamTraceabilityManifest.pkl"
 
 repository = "vuejs/core"
 commit = "cea3cf758645c9683db51822590b073ce3069dda"
-generatedAt = "2026-03-08T08:52:58.346Z"
+generatedAt = "2026-03-08T09:23:03.032Z"
 
 counts {
   total = 3309
-  covered = 81
-  planned = 3158
+  covered = 105
+  planned = 3134
   tracked = 70
 }
 
@@ -12966,9 +12966,10 @@ entries {
     kind = "test"
     line = 222
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "compiler.script.define-emits-mixed-syntax-error"
     }
     fileIssues {
       "#5393"
@@ -12983,9 +12984,10 @@ entries {
     kind = "test"
     line = 214
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "compiler.script.define-emits-both-args-error"
     }
     fileIssues {
       "#5393"
@@ -13491,9 +13493,13 @@ entries {
     kind = "test"
     line = 42
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "compiler.script.define-options-emits-error"
+      "compiler.script.define-options-expose-error"
+      "compiler.script.define-options-props-error"
+      "compiler.script.define-options-slots-error"
     }
     fileIssues {
     }
@@ -13505,9 +13511,10 @@ entries {
     kind = "test"
     line = 31
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "compiler.script.define-options-duplicate-error"
     }
     fileIssues {
     }
@@ -13533,9 +13540,10 @@ entries {
     kind = "test"
     line = 84
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "compiler.script.define-options-generic-error"
     }
     fileIssues {
     }
@@ -13720,9 +13728,10 @@ entries {
     kind = "test"
     line = 679
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "compiler.script.define-props-both-args-error"
     }
     fileIssues {
       "#4764"
@@ -14505,9 +14514,10 @@ entries {
     kind = "test"
     line = 476
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "compiler.script.define-props-destructure-assign-error"
     }
     fileIssues {
       "#5425"
@@ -14543,9 +14553,10 @@ entries {
     kind = "test"
     line = 463
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "compiler.script.define-props-destructure-local-ref-error"
     }
     fileIssues {
       "#5425"
@@ -14562,9 +14573,10 @@ entries {
     kind = "test"
     line = 444
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "compiler.script.define-props-destructure-computed-key-error"
     }
     fileIssues {
       "#5425"
@@ -14600,9 +14612,10 @@ entries {
     kind = "test"
     line = 496
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "compiler.script.define-props-destructure-watch-error"
     }
     fileIssues {
       "#5425"
@@ -51591,9 +51604,10 @@ entries {
     kind = "test"
     line = 1417
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-number-leading-zero"
     }
     fileIssues {
       "#10503"
@@ -51608,9 +51622,10 @@ entries {
     kind = "test"
     line = 1130
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-select-multiple-object-array"
     }
     fileIssues {
       "#10503"
@@ -51625,9 +51640,10 @@ entries {
     kind = "test"
     line = 966
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-select-multiple"
     }
     fileIssues {
       "#10503"
@@ -51642,9 +51658,10 @@ entries {
     kind = "test"
     line = 1384
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-select-multiple-number-model"
     }
     fileIssues {
       "#10503"
@@ -51659,9 +51676,10 @@ entries {
     kind = "test"
     line = 1274
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-select-multiple-set-object"
     }
     fileIssues {
       "#10503"
@@ -51676,9 +51694,10 @@ entries {
     kind = "test"
     line = 1209
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-select-multiple-set"
     }
     fileIssues {
       "#10503"
@@ -51727,9 +51746,10 @@ entries {
     kind = "test"
     line = 596
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-checkbox-array"
     }
     fileIssues {
       "#10503"
@@ -51744,9 +51764,10 @@ entries {
     kind = "test"
     line = 257
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-text-modifiers"
     }
     fileIssues {
       "#10503"
@@ -51761,9 +51782,10 @@ entries {
     kind = "test"
     line = 1453
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-checkbox-mutable-collection"
     }
     fileIssues {
       "#10503"
@@ -51778,9 +51800,10 @@ entries {
     kind = "test"
     line = 666
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-checkbox-set"
     }
     fileIssues {
       "#10503"
@@ -51831,9 +51854,10 @@ entries {
     kind = "test"
     line = 553
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-checkbox-true-false-object"
     }
     fileIssues {
       "#10503"
@@ -51848,9 +51872,10 @@ entries {
     kind = "test"
     line = 1343
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-text-composition-session"
     }
     fileIssues {
       "#10503"
@@ -52021,9 +52046,10 @@ entries {
     kind = "test"
     line = 1065
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-select-multiple-number"
     }
     fileIssues {
       "#10503"
@@ -52038,9 +52064,10 @@ entries {
     kind = "test"
     line = 1028
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-select-number"
     }
     fileIssues {
       "#10503"

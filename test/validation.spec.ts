@@ -11,6 +11,8 @@ import {
   validateVendoredUpstreamCorpora,
 } from "../src/index.ts";
 
+const INVENTORY_TIMEOUT_MS = 20_000;
+
 describe("catalog and validation", () => {
   test("catalog exposes stable ids", () => {
     const catalog = buildCatalog();
@@ -18,12 +20,25 @@ describe("catalog and validation", () => {
       "benchmark.compiler.sfc-batch-compile",
       "benchmark.reactivity.computed-fanout",
       "compiler.script.define-emits-array",
+      "compiler.script.define-emits-both-args-error",
+      "compiler.script.define-emits-mixed-syntax-error",
       "compiler.script.define-expose-basic",
       "compiler.script.define-model-basic",
       "compiler.script.define-model-named",
       "compiler.script.define-options-basic",
+      "compiler.script.define-options-duplicate-error",
+      "compiler.script.define-options-emits-error",
       "compiler.script.define-options-empty",
+      "compiler.script.define-options-expose-error",
+      "compiler.script.define-options-generic-error",
+      "compiler.script.define-options-props-error",
+      "compiler.script.define-options-slots-error",
+      "compiler.script.define-props-both-args-error",
+      "compiler.script.define-props-destructure-assign-error",
+      "compiler.script.define-props-destructure-computed-key-error",
       "compiler.script.define-props-destructure-defaults",
+      "compiler.script.define-props-destructure-local-ref-error",
+      "compiler.script.define-props-destructure-watch-error",
       "compiler.script.define-props-runtime-options",
       "compiler.script.define-slots-basic",
       "compiler.script.define-slots-erased-unused",
@@ -78,33 +93,49 @@ describe("catalog and validation", () => {
     expect(validateUpstreamInventories().every((result) => result.valid)).toBe(true);
   });
 
-  test("all upstream references resolve exactly", () => {
-    expect(validateUpstreamReferences().every((result) => result.valid)).toBe(true);
-  });
+  test(
+    "all upstream references resolve exactly",
+    () => {
+      expect(validateUpstreamReferences().every((result) => result.valid)).toBe(true);
+    },
+    INVENTORY_TIMEOUT_MS,
+  );
 
-  test("upstream coverage report includes every inventoried repository", () => {
-    const report = buildUpstreamCoverage();
-    expect(report.repositories.map((entry) => entry.repository)).toEqual([
-      "ubugeeei/vize",
-      "vuejs/core",
-      "vuejs/language-tools",
-    ]);
-    expect(report.repositories.every((entry) => entry.totalCases > 0)).toBe(true);
-  });
+  test(
+    "upstream coverage report includes every inventoried repository",
+    () => {
+      const report = buildUpstreamCoverage();
+      expect(report.repositories.map((entry) => entry.repository)).toEqual([
+        "ubugeeei/vize",
+        "vuejs/core",
+        "vuejs/language-tools",
+      ]);
+      expect(report.repositories.every((entry) => entry.totalCases > 0)).toBe(true);
+    },
+    INVENTORY_TIMEOUT_MS,
+  );
 
-  test("traceability manifests cover every inventoried repository", () => {
-    const manifests = buildUpstreamTraceability();
-    expect(manifests.map((entry) => entry.repository)).toEqual([
-      "ubugeeei/vize",
-      "vuejs/core",
-      "vuejs/language-tools",
-    ]);
-    expect(manifests.every((entry) => entry.counts.total > 0)).toBe(true);
-  });
+  test(
+    "traceability manifests cover every inventoried repository",
+    () => {
+      const manifests = buildUpstreamTraceability();
+      expect(manifests.map((entry) => entry.repository)).toEqual([
+        "ubugeeei/vize",
+        "vuejs/core",
+        "vuejs/language-tools",
+      ]);
+      expect(manifests.every((entry) => entry.counts.total > 0)).toBe(true);
+    },
+    INVENTORY_TIMEOUT_MS,
+  );
 
-  test("traceability manifests validate", () => {
-    expect(validateUpstreamTraceability().every((result) => result.valid)).toBe(true);
-  });
+  test(
+    "traceability manifests validate",
+    () => {
+      expect(validateUpstreamTraceability().every((result) => result.valid)).toBe(true);
+    },
+    INVENTORY_TIMEOUT_MS,
+  );
 
   test("all vendored upstream corpora validate", () => {
     expect(validateVendoredUpstreamCorpora().every((result) => result.valid)).toBe(true);

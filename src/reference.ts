@@ -173,6 +173,13 @@ function assertHelpers(
   assert.deepEqual(actual, expected);
 }
 
+function assertExactError(error: unknown, expected: CompilerCase["expect"]["error"]): void {
+  assert.ok(expected, "Expected compiler error expectation");
+  assert.ok(error instanceof Error, "Expected thrown value to be an Error");
+  assert.equal(error.name, expected.name);
+  assert.equal(normalizeNewlines(error.message), normalizeNewlines(expected.message));
+}
+
 function createDescriptor(caseData: SyntaxCase): SFCDescriptor {
   const { descriptor } = parseSfc(caseData.input.source, {
     filename: caseData.input.filename,
@@ -1009,6 +1016,45 @@ export function runParserReferenceCase(caseData: ParserCase): void {
 }
 
 export function runCompilerReferenceCase(caseData: CompilerCase): void {
+  if (caseData.expect.error) {
+    let thrown: unknown;
+
+    try {
+      switch (caseData.kind) {
+        case "template-dom-compile":
+          compileTemplate(
+            caseData.input.source ?? "",
+            caseData.input.compilerOptions as TemplateDomCompileOptions,
+          );
+          break;
+        case "sfc-script-compile": {
+          const { descriptor } = parseSfc(caseData.input.sfc ?? "", {
+            filename: caseData.input.filename ?? `${caseData.id}.vue`,
+          });
+          const scriptOptions = caseData.input.scriptOptions;
+          compileScript(descriptor, {
+            ...scriptOptions,
+            id: scriptOptions?.id ?? caseData.id,
+          } as ScriptCompileOptions);
+          break;
+        }
+        case "sfc-style-compile":
+          compileStyle({
+            source: caseData.input.source ?? "",
+            filename: caseData.input.filename ?? `${caseData.id}.css`,
+            id: caseData.input.styleOptions?.id ?? caseData.id,
+            scoped: Boolean(caseData.input.styleOptions?.scoped),
+          });
+          break;
+      }
+    } catch (error) {
+      thrown = error;
+    }
+
+    assertExactError(thrown, caseData.expect.error);
+    return;
+  }
+
   switch (caseData.kind) {
     case "template-dom-compile": {
       const result = compileTemplate(

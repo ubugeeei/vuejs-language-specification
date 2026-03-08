@@ -1,0 +1,49 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.script.define-options-slots-error"
+title = "defineOptions rejects slots declarations"
+kind = "sfc-script-compile"
+summary = "defineOptions must not be used to declare slots and must emit the stable compiler-sfc diagnostic that redirects the author to defineSlots."
+
+features {
+  "script-setup.defineOptions"
+  "compiler.script"
+  "compiler.error"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/defineOptions.spec.ts"
+    cases {
+      "should emit an error with props or emits property"
+    }
+  }
+}
+
+input {
+  filename = "DefineOptionsSlotsError.vue"
+  sfc = #"""
+    <script setup>
+    defineOptions({ slots: ["foo"] })
+    </script>
+    """#
+  scriptOptions {
+    id = "define-options-slots-error"
+  }
+}
+
+expect {
+  error {
+    name = "Error"
+    message = #"""
+      [@vue/compiler-sfc] defineOptions() cannot be used to declare slots. Use defineSlots() instead.
+
+      DefineOptionsSlotsError.vue
+      1  |  <script setup>
+      2  |  defineOptions({ slots: ["foo"] })
+         |                  ^^^^^^^^^^^^^^
+      3  |  </script>
+      """#
+  }
+}

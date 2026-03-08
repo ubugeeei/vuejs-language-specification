@@ -1,0 +1,53 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.script.define-props-destructure-watch-error"
+title = "defineProps destructure bindings cannot be passed directly to watch"
+kind = "sfc-script-compile"
+summary = "Reactive props destructure bindings must not be passed directly to watch and must instead require a getter wrapper."
+
+features {
+  "script-setup.defineProps"
+  "script-setup.destructure"
+  "compiler.script"
+  "compiler.error"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/definePropsDestructure.spec.ts"
+    cases {
+      "should error when passing destructured prop into certain methods"
+    }
+  }
+}
+
+input {
+  filename = "DefinePropsDestructureWatchError.vue"
+  sfc = #"""
+    <script setup>
+    import { watch } from "vue"
+    const { foo } = defineProps(["foo"])
+    watch(foo, () => {})
+    </script>
+    """#
+  scriptOptions {
+    id = "define-props-destructure-watch-error"
+  }
+}
+
+expect {
+  error {
+    name = "Error"
+    message = #"""
+      [@vue/compiler-sfc] "foo" is a destructured prop and should not be passed directly to watch(). Pass a getter () => foo instead.
+
+      DefinePropsDestructureWatchError.vue
+      2  |  import { watch } from "vue"
+      3  |  const { foo } = defineProps(["foo"])
+      4  |  watch(foo, () => {})
+         |        ^^^
+      5  |  </script>
+      """#
+  }
+}

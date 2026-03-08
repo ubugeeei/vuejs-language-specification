@@ -2,7 +2,7 @@ amends "../../schemas/UpstreamTraceabilityManifest.pkl"
 
 repository = "vuejs/language-tools"
 commit = "6141ef516c21fc6202b690a9b921bebfdff3057b"
-generatedAt = "2026-03-08T08:52:58.346Z"
+generatedAt = "2026-03-08T09:23:03.032Z"
 
 counts {
   total = 95

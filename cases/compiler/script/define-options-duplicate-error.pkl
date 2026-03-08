@@ -1,0 +1,52 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.script.define-options-duplicate-error"
+title = "defineOptions rejects duplicate macro calls"
+kind = "sfc-script-compile"
+summary = "A script setup block must reject more than one defineOptions call and report the stable compiler-sfc diagnostic with codeframe."
+
+features {
+  "script-setup.defineOptions"
+  "compiler.script"
+  "compiler.error"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/defineOptions.spec.ts"
+    cases {
+      "should emit an error with two defineOptions"
+    }
+  }
+}
+
+input {
+  filename = "DefineOptionsDuplicate.vue"
+  sfc = #"""
+    <script setup>
+    defineOptions({ name: "FooApp" })
+    defineOptions({ name: "BarApp" })
+    </script>
+    """#
+  scriptOptions {
+    id = "define-options-duplicate-error"
+  }
+}
+
+expect {
+  error {
+    name = "Error"
+    message = #"""
+      [@vue/compiler-sfc] duplicate defineOptions() call
+
+      DefineOptionsDuplicate.vue
+      1  |  <script setup>
+      2  |  defineOptions({ name: "FooApp" })
+         |                                    ^
+      3  |  defineOptions({ name: "BarApp" })
+         |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      4  |  </script>
+      """#
+  }
+}
