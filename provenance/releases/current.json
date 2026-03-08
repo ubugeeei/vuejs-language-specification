@@ -8,24 +8,13 @@
       "kind": "repository-snapshot",
       "manifestPath": "provenance/releases/current.json",
       "consumption": "pin a git tag or vendor a release tarball",
-      "requiredRoots": [
-        "spec",
-        "testsuites",
-        "runtime",
-        "schemas",
-        "provenance",
-        "fixtures"
-      ]
+      "requiredRoots": ["spec", "testsuites", "runtime", "schemas", "provenance", "fixtures"]
     },
     "secondaryChannels": [
       {
         "kind": "npm-package",
         "identifier": "@ubugeeei/vuejs-language-specification",
-        "purpose": [
-          "cli",
-          "programmatic-api",
-          "javascript-runtime-harness"
-        ]
+        "purpose": ["cli", "programmatic-api", "javascript-runtime-harness"]
       }
     ]
   },
@@ -38,11 +27,7 @@
       "@vue/compiler-sfc": "^3.5.0",
       "@vue/reactivity": "^3.5.0"
     },
-    "evidenceRepositories": [
-      "ubugeeei/vize",
-      "vuejs/core",
-      "vuejs/language-tools"
-    ]
+    "evidenceRepositories": ["ubugeeei/vize", "vuejs/core", "vuejs/language-tools"]
   },
   "profiles": [
     {
