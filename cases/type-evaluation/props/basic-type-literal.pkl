@@ -1,0 +1,79 @@
+amends "../../../schemas/TypeEvaluationCase.pkl"
+
+id = "type-evaluation.props.basic-type-literal"
+title = "defineProps type literal produces required and optional runtime props"
+summary = "Type evaluation turns a simple type literal into runtime prop declarations with stable requiredness."
+
+features {
+  "type-eval.defineProps"
+  "type-eval.requiredness"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/defineProps.spec.ts"
+    cases {
+      "w/ interface"
+      "w/ type"
+    }
+  }
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/sfc-compile.test.ts"
+    cases {
+      "should handle defineProps with type parameter"
+    }
+  }
+  new UpstreamReference {
+    repository = "vuejs/language-tools"
+    source = "packages/component-meta/tests/index.spec.ts"
+    cases {
+      "reference-type-props"
+    }
+  }
+}
+
+input {
+  filename = "TypedProps.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    defineProps<{
+      title: string
+      count?: number
+    }>()
+    </script>
+    """#
+  scriptOptions {
+    id = "typed-props"
+  }
+}
+
+expect {
+  runtimeProps {
+    new RuntimePropsExpectation {
+      name = "title"
+      types {
+        "String"
+      }
+      required = true
+    }
+    new RuntimePropsExpectation {
+      name = "count"
+      types {
+        "Number"
+      }
+      required = false
+    }
+  }
+  bindings {
+    new BindingExpectation {
+      name = "title"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "count"
+      kind = "props"
+    }
+  }
+}

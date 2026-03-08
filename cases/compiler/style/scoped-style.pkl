@@ -1,0 +1,36 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.style.scoped-style"
+title = "Scoped style rewrites selectors with the stable scope attribute"
+kind = "sfc-style-compile"
+summary = "Scoped CSS applies the provided scope id to emitted selectors without changing the authored selector target."
+
+features {
+  "style.scoped"
+  "compiler.style"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/css-compile.test.ts"
+    cases {
+      "should add scope attribute to selectors"
+    }
+  }
+}
+
+input {
+  filename = "ScopedStyle.vue"
+  source = #"""
+    .container { display: flex; }
+    """#
+  styleOptions {
+    id = "data-v-test"
+    scoped = true
+  }
+}
+
+expect {
+  normalizedCode = ".container[data-v-test] { display: flex;\n}"
+}

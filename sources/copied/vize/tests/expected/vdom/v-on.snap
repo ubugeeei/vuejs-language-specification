@@ -1,0 +1,609 @@
+===
+name: v-on handler
+options: default
+--- INPUT ---
+<button v-on:click="handler"></button>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", { onClick: _ctx.handler }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: v-on shorthand
+options: default
+--- INPUT ---
+<button @click="handler"></button>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", { onClick: _ctx.handler }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: inline handler
+options: default
+--- INPUT ---
+<button @click="count++"></button>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: $event => (_ctx.count++)
+  }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: inline with statement
+options: default
+--- INPUT ---
+<button @click="count = count + 1"></button>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: $event => (_ctx.count = _ctx.count + 1)
+  }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: method call
+options: default
+--- INPUT ---
+<button @click="handler()"></button>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: $event => (_ctx.handler())
+  }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: method with args
+options: default
+--- INPUT ---
+<button @click="handler(1, 2)"></button>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: $event => (_ctx.handler(1, 2))
+  }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: inline with $event
+options: default
+--- INPUT ---
+<button @click="handler($event)"></button>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: $event => (_ctx.handler($event))
+  }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: inline $event property
+options: default
+--- INPUT ---
+<button @click="handler($event.target.value)"></button>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: $event => (_ctx.handler($event.target.value))
+  }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: arrow function with event
+options: default
+--- INPUT ---
+<button @click="e => handler(e)"></button>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: e => _ctx.handler(e)
+  }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: arrow function with multiple params
+options: default
+--- INPUT ---
+<div @custom="(a, b) => handler(a, b)"></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    onCustom: (a, b) => _ctx.handler(a, b)
+  }, null, 40 /* PROPS, NEED_HYDRATION */, ["onCustom"]))
+}
+
+===
+name: stop modifier
+options: default
+--- INPUT ---
+<button @click.stop="handler"></button>
+--- OUTPUT ---
+import { withModifiers as _withModifiers, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: _withModifiers(_ctx.handler, ["stop"])
+  }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: prevent modifier
+options: default
+--- INPUT ---
+<form @submit.prevent="onSubmit"></form>
+--- OUTPUT ---
+import { withModifiers as _withModifiers, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("form", {
+    onSubmit: _withModifiers(_ctx.onSubmit, ["prevent"])
+  }, null, 40 /* PROPS, NEED_HYDRATION */, ["onSubmit"]))
+}
+
+===
+name: stop and prevent
+options: default
+--- INPUT ---
+<button @click.stop.prevent="handler"></button>
+--- OUTPUT ---
+import { withModifiers as _withModifiers, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: _withModifiers(_ctx.handler, ["stop","prevent"])
+  }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: capture modifier
+options: default
+--- INPUT ---
+<div @click.capture="handler"></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", { onClickCapture: _ctx.handler }, null, 40 /* PROPS, NEED_HYDRATION */, ["onClickCapture"]))
+}
+
+===
+name: once modifier
+options: default
+--- INPUT ---
+<button @click.once="handler"></button>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", { onClickOnce: _ctx.handler }, null, 40 /* PROPS, NEED_HYDRATION */, ["onClickOnce"]))
+}
+
+===
+name: passive modifier
+options: default
+--- INPUT ---
+<div @scroll.passive="onScroll"></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", { onScrollPassive: _ctx.onScroll }, null, 40 /* PROPS, NEED_HYDRATION */, ["onScrollPassive"]))
+}
+
+===
+name: self modifier
+options: default
+--- INPUT ---
+<div @click.self="handler"></div>
+--- OUTPUT ---
+import { withModifiers as _withModifiers, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    onClick: _withModifiers(_ctx.handler, ["self"])
+  }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: enter key
+options: default
+--- INPUT ---
+<input @keyup.enter="submit">
+--- OUTPUT ---
+import { withKeys as _withKeys, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("input", {
+    onKeyup: _withKeys(_ctx.submit, ["enter"])
+  }, null, 40 /* PROPS, NEED_HYDRATION */, ["onKeyup"]))
+}
+
+===
+name: escape key
+options: default
+--- INPUT ---
+<input @keyup.esc="cancel">
+--- OUTPUT ---
+import { withKeys as _withKeys, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("input", {
+    onKeyup: _withKeys(_ctx.cancel, ["esc"])
+  }, null, 40 /* PROPS, NEED_HYDRATION */, ["onKeyup"]))
+}
+
+===
+name: tab key
+options: default
+--- INPUT ---
+<input @keyup.tab="next">
+--- OUTPUT ---
+import { withKeys as _withKeys, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("input", {
+    onKeyup: _withKeys(_ctx.next, ["tab"])
+  }, null, 40 /* PROPS, NEED_HYDRATION */, ["onKeyup"]))
+}
+
+===
+name: delete key
+options: default
+--- INPUT ---
+<input @keyup.delete="remove">
+--- OUTPUT ---
+import { withKeys as _withKeys, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("input", {
+    onKeyup: _withKeys(_ctx.remove, ["delete"])
+  }, null, 40 /* PROPS, NEED_HYDRATION */, ["onKeyup"]))
+}
+
+===
+name: arrow keys
+options: default
+--- INPUT ---
+<input @keyup.up="up" @keyup.down="down" @keyup.left="left" @keyup.right="right">
+--- OUTPUT ---
+import { withKeys as _withKeys, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("input", {
+    onKeyup: [
+      _withKeys(_ctx.up, ["up"]),
+      _withKeys(_ctx.down, ["down"]),
+      _withKeys(_ctx.left, ["left"]),
+      _withKeys(_ctx.right, ["right"])
+    ]
+  }, null, 40 /* PROPS, NEED_HYDRATION */, ["onKeyup"]))
+}
+
+===
+name: key code
+options: default
+--- INPUT ---
+<input @keyup.13="submit">
+--- OUTPUT ---
+import { withKeys as _withKeys, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("input", {
+    onKeyup: _withKeys(_ctx.submit, ["13"])
+  }, null, 40 /* PROPS, NEED_HYDRATION */, ["onKeyup"]))
+}
+
+===
+name: ctrl modifier
+options: default
+--- INPUT ---
+<input @keyup.ctrl.enter="submit">
+--- OUTPUT ---
+import { withModifiers as _withModifiers, withKeys as _withKeys, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("input", {
+    onKeyup: _withKeys(_withModifiers(_ctx.submit, ["ctrl"]), ["enter"])
+  }, null, 40 /* PROPS, NEED_HYDRATION */, ["onKeyup"]))
+}
+
+===
+name: alt modifier
+options: default
+--- INPUT ---
+<button @click.alt="handler"></button>
+--- OUTPUT ---
+import { withModifiers as _withModifiers, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: _withModifiers(_ctx.handler, ["alt"])
+  }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: shift modifier
+options: default
+--- INPUT ---
+<button @click.shift="handler"></button>
+--- OUTPUT ---
+import { withModifiers as _withModifiers, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: _withModifiers(_ctx.handler, ["shift"])
+  }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: meta modifier
+options: default
+--- INPUT ---
+<button @click.meta="handler"></button>
+--- OUTPUT ---
+import { withModifiers as _withModifiers, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: _withModifiers(_ctx.handler, ["meta"])
+  }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: exact modifier
+options: default
+--- INPUT ---
+<button @click.ctrl.exact="handler"></button>
+--- OUTPUT ---
+import { withModifiers as _withModifiers, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: _withModifiers(_ctx.handler, ["ctrl","exact"])
+  }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: left click
+options: default
+--- INPUT ---
+<button @click.left="handler"></button>
+--- OUTPUT ---
+import { withModifiers as _withModifiers, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: _withModifiers(_ctx.handler, ["left"])
+  }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: right click
+options: default
+--- INPUT ---
+<button @click.right="handler"></button>
+--- OUTPUT ---
+import { withModifiers as _withModifiers, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onContextmenu: _withModifiers(_ctx.handler, ["right"])
+  }, null, 40 /* PROPS, NEED_HYDRATION */, ["onContextmenu"]))
+}
+
+===
+name: middle click
+options: default
+--- INPUT ---
+<button @click.middle="handler"></button>
+--- OUTPUT ---
+import { withModifiers as _withModifiers, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onMouseup: _withModifiers(_ctx.handler, ["middle"])
+  }, null, 40 /* PROPS, NEED_HYDRATION */, ["onMouseup"]))
+}
+
+===
+name: multiple events
+options: default
+--- INPUT ---
+<input @focus="onFocus" @blur="onBlur">
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("input", {
+    onFocus: _ctx.onFocus,
+    onBlur: _ctx.onBlur
+  }, null, 40 /* PROPS, NEED_HYDRATION */, ["onFocus", "onBlur"]))
+}
+
+===
+name: same event different modifiers
+options: default
+--- INPUT ---
+<button @click="a" @click.ctrl="b"></button>
+--- OUTPUT ---
+import { withModifiers as _withModifiers, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: [
+      _ctx.a,
+      _withModifiers(_ctx.b, ["ctrl"])
+    ]
+  }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: dynamic event name
+options: default
+--- INPUT ---
+<button @[event]="handler"></button>
+--- OUTPUT ---
+import { toHandlerKey as _toHandlerKey, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", { [_toHandlerKey(_ctx.event)]: _ctx.handler }, null, 16 /* FULL_PROPS */))
+}
+
+===
+name: dynamic event with modifier
+options: default
+--- INPUT ---
+<button @[event].stop="handler"></button>
+--- OUTPUT ---
+import { toHandlerKey as _toHandlerKey, withModifiers as _withModifiers, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    [_toHandlerKey(_ctx.event)]: _withModifiers(_ctx.handler, ["stop"])
+  }, null, 16 /* FULL_PROPS */))
+}
+
+===
+name: v-on object
+options: default
+--- INPUT ---
+<button v-on="handlers"></button>
+--- OUTPUT ---
+import { toHandlers as _toHandlers, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", _toHandlers(_ctx.handlers, true), null, 16 /* FULL_PROPS */))
+}
+
+===
+name: v-on object with other events
+options: default
+--- INPUT ---
+<button v-on="handlers" @click="extra"></button>
+--- OUTPUT ---
+import { toHandlers as _toHandlers, mergeProps as _mergeProps, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", _mergeProps(_toHandlers(_ctx.handlers, true), { onClick: _ctx.extra }), null, 16 /* FULL_PROPS */, ["onClick"]))
+}
+
+===
+name: component event
+options: default
+--- INPUT ---
+<MyComponent @update="onUpdate" />
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, openBlock as _openBlock, createBlock as _createBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+
+  return (_openBlock(), _createBlock(_component_MyComponent, { onUpdate: _ctx.onUpdate }, null, 8 /* PROPS */, ["onUpdate"]))
+}
+
+===
+name: component native event
+options: default
+--- INPUT ---
+<MyComponent @click.native="onClick" />
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, openBlock as _openBlock, createBlock as _createBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+
+  return (_openBlock(), _createBlock(_component_MyComponent, { onClick: _ctx.onClick }, null, 8 /* PROPS */, ["onClick"]))
+}
+
+===
+name: inline handler (cacheHandlers)
+options: cacheHandlers
+--- INPUT ---
+<button @click="count++"></button>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: _cache[0] || (_cache[0] = $event => (_ctx.count++))
+  }))
+}
+
+===
+name: inline statement (cacheHandlers)
+options: cacheHandlers
+--- INPUT ---
+<button @click="count = count + 1"></button>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: _cache[0] || (_cache[0] = $event => (_ctx.count = _ctx.count + 1))
+  }))
+}
+
+===
+name: method call (cacheHandlers)
+options: cacheHandlers
+--- INPUT ---
+<button @click="handler()"></button>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: _cache[0] || (_cache[0] = $event => (_ctx.handler()))
+  }))
+}
+
+===
+name: handler reference (cacheHandlers)
+options: cacheHandlers
+--- INPUT ---
+<button @click="handler"></button>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: _cache[0] || (_cache[0] = (...args) => (_ctx.handler && _ctx.handler(...args)))
+  }))
+}
+
+===
+name: multiple cached handlers
+options: cacheHandlers
+--- INPUT ---
+<button @click="count++" @mouseenter="hover = true"></button>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("button", {
+    onClick: _cache[0] || (_cache[0] = $event => (_ctx.count++)),
+    onMouseenter: _cache[1] || (_cache[1] = $event => (_ctx.hover = true))
+  }, null, 32 /* NEED_HYDRATION */))
+}

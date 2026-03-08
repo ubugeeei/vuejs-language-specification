@@ -1,0 +1,751 @@
+amends "../../schemas/UpstreamInventory.pkl"
+
+repository = "ubugeeei/vize"
+commit = "923a9d864583e7e06438db3bc6a720113cf171ac"
+generatedAt = "2026-03-07T19:39:11.534Z"
+
+counts {
+  files = 16
+  cases = 128
+  issueRefs = 0
+  benchmarks = 0
+}
+
+files {
+  new InventoryFile {
+    path = "examples/vite-musea/e2e/vrt/musea-gallery.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "gallery top page"
+        kind = "test"
+        line = 13
+      }
+      new InventoryCase {
+        name = "component - ${component}"
+        kind = "test"
+        line = 21
+      }
+    }
+  }
+  new InventoryFile {
+    path = "playground/e2e/atelier-output-tabs.test.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "switches between VDOM, SSR, and Vapor outputs without shifting the code view toggle"
+        kind = "test"
+        line = 96
+      }
+    }
+  }
+  new InventoryFile {
+    path = "playground/e2e/components.test.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "should render default button"
+        kind = "test"
+        line = 14
+      }
+      new InventoryCase {
+        name = "should render primary variant"
+        kind = "test"
+        line = 25
+      }
+      new InventoryCase {
+        name = "should render secondary variant"
+        kind = "test"
+        line = 37
+      }
+      new InventoryCase {
+        name = "should handle disabled state"
+        kind = "test"
+        line = 49
+      }
+      new InventoryCase {
+        name = "should emit click event"
+        kind = "test"
+        line = 62
+      }
+      new InventoryCase {
+        name = "should render component with reactive state"
+        kind = "test"
+        line = 74
+      }
+      new InventoryCase {
+        name = "should handle props correctly"
+        kind = "test"
+        line = 101
+      }
+      new InventoryCase {
+        name = "should handle computed properties"
+        kind = "test"
+        line = 126
+      }
+      new InventoryCase {
+        name = "should handle v-if directive"
+        kind = "test"
+        line = 148
+      }
+      new InventoryCase {
+        name = "should handle v-for directive"
+        kind = "test"
+        line = 175
+      }
+      new InventoryCase {
+        name = "should handle v-model on input"
+        kind = "test"
+        line = 198
+      }
+      new InventoryCase {
+        name = "should handle emits"
+        kind = "test"
+        line = 225
+      }
+      new InventoryCase {
+        name = "should handle slots"
+        kind = "test"
+        line = 244
+      }
+      new InventoryCase {
+        name = "should call onMounted"
+        kind = "test"
+        line = 271
+      }
+      new InventoryCase {
+        name = "should call onUnmounted"
+        kind = "test"
+        line = 291
+      }
+      new InventoryCase {
+        name = "should handle async setup"
+        kind = "test"
+        line = 313
+      }
+    }
+  }
+  new InventoryFile {
+    path = "playground/e2e/css-compile.test.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "should compile basic CSS"
+        kind = "test"
+        line = 12
+      }
+      new InventoryCase {
+        name = "should compile multiple rules"
+        kind = "test"
+        line = 20
+      }
+      new InventoryCase {
+        name = "should handle nested selectors"
+        kind = "test"
+        line = 32
+      }
+      new InventoryCase {
+        name = "should add scope attribute to selectors"
+        kind = "test"
+        line = 47
+      }
+      new InventoryCase {
+        name = "should scope multiple selectors"
+        kind = "test"
+        line = 56
+      }
+      new InventoryCase {
+        name = "should handle :deep() pseudo-selector"
+        kind = "test"
+        line = 68
+      }
+      new InventoryCase {
+        name = "should handle :slotted() pseudo-selector"
+        kind = "test"
+        line = 81
+      }
+      new InventoryCase {
+        name = "should handle :global() pseudo-selector"
+        kind = "test"
+        line = 94
+      }
+      new InventoryCase {
+        name = "should minify CSS when option is enabled"
+        kind = "test"
+        line = 109
+      }
+      new InventoryCase {
+        name = "should not minify by default"
+        kind = "test"
+        line = 125
+      }
+      new InventoryCase {
+        name = "should detect v-bind() usage"
+        kind = "test"
+        line = 136
+      }
+      new InventoryCase {
+        name = "should detect multiple v-bind() usages"
+        kind = "test"
+        line = 149
+      }
+      new InventoryCase {
+        name = "should handle v-bind with expressions"
+        kind = "test"
+        line = 161
+      }
+      new InventoryCase {
+        name = "should compile SFC with style block"
+        kind = "test"
+        line = 173
+      }
+      new InventoryCase {
+        name = "should compile SFC with scoped style"
+        kind = "test"
+        line = 190
+      }
+      new InventoryCase {
+        name = "should compile SFC with multiple style blocks"
+        kind = "test"
+        line = 207
+      }
+      new InventoryCase {
+        name = "should handle style lang attribute"
+        kind = "test"
+        line = 229
+      }
+    }
+  }
+  new InventoryFile {
+    path = "playground/e2e/edge-cases.test.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "should handle empty template"
+        kind = "test"
+        line = 12
+      }
+      new InventoryCase {
+        name = "should handle template with only whitespace"
+        kind = "test"
+        line = 20
+      }
+      new InventoryCase {
+        name = "should handle empty script setup"
+        kind = "test"
+        line = 30
+      }
+      new InventoryCase {
+        name = "should handle generic function declarations"
+        kind = "test"
+        line = 45
+      }
+      new InventoryCase {
+        name = "should handle async/await with types"
+        kind = "test"
+        line = 66
+      }
+      new InventoryCase {
+        name = "should handle type assertions"
+        kind = "test"
+        line = 87
+      }
+      new InventoryCase {
+        name = "should handle non-null assertions"
+        kind = "test"
+        line = 106
+      }
+      new InventoryCase {
+        name = "should handle optional chaining with types"
+        kind = "test"
+        line = 121
+      }
+      new InventoryCase {
+        name = "should handle enum declarations"
+        kind = "test"
+        line = 139
+      }
+      new InventoryCase {
+        name = "should handle const enum declarations"
+        kind = "test"
+        line = 157
+      }
+      new InventoryCase {
+        name = "should handle class with decorators pattern"
+        kind = "test"
+        line = 177
+      }
+      new InventoryCase {
+        name = "should handle deeply nested templates"
+        kind = "test"
+        line = 207
+      }
+      new InventoryCase {
+        name = "should handle multiple root elements (fragments)"
+        kind = "test"
+        line = 227
+      }
+      new InventoryCase {
+        name = "should handle component self-reference"
+        kind = "test"
+        line = 242
+      }
+      new InventoryCase {
+        name = "should handle teleport"
+        kind = "test"
+        line = 261
+      }
+      new InventoryCase {
+        name = "should handle suspense"
+        kind = "test"
+        line = 276
+      }
+      new InventoryCase {
+        name = "should handle keep-alive"
+        kind = "test"
+        line = 297
+      }
+      new InventoryCase {
+        name = "should handle template literals"
+        kind = "test"
+        line = 316
+      }
+      new InventoryCase {
+        name = "should handle unicode in template"
+        kind = "test"
+        line = 331
+      }
+      new InventoryCase {
+        name = "should handle special HTML entities"
+        kind = "test"
+        line = 346
+      }
+      new InventoryCase {
+        name = "should handle defineModel"
+        kind = "test"
+        line = 358
+      }
+      new InventoryCase {
+        name = "should handle defineModel with options"
+        kind = "test"
+        line = 372
+      }
+      new InventoryCase {
+        name = "should handle defineExpose"
+        kind = "test"
+        line = 388
+      }
+      new InventoryCase {
+        name = "should handle defineOptions"
+        kind = "test"
+        line = 411
+      }
+      new InventoryCase {
+        name = "should handle defineSlots with types"
+        kind = "test"
+        line = 430
+      }
+    }
+  }
+  new InventoryFile {
+    path = "playground/e2e/sfc-compile.test.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "should compile template-only SFC"
+        kind = "test"
+        line = 12
+      }
+      new InventoryCase {
+        name = "should compile SFC with script setup"
+        kind = "test"
+        line = 25
+      }
+      new InventoryCase {
+        name = "should compile SFC with both script and script setup"
+        kind = "test"
+        line = 41
+      }
+      new InventoryCase {
+        name = "should strip type annotations from script setup"
+        kind = "test"
+        line = 64
+      }
+      new InventoryCase {
+        name = "should strip generic type parameters from ref/reactive"
+        kind = "test"
+        line = 85
+      }
+      new InventoryCase {
+        name = "should handle complex generic types"
+        kind = "test"
+        line = 109
+      }
+      new InventoryCase {
+        name = "should handle interface declarations"
+        kind = "test"
+        line = 131
+      }
+      new InventoryCase {
+        name = "should handle type aliases"
+        kind = "test"
+        line = 151
+      }
+      new InventoryCase {
+        name = "should handle defineProps with type parameter"
+        kind = "test"
+        line = 170
+      }
+      new InventoryCase {
+        name = "should handle defineEmits with type parameter"
+        kind = "test"
+        line = 188
+      }
+      new InventoryCase {
+        name = "should handle withDefaults"
+        kind = "test"
+        line = 205
+      }
+      new InventoryCase {
+        name = "should compile v-if directive"
+        kind = "test"
+        line = 228
+      }
+      new InventoryCase {
+        name = "should compile v-for directive"
+        kind = "test"
+        line = 242
+      }
+      new InventoryCase {
+        name = "should compile v-model directive"
+        kind = "test"
+        line = 256
+      }
+      new InventoryCase {
+        name = "should compile event handlers"
+        kind = "test"
+        line = 271
+      }
+      new InventoryCase {
+        name = "should compile slot content"
+        kind = "test"
+        line = 285
+      }
+      new InventoryCase {
+        name = "should compile SFC in SSR mode"
+        kind = "test"
+        line = 304
+      }
+    }
+  }
+  new InventoryFile {
+    path = "playground/e2e/vrt/atelier-code-tabs.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "atelier code targets expose VDOM, SSR, and Vapor outputs with stable toggles"
+        kind = "test"
+        line = 45
+      }
+    }
+  }
+  new InventoryFile {
+    path = "playground/e2e/vrt/playground.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "light"
+        kind = "test"
+        line = 47
+      }
+      new InventoryCase {
+        name = "dark"
+        kind = "test"
+        line = 53
+      }
+    }
+  }
+  new InventoryFile {
+    path = "playground/e2e/wasm.test.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "should load WASM module"
+        kind = "test"
+        line = 5
+      }
+      new InventoryCase {
+        name = "should return WASM module after loading"
+        kind = "test"
+        line = 11
+      }
+      new InventoryCase {
+        name = "should have compileSfc function"
+        kind = "test"
+        line = 16
+      }
+      new InventoryCase {
+        name = "should compile a simple SFC"
+        kind = "test"
+        line = 24
+      }
+      new InventoryCase {
+        name = "should use real WASM, not mock"
+        kind = "test"
+        line = 43
+      }
+    }
+  }
+  new InventoryFile {
+    path = "playground/src/features/atelier/codeOutputs.test.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "compiles template outputs for SSR and Vapor variants"
+        kind = "test"
+        line = 82
+      }
+      new InventoryCase {
+        name = "normalizes SFC SSR and Vapor template outputs using script setup bindings"
+        kind = "test"
+        line = 111
+      }
+    }
+  }
+  new InventoryFile {
+    path = "playground/src/features/atelier/formatters.test.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "formats SSR template literal output"
+        kind = "test"
+        line = 5
+      }
+      new InventoryCase {
+        name = "formats Vapor template factory output"
+        kind = "test"
+        line = 26
+      }
+    }
+  }
+  new InventoryFile {
+    path = "playground/src/simple.test.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "should mount Button with slot"
+        kind = "test"
+        line = 6
+      }
+      new InventoryCase {
+        name = "should mount Button without slot"
+        kind = "test"
+        line = 14
+      }
+    }
+  }
+  new InventoryFile {
+    path = "tests/app/dev/elk.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "page renders with #__nuxt attached"
+        kind = "test"
+        line = 49
+      }
+      new InventoryCase {
+        name = "SSR: server-rendered HTML is not empty"
+        kind = "test"
+        line = 75
+      }
+      new InventoryCase {
+        name = "no hydration mismatch errors"
+        kind = "test"
+        line = 82
+      }
+      new InventoryCase {
+        name = "scoped CSS: data-v-* attributes exist"
+        kind = "test"
+        line = 94
+      }
+      new InventoryCase {
+        name = "styles are applied: computed styles are non-default"
+        kind = "test"
+        line = 105
+      }
+      new InventoryCase {
+        name = "navigation components are visible"
+        kind = "test"
+        line = 118
+      }
+      new InventoryCase {
+        name = "no fatal console errors"
+        kind = "test"
+        line = 131
+      }
+      new InventoryCase {
+        name = "i18n: no raw key patterns displayed"
+        kind = "test"
+        line = 148
+      }
+      new InventoryCase {
+        name = "screenshot"
+        kind = "test"
+        line = 171
+      }
+    }
+  }
+  new InventoryFile {
+    path = "tests/app/dev/misskey.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "page renders with #misskey_app attached"
+        kind = "test"
+        line = 47
+      }
+      new InventoryCase {
+        name = "visitor UI renders"
+        kind = "test"
+        line = 75
+      }
+      new InventoryCase {
+        name = "scoped CSS: data-v-* attributes exist"
+        kind = "test"
+        line = 89
+      }
+      new InventoryCase {
+        name = "CSS Modules: module-generated class names exist"
+        kind = "test"
+        line = 102
+      }
+      new InventoryCase {
+        name = "async components load"
+        kind = "test"
+        line = 125
+      }
+      new InventoryCase {
+        name = "no fatal console errors"
+        kind = "test"
+        line = 144
+      }
+      new InventoryCase {
+        name = "screenshot"
+        kind = "test"
+        line = 161
+      }
+    }
+  }
+  new InventoryFile {
+    path = "tests/app/dev/npmx.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "page renders with #__nuxt attached"
+        kind = "test"
+        line = 116
+      }
+      new InventoryCase {
+        name = "SSR: server-rendered HTML contains expected content"
+        kind = "test"
+        line = 142
+      }
+      new InventoryCase {
+        name = "SSR: accessibility route keeps definePageMeta route name"
+        kind = "test"
+        line = 151
+      }
+      new InventoryCase {
+        name = "SSR: docs alias resolves definePageMeta alias and meta"
+        kind = "test"
+        line = 169
+      }
+      new InventoryCase {
+        name = "server logs stay clean during docs prefetch"
+        kind = "test"
+        line = 191
+      }
+      new InventoryCase {
+        name = "no hydration mismatch errors"
+        kind = "test"
+        line = 211
+      }
+      new InventoryCase {
+        name = "scoped CSS: data-v-* attributes exist"
+        kind = "test"
+        line = 223
+      }
+      new InventoryCase {
+        name = "styles are applied: .skip-link has position fixed"
+        kind = "test"
+        line = 234
+      }
+      new InventoryCase {
+        name = "client-side navigation works"
+        kind = "test"
+        line = 253
+      }
+      new InventoryCase {
+        name = "reactivity: search input updates state"
+        kind = "test"
+        line = 270
+      }
+      new InventoryCase {
+        name = "i18n: localized strings displayed (no raw keys)"
+        kind = "test"
+        line = 290
+      }
+      new InventoryCase {
+        name = "components: AppHeader and AppFooter are visible"
+        kind = "test"
+        line = 309
+      }
+      new InventoryCase {
+        name = "no fatal console errors"
+        kind = "test"
+        line = 327
+      }
+      new InventoryCase {
+        name = "screenshot"
+        kind = "test"
+        line = 343
+      }
+    }
+  }
+  new InventoryFile {
+    path = "tests/app/dev/vuefes.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "page renders with #__nuxt attached"
+        kind = "test"
+        line = 48
+      }
+      new InventoryCase {
+        name = "SSR: server-rendered HTML is not empty"
+        kind = "test"
+        line = 61
+      }
+      new InventoryCase {
+        name = "no hydration mismatch errors"
+        kind = "test"
+        line = 67
+      }
+      new InventoryCase {
+        name = "scoped CSS: data-v-* attributes exist"
+        kind = "test"
+        line = 83
+      }
+      new InventoryCase {
+        name = "no fatal console errors"
+        kind = "test"
+        line = 94
+      }
+      new InventoryCase {
+        name = "screenshot"
+        kind = "test"
+        line = 110
+      }
+    }
+  }
+}

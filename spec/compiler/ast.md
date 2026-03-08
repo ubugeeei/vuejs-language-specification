@@ -1,269 +1,224 @@
-# Vue.js Template Compiler AST Specification
+# Portable Template AST Model
 
-## 1. Overview
+This document defines the portable AST model used by the machine-readable suites. It is intentionally narrower than every internal node used by `vuejs/core`, but it preserves the observable structure that cross-language implementations need in order to compare parsing and transform results.
 
-This document specifies the Abstract Syntax Tree (AST) structure used by the Vue.js template compiler. The AST serves as an intermediate representation between the source template and the generated render function code.
+## Goals
 
-### 1.1 Scope
+- Preserve enough structure to describe syntax and compiler conformance.
+- Avoid coupling the suite to transient internal helpers.
+- Separate stable shape requirements from implementation-private optimization details.
+- Leave room for profile-specific extensions such as Vapor without polluting the base model.
 
-This specification covers:
+## Stability Rules
 
-- **Template AST**: Nodes produced by parsing Vue template syntax
-- **Codegen AST**: Nodes used for code generation
-- **SFC Descriptor**: Structure representing parsed Single File Components
+- Node presence, child ordering, source locations, and directive decomposition are stable surface area.
+- Helper symbol names, temporary slot indices, and optimizer-specific caches are not stable surface area unless a case explicitly requires them.
+- Numeric enum values are not normative. Portable consumers should compare symbolic names.
+- Profile-specific fields must be namespaced under a profile object rather than mixed into the base node contract.
 
-### 1.2 Mode Compatibility
+## Common Fields
 
-| Symbol | Description |
-|--------|-------------|
-| `[U]` | Universal - applies to both Virtual DOM and Vapor modes |
-| `[V]` | Virtual DOM Only |
-| `[P]` | Vapor Only |
+Every node in the portable model exposes:
 
-### 1.3 Notation
-
-This specification uses a notation similar to [ESTree](https://github.com/estree/estree).
-
-- `interface A { }` defines a node type
-- `interface A <: B { }` means A extends B
-- `type: "X"` specifies a literal string value
-- `T | null` means the value can be T or null
-- `[ T ]` means an array of T
-
----
-
-## 2. Enumerations
-
-### 2.1 Namespace `[U]`
-
-```js
-enum Namespace {
-    HTML | SVG | MATH_ML
-}
-```
-
-| Value | Numeric | Description |
-|-------|---------|-------------|
-| HTML | 0 | HTML namespace |
-| SVG | 1 | SVG namespace |
-| MATH_ML | 2 | MathML namespace |
-
-### 2.2 NodeType `[U]`
-
-```js
-enum NodeType {
-    // Template Nodes
-    ROOT | ELEMENT | TEXT | COMMENT | SIMPLE_EXPRESSION |
-    INTERPOLATION | ATTRIBUTE | DIRECTIVE |
-    // Container Nodes
-    COMPOUND_EXPRESSION | IF | IF_BRANCH | FOR | TEXT_CALL |
-    // Codegen Nodes
-    VNODE_CALL | JS_CALL_EXPRESSION | JS_OBJECT_EXPRESSION |
-    JS_PROPERTY | JS_ARRAY_EXPRESSION | JS_FUNCTION_EXPRESSION |
-    JS_CONDITIONAL_EXPRESSION | JS_CACHE_EXPRESSION |
-    // SSR Codegen Nodes
-    JS_BLOCK_STATEMENT | JS_TEMPLATE_LITERAL | JS_IF_STATEMENT |
-    JS_ASSIGNMENT_EXPRESSION | JS_SEQUENCE_EXPRESSION | JS_RETURN_STATEMENT
-}
-```
-
-| NodeType | Numeric | Mode | Description |
-|----------|---------|------|-------------|
-| ROOT | 0 | U | Root of parsed template |
-| ELEMENT | 1 | U | Any element node |
-| TEXT | 2 | U | Static text content |
-| COMMENT | 3 | U | HTML comment |
-| SIMPLE_EXPRESSION | 4 | U | Single expression |
-| INTERPOLATION | 5 | U | Mustache interpolation `{{ }}` |
-| ATTRIBUTE | 6 | U | Static attribute |
-| DIRECTIVE | 7 | U | Directive (`v-*`, `:`, `@`, `#`) |
-| COMPOUND_EXPRESSION | 8 | U | Combined expressions |
-| IF | 9 | U | v-if chain container |
-| IF_BRANCH | 10 | U | Single if/else-if/else branch |
-| FOR | 11 | U | v-for loop |
-| TEXT_CALL | 12 | U | Text with runtime handling |
-| VNODE_CALL | 13 | V | VNode creation call |
-| JS_CALL_EXPRESSION | 14 | U | Function call |
-| JS_OBJECT_EXPRESSION | 15 | U | Object literal |
-| JS_PROPERTY | 16 | U | Object property |
-| JS_ARRAY_EXPRESSION | 17 | U | Array literal |
-| JS_FUNCTION_EXPRESSION | 18 | U | Function expression |
-| JS_CONDITIONAL_EXPRESSION | 19 | U | Ternary expression |
-| JS_CACHE_EXPRESSION | 20 | V | Cache wrapper |
-| JS_BLOCK_STATEMENT | 21 | V | Block statement (SSR) |
-| JS_TEMPLATE_LITERAL | 22 | V | Template literal (SSR) |
-| JS_IF_STATEMENT | 23 | V | If statement (SSR) |
-| JS_ASSIGNMENT_EXPRESSION | 24 | V | Assignment (SSR) |
-| JS_SEQUENCE_EXPRESSION | 25 | V | Sequence expression (SSR) |
-| JS_RETURN_STATEMENT | 26 | V | Return statement (SSR) |
-
-### 2.3 ElementType `[U]`
-
-```js
-enum ElementType {
-    ELEMENT | COMPONENT | SLOT | TEMPLATE
-}
-```
-
-| ElementType | Numeric | Description |
-|-------------|---------|-------------|
-| ELEMENT | 0 | Native HTML/SVG element |
-| COMPONENT | 1 | Vue component |
-| SLOT | 2 | `<slot>` outlet |
-| TEMPLATE | 3 | `<template>` wrapper |
-
-### 2.4 ConstantType `[U]`
-
-Used for static analysis and optimization. Higher levels imply lower levels.
-
-```js
-enum ConstantType {
-    NOT_CONSTANT | CAN_SKIP_PATCH | CAN_CACHE | CAN_STRINGIFY
-}
-```
-
-| ConstantType | Numeric | Description |
-|--------------|---------|-------------|
-| NOT_CONSTANT | 0 | Dynamic, cannot be optimized |
-| CAN_SKIP_PATCH | 1 | Can skip patch during updates |
-| CAN_CACHE | 2 | Can be cached across renders |
-| CAN_STRINGIFY | 3 | Can be pre-stringified (highest) |
-
-### 2.5 PatchFlag `[V]`
-
-Bitwise flags for optimizing Virtual DOM patching.
-
-```js
-enum PatchFlag {
-    TEXT | CLASS | STYLE | PROPS | FULL_PROPS | HYDRATE_EVENTS |
-    STABLE_FRAGMENT | KEYED_FRAGMENT | UNKEYED_FRAGMENT |
-    NEED_PATCH | DYNAMIC_SLOTS | DEV_ROOT_FRAGMENT | HOISTED | BAIL
-}
-```
-
-| Flag | Value | Description |
-|------|-------|-------------|
-| TEXT | 1 | Dynamic text content |
-| CLASS | 2 | Dynamic class binding |
-| STYLE | 4 | Dynamic style binding |
-| PROPS | 8 | Dynamic non-class/style props |
-| FULL_PROPS | 16 | Props with dynamic keys |
-| HYDRATE_EVENTS | 32 | Event listeners for hydration |
-| STABLE_FRAGMENT | 64 | Fragment with stable children |
-| KEYED_FRAGMENT | 128 | Fragment with keyed children |
-| UNKEYED_FRAGMENT | 256 | Fragment with unkeyed children |
-| NEED_PATCH | 512 | Needs patch regardless |
-| DYNAMIC_SLOTS | 1024 | Dynamic slot content |
-| DEV_ROOT_FRAGMENT | 2048 | Dev root fragment |
-| HOISTED | -1 | Static node (hoisted) |
-| BAIL | -2 | Skip optimization |
-
----
-
-## 3. Source Location `[U]`
-
-All AST nodes contain location information for error reporting and source maps.
-
-```js
-interface Position {
-    offset: number;
-    line: number;
-    column: number;
+```ts
+interface PortableNode {
+  kind: string;
+  loc: SourceLocation;
 }
 
 interface SourceLocation {
-    start: Position;
-    end: Position;
-    source: string;
+  start: Position;
+  end: Position;
+  source: string;
+}
+
+interface Position {
+  offset: number;
+  line: number;
+  column: number;
 }
 ```
 
-### 3.1 Position Fields
+`loc` is required for parser conformance, diagnostics, and source-map alignment.
 
-| Field | Type | Description |
-|-------|------|-------------|
-| offset | number | 0-based byte offset from start of file |
-| line | number | 1-based line number |
-| column | number | 1-based column number |
+## Root
 
-### 3.2 SourceLocation Fields
-
-| Field | Type | Description |
-|-------|------|-------------|
-| start | Position | Start position (inclusive) |
-| end | Position | End position (exclusive) |
-| source | string | Raw source text of this node |
-
-**Note**: The range follows the convention `[start, end)`.
-
----
-
-## 4. Base Node `[U]`
-
-All AST nodes inherit from this base structure.
-
-```js
-interface Node {
-    type: NodeType;
-    loc: SourceLocation;
+```ts
+interface RootNode extends PortableNode {
+  kind: "Root";
+  children: TemplateChildNode[];
+  comments?: CommentNode[];
+  codegen?: CodegenNode | null;
 }
 ```
 
----
+The root `children` array preserves lexical order after HTML comment retention and whitespace policy have been applied.
 
-## 5. Template AST Nodes
+## Template Nodes
 
-### 5.1 RootNode `[U]`
+```ts
+type TemplateChildNode =
+  | ElementNode
+  | TextNode
+  | CommentNode
+  | InterpolationNode
+  | CompoundExpressionNode
+  | IfNode
+  | ForNode;
 
-The root of a parsed template.
+interface ElementNode extends PortableNode {
+  kind: "Element";
+  namespace: "html" | "svg" | "mathml";
+  tag: string;
+  tagType: "element" | "component" | "slot" | "template";
+  props: PropNode[];
+  children: TemplateChildNode[];
+}
 
-```js
-interface RootNode <: Node {
-    type: "ROOT";
-    source: string;
-    children: [ TemplateChildNode ];
-    helpers: Set<symbol>;
-    components: [ string ];
-    directives: [ string ];
-    hoists: [ JSChildNode | null ];
-    imports: [ ImportItem ];
-    cached: [ CacheExpression | null ];
-    temps: number;
-    codegenNode: TemplateChildNode | JSChildNode | BlockStatement | null;
-    transformed: boolean | null;
-    filters: [ string ] | null;
+interface TextNode extends PortableNode {
+  kind: "Text";
+  content: string;
+}
+
+interface CommentNode extends PortableNode {
+  kind: "Comment";
+  content: string;
+}
+
+interface InterpolationNode extends PortableNode {
+  kind: "Interpolation";
+  expression: ExpressionNode;
+}
+
+interface CompoundExpressionNode extends PortableNode {
+  kind: "CompoundExpression";
+  parts: Array<string | ExpressionNode>;
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| source | string | Original template source |
-| children | [ TemplateChildNode ] | Top-level child nodes |
-| helpers | Set<symbol> | Runtime helpers needed |
-| components | [ string ] | Component names used |
-| directives | [ string ] | Custom directive names used |
-| hoists | [ JSChildNode \| null ] | Hoisted static expressions |
-| imports | [ ImportItem ] | Import statements to generate |
-| cached | [ CacheExpression \| null ] | Cached expressions |
-| temps | number | Number of temp variables needed |
-| codegenNode | Node \| null | Generated code node (optional) |
-| transformed | boolean \| null | Whether transform completed (optional) |
-| filters | [ string ] \| null | v2 filter names (compat only, optional) |
+## Props and Directives
 
-### 5.2 ElementNode `[U]`
+```ts
+type PropNode = AttributeNode | DirectiveNode;
 
-```js
-interface ElementNode <: Node {
-    type: "ELEMENT";
-    ns: Namespace;
-    tag: string;
-    tagType: ElementType;
-    props: [ AttributeNode | DirectiveNode ];
-    children: [ TemplateChildNode ];
-    isSelfClosing: boolean | null;
-    innerLoc: SourceLocation | null;
+interface AttributeNode extends PortableNode {
+  kind: "Attribute";
+  name: string;
+  value: string | null;
+}
+
+interface DirectiveNode extends PortableNode {
+  kind: "Directive";
+  name: string;
+  rawName: string;
+  argument: ExpressionNode | null;
+  expression: ExpressionNode | null;
+  modifiers: string[];
 }
 ```
+
+The portable form intentionally distinguishes:
+
+- canonical directive name
+- original spelling
+- argument
+- expression
+- modifier list
+
+That split is required for cross-language compiler parity and diagnostic precision.
+
+## Control Flow
+
+```ts
+interface IfNode extends PortableNode {
+  kind: "If";
+  branches: IfBranchNode[];
+}
+
+interface IfBranchNode extends PortableNode {
+  kind: "IfBranch";
+  condition: ExpressionNode | null;
+  children: TemplateChildNode[];
+}
+
+interface ForNode extends PortableNode {
+  kind: "For";
+  source: ExpressionNode;
+  valueAlias: ExpressionNode | null;
+  keyAlias: ExpressionNode | null;
+  indexAlias: ExpressionNode | null;
+  children: TemplateChildNode[];
+}
+```
+
+For `v-if` chains, comments between branches belong to the following branch, matching current upstream behavior.
+
+For `v-for`, alias decomposition is part of the parse result. Implementations must not delay alias extraction until code generation if they expose the portable AST.
+
+## Expressions
+
+```ts
+interface ExpressionNode extends PortableNode {
+  kind: "Expression";
+  content: string;
+  isStatic: boolean;
+  constType?: "not-constant" | "can-skip-patch" | "can-cache" | "can-stringify";
+}
+```
+
+`content` is preserved source text after any phase-specific rewriting required by the case, for example identifier prefixing in compiler transforms.
+
+## Code Generation Nodes
+
+The portable suite only standardizes the minimum codegen surface needed by curated compiler cases:
+
+```ts
+type CodegenNode =
+  | VNodeCall
+  | ConditionalCodegenNode
+  | CallExpressionNode
+  | ObjectExpressionNode
+  | ArrayExpressionNode;
+
+interface VNodeCall extends PortableNode {
+  kind: "VNodeCall";
+  tag: string | ExpressionNode;
+  props: ObjectExpressionNode | ExpressionNode | null;
+  children: CodegenNode | TemplateChildNode[] | ExpressionNode | null;
+  isBlock: boolean;
+  patchFlags?: string[];
+}
+
+interface ConditionalCodegenNode extends PortableNode {
+  kind: "ConditionalExpression";
+  test: ExpressionNode;
+  consequent: CodegenNode;
+  alternate: CodegenNode;
+}
+```
+
+Cases that require deeper internal trees should specify JSON Pointer assertions against implementation-native ASTs and link that requirement explicitly from the case metadata.
+
+## Profiles
+
+Profile-specific additions are attached under a `profiles` object:
+
+```ts
+interface ProfileAugmentedNode extends PortableNode {
+  profiles?: {
+    vapor?: Record<string, unknown>;
+  };
+}
+```
+
+The base suite does not require any `vapor` fields. Vapor-only conformance must be declared by profile-specific cases tied to the correct Vue minor branch snapshot.
+props: [ AttributeNode | DirectiveNode ];
+children: [ TemplateChildNode ];
+isSelfClosing: boolean | null;
+innerLoc: SourceLocation | null;
+}
+
+````
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -285,7 +240,7 @@ interface PlainElementNode <: ElementNode {
     codegenNode: VNodeCall | SimpleExpressionNode | CacheExpression | MemoExpression | null;
     ssrCodegenNode: TemplateLiteral | null;
 }
-```
+````
 
 #### 5.2.2 ComponentNode `[U]`
 
@@ -335,8 +290,8 @@ interface TextNode <: Node {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
+| Field   | Type   | Description  |
+| ------- | ------ | ------------ |
 | content | string | Text content |
 
 ### 5.4 CommentNode `[U]`
@@ -350,8 +305,8 @@ interface CommentNode <: Node {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
+| Field   | Type   | Description                                |
+| ------- | ------ | ------------------------------------------ |
 | content | string | Comment content (without `<!--` and `-->`) |
 
 ### 5.5 AttributeNode `[U]`
@@ -367,18 +322,18 @@ interface AttributeNode <: Node {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| name | string | Attribute name |
-| nameLoc | SourceLocation | Location of name only |
-| value | TextNode \| null | Value (null if boolean attribute) |
+| Field   | Type             | Description                       |
+| ------- | ---------------- | --------------------------------- |
+| name    | string           | Attribute name                    |
+| nameLoc | SourceLocation   | Location of name only             |
+| value   | TextNode \| null | Value (null if boolean attribute) |
 
 **Examples**:
 
-| Source | name | value |
-|--------|------|-------|
-| `id="app"` | "id" | TextNode { content: "app" } |
-| `disabled` | "disabled" | null |
+| Source     | name       | value                       |
+| ---------- | ---------- | --------------------------- |
+| `id="app"` | "id"       | TextNode { content: "app" } |
+| `disabled` | "disabled" | null                        |
 
 ### 5.6 DirectiveNode `[U]`
 
@@ -396,24 +351,24 @@ interface DirectiveNode <: Node {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| name | string | Normalized name: "bind", "on", "if", etc. |
-| rawName | string \| null | Original attribute name (optional) |
-| exp | ExpressionNode \| null | Directive expression |
-| arg | ExpressionNode \| null | Directive argument |
-| modifiers | [ SimpleExpressionNode ] | Modifier list |
-| forParseResult | ForParseResult \| null | Cached v-for parse (optional) |
+| Field          | Type                     | Description                               |
+| -------------- | ------------------------ | ----------------------------------------- |
+| name           | string                   | Normalized name: "bind", "on", "if", etc. |
+| rawName        | string \| null           | Original attribute name (optional)        |
+| exp            | ExpressionNode \| null   | Directive expression                      |
+| arg            | ExpressionNode \| null   | Directive argument                        |
+| modifiers      | [ SimpleExpressionNode ] | Modifier list                             |
+| forParseResult | ForParseResult \| null   | Cached v-for parse (optional)             |
 
 **Examples**:
 
-| Source | name | arg | exp | modifiers |
-|--------|------|-----|-----|-----------|
-| `v-if="show"` | "if" | null | "show" | [] |
-| `:class="cls"` | "bind" | "class" | "cls" | [] |
-| `@click.stop="fn"` | "on" | "click" | "fn" | ["stop"] |
-| `v-model.trim="val"` | "model" | null | "val" | ["trim"] |
-| `#default="{ item }"` | "slot" | "default" | "{ item }" | [] |
+| Source                | name    | arg       | exp        | modifiers |
+| --------------------- | ------- | --------- | ---------- | --------- |
+| `v-if="show"`         | "if"    | null      | "show"     | []        |
+| `:class="cls"`        | "bind"  | "class"   | "cls"      | []        |
+| `@click.stop="fn"`    | "on"    | "click"   | "fn"       | ["stop"]  |
+| `v-model.trim="val"`  | "model" | null      | "val"      | ["trim"]  |
+| `#default="{ item }"` | "slot"  | "default" | "{ item }" | []        |
 
 ### 5.7 InterpolationNode `[U]`
 
@@ -426,8 +381,8 @@ interface InterpolationNode <: Node {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
+| Field   | Type           | Description                 |
+| ------- | -------------- | --------------------------- |
 | content | ExpressionNode | The interpolated expression |
 
 ---
@@ -455,15 +410,15 @@ interface SimpleExpressionNode <: Node {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| content | string | Expression source code |
-| isStatic | boolean | Is a static string literal |
-| constType | ConstantType | Constant analysis result |
-| ast | BabelNode \| null \| false | Parsed AST (null=identifier, false=error) |
-| hoisted | JSChildNode \| null | Points to hoisted node (optional) |
-| identifiers | [ string ] \| null | Identifiers in function params (optional) |
-| isHandlerKey | boolean \| null | Is an event handler key (optional) |
+| Field        | Type                       | Description                               |
+| ------------ | -------------------------- | ----------------------------------------- |
+| content      | string                     | Expression source code                    |
+| isStatic     | boolean                    | Is a static string literal                |
+| constType    | ConstantType               | Constant analysis result                  |
+| ast          | BabelNode \| null \| false | Parsed AST (null=identifier, false=error) |
+| hoisted      | JSChildNode \| null        | Points to hoisted node (optional)         |
+| identifiers  | [ string ] \| null         | Identifiers in function params (optional) |
+| isHandlerKey | boolean \| null            | Is an event handler key (optional)        |
 
 ### 6.2 CompoundExpressionNode
 
@@ -498,10 +453,10 @@ interface IfNode <: Node {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| branches | [ IfBranchNode ] | List of branches (at least one) |
-| codegenNode | Node \| null | Generated conditional (optional) |
+| Field       | Type             | Description                      |
+| ----------- | ---------------- | -------------------------------- |
+| branches    | [ IfBranchNode ] | List of branches (at least one)  |
+| codegenNode | Node \| null     | Generated conditional (optional) |
 
 ### 7.2 IfBranchNode
 
@@ -517,12 +472,12 @@ interface IfBranchNode <: Node {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| condition | ExpressionNode \| null | Condition (null for v-else) |
-| children | [ TemplateChildNode ] | Branch content |
-| userKey | AttributeNode \| DirectiveNode \| null | User-provided key (optional) |
-| isTemplateIf | boolean \| null | Is on template element (optional) |
+| Field        | Type                                   | Description                       |
+| ------------ | -------------------------------------- | --------------------------------- |
+| condition    | ExpressionNode \| null                 | Condition (null for v-else)       |
+| children     | [ TemplateChildNode ]                  | Branch content                    |
+| userKey      | AttributeNode \| DirectiveNode \| null | User-provided key (optional)      |
+| isTemplateIf | boolean \| null                        | Is on template element (optional) |
 
 ### 7.3 ForNode
 
@@ -549,22 +504,22 @@ interface ForNode <: Node {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| source | ExpressionNode | Iterable expression |
-| valueAlias | ExpressionNode \| null | Value variable |
-| keyAlias | ExpressionNode \| null | Key/index variable |
+| Field            | Type                   | Description                  |
+| ---------------- | ---------------------- | ---------------------------- |
+| source           | ExpressionNode         | Iterable expression          |
+| valueAlias       | ExpressionNode \| null | Value variable               |
+| keyAlias         | ExpressionNode \| null | Key/index variable           |
 | objectIndexAlias | ExpressionNode \| null | Third variable (for objects) |
-| parseResult | ForParseResult | Parsed v-for expression |
-| children | [ TemplateChildNode ] | Loop body |
+| parseResult      | ForParseResult         | Parsed v-for expression      |
+| children         | [ TemplateChildNode ]  | Loop body                    |
 
 **v-for Syntax Mapping**:
 
-| Syntax | value | key | index |
-|--------|-------|-----|-------|
-| `item in items` | "item" | null | null |
-| `(item, i) in items` | "item" | "i" | null |
-| `(val, key, i) in obj` | "val" | "key" | "i" |
+| Syntax                 | value  | key   | index |
+| ---------------------- | ------ | ----- | ----- |
+| `item in items`        | "item" | null  | null  |
+| `(item, i) in items`   | "item" | "i"   | null  |
+| `(val, key, i) in obj` | "val"  | "key" | "i"   |
 
 ### 7.4 TextCallNode
 
@@ -605,17 +560,17 @@ interface VNodeCall <: Node {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| tag | string \| symbol \| CallExpression | Element tag or component |
-| props | PropsExpression \| null | Element properties |
-| children | VNodeChildren | Child content |
-| patchFlag | PatchFlag \| null | Optimization flag |
-| dynamicProps | string \| SimpleExpressionNode \| null | Dynamic prop names |
-| directives | DirectiveArguments \| null | Runtime directives |
-| isBlock | boolean | Is a block node |
-| disableTracking | boolean | Disable reactivity tracking |
-| isComponent | boolean | Is a component |
+| Field           | Type                                   | Description                 |
+| --------------- | -------------------------------------- | --------------------------- |
+| tag             | string \| symbol \| CallExpression     | Element tag or component    |
+| props           | PropsExpression \| null                | Element properties          |
+| children        | VNodeChildren                          | Child content               |
+| patchFlag       | PatchFlag \| null                      | Optimization flag           |
+| dynamicProps    | string \| SimpleExpressionNode \| null | Dynamic prop names          |
+| directives      | DirectiveArguments \| null             | Runtime directives          |
+| isBlock         | boolean                                | Is a block node             |
+| disableTracking | boolean                                | Disable reactivity tracking |
+| isComponent     | boolean                                | Is a component              |
 
 ### 8.2 CallExpression `[U]`
 
@@ -697,13 +652,13 @@ interface CacheExpression <: Node {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| index | number | Cache slot index |
-| value | JSChildNode | Cached value |
-| needPauseTracking | boolean | Pause reactivity tracking |
-| inVOnce | boolean | Is in v-once context |
-| needArraySpread | boolean | Needs array spread for v-for |
+| Field             | Type        | Description                  |
+| ----------------- | ----------- | ---------------------------- |
+| index             | number      | Cache slot index             |
+| value             | JSChildNode | Cached value                 |
+| needPauseTracking | boolean     | Pause reactivity tracking    |
+| inVOnce           | boolean     | Is in v-once context         |
+| needArraySpread   | boolean     | Needs array spread for v-for |
 
 ---
 
@@ -775,9 +730,16 @@ interface ReturnStatement <: Node {
 All possible children of a template element.
 
 ```js
-TemplateChildNode = ElementNode | InterpolationNode | CompoundExpressionNode |
-                    TextNode | CommentNode | IfNode | IfBranchNode |
-                    ForNode | TextCallNode;
+TemplateChildNode =
+  ElementNode |
+  InterpolationNode |
+  CompoundExpressionNode |
+  TextNode |
+  CommentNode |
+  IfNode |
+  IfBranchNode |
+  ForNode |
+  TextCallNode;
 ```
 
 ### 10.2 ParentNode
@@ -791,16 +753,29 @@ ParentNode = RootNode | ElementNode | IfBranchNode | ForNode;
 ### 10.3 JSChildNode
 
 ```js
-JSChildNode = VNodeCall | CallExpression | ObjectExpression | ArrayExpression |
-              ExpressionNode | FunctionExpression | ConditionalExpression |
-              CacheExpression | AssignmentExpression | SequenceExpression;
+JSChildNode =
+  VNodeCall |
+  CallExpression |
+  ObjectExpression |
+  ArrayExpression |
+  ExpressionNode |
+  FunctionExpression |
+  ConditionalExpression |
+  CacheExpression |
+  AssignmentExpression |
+  SequenceExpression;
 ```
 
 ### 10.4 SSRCodegenNode
 
 ```js
-SSRCodegenNode = BlockStatement | TemplateLiteral | IfStatement |
-                 AssignmentExpression | ReturnStatement | SequenceExpression;
+SSRCodegenNode =
+  BlockStatement |
+  TemplateLiteral |
+  IfStatement |
+  AssignmentExpression |
+  ReturnStatement |
+  SequenceExpression;
 ```
 
 ---
@@ -823,15 +798,15 @@ interface SFCBlock {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| type | string | Block type ("template", "script", "style", etc.) |
-| content | string | Block content |
-| attrs | object | Attributes on the block tag |
-| loc | SourceLocation | Source location |
-| map | RawSourceMap \| null | Source map (optional) |
-| lang | string \| null | Language attribute (optional) |
-| src | string \| null | External source path (optional) |
+| Field   | Type                 | Description                                      |
+| ------- | -------------------- | ------------------------------------------------ |
+| type    | string               | Block type ("template", "script", "style", etc.) |
+| content | string               | Block content                                    |
+| attrs   | object               | Attributes on the block tag                      |
+| loc     | SourceLocation       | Source location                                  |
+| map     | RawSourceMap \| null | Source map (optional)                            |
+| lang    | string \| null       | Language attribute (optional)                    |
+| src     | string \| null       | External source path (optional)                  |
 
 ### 11.2 SFCTemplateBlock
 
@@ -857,15 +832,15 @@ interface SFCScriptBlock <: SFCBlock {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| setup | string \| boolean \| null | Setup attribute value (optional) |
-| bindings | BindingMetadata \| null | Binding analysis result (optional) |
-| imports | object \| null | Import bindings (optional) |
-| scriptAst | [ Statement ] \| null | Non-setup script AST (optional) |
-| scriptSetupAst | [ Statement ] \| null | Setup script AST (optional) |
-| warnings | [ string ] \| null | Compiler warnings (optional) |
-| deps | [ string ] \| null | Dependency file paths (optional) |
+| Field          | Type                      | Description                        |
+| -------------- | ------------------------- | ---------------------------------- |
+| setup          | string \| boolean \| null | Setup attribute value (optional)   |
+| bindings       | BindingMetadata \| null   | Binding analysis result (optional) |
+| imports        | object \| null            | Import bindings (optional)         |
+| scriptAst      | [ Statement ] \| null     | Non-setup script AST (optional)    |
+| scriptSetupAst | [ Statement ] \| null     | Setup script AST (optional)        |
+| warnings       | [ string ] \| null        | Compiler warnings (optional)       |
+| deps           | [ string ] \| null        | Dependency file paths (optional)   |
 
 ### 11.4 SFCStyleBlock
 
@@ -877,10 +852,10 @@ interface SFCStyleBlock <: SFCBlock {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| scoped | boolean \| null | Has scoped attribute (optional) |
-| module | string \| boolean \| null | CSS modules config (optional) |
+| Field  | Type                      | Description                     |
+| ------ | ------------------------- | ------------------------------- |
+| scoped | boolean \| null           | Has scoped attribute (optional) |
+| module | string \| boolean \| null | CSS modules config (optional)   |
 
 ### 11.5 SFCDescriptor
 
@@ -900,17 +875,17 @@ interface SFCDescriptor {
 }
 ```
 
-| Field | Type | Description |
-|-------|------|-------------|
-| filename | string | File name |
-| source | string | Full source code |
-| template | SFCTemplateBlock \| null | Template block |
-| script | SFCScriptBlock \| null | Script block (non-setup) |
-| scriptSetup | SFCScriptBlock \| null | Script setup block |
-| styles | [ SFCStyleBlock ] | Style blocks |
-| customBlocks | [ SFCBlock ] | Custom blocks |
-| cssVars | [ string ] | CSS variables used |
-| slotted | boolean | Uses :slotted() modifier |
+| Field        | Type                     | Description              |
+| ------------ | ------------------------ | ------------------------ |
+| filename     | string                   | File name                |
+| source       | string                   | Full source code         |
+| template     | SFCTemplateBlock \| null | Template block           |
+| script       | SFCScriptBlock \| null   | Script block (non-setup) |
+| scriptSetup  | SFCScriptBlock \| null   | Script setup block       |
+| styles       | [ SFCStyleBlock ]        | Style blocks             |
+| customBlocks | [ SFCBlock ]             | Custom blocks            |
+| cssVars      | [ string ]               | CSS variables used       |
+| slotted      | boolean                  | Uses :slotted() modifier |
 
 ---
 
@@ -919,11 +894,13 @@ interface SFCDescriptor {
 ### 12.1 Simple Template
 
 **Input**:
+
 ```html
 <div id="app">{{ message }}</div>
 ```
 
 **AST**:
+
 ```js
 RootNode {
     type: "ROOT"
@@ -956,12 +933,14 @@ RootNode {
 ### 12.2 Conditional Rendering
 
 **Input**:
+
 ```html
 <div v-if="show">Yes</div>
 <div v-else>No</div>
 ```
 
 **AST**:
+
 ```js
 RootNode {
     type: "ROOT"
@@ -992,13 +971,13 @@ RootNode {
 ### 12.3 List Rendering
 
 **Input**:
+
 ```html
-<li v-for="(item, index) in items" :key="item.id">
-    {{ index }}: {{ item.name }}
-</li>
+<li v-for="(item, index) in items" :key="item.id">{{ index }}: {{ item.name }}</li>
 ```
 
 **AST**:
+
 ```js
 ForNode {
     type: "FOR"
@@ -1032,31 +1011,31 @@ ForNode {
 
 The compiler generates calls to runtime helper functions.
 
-| Helper | Description |
-|--------|-------------|
-| createVNode | Create VNode for components |
-| createElementVNode | Create VNode for elements |
-| openBlock | Begin block tracking |
-| createBlock | Create block VNode |
-| createElementBlock | Create element block |
-| renderList | v-for rendering |
-| renderSlot | Slot rendering |
-| withDirectives | Apply runtime directives |
-| withMemo | v-memo caching |
-| createTextVNode | Create text VNode |
-| createCommentVNode | Create comment VNode |
-| Fragment | Fragment component |
-| Teleport | Teleport component |
-| Suspense | Suspense component |
-| KeepAlive | KeepAlive component |
-| toDisplayString | Convert value for interpolation |
-| normalizeClass | Normalize class binding |
-| normalizeStyle | Normalize style binding |
-| normalizeProps | Normalize props object |
-| mergeProps | Merge multiple props |
-| resolveComponent | Resolve component by name |
-| resolveDirective | Resolve directive by name |
-| resolveDynamicComponent | Resolve dynamic component |
+| Helper                  | Description                     |
+| ----------------------- | ------------------------------- |
+| createVNode             | Create VNode for components     |
+| createElementVNode      | Create VNode for elements       |
+| openBlock               | Begin block tracking            |
+| createBlock             | Create block VNode              |
+| createElementBlock      | Create element block            |
+| renderList              | v-for rendering                 |
+| renderSlot              | Slot rendering                  |
+| withDirectives          | Apply runtime directives        |
+| withMemo                | v-memo caching                  |
+| createTextVNode         | Create text VNode               |
+| createCommentVNode      | Create comment VNode            |
+| Fragment                | Fragment component              |
+| Teleport                | Teleport component              |
+| Suspense                | Suspense component              |
+| KeepAlive               | KeepAlive component             |
+| toDisplayString         | Convert value for interpolation |
+| normalizeClass          | Normalize class binding         |
+| normalizeStyle          | Normalize style binding         |
+| normalizeProps          | Normalize props object          |
+| mergeProps              | Merge multiple props            |
+| resolveComponent        | Resolve component by name       |
+| resolveDirective        | Resolve directive by name       |
+| resolveDynamicComponent | Resolve dynamic component       |
 
 ---
 

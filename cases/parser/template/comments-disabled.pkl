@@ -1,0 +1,45 @@
+amends "../../../schemas/ParserCase.pkl"
+
+id = "parser.template.comments-disabled"
+title = "Parser omits comment nodes when comments mode is disabled"
+summary = "When parser comment retention is disabled, comment tokens must not appear in the retained child list while neighboring element structure remains intact."
+
+features {
+  "parser.comment"
+  "parser.options.comments"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/parse.spec.ts"
+    cases {
+      "comments option"
+    }
+  }
+}
+
+input {
+  comments = false
+  source = #"""
+    <div><!-- note --><span /></div>
+    """#
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/tag"
+      equals = "span"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/isSelfClosing"
+      equals = true
+    }
+  }
+}

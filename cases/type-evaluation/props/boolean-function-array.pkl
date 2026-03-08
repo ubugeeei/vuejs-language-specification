@@ -1,0 +1,77 @@
+amends "../../../schemas/TypeEvaluationCase.pkl"
+
+id = "type-evaluation.props.boolean-function-array"
+title = "Boolean, function, and array members map to their runtime constructors"
+summary = "Type evaluation must lower primitive, callable, and array members to Boolean, Function, and Array runtime constructors with stable requiredness."
+
+features {
+  "type-eval.constructor-family"
+  "type-eval.requiredness"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/resolveType.spec.ts"
+    cases {
+      "type literal"
+      "utility type: ReadonlyArray"
+    }
+  }
+}
+
+input {
+  filename = "BooleanFunctionArray.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    defineProps<{
+      enabled: boolean
+      render: () => string
+      items?: string[]
+    }>()
+    </script>
+    """#
+  scriptOptions {
+    id = "boolean-function-array"
+  }
+}
+
+expect {
+  runtimeProps {
+    new RuntimePropsExpectation {
+      name = "enabled"
+      types {
+        "Boolean"
+      }
+      required = true
+    }
+    new RuntimePropsExpectation {
+      name = "render"
+      types {
+        "Function"
+      }
+      required = true
+    }
+    new RuntimePropsExpectation {
+      name = "items"
+      types {
+        "Array"
+      }
+      required = false
+    }
+  }
+  bindings {
+    new BindingExpectation {
+      name = "enabled"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "render"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "items"
+      kind = "props"
+    }
+  }
+}

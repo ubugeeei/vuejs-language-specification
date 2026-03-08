@@ -1,0 +1,34 @@
+class Counts {
+  files: Int
+  cases: Int
+  issueRefs: Int
+  benchmarks: Int = 0
+}
+
+class CorpusCase {
+  name: String
+  kind: "test"|"benchmark"
+  line: Int
+}
+
+class IssueRef {
+  label: String
+  line: Int
+}
+
+class CorpusFile {
+  sourcePath: String
+  kind: "test"|"benchmark"
+  copiedPath: String
+  bytes: Int
+  sha256: String
+  cases: Listing<CorpusCase>
+  issues: Listing<IssueRef> = new Listing {}
+}
+
+originRepository: String
+originCommit: String
+generatedAt: String
+policy: String
+counts: Counts
+files: Listing<CorpusFile>

@@ -1,0 +1,66 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.script.define-emits-array"
+title = "defineEmits array declaration becomes the component emits option"
+kind = "sfc-script-compile"
+summary = "Script setup compilation must erase defineEmits while preserving the declared emits option and the local emit alias."
+
+features {
+  "script-setup.defineEmits"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/defineEmits.spec.ts"
+    cases {
+      "basic usage"
+    }
+  }
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/components.test.ts"
+    cases {
+      "should handle emits"
+    }
+  }
+  new UpstreamReference {
+    repository = "vuejs/language-tools"
+    source = "packages/component-meta/tests/index.spec.ts"
+    cases {
+      "reference-type-events"
+    }
+  }
+}
+
+input {
+  filename = "DefineEmits.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    const emit = defineEmits(["save", "cancel"])
+    </script>
+    """#
+  scriptOptions {
+    id = "define-emits-array"
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "emit"
+      kind = "setup-const"
+    }
+  }
+  aliases {
+    new AliasExpectation {
+      localName = "emit"
+      source = "__emit"
+    }
+  }
+  emits {
+    "save"
+    "cancel"
+  }
+}

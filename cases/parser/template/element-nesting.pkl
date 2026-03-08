@@ -1,0 +1,70 @@
+amends "../../../schemas/ParserCase.pkl"
+
+id = "parser.template.element-nesting"
+title = "Nested elements preserve element kind and self-closing shape"
+summary = "Template parsing must retain nested element structure and mark self-closing child elements without synthesizing extra nodes."
+
+features {
+  "parser.element"
+  "parser.self-closing"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/parse.spec.ts"
+    cases {
+      "simple div"
+      "self closing"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "ubugeeei/vize"
+    source = "tests/expected/parser/element.snap"
+    cases {
+      "nested elements"
+      "self closing"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <div><span /></div>
+    """#
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/type"
+      equals = "ROOT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "div"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/tag"
+      equals = "span"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/isSelfClosing"
+      equals = true
+    }
+  }
+}

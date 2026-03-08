@@ -1,0 +1,30 @@
+class Counts {
+  files: Int
+  cases: Int
+  issueRefs: Int
+  benchmarks: Int = 0
+}
+
+class InventoryCase {
+  name: String
+  kind: "test"|"benchmark"
+  line: Int
+}
+
+class IssueRef {
+  label: String
+  line: Int
+}
+
+class InventoryFile {
+  path: String
+  kind: "test"|"benchmark"
+  cases: Listing<InventoryCase>
+  issues: Listing<IssueRef> = new Listing {}
+}
+
+repository: String
+commit: String
+generatedAt: String
+counts: Counts
+files: Listing<InventoryFile>

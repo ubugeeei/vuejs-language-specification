@@ -1,0 +1,34 @@
+amends "../../../schemas/BenchmarkCase.pkl"
+
+id = "benchmark.reactivity.computed-fanout"
+title = "Write pressure against a computed fan-out graph"
+kind = "reactivity-computed-fanout"
+summary = "Measures update cost when one reactive source fans out into many computeds and one aggregate reader."
+
+features {
+  "benchmark.reactivity"
+  "benchmark.computed"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/reactivity/__benchmarks__/computed.bench.ts"
+    cases {
+      "write ref, don't read 1000 computeds (with single effect)"
+      "write ref, read 1000 computeds (with single effect)"
+    }
+  }
+}
+
+input {
+  computedCount = 250
+  updates = 500
+  effectMode = "single"
+}
+
+measure {
+  warmups = 1
+  samples = 5
+}
+

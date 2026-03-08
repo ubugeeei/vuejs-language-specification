@@ -1,0 +1,72 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.template.v-text-basic"
+title = "v-text lowers to textContent via toDisplayString"
+kind = "template-dom-compile"
+summary = "v-text must compile to a textContent property write that stringifies the bound expression through toDisplayString."
+
+features {
+  "template.v-text"
+  "compiler.dom"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-dom/__tests__/transforms/vText.spec.ts"
+    cases {
+      "should convert v-text to textContent"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <div v-text="test"/>
+    """#
+  compilerOptions {
+    mode = "module"
+    prefixIdentifiers = true
+  }
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "TO_DISPLAY_STRING"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/codegenNode/props/properties/0/key/content"
+      equals = "textContent"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/codegenNode/props/properties/0/value/callee"
+      equals = "_toDisplayString"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/codegenNode/props/properties/0/value/arguments/0/content"
+      equals = "_ctx.test"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/codegenNode/dynamicProps"
+      equals = "[\"textContent\"]"
+    }
+  }
+  normalizedCode = #"""
+    import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+    export function render(_ctx, _cache) {
+      return (_openBlock(), _createElementBlock("div", {
+        textContent: _toDisplayString(_ctx.test)
+      }, null, 8 /* PROPS */, ["textContent"]))
+    }
+    """#
+}

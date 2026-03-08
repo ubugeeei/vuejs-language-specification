@@ -1,0 +1,58 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.script.define-model-named"
+title = "Named defineModel preserves the custom prop name and default"
+kind = "sfc-script-compile"
+summary = "A named model declaration must lower into the named prop, its modifiers prop, and the corresponding update emit while retaining the authored default."
+
+features {
+  "script-setup.defineModel"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/defineModel.spec.ts"
+    cases {
+      "basic usage"
+      "w/ defineProps and defineEmits"
+    }
+  }
+}
+
+input {
+  filename = "DefineNamedModel.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    const count = defineModel<number>("count", { default: 0 })
+    </script>
+    """#
+  scriptOptions {
+    id = "define-model-named"
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "count"
+      kind = "setup-ref"
+    }
+  }
+  propConstructors {
+    new PropConstructorExpectation {
+      name = "count"
+      constructor = "Number"
+    }
+  }
+  propDefaults {
+    new LiteralExpectation {
+      name = "count"
+      value = 0
+    }
+  }
+  emits {
+    "update:count"
+  }
+}

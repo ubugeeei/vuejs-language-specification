@@ -1,0 +1,58 @@
+amends "../../../schemas/ParserCase.pkl"
+
+id = "parser.template.comment-preservation"
+title = "Comment nodes are preserved in the retained child sequence"
+summary = "When comments are preserved by the selected parser mode, comment nodes remain in source order alongside neighboring element nodes."
+
+features {
+  "parser.comment"
+  "parser.child-order"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/parse.spec.ts"
+    cases {
+      "simple comment"
+      "comments option"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "ubugeeei/vize"
+    source = "tests/expected/parser/comment.snap"
+    cases {
+      "simple comment"
+      "comment between elements"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <div><!-- note --><span/></div>
+    """#
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/children/0/type"
+      equals = "COMMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/content"
+      equals = " note "
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/1/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/1/tag"
+      equals = "span"
+    }
+  }
+}

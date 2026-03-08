@@ -1,0 +1,35 @@
+class UpstreamReference {
+  kind: "test"|"benchmark"|"issue"|"snapshot"|"artifact" = "test"
+  repository: String
+  source: String
+  cases: Listing<String>
+  issues: Listing<String> = new Listing {}
+}
+
+suite = "parser"
+kind = "template-base-parse"
+
+class Input {
+  source: String
+  comments: Boolean?
+}
+
+class PointerAssertion {
+  pointer: String
+  equals: String|Int|Boolean|Null
+}
+
+class Expectation {
+  errorCount: Int
+  ast: Listing<PointerAssertion> = new Listing {}
+  errors: Listing<PointerAssertion> = new Listing {}
+}
+
+id: String
+title: String
+summary: String
+features: Listing<String>
+profile: String?
+upstream: Listing<UpstreamReference>
+input: Input
+expect: Expectation

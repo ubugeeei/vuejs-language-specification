@@ -1,0 +1,36 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.style.slotted-selector"
+title = "Scoped :slotted selectors target slot content with the slot scope id"
+kind = "sfc-style-compile"
+summary = "A :slotted selector must rewrite to the slot scope suffix instead of the component scope suffix."
+
+features {
+  "style.scoped"
+  "style.slotted"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "playground/e2e/css-compile.test.ts"
+    cases {
+      "should handle :slotted() pseudo-selector"
+    }
+  }
+}
+
+input {
+  filename = "SlottedSelector.vue"
+  source = #"""
+    :slotted(span) { color: red; }
+    """#
+  styleOptions {
+    id = "data-v-test"
+    scoped = true
+  }
+}
+
+expect {
+  normalizedCode = "span[data-v-test-s] { color: red;\n}"
+}

@@ -1,0 +1,14 @@
+class SnapshotEntry {
+  suite: String
+  originPath: String
+  copiedPath: String
+  bytes: Int
+  sha256: String
+}
+
+originRepository: String
+originCommit: String
+generatedAt: String
+policy: String
+snapshotCount: Int
+entries: Mapping<String, SnapshotEntry>

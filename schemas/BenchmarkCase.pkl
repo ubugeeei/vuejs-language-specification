@@ -1,0 +1,38 @@
+class UpstreamReference {
+  kind: "test"|"benchmark"|"issue"|"snapshot"|"artifact" = "test"
+  repository: String
+  source: String
+  cases: Listing<String>
+  issues: Listing<String> = new Listing {}
+}
+
+suite = "benchmark"
+
+class Input {
+  fixtures: Listing<String> = new Listing {}
+  repeat: Int = 1
+  computedCount: Int = 0
+  updates: Int = 0
+  effectMode: String?
+}
+
+class Budget {
+  maxMeanMs: Float?
+}
+
+class Measure {
+  warmups: Int
+  samples: Int
+  unit: "ms" = "ms"
+  budget: Budget?
+}
+
+id: String
+title: String
+kind: String
+summary: String
+features: Listing<String>
+profile: String?
+upstream: Listing<UpstreamReference>
+input: Input
+measure: Measure

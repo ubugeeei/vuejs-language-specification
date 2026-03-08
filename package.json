@@ -1,0 +1,84 @@
+{
+  "name": "@ubugeeei/vuejs-language-specification",
+  "version": "0.1.0",
+  "description": "Vue.js language specification, conformance cases, runtime tests, and benchmark workloads.",
+  "keywords": [
+    "benchmark",
+    "compiler",
+    "conformance",
+    "runtime",
+    "sfc",
+    "specification",
+    "vue"
+  ],
+  "bin": {
+    "vue-language-spec": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "cases",
+    "fixtures",
+    "schemas",
+    "sources",
+    "spec",
+    "README.md"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./runtime": {
+      "types": "./dist/runtime/index.d.ts",
+      "import": "./dist/runtime/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "check": "oxlint --type-aware --type-check --vitest-plugin --node-plugin . && vitest run",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
+    "lint": "oxlint --type-aware --type-check --vitest-plugin --node-plugin .",
+    "validate": "node --strip-types src/cli.ts validate",
+    "catalog": "node --strip-types src/cli.ts catalog",
+    "coverage:upstream": "node --strip-types src/cli.ts coverage",
+    "traceability:upstream": "node --strip-types src/cli.ts traceability",
+    "benchmark:smoke": "node --strip-types src/cli.ts benchmark --smoke",
+    "generate:traceability": "node --strip-types scripts/generate-upstream-traceability.ts",
+    "vendor:vue-core:tests": "node --strip-types scripts/vendor-upstream-test-corpus.ts --inventory sources/upstream/vuejs-core.inventory.pkl --upstream /tmp/vuejs-core-spec",
+    "vendor:vize:snapshots": "node --strip-types scripts/vendor-vize-expected-snapshots.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.28.4",
+    "@babel/types": "^7.29.0",
+    "@pkl-community/pkl": "^0.30.2",
+    "@vue/compiler-core": "^3.5.0",
+    "@vue/compiler-dom": "^3.5.0",
+    "@vue/compiler-sfc": "^3.5.0",
+    "@vue/reactivity": "^3.5.0",
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@vitest/browser": "^4.0.18",
+    "@vitest/browser-playwright": "^4.0.18",
+    "jsdom": "^26.1.0",
+    "oxfmt": "^0.36.0",
+    "oxlint": "^1.51.0",
+    "oxlint-tsgolint": "^0.16.0",
+    "playwright": "^1.58.2",
+    "tsdown": "^0.21.0",
+    "typescript": "^5.8.0",
+    "vitest": "^4.0.18"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  }
+}

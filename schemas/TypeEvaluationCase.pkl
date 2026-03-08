@@ -1,0 +1,46 @@
+class UpstreamReference {
+  kind: "test"|"benchmark"|"issue"|"snapshot"|"artifact" = "test"
+  repository: String
+  source: String
+  cases: Listing<String>
+  issues: Listing<String> = new Listing {}
+}
+
+suite = "type-evaluation"
+kind = "script-setup-runtime-props"
+
+class ScriptOptions {
+  id: String?
+}
+
+class Input {
+  filename: String
+  sfc: String
+  scriptOptions: ScriptOptions = new ScriptOptions {}
+}
+
+class RuntimePropsExpectation {
+  name: String
+  types: Listing<String> = new Listing {}
+  required: Boolean
+  skipCheck: Boolean = false
+}
+
+class BindingExpectation {
+  name: String
+  kind: String
+}
+
+class Expectation {
+  runtimeProps: Listing<RuntimePropsExpectation> = new Listing {}
+  bindings: Listing<BindingExpectation> = new Listing {}
+}
+
+id: String
+title: String
+summary: String
+features: Listing<String>
+profile: String?
+upstream: Listing<UpstreamReference>
+input: Input
+expect: Expectation

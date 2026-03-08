@@ -1,0 +1,61 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.script.define-slots-basic"
+title = "defineSlots lowers to useSlots when the runtime binding is observed"
+kind = "sfc-script-compile"
+summary = "defineSlots must erase the macro, import useSlots, and materialize the runtime slots object when the slot binding escapes into setup output."
+
+features {
+  "script-setup.defineSlots"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/defineSlots.spec.ts"
+    cases {
+      "basic usage"
+    }
+  }
+}
+
+input {
+  filename = "defineSlots.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    const slots = defineSlots<{
+      default: { msg: string }
+    }>()
+    </script>
+    """#
+  scriptOptions {
+    id = "define-slots-basic"
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "slots"
+      kind = "setup-const"
+    }
+  }
+  normalizedCode = #"""
+    import { useSlots as _useSlots, defineComponent as _defineComponent } from 'vue'
+
+    export default /*@__PURE__*/_defineComponent({
+      __name: 'defineSlots',
+      setup(__props, { expose: __expose }) {
+      __expose();
+
+    const slots = _useSlots()
+
+    const __returned__ = { slots }
+    Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+    return __returned__
+    }
+
+    })
+    """#
+}

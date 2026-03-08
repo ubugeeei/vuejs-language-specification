@@ -1,0 +1,69 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.template.slot-fallback"
+title = "Slot outlets preserve fallback content as the renderSlot fallback closure"
+kind = "template-dom-compile"
+summary = "A named slot outlet with fallback content must lower to renderSlot with a fallback closure that preserves the fallback text node."
+
+features {
+  "template.slot"
+  "compiler.slot-outlet"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/transforms/transformSlotOutlet.spec.ts"
+    cases {
+      "named slot outlet with fallback"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <slot name="header">fallback</slot>
+    """#
+  compilerOptions {
+    mode = "module"
+    prefixIdentifiers = true
+  }
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "RENDER_SLOT"
+    }
+    new HelperExpectation {
+      name = "CREATE_TEXT"
+    }
+  }
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "SLOT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/name"
+      equals = "name"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/props/0/value/content"
+      equals = "header"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/content/content"
+      equals = "fallback"
+    }
+  }
+  normalizedCode = #"""
+    import { renderSlot as _renderSlot, createTextVNode as _createTextVNode } from "vue"
+
+    export function render(_ctx, _cache) {
+      return _renderSlot(_ctx.$slots, "header", {}, () => [
+        _createTextVNode("fallback")
+      ])
+    }
+    """#
+}

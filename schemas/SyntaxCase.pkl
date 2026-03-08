@@ -1,0 +1,40 @@
+class UpstreamReference {
+  kind: "test"|"benchmark"|"issue"|"snapshot"|"artifact" = "test"
+  repository: String
+  source: String
+  cases: Listing<String>
+  issues: Listing<String> = new Listing {}
+}
+
+class Input {
+  filename: String
+  source: String
+}
+
+class DescriptorExpectation {
+  template: Boolean
+  script: Boolean
+  scriptSetup: Boolean
+  styles: Int
+  customBlocks: Int
+  scriptLang: String?
+  scriptSetupLang: String?
+  styleLangs: Listing<String> = new Listing {}
+  scopedStyles: Int = 0
+}
+
+class Expectation {
+  descriptor: DescriptorExpectation
+  templateContentIncludes: Listing<String> = new Listing {}
+}
+
+id: String
+title: String
+suite = "syntax"
+kind = "sfc-descriptor"
+summary: String
+features: Listing<String>
+profile: String?
+upstream: Listing<UpstreamReference>
+input: Input
+expect: Expectation

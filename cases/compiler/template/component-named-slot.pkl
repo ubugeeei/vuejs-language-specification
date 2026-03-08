@@ -1,0 +1,108 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.template.component-named-slot"
+title = "Component slots compile into stable named and default slot functions"
+kind = "template-dom-compile"
+summary = "Component slot syntax must preserve named slot channels in the AST and compile to stable slot functions with explicit withCtx wrapping."
+
+features {
+  "template.slot"
+  "compiler.component"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/transforms/vSlot.spec.ts"
+    cases {
+      "on component named slot"
+      "implicit default slot"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "ubugeeei/vize"
+    source = "tests/expected/vdom/v-slot.snap"
+    cases {
+      "named slot with default"
+    }
+  }
+  new UpstreamReference {
+    repository = "vuejs/language-tools"
+    source = "packages/component-meta/tests/index.spec.ts"
+    cases {
+      "reference-type-slots"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <Card><template #header>{{ title }}</template><p>{{ body }}</p></Card>
+    """#
+  compilerOptions {
+    mode = "module"
+    prefixIdentifiers = true
+  }
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "TO_DISPLAY_STRING"
+    }
+    new HelperExpectation {
+      name = "CREATE_TEXT"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_VNODE"
+    }
+    new HelperExpectation {
+      name = "RESOLVE_COMPONENT"
+    }
+    new HelperExpectation {
+      name = "WITH_CTX"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_BLOCK"
+    }
+  }
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "COMPONENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/name"
+      equals = "slot"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/props/0/arg/content"
+      equals = "header"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/1/tag"
+      equals = "p"
+    }
+  }
+  normalizedCode = #"""
+    import { toDisplayString as _toDisplayString, createTextVNode as _createTextVNode, createElementVNode as _createElementVNode, resolveComponent as _resolveComponent, withCtx as _withCtx, openBlock as _openBlock, createBlock as _createBlock } from "vue"
+
+    export function render(_ctx, _cache) {
+      const _component_Card = _resolveComponent("Card")
+
+      return (_openBlock(), _createBlock(_component_Card, null, {
+        header: _withCtx(() => [
+          _createTextVNode(_toDisplayString(_ctx.title), 1 /* TEXT */)
+        ]),
+        default: _withCtx(() => [
+          _createElementVNode("p", null, _toDisplayString(_ctx.body), 1 /* TEXT */)
+        ]),
+        _: 1 /* STABLE */
+      }))
+    }
+    """#
+}

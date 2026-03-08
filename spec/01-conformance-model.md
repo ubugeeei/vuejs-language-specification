@@ -1,0 +1,122 @@
+# Conformance Model
+
+## 1. Declared Target
+
+A conformance claim for this repository MUST declare one or more target classes:
+
+1. `parser`
+2. `syntax`
+3. `compiler`
+4. `type-evaluation`
+5. `runtime`
+6. `benchmark`
+
+An implementation MAY conform to a proper subset of the targets above. It MUST NOT imply full-suite conformance when only a subset is implemented.
+
+## 1.1. Formal Conformance Predicate
+
+Using the notation from [`00-formal-notation.md`](./00-formal-notation.md):
+
+```text
+Claim(I) = ⟨Targets, Profiles⟩
+```
+
+A conformance claim is valid iff:
+
+```text
+ValidClaim(I) ⇔
+  Targets ≠ ∅ ∧
+  ∀ T ∈ Targets. ∀ P ∈ Profiles(T). I ⊨target T under profile P
+```
+
+An implementation MUST NOT claim `I ⊨target T` unless every `covered` case for `T` and the claimed profile set passes.
+
+## 2. Normative Order
+
+Normative authority is ordered as follows:
+
+1. machine-readable cases under [`cases/`](../cases/)
+2. normative requirements under [`spec/`](./README.md)
+3. vendored upstream artifacts under [`sources/copied/`](../sources/copied/)
+4. traceability manifests under [`sources/traceability/`](../sources/traceability/)
+5. provenance inventories under [`sources/upstream/`](../sources/upstream/)
+
+Upstream repositories are evidence sources. They are not normative by themselves after curation into this repository.
+
+## 2.1. Upstream Representation Completeness
+
+Every inventoried upstream test or benchmark MUST be represented by exactly one generated traceability entry under [`sources/traceability/`](../sources/traceability/).
+
+When a repository has a vendored corpus under [`sources/copied/`](../sources/copied/), that corpus MUST preserve the exact upstream commit, file path, case title inventory, and raw source bytes for the copied evidence.
+
+Each traceability entry MUST declare exactly one status:
+
+- `covered`
+- `planned`
+- `tracked`
+
+`covered` means the upstream behavior is backed by one or more executable local cases.
+`planned` means the upstream behavior is within the intended executable suite but has not yet been normalized into a local case.
+`tracked` means the upstream behavior is intentionally represented only as provenance because it depends on host, editor, application, or visual-regression context.
+
+## 3. Profiles
+
+The base language is the shared Vue surface curated against `vuejs/core` mainline behavior.
+
+A profile:
+
+- MUST declare `profile`
+- MUST identify the upstream branch or snapshot it was derived from
+- MUST NOT silently override the meaning of a base-language case
+
+`Vapor` is modeled as a profile, not as part of the default base line, because its upstream source of truth lives on Vue minor branches rather than the default stable mainline.
+
+## 4. Observability Boundary
+
+This repository only standardizes observable outcomes. A conforming implementation MUST preserve, where covered:
+
+- descriptor structure
+- parser AST facts
+- compiler helper sets and codegen invariants
+- runtime prop inference
+- DOM-observable runtime behavior
+- benchmark workload definitions and result shape
+
+Implementation-private details remain non-normative unless promoted into observable output by a curated case.
+
+Formally, for any executable case `c`, only the asserted projection `Proj(c)` is normative:
+
+```text
+Pass(I, c) ⇔ Proj_actual(I, c) = Proj_expected(c)
+```
+
+No additional implementation state is normative unless `Proj(c)` names it.
+
+## 5. Diagnostics
+
+Diagnostics do not need byte-for-byte identical text. When a case asserts diagnostics, a conforming implementation MUST preserve:
+
+- severity
+- stable error code, when the case names one
+- primary source location
+
+## 6. Portability Rules
+
+All non-runtime suites MUST remain language-neutral:
+
+- source-of-truth case data MUST be stored as Pkl modules, text fixtures, or copied source artifacts
+- expectations MUST target structured observables rather than engine-specific object identity
+- copied upstream artifacts MUST be committed into this repository when they are part of the curated source of truth
+
+The runtime suite MAY use the JavaScript reference harness, but its assertions MUST still be expressed in DOM or state terms.
+
+## 7. Suite Map
+
+| Target            | Normative document                                             | Primary case roots                                    |
+| ----------------- | -------------------------------------------------------------- | ----------------------------------------------------- |
+| `parser`          | [`02-sfc-syntax.md`](./02-sfc-syntax.md)                       | [`cases/parser/template/`](../cases/parser/template/) |
+| `syntax`          | [`02-sfc-syntax.md`](./02-sfc-syntax.md)                       | [`cases/syntax/sfc/`](../cases/syntax/sfc/)           |
+| `compiler`        | [`03-template-and-compiler.md`](./03-template-and-compiler.md) | [`cases/compiler/`](../cases/compiler/)               |
+| `type-evaluation` | [`04-type-evaluation.md`](./04-type-evaluation.md)             | [`cases/type-evaluation/`](../cases/type-evaluation/) |
+| `runtime`         | [`05-runtime-conformance.md`](./05-runtime-conformance.md)     | [`src/runtime/cases/`](../src/runtime/cases/)         |
+| `benchmark`       | [`06-benchmark-methodology.md`](./06-benchmark-methodology.md) | [`cases/benchmark/`](../cases/benchmark/)             |

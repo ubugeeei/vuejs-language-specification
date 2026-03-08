@@ -1,0 +1,415 @@
+===
+name: v-bind attribute
+options: default
+--- INPUT ---
+<div v-bind:id="id"></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", { id: _ctx.id }, null, 8 /* PROPS */, ["id"]))
+}
+
+===
+name: v-bind shorthand
+options: default
+--- INPUT ---
+<div :id="id"></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", { id: _ctx.id }, null, 8 /* PROPS */, ["id"]))
+}
+
+===
+name: v-bind class
+options: default
+--- INPUT ---
+<div :class="cls"></div>
+--- OUTPUT ---
+import { normalizeClass as _normalizeClass, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    class: _normalizeClass(_ctx.cls)
+  }, null, 2 /* CLASS */))
+}
+
+===
+name: v-bind style
+options: default
+--- INPUT ---
+<div :style="styles"></div>
+--- OUTPUT ---
+import { normalizeStyle as _normalizeStyle, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    style: _normalizeStyle(_ctx.styles)
+  }, null, 4 /* STYLE */))
+}
+
+===
+name: class object syntax
+options: default
+--- INPUT ---
+<div :class="{ active: isActive }"></div>
+--- OUTPUT ---
+import { normalizeClass as _normalizeClass, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    class: _normalizeClass({ active: _ctx.isActive })
+  }, null, 2 /* CLASS */))
+}
+
+===
+name: class multiple objects
+options: default
+--- INPUT ---
+<div :class="{ active: isActive, error: hasError }"></div>
+--- OUTPUT ---
+import { normalizeClass as _normalizeClass, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    class: _normalizeClass({ active: _ctx.isActive, error: _ctx.hasError })
+  }, null, 2 /* CLASS */))
+}
+
+===
+name: class array syntax
+options: default
+--- INPUT ---
+<div :class="[activeClass, errorClass]"></div>
+--- OUTPUT ---
+import { normalizeClass as _normalizeClass, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    class: _normalizeClass([_ctx.activeClass, _ctx.errorClass])
+  }, null, 2 /* CLASS */))
+}
+
+===
+name: class array with object
+options: default
+--- INPUT ---
+<div :class="[{ active: isActive }, errorClass]"></div>
+--- OUTPUT ---
+import { normalizeClass as _normalizeClass, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    class: _normalizeClass([{ active: _ctx.isActive }, _ctx.errorClass])
+  }, null, 2 /* CLASS */))
+}
+
+===
+name: class with static
+options: default
+--- INPUT ---
+<div class="static" :class="dynamic"></div>
+--- OUTPUT ---
+import { normalizeClass as _normalizeClass, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    class: _normalizeClass(["static", _ctx.dynamic])
+  }, null, 2 /* CLASS */))
+}
+
+===
+name: class ternary
+options: default
+--- INPUT ---
+<div :class="isActive ? 'active' : 'inactive'"></div>
+--- OUTPUT ---
+import { normalizeClass as _normalizeClass, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    class: _normalizeClass(_ctx.isActive ? 'active' : 'inactive')
+  }, null, 2 /* CLASS */))
+}
+
+===
+name: style object syntax
+options: default
+--- INPUT ---
+<div :style="{ color: textColor }"></div>
+--- OUTPUT ---
+import { normalizeStyle as _normalizeStyle, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    style: _normalizeStyle({ color: _ctx.textColor })
+  }, null, 4 /* STYLE */))
+}
+
+===
+name: style multiple properties
+options: default
+--- INPUT ---
+<div :style="{ color: textColor, fontSize: size + 'px' }"></div>
+--- OUTPUT ---
+import { normalizeStyle as _normalizeStyle, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    style: _normalizeStyle({ color: _ctx.textColor, fontSize: _ctx.size + 'px' })
+  }, null, 4 /* STYLE */))
+}
+
+===
+name: style array syntax
+options: default
+--- INPUT ---
+<div :style="[baseStyles, overrideStyles]"></div>
+--- OUTPUT ---
+import { normalizeStyle as _normalizeStyle, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    style: _normalizeStyle([_ctx.baseStyles, _ctx.overrideStyles])
+  }, null, 4 /* STYLE */))
+}
+
+===
+name: style with static
+options: default
+--- INPUT ---
+<div style="color: red" :style="{ fontSize: size }"></div>
+--- OUTPUT ---
+import { normalizeStyle as _normalizeStyle, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    style: _normalizeStyle([{"color":"red"}, { fontSize: _ctx.size }])
+  }, null, 4 /* STYLE */))
+}
+
+===
+name: style camelCase
+options: default
+--- INPUT ---
+<div :style="{ backgroundColor: bg }"></div>
+--- OUTPUT ---
+import { normalizeStyle as _normalizeStyle, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    style: _normalizeStyle({ backgroundColor: _ctx.bg })
+  }, null, 4 /* STYLE */))
+}
+
+===
+name: style kebab-case
+options: default
+--- INPUT ---
+<div :style="{ 'background-color': bg }"></div>
+--- OUTPUT ---
+import { normalizeStyle as _normalizeStyle, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    style: _normalizeStyle({ 'background-color': _ctx.bg })
+  }, null, 4 /* STYLE */))
+}
+
+===
+name: v-bind object
+options: default
+--- INPUT ---
+<div v-bind="attrs"></div>
+--- OUTPUT ---
+import { normalizeProps as _normalizeProps, guardReactiveProps as _guardReactiveProps, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", _normalizeProps(_guardReactiveProps(_ctx.attrs)), null, 16 /* FULL_PROPS */))
+}
+
+===
+name: v-bind object with other attrs
+options: default
+--- INPUT ---
+<div v-bind="attrs" id="static"></div>
+--- OUTPUT ---
+import { mergeProps as _mergeProps, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", _mergeProps(_ctx.attrs, { id: "static" }), null, 16 /* FULL_PROPS */))
+}
+
+===
+name: v-bind object with dynamic
+options: default
+--- INPUT ---
+<div v-bind="attrs" :class="cls"></div>
+--- OUTPUT ---
+import { mergeProps as _mergeProps, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", _mergeProps(_ctx.attrs, { class: _ctx.cls }), null, 16 /* FULL_PROPS */))
+}
+
+===
+name: v-bind $attrs
+options: default
+--- INPUT ---
+<div v-bind="$attrs"></div>
+--- OUTPUT ---
+import { normalizeProps as _normalizeProps, guardReactiveProps as _guardReactiveProps, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", _normalizeProps(_guardReactiveProps(_ctx.$attrs)), null, 16 /* FULL_PROPS */))
+}
+
+===
+name: v-bind $props
+options: default
+--- INPUT ---
+<MyComponent v-bind="$props" />
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, normalizeProps as _normalizeProps, guardReactiveProps as _guardReactiveProps, openBlock as _openBlock, createBlock as _createBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+
+  return (_openBlock(), _createBlock(_component_MyComponent, _normalizeProps(_guardReactiveProps(_ctx.$props)), null, 16 /* FULL_PROPS */))
+}
+
+===
+name: dynamic attribute name
+options: default
+--- INPUT ---
+<div :[attr]="value"></div>
+--- OUTPUT ---
+import { normalizeProps as _normalizeProps, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", _normalizeProps({ [_ctx.attr || ""]: _ctx.value }), null, 16 /* FULL_PROPS */))
+}
+
+===
+name: dynamic attribute with prefix
+options: default
+--- INPUT ---
+<div :[`data-${key}`]="value"></div>
+--- OUTPUT ---
+import { normalizeProps as _normalizeProps, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", _normalizeProps({ [(`data-${_ctx.key}`) || ""]: _ctx.value }), null, 16 /* FULL_PROPS */))
+}
+
+===
+name: v-bind.camel
+options: default
+--- INPUT ---
+<svg :view-box.camel="viewBox"></svg>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("svg", { viewBox: _ctx.viewBox }, null, 8 /* PROPS */, ["viewBox"]))
+}
+
+===
+name: v-bind.prop
+options: default
+--- INPUT ---
+<div :text-content.prop="text"></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", { ".text-content": _ctx.text }, null, 40 /* PROPS, NEED_HYDRATION */, [".text-content"]))
+}
+
+===
+name: v-bind.attr
+options: default
+--- INPUT ---
+<div :foo.attr="bar"></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", { "^foo": _ctx.bar }, null, 8 /* PROPS */, ["^foo"]))
+}
+
+===
+name: v-bind key
+options: default
+--- INPUT ---
+<div :key="id"></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", { key: _ctx.id }))
+}
+
+===
+name: v-bind ref
+options: default
+--- INPUT ---
+<div :ref="refName"></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", { ref: _ctx.refName }, null, 512 /* NEED_PATCH */))
+}
+
+===
+name: v-bind is
+options: default
+--- INPUT ---
+<component :is="comp"></component>
+--- OUTPUT ---
+import { resolveDynamicComponent as _resolveDynamicComponent, openBlock as _openBlock, createBlock as _createBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createBlock(_resolveDynamicComponent(_ctx.comp)))
+}
+
+===
+name: boolean attribute binding
+options: default
+--- INPUT ---
+<input :disabled="isDisabled">
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("input", { disabled: _ctx.isDisabled }, null, 8 /* PROPS */, ["disabled"]))
+}
+
+===
+name: boolean attribute expression
+options: default
+--- INPUT ---
+<input :disabled="count > 0">
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("input", {
+    disabled: _ctx.count > 0
+  }, null, 8 /* PROPS */, ["disabled"]))
+}
+
+===
+name: boolean readonly
+options: default
+--- INPUT ---
+<input :readonly="isReadonly">
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("input", { readonly: _ctx.isReadonly }, null, 8 /* PROPS */, ["readonly"]))
+}

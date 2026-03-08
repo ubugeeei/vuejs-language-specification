@@ -1,0 +1,172 @@
+===
+name: default slot content
+options: vapor
+--- INPUT ---
+<MyComponent>content</MyComponent>
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback, template as _template } from 'vue';
+const t0 = _template("content")
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n1 = _createComponentWithFallback(_component_MyComponent, null, {
+    "default": () => {
+      const n0 = t0()
+      return n0
+    }
+  }, true)
+  return n1
+}
+
+===
+name: default slot with element
+options: vapor
+--- INPUT ---
+<MyComponent><div>content</div></MyComponent>
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback, template as _template } from 'vue';
+const t0 = _template("<div>content</div>")
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n1 = _createComponentWithFallback(_component_MyComponent, null, {
+    "default": () => {
+      const n0 = t0()
+      return n0
+    }
+  }, true)
+  return n1
+}
+
+===
+name: named slot
+options: vapor
+--- INPUT ---
+<MyComponent><template #header>Header</template></MyComponent>
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback, template as _template } from 'vue';
+const t0 = _template("Header")
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n2 = _createComponentWithFallback(_component_MyComponent, null, {
+    "header": () => {
+      const n0 = t0()
+      return n0
+    }
+  }, true)
+  return n2
+}
+
+===
+name: multiple named slots
+options: vapor
+--- INPUT ---
+<MyComponent><template #header>H</template><template #footer>F</template></MyComponent>
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback, template as _template } from 'vue';
+const t0 = _template("H")
+const t1 = _template("F")
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n4 = _createComponentWithFallback(_component_MyComponent, null, {
+    "header": () => {
+      const n0 = t0()
+      return n0
+    },
+    "footer": () => {
+      const n2 = t1()
+      return n2
+    }
+  }, true)
+  return n4
+}
+
+===
+name: scoped slot
+options: vapor
+--- INPUT ---
+<MyComponent v-slot="{ item }">{{ item }}</MyComponent>
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, toDisplayString as _toDisplayString, setText as _setText, renderEffect as _renderEffect, createComponentWithFallback as _createComponentWithFallback, template as _template } from 'vue';
+const t0 = _template(" ")
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n1 = _createComponentWithFallback(_component_MyComponent, null, {
+    "default": (_slotProps0) => {
+      const n0 = t0()
+      _renderEffect(() => _setText(n0, _toDisplayString(_slotProps0.item)))
+      return n0
+    }
+  }, true)
+  return n1
+}
+
+===
+name: named scoped slot
+options: vapor
+--- INPUT ---
+<MyComponent><template #item="{ data }">{{ data }}</template></MyComponent>
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, toDisplayString as _toDisplayString, setText as _setText, renderEffect as _renderEffect, createComponentWithFallback as _createComponentWithFallback, template as _template } from 'vue';
+const t0 = _template(" ")
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n2 = _createComponentWithFallback(_component_MyComponent, null, {
+    "item": (_slotProps0) => {
+      const n0 = t0()
+      _renderEffect(() => _setText(n0, _toDisplayString(_slotProps0.data)))
+      return n0
+    }
+  }, true)
+  return n2
+}
+
+===
+name: scoped slot destructure
+options: vapor
+--- INPUT ---
+<MyComponent v-slot="{ item, index }">{{ index }}: {{ item }}</MyComponent>
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, toDisplayString as _toDisplayString, setText as _setText, renderEffect as _renderEffect, createComponentWithFallback as _createComponentWithFallback, template as _template } from 'vue';
+const t0 = _template(" ")
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n3 = _createComponentWithFallback(_component_MyComponent, null, {
+    "default": (_slotProps0) => {
+      const n0 = t0()
+      _renderEffect(() => _setText(n0, _toDisplayString(_slotProps0.index) + ": " + _toDisplayString(_slotProps0.item)))
+      return n0
+    }
+  }, true)
+  return n3
+}
+
+===
+name: dynamic slot name
+options: vapor
+--- INPUT ---
+<MyComponent><template #[slotName]>content</template></MyComponent>
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback, template as _template } from 'vue';
+const t0 = _template("content")
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n2 = _createComponentWithFallback(_component_MyComponent, null, {
+    $: [
+      () => ({
+        name: _ctx.slotName,
+        fn: () => {
+          const n0 = t0()
+          return n0
+        }
+      })
+    ]
+  }, true)
+  return n2
+}

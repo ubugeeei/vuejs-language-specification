@@ -1,0 +1,78 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.template.v-model-text"
+title = "Text-input v-model lowers to vModelText with update listener patching"
+kind = "template-dom-compile"
+summary = "A text-input v-model binding must compile to the vModelText runtime directive and an onUpdate:modelValue listener."
+
+features {
+  "template.v-model"
+  "compiler.dom"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-dom/__tests__/transforms/vModel.spec.ts"
+    cases {
+      "simple expression for input (text)"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <input type="text" v-model="model" />
+    """#
+  compilerOptions {
+    mode = "module"
+    prefixIdentifiers = true
+  }
+}
+
+expect {
+  helpers {
+    new HelperExpectation {
+      name = "V_MODEL_TEXT"
+    }
+    new HelperExpectation {
+      name = "WITH_DIRECTIVES"
+    }
+    new HelperExpectation {
+      name = "OPEN_BLOCK"
+    }
+    new HelperExpectation {
+      name = "CREATE_ELEMENT_BLOCK"
+    }
+  }
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/props/1/name"
+      equals = "model"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/codegenNode/tag"
+      equals = "\"input\""
+    }
+    new PointerAssertion {
+      pointer = "/children/0/codegenNode/props/properties/1/key/content"
+      equals = "onUpdate:modelValue"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/codegenNode/dynamicProps"
+      equals = "[\"onUpdate:modelValue\"]"
+    }
+  }
+  normalizedCode = #"""
+    import { vModelText as _vModelText, withDirectives as _withDirectives, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+    export function render(_ctx, _cache) {
+      return _withDirectives((_openBlock(), _createElementBlock("input", {
+        type: "text",
+        "onUpdate:modelValue": $event => ((_ctx.model) = $event)
+      }, null, 8 /* PROPS */, ["onUpdate:modelValue"])), [
+        [_vModelText, _ctx.model]
+      ])
+    }
+    """#
+}

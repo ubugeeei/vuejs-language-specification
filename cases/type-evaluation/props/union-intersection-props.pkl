@@ -1,0 +1,102 @@
+amends "../../../schemas/TypeEvaluationCase.pkl"
+
+id = "type-evaluation.props.union-intersection-props"
+title = "Union and intersection props widen to the observable runtime constructor set"
+summary = "Intersection and union merging must retain every observable prop while widening overlapping members to the runtime-safe constructor family."
+
+features {
+  "type-eval.union"
+  "type-eval.intersection"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/resolveType.spec.ts"
+    cases {
+      "union type"
+    }
+    issues {
+      "#7553"
+    }
+  }
+}
+
+input {
+  filename = "UnionIntersectionProps.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    interface CommonProps {
+      size?: 'xl' | 'l' | 'm' | 's' | 'xs'
+    }
+
+    type ConditionalProps =
+      | {
+          color: 'normal' | 'primary' | 'secondary'
+          appearance: 'normal' | 'outline' | 'text'
+        }
+      | {
+          color: number
+          appearance: 'outline'
+          note: string
+        }
+
+    defineProps<CommonProps & ConditionalProps>()
+    </script>
+    """#
+  scriptOptions {
+    id = "union-intersection-props"
+  }
+}
+
+expect {
+  runtimeProps {
+    new RuntimePropsExpectation {
+      name = "size"
+      types {
+        "String"
+      }
+      required = false
+    }
+    new RuntimePropsExpectation {
+      name = "color"
+      types {
+        "String"
+        "Number"
+      }
+      required = true
+    }
+    new RuntimePropsExpectation {
+      name = "appearance"
+      types {
+        "String"
+      }
+      required = true
+    }
+    new RuntimePropsExpectation {
+      name = "note"
+      types {
+        "String"
+      }
+      required = true
+    }
+  }
+  bindings {
+    new BindingExpectation {
+      name = "size"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "color"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "appearance"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "note"
+      kind = "props"
+    }
+  }
+}

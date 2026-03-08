@@ -1,0 +1,438 @@
+===
+name: empty div
+options: default
+--- INPUT ---
+<div></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div"))
+}
+
+===
+name: self-closing div
+options: default
+--- INPUT ---
+<div />
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div"))
+}
+
+===
+name: element with text
+options: default
+--- INPUT ---
+<div>hello</div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", null, "hello"))
+}
+
+===
+name: element with interpolation
+options: default
+--- INPUT ---
+<div>{{ msg }}</div>
+--- OUTPUT ---
+import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", null, _toDisplayString(_ctx.msg), 1 /* TEXT */))
+}
+
+===
+name: element with mixed content
+options: default
+--- INPUT ---
+<div>Hello {{ name }}!</div>
+--- OUTPUT ---
+import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", null, "Hello " + _toDisplayString(_ctx.name) + "!", 1 /* TEXT */))
+}
+
+===
+name: multiple interpolations
+options: default
+--- INPUT ---
+<div>{{ a }} and {{ b }}</div>
+--- OUTPUT ---
+import { toDisplayString as _toDisplayString, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", null, _toDisplayString(_ctx.a) + " and " + _toDisplayString(_ctx.b), 1 /* TEXT */))
+}
+
+===
+name: input element
+options: default
+--- INPUT ---
+<input>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("input"))
+}
+
+===
+name: br element
+options: default
+--- INPUT ---
+<br>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("br"))
+}
+
+===
+name: img element
+options: default
+--- INPUT ---
+<img src="test.png">
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("img", { src: "test.png" }))
+}
+
+===
+name: hr element
+options: default
+--- INPUT ---
+<hr>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("hr"))
+}
+
+===
+name: nested elements
+options: default
+--- INPUT ---
+<div><span>text</span></div>
+--- OUTPUT ---
+import { createElementVNode as _createElementVNode, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", null, [
+    _createElementVNode("span", null, "text")
+  ]))
+}
+
+===
+name: deeply nested
+options: default
+--- INPUT ---
+<div><p><span>deep</span></p></div>
+--- OUTPUT ---
+import { createElementVNode as _createElementVNode, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", null, [
+    _createElementVNode("p", null, [
+      _createElementVNode("span", null, "deep")
+    ])
+  ]))
+}
+
+===
+name: multiple children
+options: default
+--- INPUT ---
+<div><span></span><p></p></div>
+--- OUTPUT ---
+import { createElementVNode as _createElementVNode, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", null, [
+    _createElementVNode("span"),
+    _createElementVNode("p")
+  ]))
+}
+
+===
+name: mixed children types
+options: default
+--- INPUT ---
+<div>text<span>element</span>{{ interp }}</div>
+--- OUTPUT ---
+import { createElementVNode as _createElementVNode, toDisplayString as _toDisplayString, createTextVNode as _createTextVNode, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", null, [
+    _createTextVNode("text"),
+    _createElementVNode("span", null, "element"),
+    _createTextVNode(_toDisplayString(_ctx.interp), 1 /* TEXT */)
+  ]))
+}
+
+===
+name: static id
+options: default
+--- INPUT ---
+<div id="app"></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", { id: "app" }))
+}
+
+===
+name: static class
+options: default
+--- INPUT ---
+<div class="container"></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", { class: "container" }))
+}
+
+===
+name: multiple static attributes
+options: default
+--- INPUT ---
+<div id="app" class="container"></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    id: "app",
+    class: "container"
+  }))
+}
+
+===
+name: data attribute
+options: default
+--- INPUT ---
+<div data-id="123"></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", { "data-id": "123" }))
+}
+
+===
+name: boolean attribute
+options: default
+--- INPUT ---
+<input disabled>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("input", { disabled: "" }))
+}
+
+===
+name: aria attribute
+options: default
+--- INPUT ---
+<div aria-label="test"></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", { "aria-label": "test" }))
+}
+
+===
+name: dynamic id
+options: default
+--- INPUT ---
+<div :id="dynamicId"></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", { id: _ctx.dynamicId }, null, 8 /* PROPS */, ["id"]))
+}
+
+===
+name: dynamic class
+options: default
+--- INPUT ---
+<div :class="dynamicClass"></div>
+--- OUTPUT ---
+import { normalizeClass as _normalizeClass, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    class: _normalizeClass(_ctx.dynamicClass)
+  }, null, 2 /* CLASS */))
+}
+
+===
+name: dynamic style
+options: default
+--- INPUT ---
+<div :style="dynamicStyle"></div>
+--- OUTPUT ---
+import { normalizeStyle as _normalizeStyle, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    style: _normalizeStyle(_ctx.dynamicStyle)
+  }, null, 4 /* STYLE */))
+}
+
+===
+name: dynamic attribute
+options: default
+--- INPUT ---
+<div :data-id="id"></div>
+--- OUTPUT ---
+import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", { "data-id": _ctx.id }, null, 8 /* PROPS */, ["data-id"]))
+}
+
+===
+name: mixed static and dynamic
+options: default
+--- INPUT ---
+<div class="static" :class="dynamic"></div>
+--- OUTPUT ---
+import { normalizeClass as _normalizeClass, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", {
+    class: _normalizeClass(["static", _ctx.dynamic])
+  }, null, 2 /* CLASS */))
+}
+
+===
+name: template element
+options: default
+--- INPUT ---
+<template><div>content</div></template>
+--- OUTPUT ---
+import { createElementVNode as _createElementVNode, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("template", null, [
+    _createElementVNode("div", null, "content")
+  ]))
+}
+
+===
+name: slot element
+options: default
+--- INPUT ---
+<slot></slot>
+--- OUTPUT ---
+import { renderSlot as _renderSlot } from "vue"
+
+export function render(_ctx, _cache) {
+  return _renderSlot(_ctx.$slots, "default")
+}
+
+===
+name: slot with name
+options: default
+--- INPUT ---
+<slot name="header"></slot>
+--- OUTPUT ---
+import { renderSlot as _renderSlot } from "vue"
+
+export function render(_ctx, _cache) {
+  return _renderSlot(_ctx.$slots, "header")
+}
+
+===
+name: slot with fallback
+options: default
+--- INPUT ---
+<slot>fallback content</slot>
+--- OUTPUT ---
+import { renderSlot as _renderSlot, createTextVNode as _createTextVNode } from "vue"
+
+export function render(_ctx, _cache) {
+  return _renderSlot(_ctx.$slots, "default", {}, () => [
+    _createTextVNode("fallback content")
+  ])
+}
+
+===
+name: svg element
+options: default
+--- INPUT ---
+<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40"/></svg>
+--- OUTPUT ---
+import { createElementVNode as _createElementVNode, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("svg", { viewBox: "0 0 100 100" }, [
+    _createElementVNode("circle", {
+      cx: "50",
+      cy: "50",
+      r: "40"
+    })
+  ]))
+}
+
+===
+name: svg with namespace
+options: default
+--- INPUT ---
+<svg xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100"/></svg>
+--- OUTPUT ---
+import { createElementVNode as _createElementVNode, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("svg", { xmlns: "http://www.w3.org/2000/svg" }, [
+    _createElementVNode("rect", {
+      width: "100",
+      height: "100"
+    })
+  ]))
+}
+
+===
+name: html comment
+options: default
+--- INPUT ---
+<div><!-- comment --></div>
+--- OUTPUT ---
+import { createCommentVNode as _createCommentVNode, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", null, [
+    _createCommentVNode(" comment ")
+  ]))
+}
+
+===
+name: comment between elements
+options: default
+--- INPUT ---
+<div><span></span><!-- between --><p></p></div>
+--- OUTPUT ---
+import { createElementVNode as _createElementVNode, createCommentVNode as _createCommentVNode, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+export function render(_ctx, _cache) {
+  return (_openBlock(), _createElementBlock("div", null, [
+    _createElementVNode("span"),
+    _createCommentVNode(" between "),
+    _createElementVNode("p")
+  ]))
+}

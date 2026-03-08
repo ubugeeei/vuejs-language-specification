@@ -1,0 +1,55 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.script.define-slots-erased-unused"
+title = "Unused defineSlots remains type-only"
+kind = "sfc-script-compile"
+summary = "When the defineSlots result is not bound into runtime output, the compiler must erase the macro without materializing a useSlots call."
+
+features {
+  "script-setup.defineSlots"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/defineSlots.spec.ts"
+    cases {
+      "w/o return value"
+    }
+  }
+}
+
+input {
+  filename = "defineSlotsNoBind.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    defineSlots<{
+      default: { msg: string }
+    }>()
+    </script>
+    """#
+  scriptOptions {
+    id = "define-slots-erased-unused"
+  }
+}
+
+expect {
+  normalizedCode = #"""
+    import { defineComponent as _defineComponent } from 'vue'
+
+    export default /*@__PURE__*/_defineComponent({
+      __name: 'defineSlotsNoBind',
+      setup(__props, { expose: __expose }) {
+      __expose();
+
+
+
+    const __returned__ = {  }
+    Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+    return __returned__
+    }
+
+    })
+    """#
+}

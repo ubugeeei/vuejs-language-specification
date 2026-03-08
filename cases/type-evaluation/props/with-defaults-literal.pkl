@@ -1,0 +1,71 @@
+amends "../../../schemas/TypeEvaluationCase.pkl"
+
+id = "type-evaluation.props.with-defaults-literal"
+title = "withDefaults preserves runtime constructors for optional props"
+summary = "Optional props wrapped by withDefaults must still lower to their original runtime constructor families and remain non-required in runtime props."
+
+features {
+  "type-eval.withDefaults"
+  "type-eval.optional-props"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/defineProps.spec.ts"
+    cases {
+      "withDefaults (static)"
+    }
+  }
+}
+
+input {
+  filename = "WithDefaultsLiteral.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    const props = withDefaults(defineProps<{
+      tone?: "primary" | "secondary"
+      rounded?: boolean
+    }>(), {
+      tone: "primary",
+      rounded: true,
+    })
+    </script>
+    """#
+  scriptOptions {
+    id = "with-defaults-literal"
+  }
+}
+
+expect {
+  runtimeProps {
+    new RuntimePropsExpectation {
+      name = "tone"
+      types {
+        "String"
+      }
+      required = false
+    }
+    new RuntimePropsExpectation {
+      name = "rounded"
+      types {
+        "Boolean"
+      }
+      required = false
+    }
+  }
+  bindings {
+    new BindingExpectation {
+      name = "props"
+      kind = "setup-const"
+    }
+    new BindingExpectation {
+      name = "tone"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "rounded"
+      kind = "props"
+    }
+  }
+}

@@ -1,0 +1,702 @@
+amends "../../schemas/UpstreamInventory.pkl"
+
+repository = "vuejs/language-tools"
+commit = "6141ef516c21fc6202b690a9b921bebfdff3057b"
+generatedAt = "2026-03-08T06:47:33.703Z"
+
+counts {
+  files = 15
+  cases = 95
+  issueRefs = 26
+  benchmarks = 0
+}
+
+files {
+  new InventoryFile {
+    path = "extensions/vscode/tests/rangeFormatting.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "only replace selected range"
+        kind = "test"
+        line = 6
+      }
+      new InventoryCase {
+        name = "keeps indent when edits start on previous line"
+        kind = "test"
+        line = 14
+      }
+      new InventoryCase {
+        name = "drops edits if the selection text unchanged after restrict"
+        kind = "test"
+        line = 52
+      }
+      new InventoryCase {
+        name = "returns next edits unchanged when they fully match the selection"
+        kind = "test"
+        line = 60
+      }
+      new InventoryCase {
+        name = "keeps boundary inserts when other edits are out of range"
+        kind = "test"
+        line = 68
+      }
+      new InventoryCase {
+        name = "handles deletion where newText is shorter than oldText in selection"
+        kind = "test"
+        line = 79
+      }
+      new InventoryCase {
+        name = "handles newText completely exhausted before reaching overlapEnd"
+        kind = "test"
+        line = 87
+      }
+      new InventoryCase {
+        name = "handles insertion where newText is longer than oldText"
+        kind = "test"
+        line = 95
+      }
+      new InventoryCase {
+        name = "handles whitespace-only differences"
+        kind = "test"
+        line = 103
+      }
+      new InventoryCase {
+        name = "handles edit range completely before selection"
+        kind = "test"
+        line = 111
+      }
+      new InventoryCase {
+        name = "handles edit range completely after selection"
+        kind = "test"
+        line = 119
+      }
+      new InventoryCase {
+        name = "handles empty selection"
+        kind = "test"
+        line = 127
+      }
+      new InventoryCase {
+        name = "handles empty edit (pure insertion)"
+        kind = "test"
+        line = 135
+      }
+      new InventoryCase {
+        name = "handles multiple edits within selection"
+        kind = "test"
+        line = 143
+      }
+      new InventoryCase {
+        name = "handles edit with mixed whitespace and non-whitespace changes"
+        kind = "test"
+        line = 154
+      }
+      new InventoryCase {
+        name = "handles non-ASCII characters"
+        kind = "test"
+        line = 162
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/component-meta/tests/index.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "empty-component"
+        kind = "test"
+        line = 7
+      }
+      new InventoryCase {
+        name = "reference-type-model"
+        kind = "test"
+        line = 33
+      }
+      new InventoryCase {
+        name = "reference-type-props"
+        kind = "test"
+        line = 145
+      }
+      new InventoryCase {
+        name = "reference-type-props-destructured"
+        kind = "test"
+        line = 678
+      }
+      new InventoryCase {
+        name = "reference-type-props-js"
+        kind = "test"
+        line = 692
+      }
+      new InventoryCase {
+        name = "reference-type-props-js-setup"
+        kind = "test"
+        line = 838
+      }
+      new InventoryCase {
+        name = "reference-type-events"
+        kind = "test"
+        line = 1071
+      }
+      new InventoryCase {
+        name = "reference-type-events w/ generic"
+        kind = "test"
+        line = 1192
+      }
+      new InventoryCase {
+        name = "reference-type-slots"
+        kind = "test"
+        line = 1217
+      }
+      new InventoryCase {
+        name = "reference-type-slots w/ defineSlots"
+        kind = "test"
+        line = 1246
+      }
+      new InventoryCase {
+        name = "reference-type-slots w/ generic"
+        kind = "test"
+        line = 1287
+      }
+      new InventoryCase {
+        name = "reference-type-exposed"
+        kind = "test"
+        line = 1299
+      }
+      new InventoryCase {
+        name = "options-api expose array"
+        kind = "test"
+        line = 1341
+      }
+      new InventoryCase {
+        name = "component with both props and events"
+        kind = "test"
+        line = 1372
+      }
+      new InventoryCase {
+        name = "non-component"
+        kind = "test"
+        line = 1387
+      }
+      new InventoryCase {
+        name = "ts-component"
+        kind = "test"
+        line = 1397
+      }
+      new InventoryCase {
+        name = "ts-component.tsx"
+        kind = "test"
+        line = 1418
+      }
+      new InventoryCase {
+        name = "ts-named-exports"
+        kind = "test"
+        line = 1442
+      }
+      new InventoryCase {
+        name = "options-api"
+        kind = "test"
+        line = 1472
+      }
+      new InventoryCase {
+        name = "component-name-description (vue)"
+        kind = "test"
+        line = 1613
+      }
+      new InventoryCase {
+        name = "component-name-description (ts)"
+        kind = "test"
+        line = 1625
+      }
+      new InventoryCase {
+        name = "component-no-name (vue)"
+        kind = "test"
+        line = 1637
+      }
+    }
+    issues {
+      new IssueRef {
+        label = "#5546"
+        line = 1373
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/language-plugin-pug/tests/baseParse.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "should parse multiline :class attribute with backtick template string"
+        kind = "test"
+        line = 7
+      }
+      new InventoryCase {
+        name = "should correctly convert backtick to double quotes when no double quotes inside"
+        kind = "test"
+        line = 28
+      }
+      new InventoryCase {
+        name = "should correctly convert backtick to single quotes when double quotes inside"
+        kind = "test"
+        line = 37
+      }
+      new InventoryCase {
+        name = "should handle multiline backtick values with newlines"
+        kind = "test"
+        line = 46
+      }
+      new InventoryCase {
+        name = "should produce valid HTML that Vue compiler can parse when both quote types present"
+        kind = "test"
+        line = 59
+      }
+      new InventoryCase {
+        name = "should convert inner single quotes to double quotes when both quote types present"
+        kind = "test"
+        line = 86
+      }
+      new InventoryCase {
+        name = "should produce valid JavaScript expression when both quote types present"
+        kind = "test"
+        line = 95
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/language-server/tests/completions.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "Vue tags"
+        kind = "test"
+        line = 8
+      }
+      new InventoryCase {
+        name = "#4670"
+        kind = "test"
+        line = 48
+      }
+      new InventoryCase {
+        name = "HTML tags and built-in components"
+        kind = "test"
+        line = 65
+      }
+      new InventoryCase {
+        name = "Auto import"
+        kind = "test"
+        line = 258
+      }
+      new InventoryCase {
+        name = "Boolean props"
+        kind = "test"
+        line = 618
+      }
+      new InventoryCase {
+        name = "Directives"
+        kind = "test"
+        line = 635
+      }
+      new InventoryCase {
+        name = "Directive modifiers"
+        kind = "test"
+        line = 642
+      }
+      new InventoryCase {
+        name = "$event argument"
+        kind = "test"
+        line = 673
+      }
+      new InventoryCase {
+        name = "<script setup>"
+        kind = "test"
+        line = 682
+      }
+      new InventoryCase {
+        name = "Slot name"
+        kind = "test"
+        line = 697
+      }
+      new InventoryCase {
+        name = "#2454"
+        kind = "test"
+        line = 720
+      }
+      new InventoryCase {
+        name = "#3658"
+        kind = "test"
+        line = 767
+      }
+      new InventoryCase {
+        name = "#4639"
+        kind = "test"
+        line = 784
+      }
+      new InventoryCase {
+        name = "Alias path"
+        kind = "test"
+        line = 797
+      }
+      new InventoryCase {
+        name = "Relative path"
+        kind = "test"
+        line = 810
+      }
+      new InventoryCase {
+        name = "core#8811"
+        kind = "test"
+        line = 890
+      }
+      new InventoryCase {
+        name = "#4796"
+        kind = "test"
+        line = 911
+      }
+      new InventoryCase {
+        name = "Auto insert defines"
+        kind = "test"
+        line = 962
+      }
+      new InventoryCase {
+        name = "#5847"
+        kind = "test"
+        line = 1005
+      }
+    }
+    issues {
+      new IssueRef {
+        label = "#4670"
+        line = 48
+      }
+      new IssueRef {
+        label = "#2454"
+        line = 720
+      }
+      new IssueRef {
+        label = "#2511"
+        line = 737
+      }
+      new IssueRef {
+        label = "#3658"
+        line = 767
+      }
+      new IssueRef {
+        label = "#4639"
+        line = 784
+      }
+      new IssueRef {
+        label = "#8811"
+        line = 890
+      }
+      new IssueRef {
+        label = "#4796"
+        line = 911
+      }
+      new IssueRef {
+        label = "#5847"
+        line = 1005
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/language-server/tests/definitions.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "TS to vue"
+        kind = "test"
+        line = 6
+      }
+      new InventoryCase {
+        name = "Alias path"
+        kind = "test"
+        line = 43
+      }
+      new InventoryCase {
+        name = "#2600"
+        kind = "test"
+        line = 80
+      }
+    }
+    issues {
+      new IssueRef {
+        label = "#2600"
+        line = 80
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/language-server/tests/documentLinks.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "Document links"
+        kind = "test"
+        line = 6
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/language-server/tests/inlayHints.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "Inline handler leading"
+        kind = "test"
+        line = 6
+      }
+      new InventoryCase {
+        name = "Missing props"
+        kind = "test"
+        line = 34
+      }
+      new InventoryCase {
+        name = "Options wrapper"
+        kind = "test"
+        line = 70
+      }
+      new InventoryCase {
+        name = "Destructured props"
+        kind = "test"
+        line = 90
+      }
+      new InventoryCase {
+        name = "#4720"
+        kind = "test"
+        line = 188
+      }
+      new InventoryCase {
+        name = "#4855"
+        kind = "test"
+        line = 208
+      }
+    }
+    issues {
+      new IssueRef {
+        label = "#4720"
+        line = 188
+      }
+      new IssueRef {
+        label = "#4855"
+        line = 208
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/language-server/tests/moduleResolution.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "#5818 clears missing module error after renaming to an existing filename"
+        kind = "test"
+        line = 8
+      }
+    }
+    issues {
+      new IssueRef {
+        label = "#5818"
+        line = 8
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/language-server/tests/quickFix.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "\"Add import\" quick fix for undefined variable in template"
+        kind = "test"
+        line = 16
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/language-server/tests/references.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "Default slot"
+        kind = "test"
+        line = 6
+      }
+      new InventoryCase {
+        name = "Named slot"
+        kind = "test"
+        line = 71
+      }
+      new InventoryCase {
+        name = "v-bind shorthand"
+        kind = "test"
+        line = 134
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/language-server/tests/renaming.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "#2410"
+        kind = "test"
+        line = 6
+      }
+      new InventoryCase {
+        name = "CSS"
+        kind = "test"
+        line = 81
+      }
+      new InventoryCase {
+        name = "Component props"
+        kind = "test"
+        line = 353
+      }
+      new InventoryCase {
+        name = "Component type props"
+        kind = "test"
+        line = 465
+      }
+      new InventoryCase {
+        name = "Component dynamic props"
+        kind = "test"
+        line = 577
+      }
+      new InventoryCase {
+        name = "Component returns"
+        kind = "test"
+        line = 650
+      }
+      new InventoryCase {
+        name = "<script setup>"
+        kind = "test"
+        line = 731
+      }
+      new InventoryCase {
+        name = "Component tags"
+        kind = "test"
+        line = 804
+      }
+      new InventoryCase {
+        name = "Global component tags"
+        kind = "test"
+        line = 908
+      }
+      new InventoryCase {
+        name = "#4673"
+        kind = "test"
+        line = 995
+      }
+      new InventoryCase {
+        name = "Scoped Classes"
+        kind = "test"
+        line = 1080
+      }
+      new InventoryCase {
+        name = "Template Ref"
+        kind = "test"
+        line = 1177
+      }
+      new InventoryCase {
+        name = "Same Name Shorthand"
+        kind = "test"
+        line = 1243
+      }
+    }
+    issues {
+      new IssueRef {
+        label = "#2410"
+        line = 6
+      }
+      new IssueRef {
+        label = "#4673"
+        line = 995
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/language-server/tests/semanticTokens.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "#5572 semantic tokens stay in sync when a git view is opened"
+        kind = "test"
+        line = 16
+      }
+    }
+    issues {
+      new IssueRef {
+        label = "#5572"
+        line = 16
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/language-service/tests/format/1806.spec.ts"
+    kind = "test"
+    cases {
+    }
+    issues {
+      new IssueRef {
+        label = "#000"
+        line = 20
+      }
+      new IssueRef {
+        label = "#000"
+        line = 38
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/tsc/tests/dts.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "Input: ${shortenPath(intputFile)}, Output: ${shortenPath(expectedOutputFile)}"
+        kind = "test"
+        line = 54
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/tsc/tests/typecheck.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "vue-tsc"
+        kind = "test"
+        line = 6
+      }
+    }
+    issues {
+      new IssueRef {
+        label = "tsc/_failed_#3632"
+        line = 27
+      }
+      new IssueRef {
+        label = "tsc/_failed_#3632"
+        line = 28
+      }
+      new IssueRef {
+        label = "tsc/_failed_#3632"
+        line = 29
+      }
+      new IssueRef {
+        label = "tsc/_failed_#3632"
+        line = 30
+      }
+      new IssueRef {
+        label = "tsc/_failed_#4569"
+        line = 31
+      }
+      new IssueRef {
+        label = "tsc/_failed_#5071"
+        line = 32
+      }
+      new IssueRef {
+        label = "tsc/_failed_#5071"
+        line = 33
+      }
+      new IssueRef {
+        label = "tsc/_failed_#5823"
+        line = 34
+      }
+    }
+  }
+}

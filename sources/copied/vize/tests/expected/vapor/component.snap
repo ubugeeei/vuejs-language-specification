@@ -1,0 +1,234 @@
+===
+name: simple component
+options: vapor
+--- INPUT ---
+<MyComponent />
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback } from 'vue';
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n0 = _createComponentWithFallback(_component_MyComponent, null, null, true)
+  return n0
+}
+
+===
+name: component with props
+options: vapor
+--- INPUT ---
+<MyComponent :msg="message" />
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback } from 'vue';
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n0 = _createComponentWithFallback(_component_MyComponent, { msg: () => (_ctx.message) }, null, true)
+  return n0
+}
+
+===
+name: component with static prop
+options: vapor
+--- INPUT ---
+<MyComponent msg="hello" />
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback } from 'vue';
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n0 = _createComponentWithFallback(_component_MyComponent, { msg: () => ("hello") }, null, true)
+  return n0
+}
+
+===
+name: component with event
+options: vapor
+--- INPUT ---
+<MyComponent @update="onUpdate" />
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback } from 'vue';
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n0 = _createComponentWithFallback(_component_MyComponent, { onUpdate: () => _ctx.onUpdate }, null, true)
+  return n0
+}
+
+===
+name: component with content
+options: vapor
+--- INPUT ---
+<MyComponent>content</MyComponent>
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback, template as _template } from 'vue';
+const t0 = _template("content")
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n1 = _createComponentWithFallback(_component_MyComponent, null, {
+    "default": () => {
+      const n0 = t0()
+      return n0
+    }
+  }, true)
+  return n1
+}
+
+===
+name: named slot
+options: vapor
+--- INPUT ---
+<MyComponent><template #header>Header</template></MyComponent>
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback, template as _template } from 'vue';
+const t0 = _template("Header")
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n2 = _createComponentWithFallback(_component_MyComponent, null, {
+    "header": () => {
+      const n0 = t0()
+      return n0
+    }
+  }, true)
+  return n2
+}
+
+===
+name: scoped slot
+options: vapor
+--- INPUT ---
+<MyComponent v-slot="{ item }">{{ item }}</MyComponent>
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, toDisplayString as _toDisplayString, setText as _setText, renderEffect as _renderEffect, createComponentWithFallback as _createComponentWithFallback, template as _template } from 'vue';
+const t0 = _template(" ")
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n1 = _createComponentWithFallback(_component_MyComponent, null, {
+    "default": (_slotProps0) => {
+      const n0 = t0()
+      _renderEffect(() => _setText(n0, _toDisplayString(_slotProps0.item)))
+      return n0
+    }
+  }, true)
+  return n1
+}
+
+===
+name: Teleport
+options: vapor
+--- INPUT ---
+<Teleport to="body"><div>content</div></Teleport>
+--- OUTPUT ---
+import { VaporTeleport as _VaporTeleport, createComponent as _createComponent, template as _template } from 'vue';
+const t0 = _template("<div>content</div>")
+
+export function render(_ctx) {
+  const n1 = _createComponent(_VaporTeleport, { to: () => ("body") }, {
+    "default": () => {
+      const n0 = t0()
+      return n0
+    }
+  }, true)
+  return n1
+}
+
+===
+name: Suspense
+options: vapor
+--- INPUT ---
+<Suspense><Component /></Suspense>
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback, withVaporCtx as _withVaporCtx } from 'vue';
+
+export function render(_ctx) {
+  const _component_Component = _resolveComponent("Component")
+  const _component_Suspense = _resolveComponent("Suspense")
+  const n1 = _createComponentWithFallback(_component_Suspense, null, {
+    "default": _withVaporCtx(() => {
+      const n0 = _createComponentWithFallback(_component_Component)
+      return n0
+    })
+  }, true)
+  return n1
+}
+
+===
+name: KeepAlive
+options: vapor
+--- INPUT ---
+<KeepAlive><Component /></KeepAlive>
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, VaporKeepAlive as _VaporKeepAlive, createComponentWithFallback as _createComponentWithFallback, withVaporCtx as _withVaporCtx, createComponent as _createComponent } from 'vue';
+
+export function render(_ctx) {
+  const _component_Component = _resolveComponent("Component")
+  const n1 = _createComponent(_VaporKeepAlive, null, {
+    "default": _withVaporCtx(() => {
+      const n0 = _createComponentWithFallback(_component_Component)
+      return n0
+    })
+  }, true)
+  return n1
+}
+
+===
+name: dynamic component
+options: vapor
+--- INPUT ---
+<component :is="currentComponent" />
+--- OUTPUT ---
+import { createDynamicComponent as _createDynamicComponent } from 'vue';
+
+export function render(_ctx) {
+  const n0 = _createDynamicComponent(() => (_ctx.currentComponent), null, null, true)
+  return n0
+}
+
+===
+name: dynamic with props
+options: vapor
+--- INPUT ---
+<component :is="current" :msg="message" />
+--- OUTPUT ---
+import { createDynamicComponent as _createDynamicComponent } from 'vue';
+
+export function render(_ctx) {
+  const n0 = _createDynamicComponent(() => (_ctx.current), { msg: () => (_ctx.message) }, null, true)
+  return n0
+}
+
+===
+name: component v-model
+options: vapor
+--- INPUT ---
+<MyComponent v-model="value" />
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback } from 'vue';
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n0 = _createComponentWithFallback(_component_MyComponent, {
+    modelValue: () => (_ctx.value),
+    "onUpdate:modelValue": () => _value => (_ctx.value = _value)
+  }, null, true)
+  return n0
+}
+
+===
+name: named v-model
+options: vapor
+--- INPUT ---
+<MyComponent v-model:title="pageTitle" />
+--- OUTPUT ---
+import { resolveComponent as _resolveComponent, createComponentWithFallback as _createComponentWithFallback } from 'vue';
+
+export function render(_ctx) {
+  const _component_MyComponent = _resolveComponent("MyComponent")
+  const n0 = _createComponentWithFallback(_component_MyComponent, {
+    title: () => (_ctx.pageTitle),
+    "onUpdate:title": () => _value => (_ctx.pageTitle = _value)
+  }, null, true)
+  return n0
+}
