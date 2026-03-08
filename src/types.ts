@@ -89,6 +89,8 @@ export interface CompilerOptionsInput {
 
 export interface ScriptOptionsInput {
   id?: string;
+  inlineTemplate?: boolean;
+  isProd?: boolean;
 }
 
 export interface StyleOptionsInput {

@@ -1,0 +1,92 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.script.define-props-destructure-for-of-shadowing"
+title = "Reactive props destructure preserves for-of shadowing"
+kind = "sfc-script-compile"
+summary = "Prop rewrites introduced by reactive destructure must respect for-of loop shadowing and restore prop access outside the loop body."
+
+features {
+  "script-setup.defineProps"
+  "script-setup.destructure"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/definePropsDestructure.spec.ts"
+    cases {
+      "for-of loop variable shadowing"
+    }
+  }
+}
+
+input {
+  filename = "definePropsDestructureForOfShadowing.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    interface Props {
+      msg: string
+      input: string[]
+    }
+    const { msg, input } = defineProps<Props>()
+    for (const msg of input) {
+      console.log("MESSAGE", msg)
+    }
+    console.log("NOT FAIL", { msg })
+    </script>
+    """#
+  scriptOptions {
+    id = "define-props-destructure-for-of-shadowing"
+    inlineTemplate = true
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "msg"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "input"
+      kind = "props"
+    }
+  }
+  propConstructors {
+    new PropConstructorExpectation {
+      name = "msg"
+      constructor = "String"
+    }
+    new PropConstructorExpectation {
+      name = "input"
+      constructor = "Array"
+    }
+  }
+  normalizedCode = #"""
+    import { defineComponent as _defineComponent } from 'vue'
+    interface Props {
+      msg: string
+      input: string[]
+    }
+
+    export default /*@__PURE__*/_defineComponent({
+      __name: 'definePropsDestructureForOfShadowing',
+      props: {
+        msg: { type: String, required: true },
+        input: { type: Array, required: true }
+      },
+      setup(__props: any) {
+
+
+    for (const msg of __props.input) {
+      console.log("MESSAGE", msg)
+    }
+    console.log("NOT FAIL", { msg: __props.msg })
+
+    return () => {}
+    }
+
+    })
+    """#
+}

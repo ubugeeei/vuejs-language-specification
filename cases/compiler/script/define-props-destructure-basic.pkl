@@ -1,0 +1,65 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.script.define-props-destructure-basic"
+title = "Reactive props destructure rewrites setup and template reads to props access"
+kind = "sfc-script-compile"
+summary = "A destructured defineProps binding must erase the destructure pattern and rewrite setup and inline-template reads to the corresponding props slot."
+
+features {
+  "script-setup.defineProps"
+  "script-setup.destructure"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/definePropsDestructure.spec.ts"
+    cases {
+      "basic usage"
+    }
+  }
+}
+
+input {
+  filename = "definePropsDestructureBasic.vue"
+  sfc = #"""
+    <script setup>
+    const { foo } = defineProps(["foo"])
+    console.log(foo)
+    </script>
+    <template>{{ foo }}</template>
+    """#
+  scriptOptions {
+    id = "define-props-destructure-basic"
+    inlineTemplate = true
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "foo"
+      kind = "props"
+    }
+  }
+  normalizedCode = #"""
+    import { toDisplayString as _toDisplayString } from "vue"
+
+
+    export default {
+      __name: 'definePropsDestructureBasic',
+      props: ["foo"],
+      setup(__props) {
+
+
+    console.log(__props.foo)
+
+    return (_ctx, _cache) => {
+      return _toDisplayString(__props.foo)
+    }
+    }
+
+    }
+    """#
+}

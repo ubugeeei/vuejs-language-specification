@@ -128,10 +128,9 @@ function assertBindings(
 
   const actual = sortRecord(
     Object.fromEntries(
-      Object.entries(actualBindings ?? {}).map(([name, value]) => [
-        name,
-        normalizeBindingType(value),
-      ]),
+      Object.entries(actualBindings ?? {})
+        .filter(([, value]) => typeof value === "string")
+        .map(([name, value]) => [name, normalizeBindingType(value)]),
     ),
   );
   const expected = sortRecord(

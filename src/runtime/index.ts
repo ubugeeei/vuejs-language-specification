@@ -15,8 +15,12 @@ import { vModelCheckboxMutableCollectionCase } from "./cases/v-model-checkbox-mu
 import { vModelCheckboxSetCase } from "./cases/v-model-checkbox-set.ts";
 import { vModelCheckboxTrueFalseCase } from "./cases/v-model-checkbox-true-false.ts";
 import { vModelCheckboxTrueFalseObjectCase } from "./cases/v-model-checkbox-true-false-object.ts";
+import { vModelMultipleListenersCase } from "./cases/v-model-multiple-listeners.ts";
+import { vModelNumberInputCase } from "./cases/v-model-number-input.ts";
 import { vModelNumberLeadingZeroCase } from "./cases/v-model-number-leading-zero.ts";
+import { vModelNumberRenderingCase } from "./cases/v-model-number-rendering.ts";
 import { vModelRadioCase } from "./cases/v-model-radio.ts";
+import { vModelRangeCase } from "./cases/v-model-range.ts";
 import { vModelSelectCase } from "./cases/v-model-select.ts";
 import { vModelSelectNumberCase } from "./cases/v-model-select-number.ts";
 import { vModelSelectMultipleCase } from "./cases/v-model-select-multiple.ts";
@@ -28,6 +32,8 @@ import { vModelSelectMultipleSetObjectCase } from "./cases/v-model-select-multip
 import { vModelTextCase } from "./cases/v-model-text.ts";
 import { vModelTextCompositionSessionCase } from "./cases/v-model-text-composition-session.ts";
 import { vModelTextModifiersCase } from "./cases/v-model-text-modifiers.ts";
+import { vModelTextareaCase } from "./cases/v-model-textarea.ts";
+import { vModelUpdatedListenerCase } from "./cases/v-model-updated-listener.ts";
 import { vShowToggleCase } from "./cases/v-show-toggle.ts";
 import type { RuntimeCase } from "./types.ts";
 
@@ -37,14 +43,18 @@ export const runtimeCases: RuntimeCase[] = [
   vModelTextCase,
   vModelTextCompositionSessionCase,
   vModelTextModifiersCase,
+  vModelTextareaCase,
   vModelCheckboxCase,
   vModelCheckboxArrayCase,
   vModelCheckboxMutableCollectionCase,
   vModelCheckboxSetCase,
   vModelCheckboxTrueFalseCase,
   vModelCheckboxTrueFalseObjectCase,
+  vModelNumberInputCase,
   vModelNumberLeadingZeroCase,
+  vModelNumberRenderingCase,
   vModelRadioCase,
+  vModelRangeCase,
   vModelSelectCase,
   vModelSelectNumberCase,
   vModelSelectMultipleCase,
@@ -53,6 +63,8 @@ export const runtimeCases: RuntimeCase[] = [
   vModelSelectMultipleObjectArrayCase,
   vModelSelectMultipleSetCase,
   vModelSelectMultipleSetObjectCase,
+  vModelMultipleListenersCase,
+  vModelUpdatedListenerCase,
   vShowToggleCase,
   slotProjectionCase,
   slotFallbackCase,

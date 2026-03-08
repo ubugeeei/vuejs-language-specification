@@ -1,0 +1,84 @@
+amends "../../../schemas/CompilerCase.pkl"
+
+id = "compiler.script.define-props-destructure-for-shadowing"
+title = "Reactive props destructure preserves regular for-loop shadowing"
+kind = "sfc-script-compile"
+summary = "Prop rewrites introduced by reactive destructure must preserve locally shadowed loop indices while still rewriting distinct prop reads."
+
+features {
+  "script-setup.defineProps"
+  "script-setup.destructure"
+  "compiler.script"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-sfc/__tests__/compileScript/definePropsDestructure.spec.ts"
+    cases {
+      "regular for loop variable shadowing"
+    }
+  }
+}
+
+input {
+  filename = "definePropsDestructureForShadowing.vue"
+  sfc = #"""
+    <script setup lang="ts">
+    const { i, len } = defineProps<{ i: number; len: number }>()
+    for (let i = 0; i < len; i++) {
+      console.log("INDEX", i)
+    }
+    console.log("AFTER", { i })
+    </script>
+    """#
+  scriptOptions {
+    id = "define-props-destructure-for-shadowing"
+    inlineTemplate = true
+  }
+}
+
+expect {
+  bindings {
+    new BindingExpectation {
+      name = "i"
+      kind = "props"
+    }
+    new BindingExpectation {
+      name = "len"
+      kind = "props"
+    }
+  }
+  propConstructors {
+    new PropConstructorExpectation {
+      name = "i"
+      constructor = "Number"
+    }
+    new PropConstructorExpectation {
+      name = "len"
+      constructor = "Number"
+    }
+  }
+  normalizedCode = #"""
+    import { defineComponent as _defineComponent } from 'vue'
+
+    export default /*@__PURE__*/_defineComponent({
+      __name: 'definePropsDestructureForShadowing',
+      props: {
+        i: { type: Number, required: true },
+        len: { type: Number, required: true }
+      },
+      setup(__props: any) {
+
+
+    for (let i = 0; i < __props.len; i++) {
+      console.log("INDEX", i)
+    }
+    console.log("AFTER", { i: __props.i })
+
+    return () => {}
+    }
+
+    })
+    """#
+}

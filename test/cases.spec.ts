@@ -29,7 +29,7 @@ describe("generic cases", () => {
   const cases = loadGenericCases().map((entry) => entry.data);
 
   test("loads the expected seed case count", () => {
-    expect(cases).toHaveLength(65);
+    expect(cases).toHaveLength(71);
   });
 
   for (const caseData of cases.filter((value) => isSuite("parser", value))) {

@@ -17,6 +17,8 @@ class CompilerOptions {
 
 class ScriptOptions {
   id: String?
+  inlineTemplate: Boolean?
+  isProd: Boolean?
 }
 
 class StyleOptions {

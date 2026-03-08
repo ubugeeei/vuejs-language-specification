@@ -2,12 +2,12 @@ amends "../../schemas/UpstreamTraceabilityManifest.pkl"
 
 repository = "vuejs/core"
 commit = "cea3cf758645c9683db51822590b073ce3069dda"
-generatedAt = "2026-03-08T09:23:03.032Z"
+generatedAt = "2026-03-08T09:39:52.150Z"
 
 counts {
   total = 3309
-  covered = 105
-  planned = 3134
+  covered = 117
+  planned = 3122
   tracked = 70
 }
 
@@ -14113,9 +14113,10 @@ entries {
     kind = "test"
     line = 256
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "compiler.script.define-props-destructure-alias"
     }
     fileIssues {
       "#5425"
@@ -14132,9 +14133,10 @@ entries {
     kind = "test"
     line = 13
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "compiler.script.define-props-destructure-basic"
     }
     fileIssues {
       "#5425"
@@ -14305,9 +14307,10 @@ entries {
     kind = "test"
     line = 71
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "compiler.script.define-props-destructure-for-of-shadowing"
     }
     fileIssues {
       "#5425"
@@ -14438,9 +14441,10 @@ entries {
     kind = "test"
     line = 283
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "compiler.script.define-props-destructure-non-identifier-key"
     }
     fileIssues {
       "#5425"
@@ -14457,9 +14461,10 @@ entries {
     kind = "test"
     line = 93
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "compiler.script.define-props-destructure-for-shadowing"
     }
     fileIssues {
       "#5425"
@@ -14476,9 +14481,10 @@ entries {
     kind = "test"
     line = 304
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "compiler.script.define-props-destructure-rest"
     }
     fileIssues {
       "#5425"
@@ -51890,9 +51896,10 @@ entries {
     kind = "test"
     line = 160
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.dom.v-model-multiple-listeners"
     }
     fileIssues {
       "#10503"
@@ -51907,9 +51914,10 @@ entries {
     kind = "test"
     line = 74
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-number-input"
     }
     fileIssues {
       "#10503"
@@ -51924,9 +51932,10 @@ entries {
     kind = "test"
     line = 106
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-number-rendering"
     }
     fileIssues {
       "#10503"
@@ -51959,9 +51968,10 @@ entries {
     kind = "test"
     line = 378
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-range"
     }
     fileIssues {
       "#10503"
@@ -52012,9 +52022,10 @@ entries {
     kind = "test"
     line = 226
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.forms.v-model-textarea"
     }
     fileIssues {
       "#10503"
@@ -52029,9 +52040,10 @@ entries {
     kind = "test"
     line = 189
     classification = "runtime-host"
-    status = "planned"
+    status = "covered"
     profile = null
     localCases {
+      "runtime.dom.v-model-updated-listener"
     }
     fileIssues {
       "#10503"
