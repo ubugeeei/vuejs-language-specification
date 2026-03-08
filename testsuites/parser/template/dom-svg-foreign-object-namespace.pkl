@@ -1,0 +1,53 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.dom-svg-foreign-object-namespace"
+kind = "template-dom-parse"
+title = "DOM parser preserves HTML re-entry at foreignObject boundaries"
+summary = "The DOM parser surface must assign SVG namespace to svg descendants and re-enter HTML namespace for descendants of foreignObject."
+
+features {
+  "parser.namespace"
+  "parser.dom"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-dom/__tests__/parse.spec.ts"
+    cases {
+      "foreignObject tag in SVG namespace"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "ubugeeei/vize"
+    source = "tests/expected/parser/element.snap"
+    cases {
+      "SVG element"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <svg><foreignObject><test/></foreignObject></svg>
+    """#
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "SVG"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/ns"
+      equals = "SVG"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/children/0/ns"
+      equals = "HTML"
+    }
+  }
+}

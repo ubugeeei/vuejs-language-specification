@@ -1,0 +1,51 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.native-custom-tag-classification"
+title = "Native-tag and custom-element selectors stabilize tag classification"
+summary = "A parser implementation must respect declarative native-tag and custom-element configuration when assigning tag kinds to lower-case tags."
+
+features {
+  "parser.tag-classification"
+  "parser.custom-element"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/parse.spec.ts"
+    cases {
+      "native element with `isNativeTag`"
+      "custom element"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <div></div><comp></comp><Comp></Comp>
+    """#
+  nativeTags {
+    "div"
+  }
+  customElementTags {
+    "comp"
+  }
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/tagType"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/tagType"
+      equals = "COMPONENT"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.sfc-root-raw-text"
+title = "SFC parse mode keeps non-template root blocks as raw text"
+summary = "In SFC parse mode, root-level non-template blocks must retain their contents as raw text so parser state does not leak across later parses."
+
+features {
+  "parser.parse-mode"
+  "parser.raw-text"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/parse.spec.ts"
+    cases {
+      "should reset inRCDATA state"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <script setup>const x = 1 < 2</script><template><div/></template>
+    """#
+  parseMode = "sfc"
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "script"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/content"
+      equals = "const x = 1 < 2"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/tag"
+      equals = "template"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/children/0/tag"
+      equals = "div"
+    }
+  }
+}

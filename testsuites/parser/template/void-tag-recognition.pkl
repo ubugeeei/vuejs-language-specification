@@ -1,0 +1,59 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.void-tag-recognition"
+title = "Declarative void-tag sets terminate elements without synthetic end tags"
+summary = "When a parser is configured with a void-tag set, the covered element must end at the start tag boundary and following text must remain a sibling node."
+
+features {
+  "parser.void-tag"
+  "parser.text-boundary"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/parse.spec.ts"
+    cases {
+      "void element"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "ubugeeei/vize"
+    source = "tests/expected/parser/element.snap"
+    cases {
+      "void element - img"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <img>after
+    """#
+  voidTags {
+    "img"
+  }
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "img"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/loc/source"
+      equals = "<img>"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/content"
+      equals = "after"
+    }
+  }
+}

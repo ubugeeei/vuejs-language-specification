@@ -1,0 +1,55 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.whitespace-condense-between-elements"
+title = "Condense whitespace mode removes newline-only separators between elements"
+summary = "Under the condense strategy, inter-element whitespace containing a newline is not retained as standalone text nodes in the covered element sequence."
+
+features {
+  "parser.whitespace"
+  "parser.child-order"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/parse.spec.ts"
+    cases {
+      "should remove whitespaces w/ newline between elements"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "ubugeeei/vize"
+    source = "tests/expected/vapor/edge-cases.snap"
+    cases {
+      "newline between elements"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <div/> 
+    <div/> 
+    <div/>
+    """#
+  whitespace = "condense"
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "div"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/tag"
+      equals = "div"
+    }
+    new PointerAssertion {
+      pointer = "/children/2/tag"
+      equals = "div"
+    }
+  }
+}

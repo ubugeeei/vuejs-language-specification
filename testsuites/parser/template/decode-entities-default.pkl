@@ -1,0 +1,40 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.decode-entities-default"
+title = "Character entities decode into text by default"
+summary = "Default parser behavior must decode covered HTML entities into the retained text node while leaving unknown entities observable."
+
+features {
+  "parser.entities"
+  "parser.text"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/parse.spec.ts"
+    cases {
+      "use decode by default"
+    }
+  }
+}
+
+input {
+  source = #"""
+    &gt;&lt;&amp;&apos;&quot;&foo;
+    """#
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/content"
+      equals = "><&'\"&foo;"
+    }
+  }
+}

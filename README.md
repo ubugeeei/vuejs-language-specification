@@ -17,23 +17,29 @@ The project has two equally important outputs:
 
 ## Normative Map
 
-| Area                  | Specification                                                            | Primary Test Suites                                                                                                  |
-| --------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
-| Formal notation       | [`spec/00-formal-notation.md`](./spec/00-formal-notation.md)             | [`spec/`](./spec/)                                                                                                   |
-| Conformance model     | [`spec/01-conformance-model.md`](./spec/01-conformance-model.md)         | [`testsuites/`](./testsuites/)                                                                                       |
-| SFC syntax and parser | [`spec/02-sfc-syntax.md`](./spec/02-sfc-syntax.md)                       | [`testsuites/syntax/sfc/`](./testsuites/syntax/sfc/), [`testsuites/parser/template/`](./testsuites/parser/template/) |
-| Compiler semantics    | [`spec/03-template-and-compiler.md`](./spec/03-template-and-compiler.md) | [`testsuites/compiler/`](./testsuites/compiler/)                                                                     |
-| Type evaluation       | [`spec/04-type-evaluation.md`](./spec/04-type-evaluation.md)             | [`testsuites/type-evaluation/`](./testsuites/type-evaluation/)                                                       |
-| Runtime conformance   | [`spec/05-runtime-conformance.md`](./spec/05-runtime-conformance.md)     | [`src/runtime/testsuites/`](./src/runtime/testsuites/)                                                               |
-| Benchmark methodology | [`spec/06-benchmark-methodology.md`](./spec/06-benchmark-methodology.md) | [`testsuites/benchmark/`](./testsuites/benchmark/)                                                                   |
-| Upstream provenance   | [`spec/07-upstream-provenance.md`](./spec/07-upstream-provenance.md)     | [`sources/copied/`](./sources/copied/), [`sources/traceability/`](./sources/traceability/)                           |
+| Area                  | Specification                                                                    | Primary Test Suites                                                                                                                            |
+| --------------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Formal notation       | [`spec/00-formal-notation.md`](./spec/00-formal-notation.md)                     | [`spec/`](./spec/)                                                                                                                             |
+| Conformance model     | [`spec/01-conformance-model.md`](./spec/01-conformance-model.md)                 | [`testsuites/`](./testsuites/)                                                                                                                 |
+| SFC syntax and parser | [`spec/02-sfc-syntax.md`](./spec/02-sfc-syntax.md)                               | [`testsuites/syntax/sfc/`](./testsuites/syntax/sfc/), [`testsuites/parser/template/`](./testsuites/parser/template/)                           |
+| Compiler semantics    | [`spec/03-template-and-compiler.md`](./spec/03-template-and-compiler.md)         | [`testsuites/compiler/`](./testsuites/compiler/)                                                                                               |
+| Type evaluation       | [`spec/04-type-evaluation.md`](./spec/04-type-evaluation.md)                     | [`testsuites/type-evaluation/`](./testsuites/type-evaluation/)                                                                                 |
+| Runtime conformance   | [`spec/05-runtime-conformance.md`](./spec/05-runtime-conformance.md)             | [`src/runtime/testsuites/`](./src/runtime/testsuites/)                                                                                         |
+| Benchmark methodology | [`spec/06-benchmark-methodology.md`](./spec/06-benchmark-methodology.md)         | [`testsuites/benchmark/`](./testsuites/benchmark/)                                                                                             |
+| Upstream provenance   | [`spec/07-upstream-provenance.md`](./spec/07-upstream-provenance.md)             | [`sources/copied/`](./sources/copied/), [`sources/traceability/`](./sources/traceability/)                                                     |
+| Artifact model        | [`spec/08-test-suite-artifact-model.md`](./spec/08-test-suite-artifact-model.md) | [`testsuites/`](./testsuites/), [`src/runtime/testsuites/`](./src/runtime/testsuites/), [`test/validation.spec.ts`](./test/validation.spec.ts) |
+| Requirement matrix    | [`spec/09-requirement-matrix-model.md`](./spec/09-requirement-matrix-model.md)   | [`spec/`](./spec/), [`testsuites/`](./testsuites/), [`src/runtime/testsuites/`](./src/runtime/testsuites/)                                     |
 
 Each normative chapter uses explicit `MUST`/`MAY` requirements and links to the corresponding test suites that operationalize that requirement.
+Those links are part of the maintained artifact surface and are validated against local executable test suites.
+Normative chapter shape is also validated so that required formal sections stay present over time.
+
+The artifact-model chapter additionally defines repository-level structural invariants for local executable test suites. Those invariants are enforced by the validator and repository verification tests.
 
 ## Scope
 
 - `parser`
-  - template AST shape, directive/attribute classification, interpolation nodes, and recoverable parse diagnostics
+  - template AST shape, directive/attribute classification, interpolation nodes, recoverable parse diagnostics, parser option semantics, text modes, and DOM namespace behavior
 - `syntax`
   - SFC block structure, template surface syntax, style block semantics, descriptor-level parsing.
 - `compiler`
@@ -104,6 +110,7 @@ Examples:
 ```bash
 npx vue-language-spec validate
 npx vue-language-spec catalog --suite compiler
+npx vue-language-spec requirements
 npx vue-language-spec coverage --repository vuejs/language-tools
 npx vue-language-spec traceability --repository vuejs/core
 npx vue-language-spec benchmark --smoke

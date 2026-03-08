@@ -7,11 +7,24 @@ class UpstreamReference {
 }
 
 suite = "parser"
-kind = "template-base-parse"
 
 class Input {
   source: String
   comments: Boolean?
+  parseMode: ("base"|"html"|"sfc")?
+  whitespace: ("preserve"|"condense")?
+  ns: ("HTML"|"SVG"|"MATH_ML")?
+  nativeTags: Listing<String> = new Listing {}
+  voidTags: Listing<String> = new Listing {}
+  customElementTags: Listing<String> = new Listing {}
+  preTags: Listing<String> = new Listing {}
+  ignoreNewlineTags: Listing<String> = new Listing {}
+  delimiters: Delimiters?
+}
+
+class Delimiters {
+  start: String
+  end: String
 }
 
 class PointerAssertion {
@@ -27,6 +40,7 @@ class Expectation {
 
 id: String
 title: String
+kind: "template-base-parse"|"template-dom-parse" = "template-base-parse"
 summary: String
 features: Listing<String>
 profile: String?

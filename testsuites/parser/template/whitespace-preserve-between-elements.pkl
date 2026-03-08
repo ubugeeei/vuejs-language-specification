@@ -1,0 +1,63 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.whitespace-preserve-between-elements"
+title = "Preserve whitespace mode retains newline separators as text nodes"
+summary = "Under the preserve strategy, inter-element whitespace containing a newline remains a retained text node with its original source content."
+
+features {
+  "parser.whitespace"
+  "parser.text"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/parse.spec.ts"
+    cases {
+      "should preserve whitespaces w/ newline between elements"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <div/> 
+    <div/> 
+    <div/>
+    """#
+  whitespace = "preserve"
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/1/content"
+      equals = " "
+    }
+    new PointerAssertion {
+      pointer = "/children/2/type"
+      equals = "ELEMENT"
+    }
+    new PointerAssertion {
+      pointer = "/children/3/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/3/content"
+      equals = " "
+    }
+    new PointerAssertion {
+      pointer = "/children/4/type"
+      equals = "ELEMENT"
+    }
+  }
+}

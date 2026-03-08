@@ -2,12 +2,12 @@ amends "../../schemas/UpstreamTraceabilityManifest.pkl"
 
 repository = "vuejs/core"
 commit = "cea3cf758645c9683db51822590b073ce3069dda"
-generatedAt = "2026-03-08T10:20:37.164Z"
+generatedAt = "2026-03-08T12:46:30.605Z"
 
 counts {
   total = 3309
-  covered = 148
-  planned = 3091
+  covered = 159
+  planned = 3080
   tracked = 70
 }
 
@@ -780,9 +780,10 @@ entries {
     kind = "test"
     line = 306
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localTestSuites {
+      "parser.template.custom-delimiters"
     }
     fileIssues {
       "#1241"
@@ -797,9 +798,10 @@ entries {
     kind = "test"
     line = 670
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localTestSuites {
+      "parser.template.native-custom-tag-classification"
     }
     fileIssues {
       "#1241"
@@ -1227,9 +1229,10 @@ entries {
     kind = "test"
     line = 575
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localTestSuites {
+      "parser.template.native-custom-tag-classification"
     }
     fileIssues {
       "#1241"
@@ -1399,9 +1402,10 @@ entries {
     kind = "test"
     line = 2405
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localTestSuites {
+      "parser.template.html-rcdata-textarea"
     }
     fileIssues {
       "#1241"
@@ -1535,9 +1539,10 @@ entries {
     kind = "test"
     line = 2427
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localTestSuites {
+      "parser.template.whitespace-preserve-between-elements"
     }
     fileIssues {
       "#1241"
@@ -1654,9 +1659,10 @@ entries {
     kind = "test"
     line = 2313
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localTestSuites {
+      "parser.template.whitespace-condense-between-elements"
     }
     fileIssues {
       "#1241"
@@ -1671,9 +1677,10 @@ entries {
     kind = "test"
     line = 2260
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localTestSuites {
+      "parser.template.sfc-root-raw-text"
     }
     fileIssues {
       "#1241"
@@ -1949,9 +1956,10 @@ entries {
     kind = "test"
     line = 2282
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localTestSuites {
+      "parser.template.decode-entities-default"
     }
     fileIssues {
       "#1241"
@@ -2205,9 +2213,10 @@ entries {
     kind = "test"
     line = 512
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localTestSuites {
+      "parser.template.void-tag-recognition"
     }
     fileIssues {
       "#1241"
@@ -8890,9 +8899,10 @@ entries {
     kind = "test"
     line = 452
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localTestSuites {
+      "parser.template.dom-svg-foreign-object-namespace"
     }
     fileIssues {
       "#908"
@@ -9082,9 +9092,10 @@ entries {
     kind = "test"
     line = 503
     classification = "portable-language"
-    status = "planned"
+    status = "covered"
     profile = null
     localTestSuites {
+      "parser.template.dom-root-svg-namespace"
     }
     fileIssues {
       "#908"

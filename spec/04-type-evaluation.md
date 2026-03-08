@@ -21,6 +21,55 @@ For a test suite `t`, conformance is:
 TypePass(I, t) ⇔ PropsEq(sortByName(eval_props(actual)), sortByName(eval_props(expected)))
 ```
 
+## 1.1.1. Input Type Surface
+
+The covered input fragment is modeled by:
+
+```text
+PropDecl         ::= RequiredProp | OptionalProp
+TypeExpr         ::= LiteralType | InterfaceRef | Intersection | Union | ModelDecl
+LiteralType      ::= "{" PropDecl* "}"
+Intersection     ::= TypeExpr "&" TypeExpr
+Union            ::= TypeExpr "|" TypeExpr
+ModelDecl        ::= defineModel invocation surface visible to compile_script
+```
+
+Only covered input fragments promoted into local executable test suites are normative.
+
+## 1.2. Runtime-Prop Data Model
+
+The normalized observable output is:
+
+```text
+RuntimeProp ::= ⟨name, constructors*, required, skipCheck⟩
+Constructor ::= String | Number | Boolean | Object | Array | Function | Symbol | null
+```
+
+For comparison, constructor sets are treated as unordered:
+
+```text
+RuntimePropEq(p, q) ⇔
+  p.name = q.name ∧
+  SetEq(p.constructors, q.constructors) ∧
+  p.required = q.required ∧
+  p.skipCheck = q.skipCheck
+```
+
+## 1.3. Observable Lowering Rules
+
+The repository constrains the following abstract lowering operations:
+
+```text
+LowerLiteralProps      : TypeLiteral → RuntimeProp*
+LowerInterfaceProps    : InterfaceDecl → RuntimeProp*
+LowerIntersectionProps : Type* → RuntimeProp*
+LowerUnionProps        : Type* → RuntimeProp*
+ApplyDefaults          : RuntimeProp* × DefaultMap → RuntimeProp*
+ApplyModelExpansion    : ModelDecl → RuntimeProp*
+```
+
+Only the normalized result of these operations is normative. A conforming implementation MAY use any internal type engine that yields the same observable `RuntimeProp*`.
+
 ## 2. Requirements
 
 | ID       | Requirement                                                                                                                                                      | Test Suites                                                                                                                                                                                                        |
@@ -45,6 +94,23 @@ For curated test suites, a conforming type evaluator MUST preserve:
 
 Test suites MAY additionally assert binding maps when macro lowering changes which names are visible to later compilation stages.
 
+## 3.1. Normalization Rules
+
+Before comparison, local type-evaluation test suites normalize the output by:
+
+```text
+NormalizeProps(props) ::=
+  sortByName(map(props, normalizeConstructors))
+```
+
+where:
+
+```text
+normalizeConstructors(p) ::= removeConstructorOrder(p)
+```
+
+Order inside a runtime constructor set is non-normative unless a future test suite explicitly states otherwise.
+
 ## 4. Unsupported or Uncovered Constructs
 
 When a construct is outside the curated suite:
@@ -62,3 +128,11 @@ Type-evaluation conformance in this repository is represented by the conjunction
 - upstream tooling traceability under [`sources/traceability/vuejs-core.traceability.pkl`](../sources/traceability/vuejs-core.traceability.pkl) and [`sources/traceability/vuejs-language-tools.traceability.pkl`](../sources/traceability/vuejs-language-tools.traceability.pkl)
 
 `covered` entries define the current executable obligation. `planned` entries define the remaining normalization backlog for type-level behavior and MUST remain visible in provenance review.
+
+## 6. Unsupported Surface Registry
+
+Until explicitly promoted into a local executable test suite, the following remain provenance-tracked rather than base-language obligations:
+
+- component-meta extraction conventions from `vuejs/language-tools`
+- editor-host-dependent narrowing behavior
+- TypeScript-program-dependent diagnostics whose observable contract has not yet been normalized into `RuntimeProp*`

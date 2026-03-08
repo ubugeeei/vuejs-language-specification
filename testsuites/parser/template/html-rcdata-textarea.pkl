@@ -1,0 +1,55 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.html-rcdata-textarea"
+title = "HTML mode keeps textarea content in RCDATA text mode"
+summary = "In HTML parse mode, textarea content remains a single text node and is not reparsed as nested markup or condensed by the general whitespace strategy."
+
+features {
+  "parser.text-mode"
+  "parser.whitespace"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/parse.spec.ts"
+    cases {
+      "should NOT condense whitespaces in RCDATA text mode"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "ubugeeei/vize"
+    source = "tests/expected/parser/element.snap"
+    cases {
+      "textarea element"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <textarea>Text:
+       foo</textarea>
+    """#
+  parseMode = "html"
+  whitespace = "condense"
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "textarea"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/type"
+      equals = "TEXT"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/content"
+      equals = "Text:\n   foo"
+    }
+  }
+}

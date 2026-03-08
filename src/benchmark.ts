@@ -126,5 +126,3 @@ export function runBenchmarkTestSuite(
 
   return createSummary(testSuite, results);
 }
-
-export const runBenchmarkCase = runBenchmarkTestSuite;

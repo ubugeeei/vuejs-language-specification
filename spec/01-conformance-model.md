@@ -31,6 +31,8 @@ ValidClaim(I) ⇔
 
 An implementation MUST NOT claim `I ⊨target T` unless every `covered` test suite for `T` and the claimed profile set passes.
 
+The normative binding from requirement identifiers to executable local test suites is defined by the validated requirement matrices in [`09-requirement-matrix-model.md`](./09-requirement-matrix-model.md).
+
 ## 2. Normative Order
 
 Normative authority is ordered as follows:
@@ -97,7 +99,7 @@ No additional implementation state is normative unless `Proj(t)` names it.
 Diagnostics do not need byte-for-byte identical text. When a test suite asserts diagnostics, a conforming implementation MUST preserve:
 
 - severity
-- stable error code, when the case names one
+- stable error code, when the test suite names one
 - primary source location
 
 ## 6. Portability Rules

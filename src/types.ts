@@ -29,8 +29,6 @@ export interface BaseTestSuite {
   upstream: UpstreamReference[];
 }
 
-export type BaseCase = BaseTestSuite;
-
 export interface SyntaxTestSuite extends BaseTestSuite {
   suite: "syntax";
   kind: "sfc-descriptor";
@@ -54,8 +52,6 @@ export interface SyntaxTestSuite extends BaseTestSuite {
   };
 }
 
-export type SyntaxCase = SyntaxTestSuite;
-
 export interface PointerAssertion {
   pointer: string;
   equals: string | number | boolean | null;
@@ -68,14 +64,38 @@ export interface BindingExpectation {
 
 export interface ParserOptionsInput {
   comments?: boolean;
+  parseMode?: "base" | "html" | "sfc";
+  whitespace?: "preserve" | "condense";
+  delimiters?: {
+    start: string;
+    end: string;
+  };
+  ns?: "HTML" | "SVG" | "MATH_ML";
+  nativeTags?: string[];
+  voidTags?: string[];
+  customElementTags?: string[];
+  preTags?: string[];
+  ignoreNewlineTags?: string[];
 }
 
 export interface ParserTestSuite extends BaseTestSuite {
   suite: "parser";
-  kind: "template-base-parse";
+  kind: "template-base-parse" | "template-dom-parse";
   input: {
     source: string;
     comments?: boolean;
+    parseMode?: "base" | "html" | "sfc";
+    whitespace?: "preserve" | "condense";
+    delimiters?: {
+      start: string;
+      end: string;
+    };
+    ns?: "HTML" | "SVG" | "MATH_ML";
+    nativeTags?: string[];
+    voidTags?: string[];
+    customElementTags?: string[];
+    preTags?: string[];
+    ignoreNewlineTags?: string[];
   };
   expect: {
     errorCount: number;
@@ -83,8 +103,6 @@ export interface ParserTestSuite extends BaseTestSuite {
     errors?: PointerAssertion[];
   };
 }
-
-export type ParserCase = ParserTestSuite;
 
 export interface CompilerOptionsInput {
   mode?: string;
@@ -175,8 +193,6 @@ export interface CompilerTestSuite extends BaseTestSuite {
   };
 }
 
-export type CompilerCase = CompilerTestSuite;
-
 export interface TypeEvaluationTestSuite extends BaseTestSuite {
   suite: "type-evaluation";
   kind: "script-setup-runtime-props";
@@ -191,8 +207,6 @@ export interface TypeEvaluationTestSuite extends BaseTestSuite {
   };
 }
 
-export type TypeEvaluationCase = TypeEvaluationTestSuite;
-
 export interface BenchmarkTestSuite extends BaseTestSuite {
   suite: "benchmark";
   kind: "compiler-sfc-batch" | "reactivity-computed-fanout";
@@ -206,8 +220,6 @@ export interface BenchmarkTestSuite extends BaseTestSuite {
     };
   };
 }
-
-export type BenchmarkCase = BenchmarkTestSuite;
 
 export interface UpstreamInventoryFileCase {
   name: string;
@@ -357,8 +369,6 @@ export type GenericTestSuite =
   | TypeEvaluationTestSuite
   | BenchmarkTestSuite;
 
-export type GenericCase = GenericTestSuite;
-
 export interface CatalogEntry {
   id: string;
   title: string;
@@ -367,6 +377,20 @@ export interface CatalogEntry {
   file: string;
   features: string[];
   profile?: string;
+}
+
+export interface RequirementMatrixReference {
+  label: string;
+  href: string;
+  targetPath: string;
+}
+
+export interface RequirementMatrixEntry {
+  id: string;
+  statement: string;
+  file: string;
+  line: number;
+  references: RequirementMatrixReference[];
 }
 
 export interface ValidationMessage {

@@ -85,17 +85,13 @@ export const runtimeTestSuites: RuntimeTestSuite[] = [
   computedCacheTestSuite,
 ];
 
-export const runtimeCases = runtimeTestSuites;
-
 export const browserRuntimeTestSuites = runtimeTestSuites.filter(
   (runtimeTestSuite) => runtimeTestSuite.environment === "browser",
 );
-export const browserRuntimeCases = browserRuntimeTestSuites;
 
 export const nodeRuntimeTestSuites = runtimeTestSuites.filter(
   (runtimeTestSuite) => runtimeTestSuite.environment === "node",
 );
-export const nodeRuntimeCases = nodeRuntimeTestSuites;
 
 export async function runRuntimeTestSuites(
   testSuites: RuntimeTestSuite[] = runtimeTestSuites,
@@ -104,7 +100,4 @@ export async function runRuntimeTestSuites(
     await runtimeTestSuite.run();
   }
 }
-
-export const runRuntimeCases = runRuntimeTestSuites;
-
-export type { RuntimeCase, RuntimeTestSuite } from "./types.ts";
+export type { RuntimeTestSuite } from "./types.ts";

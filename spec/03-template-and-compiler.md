@@ -12,7 +12,7 @@ A conforming compiler MAY vary in formatting or helper alias spelling, but it MU
 - helper usage classes
 - hoist and cache behavior
 - emitted runtime options
-- stable normalized code where the case fixes exact output
+- stable normalized code where the test suite fixes exact output
 
 ## 2.1. Compiler Judgments
 
@@ -33,6 +33,47 @@ CompilerPass(I, t) ⇔
   CodeEq(Proj_code(actual), Proj_code(expected)) ∧
   PropsEq(Proj_props(actual), Proj_props(expected))
 ```
+
+## 2.2. Output Data Model
+
+The portable compiler surface constrained by local test suites is:
+
+```text
+HelperSet          ::= Identifier*
+BindingMap         ::= ⟨name, kind⟩*
+ConstructorBinding ::= ⟨name, constructor⟩*
+DefaultBinding     ::= ⟨name, literalOrKind⟩*
+EmitSet            ::= Identifier*
+CssVarSet          ::= Identifier*
+```
+
+Projection functions used by this repository are:
+
+```text
+TemplateProj(r, t) ::= ⟨AstProj(r, t), HelperProj(r, t), CodeProj(r, t), HoistProj(r, t)⟩
+ScriptProj(r, t)   ::= ⟨BindingProj(r, t), PropProj(r, t), EmitProj(r, t), CodeProj(r, t)⟩
+StyleProj(r, t)    ::= ⟨CodeProj(r, t), CssVarProj(r, t)⟩
+```
+
+Only explicitly asserted projections are normative for a given local test suite.
+
+## 2.3. Diagnostic and Warning Model
+
+Compiler failure-path and warning-path suites observe:
+
+```text
+CompileError   ::= ⟨class, code?, primarySpan?, message, codeframe?⟩
+CompileWarning ::= ⟨message⟩
+```
+
+For covered failure-path suites:
+
+```text
+ErrorPass(I, t) ::= DiagEq(actualError, expectedError)
+WarningPass(I, t) ::= SequenceEq(actualWarnings, expectedWarnings)
+```
+
+`codeframe` is normative only for suites that explicitly assert it.
 
 ## 3. Requirements
 

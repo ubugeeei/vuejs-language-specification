@@ -11,5 +11,3 @@ export interface RuntimeTestSuite {
   upstream: UpstreamReference[];
   run(): Promise<void>;
 }
-
-export type RuntimeCase = RuntimeTestSuite;

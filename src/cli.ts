@@ -1,8 +1,13 @@
 import { buildCatalog, loadGenericTestSuites } from "./catalog.ts";
 import { runBenchmarkTestSuite } from "./benchmark.ts";
 import { packageRoot } from "./fs.ts";
+import { loadRequirementMatrixEntries } from "./requirements.ts";
 import { buildUpstreamCoverage, buildUpstreamTraceability } from "./upstream.ts";
 import {
+  validateNormativeChapterStructure,
+  validateRequirementMatrices,
+  validateRepositoryConventions,
+  validateRuntimeTestSuites,
   validateTestSuites,
   validateUpstreamInventories,
   validateUpstreamReferences,
@@ -44,6 +49,7 @@ function printHelp() {
 Commands:
   validate [--json]
   catalog [--suite <suite>] [--json]
+  requirements [--json]
   benchmark [test-suite-id] [--smoke] [--json]
   coverage [--repository <repo>] [--json]
   traceability [--repository <repo>] [--json]
@@ -58,7 +64,11 @@ async function main() {
   switch (command) {
     case "validate": {
       const messages = [
+        ...validateRepositoryConventions(root),
         ...validateTestSuites(root),
+        ...validateRuntimeTestSuites(root),
+        ...validateNormativeChapterStructure(root),
+        ...validateRequirementMatrices(root),
         ...validateUpstreamInventories(root),
         ...validateUpstreamReferences(root),
         ...validateUpstreamTraceability(root),
@@ -87,6 +97,22 @@ async function main() {
         json
           ? JSON.stringify(catalog, null, 2)
           : catalog.map((entry) => `${entry.id} ${entry.file}`).join("\n"),
+      );
+      return;
+    }
+    case "requirements": {
+      const requirements = loadRequirementMatrixEntries(root);
+      console.log(
+        json
+          ? JSON.stringify(requirements, null, 2)
+          : requirements
+              .map(
+                (entry) =>
+                  `${entry.id} ${entry.file}:${entry.line} ${entry.references
+                    .map((reference) => reference.label)
+                    .join(", ")}`,
+              )
+              .join("\n"),
       );
       return;
     }

@@ -16,6 +16,8 @@ UpstreamRef = ⟨repository, source, cases*, issues*, kind⟩
 InventoryEntry = ⟨repository, commit, source, kind, line, caseName, issueLabels*⟩
 ```
 
+`cases*` and `caseName` intentionally preserve upstream vocabulary because they denote upstream-inventoried test or benchmark titles, not local executable test suites.
+
 Curated test-suite metadata MUST use repository-local selectors (`repository`, `source`, `case name`, `line`) rather than external blob URLs.
 
 ## 2. Inventories

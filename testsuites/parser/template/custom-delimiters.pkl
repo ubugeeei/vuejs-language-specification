@@ -1,0 +1,52 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.custom-delimiters"
+title = "Custom interpolation delimiters remain part of the parser contract"
+summary = "A parser implementation must allow declarative delimiter substitution and still emit interpolation nodes with the same expression payload and source span semantics."
+
+features {
+  "parser.delimiters"
+  "parser.interpolation"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-core/__tests__/parse.spec.ts"
+    cases {
+      "custom delimiters"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <p>{msg}</p>
+    """#
+  delimiters = new Delimiters {
+    start = "{"
+    end = "}"
+  }
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/tag"
+      equals = "p"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/type"
+      equals = "INTERPOLATION"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/content/content"
+      equals = "msg"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/loc/source"
+      equals = "{msg}"
+    }
+  }
+}

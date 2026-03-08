@@ -7,8 +7,6 @@ export function discoverTestSuiteFiles(root: string = packageRoot(import.meta.ur
   return walkFiles(join(root, "testsuites"), (file) => file.endsWith(".pkl"));
 }
 
-export const discoverCaseFiles = discoverTestSuiteFiles;
-
 export function loadGenericTestSuites(root: string = packageRoot(import.meta.url)): Array<{
   file: string;
   data: GenericTestSuite;
@@ -18,8 +16,6 @@ export function loadGenericTestSuites(root: string = packageRoot(import.meta.url
     data: evaluatePklFile<GenericTestSuite>(file),
   }));
 }
-
-export const loadGenericCases = loadGenericTestSuites;
 
 export function buildCatalog(
   root: string = packageRoot(import.meta.url),

@@ -1,0 +1,42 @@
+amends "../../../schemas/ParserTestSuite.pkl"
+
+id = "parser.template.dom-root-svg-namespace"
+kind = "template-dom-parse"
+title = "DOM parser root namespace selection remains observable"
+summary = "When the root namespace is configured to SVG, the covered parser surface must preserve SVG at the root and still switch to HTML at foreignObject descendants."
+
+features {
+  "parser.namespace"
+  "parser.dom"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/core"
+    source = "packages/compiler-dom/__tests__/parse.spec.ts"
+    cases {
+      "root ns"
+    }
+  }
+}
+
+input {
+  source = #"""
+    <foreignObject><test/></foreignObject>
+    """#
+  ns = "SVG"
+}
+
+expect {
+  errorCount = 0
+  ast {
+    new PointerAssertion {
+      pointer = "/children/0/ns"
+      equals = "SVG"
+    }
+    new PointerAssertion {
+      pointer = "/children/0/children/0/ns"
+      equals = "HTML"
+    }
+  }
+}

@@ -2,7 +2,7 @@ amends "../../schemas/UpstreamTraceabilityManifest.pkl"
 
 repository = "ubugeeei/vize"
 commit = "923a9d864583e7e06438db3bc6a720113cf171ac"
-generatedAt = "2026-03-08T10:20:37.164Z"
+generatedAt = "2026-03-08T12:46:30.605Z"
 
 counts {
   total = 128

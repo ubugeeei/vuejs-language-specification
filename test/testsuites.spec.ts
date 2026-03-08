@@ -29,7 +29,7 @@ describe("generic test suites", () => {
   const testSuites = loadGenericTestSuites().map((entry) => entry.data);
 
   test("loads the expected seed test-suite count", () => {
-    expect(testSuites).toHaveLength(96);
+    expect(testSuites).toHaveLength(106);
   });
 
   for (const testSuite of testSuites.filter((value) => isSuite("parser", value))) {

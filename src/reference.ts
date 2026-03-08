@@ -49,6 +49,7 @@ interface ExtractedRuntimeProp {
 type ScriptCompileOptions = NonNullable<Parameters<typeof compileScript>[1]>;
 type TemplateDomCompileOptions = Parameters<typeof compileTemplate>[1];
 type ParserOptions = NonNullable<Parameters<typeof CompilerCore.baseParse>[1]>;
+type DomParserOptions = NonNullable<Parameters<typeof CompilerDom.parse>[1]>;
 const ansiPattern = new RegExp(`${String.fromCharCode(27)}\\[[0-?]*[ -/]*[@-~]`, "g");
 
 const helperSymbolNames = new Map<symbol, string>(
@@ -93,6 +94,8 @@ function normalizeEnumField(key: string, value: unknown): unknown {
       return CompilerCore.ElementTypes[value] ?? value;
     case "constType":
       return CompilerCore.ConstantTypes[value] ?? value;
+    case "ns":
+      return CompilerCore.Namespaces[value] ?? value;
     case "code":
       return CompilerCore.ErrorCodes[value] ?? value;
     default:
@@ -236,6 +239,91 @@ function createDescriptor(testSuite: SyntaxTestSuite): SFCDescriptor {
     filename: testSuite.input.filename,
   });
   return descriptor;
+}
+
+function createMembershipPredicate(
+  values: string[] | undefined,
+): ((tag: string) => boolean) | undefined {
+  if ((values?.length ?? 0) === 0) {
+    return undefined;
+  }
+
+  const resolved = new Set(values);
+  return (tag: string) => resolved.has(tag);
+}
+
+function resolveNamespace(
+  value: ParserTestSuite["input"]["ns"],
+): CompilerCore.Namespaces | undefined {
+  switch (value) {
+    case "HTML":
+      return CompilerCore.Namespaces.HTML;
+    case "SVG":
+      return CompilerCore.Namespaces.SVG;
+    case "MATH_ML":
+      return CompilerCore.Namespaces.MATH_ML;
+    default:
+      return undefined;
+  }
+}
+
+function buildParserOptions(
+  testSuite: ParserTestSuite,
+  errors: CompilerCore.CompilerError[],
+): ParserOptions {
+  const parserOptions: ParserOptions = {
+    onError: (error) => {
+      errors.push(error);
+    },
+  };
+
+  if (testSuite.input.comments !== undefined) {
+    parserOptions.comments = testSuite.input.comments;
+  }
+
+  if (testSuite.input.parseMode !== undefined) {
+    parserOptions.parseMode = testSuite.input.parseMode;
+  }
+
+  if (testSuite.input.whitespace !== undefined) {
+    parserOptions.whitespace = testSuite.input.whitespace;
+  }
+
+  if (testSuite.input.delimiters) {
+    parserOptions.delimiters = [testSuite.input.delimiters.start, testSuite.input.delimiters.end];
+  }
+
+  const namespace = resolveNamespace(testSuite.input.ns);
+  if (namespace !== undefined) {
+    parserOptions.ns = namespace;
+  }
+
+  const isNativeTag = createMembershipPredicate(testSuite.input.nativeTags);
+  if (isNativeTag) {
+    parserOptions.isNativeTag = isNativeTag;
+  }
+
+  const isVoidTag = createMembershipPredicate(testSuite.input.voidTags);
+  if (isVoidTag) {
+    parserOptions.isVoidTag = isVoidTag;
+  }
+
+  const isCustomElement = createMembershipPredicate(testSuite.input.customElementTags);
+  if (isCustomElement) {
+    parserOptions.isCustomElement = isCustomElement;
+  }
+
+  const isPreTag = createMembershipPredicate(testSuite.input.preTags);
+  if (isPreTag) {
+    parserOptions.isPreTag = isPreTag;
+  }
+
+  const isIgnoreNewlineTag = createMembershipPredicate(testSuite.input.ignoreNewlineTags);
+  if (isIgnoreNewlineTag) {
+    parserOptions.isIgnoreNewlineTag = isIgnoreNewlineTag;
+  }
+
+  return parserOptions;
 }
 
 function parseGeneratedScript(source: string): File {
@@ -1049,17 +1137,11 @@ export function runSyntaxReferenceTestSuite(testSuite: SyntaxTestSuite): void {
 
 export function runParserReferenceTestSuite(testSuite: ParserTestSuite): void {
   const errors: CompilerCore.CompilerError[] = [];
-  const parserOptions: ParserOptions = {
-    onError: (error) => {
-      errors.push(error);
-    },
-  };
-
-  if (testSuite.input.comments !== undefined) {
-    parserOptions.comments = testSuite.input.comments;
-  }
-
-  const ast = CompilerCore.baseParse(testSuite.input.source, parserOptions);
+  const parserOptions = buildParserOptions(testSuite, errors);
+  const ast =
+    testSuite.kind === "template-dom-parse"
+      ? CompilerDom.parse(testSuite.input.source, parserOptions as DomParserOptions)
+      : CompilerCore.baseParse(testSuite.input.source, parserOptions);
 
   assert.equal(errors.length, testSuite.expect.errorCount);
   assertPointerAssertions(normalizeStructuredArtifact(ast), testSuite.expect.ast);
@@ -1206,8 +1288,3 @@ export function runTypeEvaluationReferenceTestSuite(testSuite: TypeEvaluationTes
   assertBindings(result.bindings, testSuite.expect.bindings);
   assertRuntimeProps(componentOptions, testSuite.expect.runtimeProps);
 }
-
-export const runSyntaxReferenceCase = runSyntaxReferenceTestSuite;
-export const runParserReferenceCase = runParserReferenceTestSuite;
-export const runCompilerReferenceCase = runCompilerReferenceTestSuite;
-export const runTypeEvaluationReferenceCase = runTypeEvaluationReferenceTestSuite;
