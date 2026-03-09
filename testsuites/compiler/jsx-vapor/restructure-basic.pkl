@@ -1,0 +1,82 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.jsx-vapor.restructure-basic"
+title = "JSX Vapor restructure preserves nested destructure reads"
+kind = "jsx-expected-snapshot"
+summary = "JSX Vapor parameter restructure must rewrite nested destructure reads back to stable __props access while preserving inner function parameter shadowing."
+
+features {
+  "compiler.snapshot"
+  "compiler.profile.jsx-vapor"
+  "compiler.jsx-vapor"
+  "jsx-vapor.restructure"
+  "jsx-vapor.destructure"
+  "imported.input"
+  "imported.input.jsx-vapor"
+}
+
+profile = "jsx-vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/vuejs-vue-jsx-vapor/packages/macros/tests/restructure.spec.ts"
+  source = "packages/macros/tests/restructure.spec.ts"
+  caseName = "reconstruct"
+  originRepository = "vuejs/vue-jsx-vapor"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/vue-jsx-vapor"
+  moduleName = "@vue-jsx-vapor/macros/restructure"
+  operation = "copied snapshot oracle via restructure"
+  profile = "jsx-vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/vue-jsx-vapor"
+    source = "packages/macros/tests/restructure.spec.ts"
+    cases {
+      "reconstruct"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "vuejs/vue-jsx-vapor"
+    source = "packages/macros/tests/__snapshots__/restructure.spec.ts.snap"
+    cases {
+      "transform > reconstruct 1"
+    }
+  }
+}
+
+input {
+  source = #"""
+  const App = ([[[,foo]], {id: {foo: [bar]}}], { baz }) => {
+          function onClick({ foo }){
+            return { foo, baz: baz.baz }
+          };
+          return [ foo, bar, baz ]
+        }
+  """#
+}
+
+expect {
+  normalizedCode = #"""
+  const App = (__props, __props1) => {
+          function onClick(__props){
+            return { foo: __props.foo, baz: __props1.baz.baz }
+          };
+          return [ __props[0][0][1], __props[1].id.foo[0], __props1.baz ]
+        }
+  """#
+  vendoredSnapshotOutput = #"""
+  const App = (__props, __props1) => {
+          function onClick(__props){
+            return { foo: __props.foo, baz: __props1.baz.baz }
+          };
+          return [ __props[0][0][1], __props[1].id.foo[0], __props1.baz ]
+        }
+  """#
+}
+

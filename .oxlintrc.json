@@ -1,3 +1,7 @@
 {
-  "ignorePatterns": ["provenance/vendor/vuejs-core/**", "provenance/vendor/ubugeeei-vize/**"]
+  "ignorePatterns": [
+    "provenance/vendor/vuejs-core/**",
+    "provenance/vendor/ubugeeei-vize/**",
+    "provenance/vendor/vuejs-vue-jsx-vapor/**"
+  ]
 }

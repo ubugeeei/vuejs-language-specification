@@ -800,6 +800,7 @@ function writeRequirementDoc(args: {
   section: string;
   summary: string;
   rows: RequirementRow[];
+  notes?: string[];
 }): void {
   const lines: string[] = [];
   lines.push(`# ${args.title}`);
@@ -819,9 +820,13 @@ function writeRequirementDoc(args: {
   lines.push("");
   lines.push("## Notes");
   lines.push("");
-  lines.push(
+  for (const note of [
     "This annex is generated from copied community fixture inputs. Unless a row explicitly says otherwise, expected parser/compiler artifacts are derived from the official `vuejs/core` implementation and stored statically in this repository.",
-  );
+    ...(args.notes ?? []),
+  ]) {
+    lines.push(note);
+    lines.push("");
+  }
   writeGeneratedFile(args.file, lines.join("\n"));
 }
 
@@ -1094,8 +1099,12 @@ function main(): void {
     title: "11. Imported Compiler Input Corpus",
     section: "compiler",
     summary:
-      "This annex lifts copied community compiler fixture inputs into local static compiler test suites. Default-profile outputs and diagnostics MUST come from the official vuejs/core implementation; copied Vapor snapshots remain provisional until the official Vapor oracle is vendored.",
+      'This annex lifts copied community compiler fixture inputs into local static compiler test suites. Default-profile outputs and diagnostics MUST come from the official vuejs/core implementation; copied `vapor` snapshots remain provisional until the official Vapor oracle is vendored, and `jsx-vapor` remains a separate profile boundary because it uses a JSX/TSX authoring surface.',
     rows: compilerRows,
+    notes: [
+      'Rows that mention `profile = "vapor"` are template- or SFC-authored Vapor suites generated from copied `ubugeeei/vize` fixture inputs and exact copied snapshot outputs.',
+      '`vuejs/vue-jsx-vapor` belongs to the same Vapor family but uses a JSX/TSX authoring surface. Its imported executable suites are maintained separately under `spec/12-imported-jsx-vapor-input-corpus.md` rather than merged into the base template/SFC rows in this annex.',
+    ],
   });
 
   console.log(

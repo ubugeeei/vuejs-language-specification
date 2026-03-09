@@ -2,7 +2,7 @@
 
 ## 1. Scope
 
-This chapter defines the observable compiler contract for template compilation, script compilation, and scoped style compilation.
+This chapter defines the observable compiler contract for template compilation, script compilation, scoped style compilation, and explicitly declared profile-scoped compiler families such as Vapor and JSX Vapor.
 
 ## 2. General Rule
 
@@ -134,8 +134,27 @@ Substring matching is non-normative and insufficient.
 
 ## 5. Profiles
 
-Profile-specific compiler behavior, including Vapor, MUST be isolated behind `profile`-declared test suites and MUST identify the upstream branch snapshot they were derived from.
+Profile-specific compiler behavior, including the Vapor family, MUST be isolated behind `profile`-declared test suites and MUST identify the upstream branch snapshot or repository snapshot they were derived from.
+
+This repository reserves:
+
+- `vapor` for template- and SFC-authored Vapor suites
+- `jsx-vapor` for JSX- and TSX-authored Vapor suites derived from `vuejs/vue-jsx-vapor`
+
+`vapor` suites MAY remain snapshot-backed while the official `vuejs/core` Vapor oracle is not yet vendored, but they MUST stay isolated behind `profile = "vapor"`.
+
+`jsx-vapor` suites MUST declare a JSX-specific compiler or tooling artifact surface and MUST NOT be cited as evidence for base template-parser or SFC-descriptor requirements unless a local suite separately normalizes that input into those surfaces.
+
 When this repository does not ship a default JavaScript reference compiler for a profile, the profile MAY be represented by snapshot-backed compiler suites whose observable contract is the exact copied output bound to the vendored upstream snapshot corpus.
+
+Shared semantic claims across the base line, `vapor`, and `jsx-vapor` MAY map to the same requirement only when each linked local suite declares its profile and input surface explicitly.
+
+The current executable `jsx-vapor` surface in this repository constrains:
+
+- macro lowering for `defineComponent`, `defineVaporComponent`, `defineModel`, `defineSlots`, `defineExpose`, `defineStyle`, and JSX-authored slot objects
+- parameter restructure that rewrites destructured reads, default-bearing props, rest props, and nested assignment patterns through stable helper-proxy shapes
+
+Directive spellings such as `$` dynamic directive arguments, `_` modifiers, and interop-mode switching remain traceability-only until explicit executable suites are added.
 
 ## 6. Coverage Surface
 

@@ -8,13 +8,24 @@
       "kind": "repository-snapshot",
       "manifestPath": "provenance/releases/current.json",
       "consumption": "pin a git tag or vendor a release tarball",
-      "requiredRoots": ["spec", "testsuites", "runtime", "schemas", "provenance", "fixtures"]
+      "requiredRoots": [
+        "spec",
+        "testsuites",
+        "runtime",
+        "schemas",
+        "provenance",
+        "fixtures"
+      ]
     },
     "secondaryChannels": [
       {
         "kind": "npm-package",
         "identifier": "@ubugeeei/vuejs-language-specification",
-        "purpose": ["cli", "programmatic-api", "javascript-runtime-harness"]
+        "purpose": [
+          "cli",
+          "programmatic-api",
+          "javascript-runtime-harness"
+        ]
       }
     ]
   },
@@ -27,7 +38,12 @@
       "@vue/compiler-sfc": "^3.5.0",
       "@vue/reactivity": "^3.5.0"
     },
-    "evidenceRepositories": ["ubugeeei/vize", "vuejs/core", "vuejs/language-tools"]
+    "evidenceRepositories": [
+      "ubugeeei/vize",
+      "vuejs/core",
+      "vuejs/language-tools",
+      "vuejs/vue-jsx-vapor"
+    ]
   },
   "profiles": [
     {
@@ -37,6 +53,14 @@
       "upstreamRepository": "vuejs/core",
       "upstreamLine": "mainline",
       "isolation": "base"
+    },
+    {
+      "name": "jsx-vapor",
+      "default": false,
+      "stability": "provisional",
+      "upstreamRepository": "vuejs/vue-jsx-vapor",
+      "upstreamLine": "repository snapshot",
+      "isolation": "opt-in"
     },
     {
       "name": "vapor",
@@ -94,14 +118,14 @@
       "moduleEntrypoints": []
     },
     "counts": {
-      "pklTestSuites": 1180,
+      "pklTestSuites": 1191,
       "runtimeTestSuites": 41,
-      "requirementMatrixEntries": 115,
-      "normativeChapters": 12,
+      "requirementMatrixEntries": 123,
+      "normativeChapters": 13,
       "schemas": 9,
-      "upstreamInventories": 3,
-      "traceabilityManifests": 3,
-      "vendoredCorpora": 2
+      "upstreamInventories": 4,
+      "traceabilityManifests": 4,
+      "vendoredCorpora": 3
     }
   }
 }

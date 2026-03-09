@@ -1,0 +1,24 @@
+amends "../../../schemas/VendoredSnapshotManifest.pkl"
+
+originRepository = "vuejs/vue-jsx-vapor"
+originCommit = "20889643214efdecf125251b70fceee87bbb1866"
+generatedAt = "2026-03-09T18:14:05.530Z"
+policy = "Vendored raw Vitest snapshot files copied from vuejs/vue-jsx-vapor. These copies are committed so profile-scoped JSX Vapor expectations remain locally auditable and stable even when upstream formatting evolves."
+snapshotCount = 2
+
+entries {
+  ["packages/macros/tests/__snapshots__/fixtures.spec.ts.snap"] = new SnapshotEntry {
+    suite = "macros"
+    originPath = "packages/macros/tests/__snapshots__/fixtures.spec.ts.snap"
+    copiedPath = "provenance/vendor/vuejs-vue-jsx-vapor/packages/macros/tests/__snapshots__/fixtures.spec.ts.snap"
+    bytes = 6694
+    sha256 = "b55895da9a6a9433fa49ea20a725bb0714498bf3cb293982eaca96992c125c00"
+  }
+  ["packages/macros/tests/__snapshots__/restructure.spec.ts.snap"] = new SnapshotEntry {
+    suite = "macros"
+    originPath = "packages/macros/tests/__snapshots__/restructure.spec.ts.snap"
+    copiedPath = "provenance/vendor/vuejs-vue-jsx-vapor/packages/macros/tests/__snapshots__/restructure.spec.ts.snap"
+    bytes = 1791
+    sha256 = "d59535c3ca7ab01f8833fdd2a89758c95df5db57f0fcbfeaad62f85196d44773"
+  }
+}

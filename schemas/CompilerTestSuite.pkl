@@ -132,7 +132,7 @@ class Expectation {
 
 id: String
 title: String
-kind: "template-dom-compile"|"template-expected-snapshot"|"sfc-script-compile"|"sfc-style-compile"|"sfc-full-compile"|"sfc-expected-snapshot"
+kind: "template-dom-compile"|"template-expected-snapshot"|"jsx-expected-snapshot"|"sfc-script-compile"|"sfc-style-compile"|"sfc-full-compile"|"sfc-expected-snapshot"
 summary: String
 features: Listing<String>
 profile: String?

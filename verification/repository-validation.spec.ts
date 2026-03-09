@@ -218,6 +218,7 @@ describe("repository validation and catalog stability", () => {
         "ubugeeei/vize",
         "vuejs/core",
         "vuejs/language-tools",
+        "vuejs/vue-jsx-vapor",
       ]);
       expect(report.repositories.every((entry) => entry.totalCases > 0)).toBe(true);
     },
@@ -232,6 +233,7 @@ describe("repository validation and catalog stability", () => {
         "ubugeeei/vize",
         "vuejs/core",
         "vuejs/language-tools",
+        "vuejs/vue-jsx-vapor",
       ]);
       expect(manifests.every((entry) => entry.counts.total > 0)).toBe(true);
     },

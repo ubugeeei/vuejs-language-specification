@@ -213,3 +213,5 @@ interface ProfileAugmentedNode extends PortableNode {
 ```
 
 The base suite does not require any `vapor` fields. Vapor-only conformance must be declared by profile-specific test suites tied to the correct Vue minor branch snapshot.
+
+`jsx-vapor` coverage ordinarily operates over JSX or TSX compiler artifacts rather than this portable template AST. A local `jsx-vapor` suite MUST NOT coerce JSX syntax into the base template AST unless it defines a dedicated profile-scoped projection for that comparison.

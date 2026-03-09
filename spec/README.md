@@ -38,7 +38,9 @@ The specification uses the following document classes:
 - `10-imported-parser-input-corpus.md`
   - generated annex that links copied community parser inputs to local executable parser test suites with official `vuejs/core` parser oracles
 - `11-imported-compiler-input-corpus.md`
-  - generated annex that links copied community compiler inputs to local executable compiler test suites with official `vuejs/core` default-profile oracles and provisional Vapor coverage
+  - generated annex that links copied community compiler inputs to local executable compiler test suites with official `vuejs/core` default-profile oracles and provisional `vapor` coverage
+- `12-imported-jsx-vapor-input-corpus.md`
+  - annex that links copied `vuejs/vue-jsx-vapor` macro and restructure inputs to local executable `jsx-vapor` compiler test suites
 
 ## Normative Conventions
 
@@ -47,11 +49,13 @@ The specification uses the following document classes:
 - The machine-readable suites under `testsuites/` are normative whenever a document explicitly references them.
 - Required formal section headings in normative chapters are repository-validated and therefore part of the maintained specification surface.
 - Implementation internals are non-normative unless an observable output depends on them.
-- Experimental profiles, including Vapor, are only normative when a test suite or document explicitly marks them as part of that profile.
+- Experimental profiles, including `vapor` and `jsx-vapor`, are only normative when a test suite or document explicitly marks them as part of that profile.
 
 ## Terminology
 
 - `test suite` means a local executable artifact curated in this repository under `testsuites/`, including `testsuites/runtime/` for runtime conformance.
 - `upstream case` means an inventoried upstream test or benchmark title referenced through provenance metadata.
 - `requirement matrix` means the validated Markdown mapping from requirement identifiers to local executable test suites.
+- `vapor` means the template- or SFC-authored Vapor profile surface.
+- `jsx-vapor` means the JSX- or TSX-authored Vapor profile surface derived from `vuejs/vue-jsx-vapor`.
 - Specification text should use `test suite` for local conformance artifacts and reserve `case` for upstream provenance unless the term is part of an upstream title.

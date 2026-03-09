@@ -142,13 +142,34 @@ function buildProfiles(root: string): ReleaseManifestProfile[] {
     },
   ];
 
+  const profileMetadata: Record<
+    string,
+    Pick<ReleaseManifestProfile, "stability" | "upstreamRepository" | "upstreamLine">
+  > = {
+    vapor: {
+      stability: "provisional",
+      upstreamRepository: "vuejs/core",
+      upstreamLine: "minor-branch snapshot",
+    },
+    "jsx-vapor": {
+      stability: "provisional",
+      upstreamRepository: "vuejs/vue-jsx-vapor",
+      upstreamLine: "repository snapshot",
+    },
+  };
+
   for (const profile of [...explicitProfiles].sort((left, right) => left.localeCompare(right))) {
+    const metadata = profileMetadata[profile] ?? {
+      stability: "stable" as const,
+      upstreamRepository: "vuejs/core",
+      upstreamLine: "profile-specific snapshot",
+    };
     profiles.push({
       name: profile,
       default: false,
-      stability: profile === "vapor" ? "provisional" : "stable",
-      upstreamRepository: "vuejs/core",
-      upstreamLine: profile === "vapor" ? "minor-branch snapshot" : "profile-specific snapshot",
+      stability: metadata.stability,
+      upstreamRepository: metadata.upstreamRepository,
+      upstreamLine: metadata.upstreamLine,
       isolation: "opt-in",
     });
   }

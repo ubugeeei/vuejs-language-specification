@@ -1,0 +1,169 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.jsx-vapor.slot-object-lowering"
+title = "JSX Vapor slot object lowering"
+kind = "jsx-expected-snapshot"
+summary = "JSX-authored slot objects and <slot> outlets in JSX Vapor must lower to the copied snapshot oracle without losing the authored default-slot function structure."
+
+features {
+  "compiler.snapshot"
+  "compiler.profile.jsx-vapor"
+  "compiler.jsx-vapor"
+  "jsx-vapor.slot"
+  "imported.input"
+  "imported.input.jsx-vapor"
+}
+
+profile = "jsx-vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/vuejs-vue-jsx-vapor/packages/macros/tests/fixtures/slot.tsx"
+  source = "packages/macros/tests/fixtures/slot.tsx"
+  caseName = "./fixtures/slot.tsx"
+  originRepository = "vuejs/vue-jsx-vapor"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/vue-jsx-vapor"
+  moduleName = "@vue-jsx-vapor/macros"
+  operation = "copied snapshot oracle via transformJsxMacros"
+  profile = "jsx-vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/vue-jsx-vapor"
+    source = "packages/macros/tests/fixtures/slot.tsx"
+    cases {
+      "./fixtures/slot.tsx"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "vuejs/vue-jsx-vapor"
+    source = "packages/macros/tests/__snapshots__/fixtures.spec.ts.snap"
+    cases {
+      "fixtures > ./fixtures/slot.tsx 1"
+    }
+  }
+}
+
+input {
+  source = #"""
+  import { defineComponent, defineVaporComponent } from 'vue';
+  
+  const Comp = defineComponent((props: {text?: string}) => {
+    const computedText = () => {
+     return props.text
+    }
+    return () => <div><slot foo="" /></div>
+  })
+  ;<Comp>
+    {{ default: (props) => [props.foo === ''] }}
+  </Comp>
+  
+  const Comp1 = defineVaporComponent((props: {text?: string}) => {
+    const computedText = () => {
+     return props.text
+    }
+    return <div><slot foo="" /></div>
+  }) 
+  ;<Comp1>
+    {{ default: (props) => [props.foo === ''] }}
+  </Comp1>
+  
+  const Comp2 = (props: {text?: string}) => {
+    const computedText = () => {
+     return props.text
+    }
+    return <div><slot foo="" /></div>
+  }
+  ;<Comp2>
+    {{ default: (props) => [props.foo === ''] }}
+  </Comp2>
+  
+  """#
+}
+
+expect {
+  normalizedCode = #"""
+  
+  import { useFullProps as __useFullProps } from "/vue-jsx-vapor/props";import { defineComponent, defineVaporComponent } from 'vue';
+  
+  const Comp = defineComponent(() => {const props = __useFullProps();
+    const computedText = () => {
+     return props.text
+    }
+    return () => <div><slot foo="" /></div>
+  }, { props: {
+  'text': null
+  } })
+  ;<Comp>
+    {{ default: (props) => [props.foo === ''] }}
+  </Comp>
+  
+  const Comp1 = defineVaporComponent(() => {const props = __useFullProps();
+    const computedText = () => {
+     return props.text
+    }
+    return <div><slot foo="" /></div>
+  }, { props: {
+  'text': null
+  } }) 
+  ;<Comp1>
+    {{ default: (props) => [props.foo === ''] }}
+  </Comp1>
+  
+  const Comp2 = (props: {text?: string}) => {
+    const computedText = () => {
+     return props.text
+    }
+    return <div><slot foo="" /></div>
+  }
+  ;<Comp2>
+    {{ default: (props) => [props.foo === ''] }}
+  </Comp2>
+  
+  """#
+  vendoredSnapshotOutput = #"""
+  
+  import { useFullProps as __useFullProps } from "/vue-jsx-vapor/props";import { defineComponent, defineVaporComponent } from 'vue';
+  
+  const Comp = defineComponent(() => {const props = __useFullProps();
+    const computedText = () => {
+     return props.text
+    }
+    return () => <div><slot foo="" /></div>
+  }, { props: {
+  'text': null
+  } })
+  ;<Comp>
+    {{ default: (props) => [props.foo === ''] }}
+  </Comp>
+  
+  const Comp1 = defineVaporComponent(() => {const props = __useFullProps();
+    const computedText = () => {
+     return props.text
+    }
+    return <div><slot foo="" /></div>
+  }, { props: {
+  'text': null
+  } }) 
+  ;<Comp1>
+    {{ default: (props) => [props.foo === ''] }}
+  </Comp1>
+  
+  const Comp2 = (props: {text?: string}) => {
+    const computedText = () => {
+     return props.text
+    }
+    return <div><slot foo="" /></div>
+  }
+  ;<Comp2>
+    {{ default: (props) => [props.foo === ''] }}
+  </Comp2>
+  
+  """#
+}
+

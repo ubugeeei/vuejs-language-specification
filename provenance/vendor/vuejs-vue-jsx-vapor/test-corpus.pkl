@@ -1,0 +1,134 @@
+amends "../../../schemas/VendoredUpstreamCorpusManifest.pkl"
+
+originRepository = "vuejs/vue-jsx-vapor"
+originCommit = "20889643214efdecf125251b70fceee87bbb1866"
+generatedAt = "2026-03-09T18:13:37.843Z"
+policy = "Vendored raw upstream test and benchmark source files copied into this repository. These copies are committed so provenance remains local and this repository can evolve toward a self-hosted source of truth for curated Vue language behavior."
+
+counts {
+  files = 7
+  cases = 11
+  issueRefs = 0
+  benchmarks = 0
+}
+
+files {
+  new CorpusFile {
+    sourcePath = "packages/macros/tests/fixtures/define-component.tsx"
+    kind = "test"
+    copiedPath = "provenance/vendor/vuejs-vue-jsx-vapor/packages/macros/tests/fixtures/define-component.tsx"
+    bytes = 1528
+    sha256 = "a2edc79ed30dd6b97714a3289f10bc62508c8e78a9e78c50882888b2cee9afc4"
+    cases {
+      new CorpusCase {
+        name = "./fixtures/define-component.tsx"
+        kind = "test"
+        line = 1
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "packages/macros/tests/fixtures/define-expose.tsx"
+    kind = "test"
+    copiedPath = "provenance/vendor/vuejs-vue-jsx-vapor/packages/macros/tests/fixtures/define-expose.tsx"
+    bytes = 277
+    sha256 = "2a97d029483cdb75ea9d3c28718579a248c719bc29b95aed88cd6b294e6960e3"
+    cases {
+      new CorpusCase {
+        name = "./fixtures/define-expose.tsx"
+        kind = "test"
+        line = 1
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "packages/macros/tests/fixtures/define-model.tsx"
+    kind = "test"
+    copiedPath = "provenance/vendor/vuejs-vue-jsx-vapor/packages/macros/tests/fixtures/define-model.tsx"
+    bytes = 423
+    sha256 = "4b1e46b077465b404123ad678f7ac356a1185c29a6801b7d58cd1baae423f9e7"
+    cases {
+      new CorpusCase {
+        name = "./fixtures/define-model.tsx"
+        kind = "test"
+        line = 2
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "packages/macros/tests/fixtures/define-slots.tsx"
+    kind = "test"
+    copiedPath = "provenance/vendor/vuejs-vue-jsx-vapor/packages/macros/tests/fixtures/define-slots.tsx"
+    bytes = 276
+    sha256 = "ec038568f41bf5486bcd8f686062a84ee269cbd0c060c9098d1ea0d210f84804"
+    cases {
+      new CorpusCase {
+        name = "./fixtures/define-slots.tsx"
+        kind = "test"
+        line = 1
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "packages/macros/tests/fixtures/define-style.tsx"
+    kind = "test"
+    copiedPath = "provenance/vendor/vuejs-vue-jsx-vapor/packages/macros/tests/fixtures/define-style.tsx"
+    bytes = 723
+    sha256 = "a7248fd08f60880a9871ca1ec0bc841f57a31a8d2038afa9483bc16a2354dd74"
+    cases {
+      new CorpusCase {
+        name = "./fixtures/define-style.tsx"
+        kind = "test"
+        line = 1
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "packages/macros/tests/fixtures/slot.tsx"
+    kind = "test"
+    copiedPath = "provenance/vendor/vuejs-vue-jsx-vapor/packages/macros/tests/fixtures/slot.tsx"
+    bytes = 716
+    sha256 = "20f0bdeeba6b058fa3f709095464ad96446565b51d1c3ac988a58b6fe06ec5be"
+    cases {
+      new CorpusCase {
+        name = "./fixtures/slot.tsx"
+        kind = "test"
+        line = 1
+      }
+    }
+  }
+  new CorpusFile {
+    sourcePath = "packages/macros/tests/restructure.spec.ts"
+    kind = "test"
+    copiedPath = "provenance/vendor/vuejs-vue-jsx-vapor/packages/macros/tests/restructure.spec.ts"
+    bytes = 1866
+    sha256 = "9451607eacba9d4d0110242e8996174a546ebf635339f93ae45396c868808493"
+    cases {
+      new CorpusCase {
+        name = "reconstruct"
+        kind = "test"
+        line = 24
+      }
+      new CorpusCase {
+        name = "reconstruct arrowFunctionExpression"
+        kind = "test"
+        line = 36
+      }
+      new CorpusCase {
+        name = "reconstruct default-prop"
+        kind = "test"
+        line = 45
+      }
+      new CorpusCase {
+        name = "reconstruct rest-prop"
+        kind = "test"
+        line = 54
+      }
+      new CorpusCase {
+        name = "reconstruct AssignmentPattern"
+        kind = "test"
+        line = 63
+      }
+    }
+  }
+}

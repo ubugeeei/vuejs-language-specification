@@ -10,7 +10,7 @@ import {
   provenanceTraceabilityRoot,
   runtimeTestSuitesRoot,
   vendoredRepositoryRoot,
-  vendoredVizeSnapshotRoot,
+  provenanceVendorRoot,
 } from "./layout.ts";
 import { discoverTestSuiteFiles } from "./catalog.ts";
 import { evaluatePklFile } from "./pkl.ts";
@@ -24,8 +24,13 @@ import {
   loadVendoredUpstreamCorpora,
 } from "./upstream.ts";
 import {
+  loadVendoredJsxVaporExpectedSnapshotCase,
+  parseJsxVaporExpectedSnapshotContent,
+} from "./jsx-vapor-snapshots.ts";
+import {
   loadVendoredVizeExpectedSnapshotCase,
   normalizeVizeSnapshotInput,
+  parseVizeExpectedSnapshotContent,
 } from "./vize-snapshots.ts";
 import type {
   CompilerTestSuite,
@@ -47,12 +52,29 @@ function repositoryToTraceabilityFile(root: string, repository: string): string 
   );
 }
 
-function extractSnapshotNames(content: string): Set<string> {
-  return new Set(
-    [...content.matchAll(/^name:\s*(.+)$/gm)]
-      .map((match) => match[1]?.trim())
-      .filter(Boolean) as string[],
-  );
+function snapshotManifestFiles(root: string): string[] {
+  const vendorRoot = provenanceVendorRoot(root);
+  if (!existsSync(vendorRoot)) {
+    return [];
+  }
+
+  return walkFiles(vendorRoot, (file) => file.endsWith("expected-snapshots.pkl"));
+}
+
+function extractSnapshotNames(
+  repository: string,
+  content: string,
+  source: string,
+): Set<string> {
+  if (repository === "ubugeeei/vize") {
+    return new Set(parseVizeExpectedSnapshotContent(content).map((entry) => entry.name));
+  }
+
+  if (repository === "vuejs/vue-jsx-vapor" && source.endsWith(".snap")) {
+    return new Set(parseJsxVaporExpectedSnapshotContent(content).map((entry) => entry.name));
+  }
+
+  return new Set();
 }
 
 const canonicalSfcBlockOrder = ["script", "script setup", "template", "style scoped", "style"];
@@ -472,46 +494,77 @@ function validateVendoredSnapshotExpectation(testSuite: GenericTestSuite, root: 
     return [];
   }
 
-  const reference = testSuite.upstream.find(
+  const vizeFixtureReference = testSuite.upstream.find(
     (entry) => entry.repository === "ubugeeei/vize" && entry.source.startsWith("tests/fixtures/"),
   );
-  if (!reference) {
-    return [
-      `test suite ${testSuite.id} declares vendored snapshot output without copied fixture provenance`,
-    ];
-  }
-
-  const caseName = reference.cases[0];
-  if (!caseName) {
-    return [`test suite ${testSuite.id} declares vendored snapshot output without a case name`];
-  }
-
-  const snapshot = loadVendoredVizeExpectedSnapshotCase(reference.source, caseName, root);
-  if (!snapshot) {
-    return [
-      `test suite ${testSuite.id} references missing vendored snapshot ${reference.source} :: ${caseName}`,
-    ];
-  }
-
   const errors: string[] = [];
-  if (normalizeVizeSnapshotInput(source) !== normalizeVizeSnapshotInput(snapshot.input)) {
-    errors.push(`test suite ${testSuite.id} source does not match vendored snapshot input`);
-  }
-  if (output != null && normalizeNewlines(output) !== normalizeNewlines(snapshot.output)) {
-    errors.push(
-      `test suite ${testSuite.id} vendored snapshot output does not match copied snapshot`,
+  if (vizeFixtureReference) {
+    const caseName = vizeFixtureReference.cases[0];
+    if (!caseName) {
+      return [`test suite ${testSuite.id} declares vendored snapshot output without a case name`];
+    }
+
+    const snapshot = loadVendoredVizeExpectedSnapshotCase(vizeFixtureReference.source, caseName, root);
+    if (!snapshot) {
+      return [
+        `test suite ${testSuite.id} references missing vendored snapshot ${vizeFixtureReference.source} :: ${caseName}`,
+      ];
+    }
+
+    if (normalizeVizeSnapshotInput(source) !== normalizeVizeSnapshotInput(snapshot.input)) {
+      errors.push(`test suite ${testSuite.id} source does not match vendored snapshot input`);
+    }
+    if (output != null && normalizeNewlines(output) !== normalizeNewlines(snapshot.output)) {
+      errors.push(
+        `test suite ${testSuite.id} vendored snapshot output does not match copied snapshot`,
+      );
+    }
+    if ((options ?? null) !== (snapshot.options ?? null)) {
+      errors.push(
+        `test suite ${testSuite.id} vendored snapshot options do not match copied snapshot`,
+      );
+    }
+  } else {
+    const jsxVaporSnapshotReference = testSuite.upstream.find(
+      (entry) => entry.repository === "vuejs/vue-jsx-vapor" && entry.kind === "snapshot",
     );
-  }
-  if ((options ?? null) !== (snapshot.options ?? null)) {
-    errors.push(
-      `test suite ${testSuite.id} vendored snapshot options do not match copied snapshot`,
+    if (!jsxVaporSnapshotReference) {
+      return [
+        `test suite ${testSuite.id} declares vendored snapshot output without copied snapshot provenance`,
+      ];
+    }
+
+    const caseName = jsxVaporSnapshotReference.cases[0];
+    if (!caseName) {
+      return [`test suite ${testSuite.id} declares vendored snapshot output without a case name`];
+    }
+
+    const snapshot = loadVendoredJsxVaporExpectedSnapshotCase(
+      jsxVaporSnapshotReference.source,
+      caseName,
+      root,
     );
+    if (!snapshot) {
+      return [
+        `test suite ${testSuite.id} references missing vendored snapshot ${jsxVaporSnapshotReference.source} :: ${caseName}`,
+      ];
+    }
+
+    if (output != null && normalizeNewlines(output) !== normalizeNewlines(snapshot.output)) {
+      errors.push(
+        `test suite ${testSuite.id} vendored snapshot output does not match copied snapshot`,
+      );
+    }
+    if (options != null) {
+      errors.push(`test suite ${testSuite.id} vendored snapshot options must be null`);
+    }
   }
 
   if (testSuite.suite === "compiler") {
     const compilerTestSuite = testSuite as CompilerTestSuite;
     if (
       (compilerTestSuite.kind === "template-expected-snapshot" ||
+        compilerTestSuite.kind === "jsx-expected-snapshot" ||
         compilerTestSuite.kind === "sfc-expected-snapshot") &&
       compilerTestSuite.expect.normalizedCode != null &&
       output != null &&
@@ -742,6 +795,7 @@ export function validateTestSuites(
 
       const usesSnapshotKind =
         entry.data.kind === "template-expected-snapshot" ||
+        entry.data.kind === "jsx-expected-snapshot" ||
         entry.data.kind === "sfc-expected-snapshot";
       const usesSnapshotExpectation =
         entry.data.suite === "parser"
@@ -1109,55 +1163,51 @@ export function validateUpstreamInventories(
 export function validateVendoredSnapshots(
   root: string = packageRoot(import.meta.url),
 ): ValidationMessage[] {
-  const manifestFile = join(vendoredVizeSnapshotRoot(root), "expected-snapshots.pkl");
+  return snapshotManifestFiles(root).map((manifestFile) => {
+    try {
+      const manifest = evaluatePklFile<VendoredSnapshotManifest>(manifestFile);
+      const entries = Object.entries(manifest.entries);
+      const errors: string[] = [];
 
-  try {
-    const manifest = evaluatePklFile<VendoredSnapshotManifest>(manifestFile);
-    const entries = Object.entries(manifest.entries);
-    const errors: string[] = [];
-
-    if (entries.length !== manifest.snapshotCount) {
-      errors.push(
-        `snapshotCount mismatch: manifest=${manifest.snapshotCount} actual=${entries.length}`,
-      );
-    }
-
-    for (const [key, entry] of entries) {
-      const file = join(root, entry.copiedPath);
-      if (!existsSync(file)) {
-        errors.push(`Missing vendored snapshot for ${key}: ${entry.copiedPath}`);
-        continue;
-      }
-
-      const content = readFileSync(file);
-      const actualSha = createHash("sha256").update(content).digest("hex");
-      if (actualSha !== entry.sha256) {
-        errors.push(`sha256 mismatch for ${key}`);
-      }
-
-      if (content.byteLength !== entry.bytes) {
+      if (entries.length !== manifest.snapshotCount) {
         errors.push(
-          `byte length mismatch for ${key}: manifest=${entry.bytes} actual=${content.byteLength}`,
+          `snapshotCount mismatch: manifest=${manifest.snapshotCount} actual=${entries.length}`,
         );
       }
-    }
 
-    return [
-      {
+      for (const [key, entry] of entries) {
+        const file = join(root, entry.copiedPath);
+        if (!existsSync(file)) {
+          errors.push(`Missing vendored snapshot for ${key}: ${entry.copiedPath}`);
+          continue;
+        }
+
+        const content = readFileSync(file);
+        const actualSha = createHash("sha256").update(content).digest("hex");
+        if (actualSha !== entry.sha256) {
+          errors.push(`sha256 mismatch for ${key}`);
+        }
+
+        if (content.byteLength !== entry.bytes) {
+          errors.push(
+            `byte length mismatch for ${key}: manifest=${entry.bytes} actual=${content.byteLength}`,
+          );
+        }
+      }
+
+      return {
         file: manifestFile,
         valid: errors.length === 0,
         errors,
-      },
-    ];
-  } catch (error) {
-    return [
-      {
+      };
+    } catch (error) {
+      return {
         file: manifestFile,
         valid: false,
         errors: [error instanceof Error ? error.message : String(error)],
-      },
-    ];
-  }
+      };
+    }
+  });
 }
 
 function normalizeVendoredCorpusManifest(
@@ -1373,28 +1423,36 @@ export function validateUpstreamReferences(
   root: string = packageRoot(import.meta.url),
 ): ValidationMessage[] {
   const report = buildUpstreamCoverage(root);
-  const snapshotManifestFile = join(vendoredVizeSnapshotRoot(root), "expected-snapshots.pkl");
   const errors: string[] = report.danglingReferences.map(
     (reference) =>
       `Unresolved ${reference.kind} reference: ${reference.repository} ${reference.source} :: ${reference.caseName} <- ${reference.localTestSuiteId}`,
   );
 
   try {
-    const manifest = evaluatePklFile<VendoredSnapshotManifest>(snapshotManifestFile);
     const snapshotNameIndex = new Map<string, Set<string>>();
 
-    for (const [source, entry] of Object.entries(manifest.entries)) {
-      const copiedPath = join(root, entry.copiedPath);
-      if (!existsSync(copiedPath)) {
-        continue;
+    for (const manifestFile of snapshotManifestFiles(root)) {
+      const manifest = evaluatePklFile<VendoredSnapshotManifest>(manifestFile);
+      for (const [source, entry] of Object.entries(manifest.entries)) {
+        const copiedPath = join(root, entry.copiedPath);
+        if (!existsSync(copiedPath)) {
+          continue;
+        }
+        snapshotNameIndex.set(
+          `${manifest.originRepository}\u0000${source}`,
+          extractSnapshotNames(
+            manifest.originRepository,
+            readFileSync(copiedPath, "utf8"),
+            source,
+          ),
+        );
       }
-      snapshotNameIndex.set(source, extractSnapshotNames(readFileSync(copiedPath, "utf8")));
     }
 
     for (const reference of loadLocalUpstreamReferences(root).filter(
       (entry) => entry.kind === "snapshot",
     )) {
-      const snapshotNames = snapshotNameIndex.get(reference.source);
+      const snapshotNames = snapshotNameIndex.get(`${reference.repository}\u0000${reference.source}`);
       if (!snapshotNames) {
         errors.push(
           `Snapshot source is not vendored: ${reference.repository} ${reference.source} <- ${reference.localTestSuiteId}`,

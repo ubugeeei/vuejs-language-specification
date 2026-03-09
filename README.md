@@ -74,17 +74,20 @@ The artifact-model chapter additionally defines repository-level structural inva
 - Defining every internal optimization detail as normative behavior.
 - Treating experimental profiles as if they were already part of the stable base language.
 
-## Vapor Profile
+## Vapor Family Profiles
 
-`Vapor` is intentionally treated as a separate profile. It does not currently live on the default `vuejs/core` line in a stable, always-on form, so this repository models it as an opt-in compatibility layer that is versioned against the relevant Vue minor branch snapshot rather than against `main`.
+`Vapor` and `JSX Vapor` are intentionally treated as separate opt-in profiles.
+
+- `vapor` covers template- and SFC-authored Vapor Mode inputs and is versioned against the relevant Vue minor branch snapshot plus copied `ubugeeei/vize` artifacts.
+- `jsx-vapor` covers JSX- and TSX-authored Vapor inputs derived from `vuejs/vue-jsx-vapor`.
 
 The base specification in this repository is therefore:
 
 - normative for the shared Vue language surface backed by `vuejs/core` mainline behavior
-- extensible for additional profiles such as Vapor
+- extensible for additional profiles such as the Vapor family
 - explicit about which test suites are profile-specific
 
-The next planned profile-facing provenance input is `vuejs/vue-jsx-vapor`. It should land as explicit profile-scoped compiler and runtime coverage rather than being merged into the base line implicitly.
+The profiles stay separate because `jsx-vapor` does not imply base SFC syntax or template-parser conformance. `jsx-vapor` coverage therefore lands as explicit profile-scoped compiler, tooling, or runtime suites rather than being merged into the base line implicitly.
 
 ## Distribution Model
 
@@ -226,5 +229,5 @@ This repository is structured to be released as a canonical conformance snapshot
 - structured, exact assertions rather than substring matching
 - Browser Mode runtime validation for DOM-observable behavior, including `v-model` text, checkbox, radio, and select coverage
 
-The next increments should continue expanding upstream-derived coverage, especially for issue regressions and profile-specific suites such as Vapor and `vuejs/vue-jsx-vapor`.
-The current imported fixture lift already includes parser suites, base compiler suites, runtime/compiler-adjacent suites, and profile-scoped Vapor compiler suites. Default-profile expectations come from the official `vuejs/core` oracle; Vapor remains provisional until an official oracle is vendored.
+The next increments should continue expanding upstream-derived coverage, especially for issue regressions and profile-specific suites such as `vapor` and `jsx-vapor`.
+The current imported fixture lift already includes parser suites, base compiler suites, runtime/compiler-adjacent suites, profile-scoped `vapor` compiler suites, and profile-scoped `jsx-vapor` macro/restructure suites. Default-profile expectations come from the official `vuejs/core` oracle; `vapor` and `jsx-vapor` both remain provisional until an official executable oracle is vendored for each profile.

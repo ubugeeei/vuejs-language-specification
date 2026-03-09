@@ -97,14 +97,25 @@ WellFormedVendoredSnapshot(t) ⇔
   t.expect.vendoredSnapshotOutput = ⊥
     ∨
   ∃ u ∈ t.upstream.
-    u.repository = "ubugeeei/vize" ∧
-    Prefix(u.source, "tests/fixtures/") ∧
-    CopiedSnapshotExists(u.source, Head(u.cases)) ∧
-    SnapshotInputEq(t, u.source, Head(u.cases)) ∧
-    SnapshotOutputEq(t, u.source, Head(u.cases))
+    SnapshotLocator(t, u) ∧
+    SnapshotOutputEq(t, u.repository, u.source, Head(u.cases)) ∧
+    SnapshotOptionsEq(t, u.repository, u.source, Head(u.cases))
 ```
 
-Additionally, if `t.oracle.repository = "vuejs/core"` and `t.oracle.provisional ≠ true`, then `t.kind` MUST NOT be a snapshot-only kind and `t.expect.vendoredSnapshotOutput` MUST be `⊥`.
+where:
+
+```text
+SnapshotLocator(t, u) ::=
+  u.kind = "snapshot" ∧
+  VendoredSnapshotCaseExists(u.repository, u.source, Head(u.cases))
+    ∨
+  u.repository = "ubugeeei/vize" ∧
+  Prefix(u.source, "tests/fixtures/") ∧
+  CopiedSnapshotExists(u.source, Head(u.cases)) ∧
+  SnapshotInputEq(t, u.source, Head(u.cases))
+```
+
+Additionally, if `t.oracle.repository = "vuejs/core"` and `t.oracle.provisional ≠ true`, then `t.kind` MUST NOT be a snapshot-only kind (`template-expected-snapshot`, `jsx-expected-snapshot`, `sfc-expected-snapshot`) and `t.expect.vendoredSnapshotOutput` MUST be `⊥`.
 
 Additionally, the first non-blank line of every Pkl test suite MUST amend the canonical suite schema:
 

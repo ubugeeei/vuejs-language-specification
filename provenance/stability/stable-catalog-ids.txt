@@ -1,5 +1,16 @@
 benchmark.compiler.sfc-batch-compile
 benchmark.reactivity.computed-fanout
+compiler.jsx-vapor.define-component-macro
+compiler.jsx-vapor.define-expose-macro
+compiler.jsx-vapor.define-model-macro
+compiler.jsx-vapor.define-slots-macro
+compiler.jsx-vapor.define-style-macro
+compiler.jsx-vapor.restructure-arrow-function
+compiler.jsx-vapor.restructure-assignment-pattern
+compiler.jsx-vapor.restructure-basic
+compiler.jsx-vapor.restructure-defaults
+compiler.jsx-vapor.restructure-rest
+compiler.jsx-vapor.slot-object-lowering
 compiler.script.define-emits-array
 compiler.script.define-emits-both-args-error
 compiler.script.define-emits-mixed-syntax-error

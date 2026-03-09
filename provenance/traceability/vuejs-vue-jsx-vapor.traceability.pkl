@@ -1,0 +1,180 @@
+amends "../../schemas/UpstreamTraceabilityManifest.pkl"
+
+repository = "vuejs/vue-jsx-vapor"
+commit = "20889643214efdecf125251b70fceee87bbb1866"
+generatedAt = "2026-03-09T18:17:17.696Z"
+
+counts {
+  total = 11
+  covered = 11
+  planned = 0
+  tracked = 0
+}
+
+entries {
+  new TraceabilityEntry {
+    source = "packages/macros/tests/fixtures/define-component.tsx"
+    name = "./fixtures/define-component.tsx"
+    kind = "test"
+    line = 1
+    classification = "portable-language"
+    status = "covered"
+    profile = "jsx-vapor"
+    localTestSuites {
+      "compiler.jsx-vapor.define-component-macro"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes JSX-authored Vapor compiler behavior that should eventually become a local profile-scoped conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "packages/macros/tests/fixtures/define-expose.tsx"
+    name = "./fixtures/define-expose.tsx"
+    kind = "test"
+    line = 1
+    classification = "portable-language"
+    status = "covered"
+    profile = "jsx-vapor"
+    localTestSuites {
+      "compiler.jsx-vapor.define-expose-macro"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes JSX-authored Vapor compiler behavior that should eventually become a local profile-scoped conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "packages/macros/tests/fixtures/define-model.tsx"
+    name = "./fixtures/define-model.tsx"
+    kind = "test"
+    line = 2
+    classification = "portable-language"
+    status = "covered"
+    profile = "jsx-vapor"
+    localTestSuites {
+      "compiler.jsx-vapor.define-model-macro"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes JSX-authored Vapor compiler behavior that should eventually become a local profile-scoped conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "packages/macros/tests/fixtures/define-slots.tsx"
+    name = "./fixtures/define-slots.tsx"
+    kind = "test"
+    line = 1
+    classification = "portable-language"
+    status = "covered"
+    profile = "jsx-vapor"
+    localTestSuites {
+      "compiler.jsx-vapor.define-slots-macro"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes JSX-authored Vapor compiler behavior that should eventually become a local profile-scoped conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "packages/macros/tests/fixtures/define-style.tsx"
+    name = "./fixtures/define-style.tsx"
+    kind = "test"
+    line = 1
+    classification = "portable-language"
+    status = "covered"
+    profile = "jsx-vapor"
+    localTestSuites {
+      "compiler.jsx-vapor.define-style-macro"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes JSX-authored Vapor compiler behavior that should eventually become a local profile-scoped conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "packages/macros/tests/fixtures/slot.tsx"
+    name = "./fixtures/slot.tsx"
+    kind = "test"
+    line = 1
+    classification = "portable-language"
+    status = "covered"
+    profile = "jsx-vapor"
+    localTestSuites {
+      "compiler.jsx-vapor.slot-object-lowering"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes JSX-authored Vapor compiler behavior that should eventually become a local profile-scoped conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "packages/macros/tests/restructure.spec.ts"
+    name = "reconstruct"
+    kind = "test"
+    line = 24
+    classification = "portable-language"
+    status = "covered"
+    profile = "jsx-vapor"
+    localTestSuites {
+      "compiler.jsx-vapor.restructure-basic"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes JSX-authored Vapor compiler behavior that should eventually become a local profile-scoped conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "packages/macros/tests/restructure.spec.ts"
+    name = "reconstruct arrowFunctionExpression"
+    kind = "test"
+    line = 36
+    classification = "portable-language"
+    status = "covered"
+    profile = "jsx-vapor"
+    localTestSuites {
+      "compiler.jsx-vapor.restructure-arrow-function"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes JSX-authored Vapor compiler behavior that should eventually become a local profile-scoped conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "packages/macros/tests/restructure.spec.ts"
+    name = "reconstruct AssignmentPattern"
+    kind = "test"
+    line = 63
+    classification = "portable-language"
+    status = "covered"
+    profile = "jsx-vapor"
+    localTestSuites {
+      "compiler.jsx-vapor.restructure-assignment-pattern"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes JSX-authored Vapor compiler behavior that should eventually become a local profile-scoped conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "packages/macros/tests/restructure.spec.ts"
+    name = "reconstruct default-prop"
+    kind = "test"
+    line = 45
+    classification = "portable-language"
+    status = "covered"
+    profile = "jsx-vapor"
+    localTestSuites {
+      "compiler.jsx-vapor.restructure-defaults"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes JSX-authored Vapor compiler behavior that should eventually become a local profile-scoped conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "packages/macros/tests/restructure.spec.ts"
+    name = "reconstruct rest-prop"
+    kind = "test"
+    line = 54
+    classification = "portable-language"
+    status = "covered"
+    profile = "jsx-vapor"
+    localTestSuites {
+      "compiler.jsx-vapor.restructure-rest"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes JSX-authored Vapor compiler behavior that should eventually become a local profile-scoped conformance test suite."
+  }
+}
