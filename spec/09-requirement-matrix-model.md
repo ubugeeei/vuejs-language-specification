@@ -24,13 +24,15 @@ Formally:
 RequirementId      ::= Upper (Upper | Digit | "-")*
 RequirementStmt    ::= non-empty markdown text
 PklSuitePath       ::= "../testsuites/" Segment "/" Segment "/" Segment ".pkl"
-RuntimeSuitePath   ::= "../runtime/testsuites/" Segment ".ts"
+RuntimeSuitePath   ::= "../testsuites/runtime/" RuntimeDomainDir "/" Segment ".ts"
 RequirementLink    ::= ⟨label, path⟩
 RequirementRow     ::= ⟨id, stmt, links+⟩
 RequirementMatrix  ::= RequirementRow*
 ```
 
 `Segment` is any repository path segment without `/`.
+`RuntimeDomain` is one of `dom`, `forms`, `components`, `lifecycle`, or `reactivity`, as used by canonical runtime ids.
+`RuntimeDomainDir` is the numbered directory form of that domain: `10-dom`, `20-forms`, `30-components`, `40-lifecycle`, or `50-reactivity`.
 
 ## 3. Well-Formedness
 
@@ -83,7 +85,7 @@ The repository validator MUST reject any state where:
 - a local executable artifact is not linked from any requirement row
 - a requirement link label does not equal the target artifact id
 
-These obligations are implemented by [`src/requirements.ts`](../src/requirements.ts), [`src/validate.ts`](../src/validate.ts), and [`test/validation.spec.ts`](../test/validation.spec.ts).
+These obligations are implemented by [`src/requirements.ts`](../src/requirements.ts), [`src/validate.ts`](../src/validate.ts), and [`verification/repository-validation.spec.ts`](../verification/repository-validation.spec.ts).
 
 ## 6. Conformance Boundary
 

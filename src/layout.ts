@@ -41,5 +41,5 @@ export function runtimeHarnessRoot(root: string): string {
 }
 
 export function runtimeTestSuitesRoot(root: string): string {
-  return join(runtimeRoot(root), "testsuites");
+  return join(root, "testsuites", "runtime");
 }

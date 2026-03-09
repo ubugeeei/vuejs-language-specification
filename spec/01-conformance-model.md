@@ -37,7 +37,7 @@ The normative binding from requirement identifiers to executable local test suit
 
 Normative authority is ordered as follows:
 
-1. machine-readable test suites under [`testsuites/`](../testsuites/)
+1. machine-readable test suites under [`testsuites/`](../testsuites/), including runtime artifacts under [`testsuites/runtime/`](../testsuites/runtime/)
 2. normative requirements under [`spec/`](./README.md)
 3. vendored upstream artifacts under [`provenance/vendor/`](../provenance/vendor/)
 4. traceability manifests under [`provenance/traceability/`](../provenance/traceability/)
@@ -120,5 +120,5 @@ The runtime suite MAY use the JavaScript reference harness, but its assertions M
 | `syntax`          | [`02-sfc-syntax.md`](./02-sfc-syntax.md)                       | [`testsuites/syntax/sfc/`](../testsuites/syntax/sfc/)           |
 | `compiler`        | [`03-template-and-compiler.md`](./03-template-and-compiler.md) | [`testsuites/compiler/`](../testsuites/compiler/)               |
 | `type-evaluation` | [`04-type-evaluation.md`](./04-type-evaluation.md)             | [`testsuites/type-evaluation/`](../testsuites/type-evaluation/) |
-| `runtime`         | [`05-runtime-conformance.md`](./05-runtime-conformance.md)     | [`runtime/testsuites/`](../runtime/testsuites/)                 |
+| `runtime`         | [`05-runtime-conformance.md`](./05-runtime-conformance.md)     | [`testsuites/runtime/`](../testsuites/runtime/)                 |
 | `benchmark`       | [`06-benchmark-methodology.md`](./06-benchmark-methodology.md) | [`testsuites/benchmark/`](../testsuites/benchmark/)             |

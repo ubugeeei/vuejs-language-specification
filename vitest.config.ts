@@ -19,10 +19,10 @@ export default defineConfig({
         test: {
           name: "node",
           include: [
-            "test/testsuites.spec.ts",
-            "test/runtime.spec.ts",
-            "test/validation.spec.ts",
-            "test/vize-snapshots.spec.ts",
+            "verification/conformance-pkl.spec.ts",
+            "verification/runtime-conformance.node.spec.ts",
+            "verification/repository-validation.spec.ts",
+            "verification/provenance-vize-snapshots.spec.ts",
           ],
         },
       },
@@ -30,7 +30,7 @@ export default defineConfig({
         extends: true,
         test: {
           name: "browser",
-          include: ["test/runtime.browser.spec.ts"],
+          include: ["verification/runtime-conformance.browser.spec.ts"],
           browser: {
             enabled: true,
             provider: playwright(),

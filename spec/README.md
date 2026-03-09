@@ -51,7 +51,7 @@ The specification uses the following document classes:
 
 ## Terminology
 
-- `test suite` means a local executable artifact curated in this repository, typically under `testsuites/` or `runtime/testsuites/`.
+- `test suite` means a local executable artifact curated in this repository under `testsuites/`, including `testsuites/runtime/` for runtime conformance.
 - `upstream case` means an inventoried upstream test or benchmark title referenced through provenance metadata.
 - `requirement matrix` means the validated Markdown mapping from requirement identifiers to local executable test suites.
 - Specification text should use `test suite` for local conformance artifacts and reserve `case` for upstream provenance unless the term is part of an upstream title.

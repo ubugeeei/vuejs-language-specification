@@ -6,6 +6,7 @@ This repository does not invent test suites in a vacuum. Every curated test suit
 
 - `vuejs/core` test
 - `vuejs/language-tools` test
+- `vuejs/vue-jsx-vapor` profile-specific test or fixture
 - issue reference embedded in an upstream test
 - copied community test, fixture, or benchmark source
 
@@ -76,3 +77,5 @@ When promoting an upstream behavior into this repository:
 ## 4. Vapor Provenance
 
 Vapor evidence must not be merged into the base inventory without a profile tag. Because Vapor lives on Vue minor branches rather than the default upstream line, every Vapor case must carry branch-specific provenance.
+
+Future Vapor-adjacent provenance MAY also be sourced from `vuejs/vue-jsx-vapor`, but those suites MUST remain profile-scoped until a curated local artifact and requirement mapping are added.

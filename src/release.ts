@@ -41,7 +41,7 @@ const targetDefinitions: ReleaseManifestTarget[] = [
   },
   {
     name: "runtime",
-    root: "runtime/testsuites",
+    root: "testsuites/runtime",
     executableFormat: "typescript",
   },
   {

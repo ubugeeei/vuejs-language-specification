@@ -56,6 +56,13 @@ function extractSnapshotNames(content: string): Set<string> {
 }
 
 const canonicalSfcBlockOrder = ["script", "script setup", "template", "style scoped", "style"];
+const canonicalRuntimeSuiteDomains = [
+  { order: 10, domain: "dom", dir: "10-dom" },
+  { order: 20, domain: "forms", dir: "20-forms" },
+  { order: 30, domain: "components", dir: "30-components" },
+  { order: 40, domain: "lifecycle", dir: "40-lifecycle" },
+  { order: 50, domain: "reactivity", dir: "50-reactivity" },
+] as const;
 
 function extractSfcBlockOrder(source: string): string[] {
   const { descriptor } = parseSfc(source, {
@@ -208,11 +215,15 @@ const legacyLocalNamingRules = [
   },
   {
     needle: "src/runtime/cases/",
-    replacement: "runtime/testsuites/",
+    replacement: "testsuites/runtime/",
   },
   {
     needle: "src/runtime/testsuites/",
-    replacement: "runtime/testsuites/",
+    replacement: "testsuites/runtime/",
+  },
+  {
+    needle: "runtime/testsuites/",
+    replacement: "testsuites/runtime/",
   },
   {
     needle: "sources/",
@@ -333,7 +344,14 @@ function collectConventionScanFiles(root: string): string[] {
     join(root, "tsdown.config.ts"),
   ].filter((file) => existsSync(file));
 
-  for (const directory of ["src", "schemas", "scripts", "runtime"] as const) {
+  for (const directory of [
+    "src",
+    "schemas",
+    "scripts",
+    "runtime",
+    "testsuites",
+    "verification",
+  ] as const) {
     const fullDirectory = join(root, directory);
     if (!existsSync(fullDirectory)) {
       continue;
@@ -346,11 +364,28 @@ function collectConventionScanFiles(root: string): string[] {
     );
   }
 
-  return files.filter((file) => file !== join(root, "src", "validate.ts"));
+  return files.filter(
+    (file) =>
+      file !== join(root, "src", "validate.ts") &&
+      file !== join(root, "verification", "repository-validation.spec.ts"),
+  );
 }
 
 function splitPathSegments(value: string): string[] {
   return value.split(/[\\/]/u);
+}
+
+function runtimeDomainFromId(runtimeId: string): string | null {
+  const segments = runtimeId.split(".");
+  if (segments.length < 3 || segments[0] !== "runtime") {
+    return null;
+  }
+
+  return segments[1] ?? null;
+}
+
+function runtimeDomainDirFromDomain(domain: string): string | null {
+  return canonicalRuntimeSuiteDomains.find((entry) => entry.domain === domain)?.dir ?? null;
 }
 
 function normalizeHeading(line: string): string | null {
@@ -501,6 +536,8 @@ export function validateRepositoryConventions(
   const errors: string[] = [];
   const legacyPaths = [
     join(root, "cases"),
+    join(root, "test"),
+    join(root, "runtime", "testsuites"),
     join(root, "src", "runtime", "cases"),
     join(root, "src", "runtime", "testsuites"),
     join(root, "schemas", "BenchmarkCase.pkl"),
@@ -801,6 +838,56 @@ export function validateRuntimeTestSuites(
     }
 
     errors.push(...validateUpstreamSelectors(testSuite.upstream, suiteContext));
+  }
+
+  const runtimeRoot = runtimeTestSuitesRoot(root);
+  if (existsSync(runtimeRoot)) {
+    for (const file of walkFiles(runtimeRoot, (entry) => entry.endsWith(".ts"))) {
+      const relativeFromRuntimeRoot = relative(runtimeRoot, file);
+      const segments = splitPathSegments(relativeFromRuntimeRoot);
+
+      if (segments.length !== 2 || !segments[1]?.endsWith(".ts")) {
+        errors.push(
+          `Runtime test suite path must match testsuites/runtime/<number-domain>/<name>.ts: ${relative(root, file)}`,
+        );
+        continue;
+      }
+
+      const domainDirFromPath = segments[0] ?? "";
+      const canonicalDomainDirs = canonicalRuntimeSuiteDomains.map((entry) => entry.dir);
+      if (!canonicalDomainDirs.includes(domainDirFromPath as never)) {
+        errors.push(
+          `Runtime test suite path must use a canonical numbered domain directory (${canonicalDomainDirs.join(", ")}): ${relative(root, file)}`,
+        );
+      }
+
+      const runtimeId = extractRuntimeTestSuiteId(file);
+      if (runtimeId === null) {
+        continue;
+      }
+
+      const domainFromId = runtimeDomainFromId(runtimeId);
+      if (domainFromId === null) {
+        errors.push(
+          `Runtime test suite id must match runtime.<domain>.* for ${relative(root, file)}`,
+        );
+        continue;
+      }
+
+      const expectedDomainDir = runtimeDomainDirFromDomain(domainFromId);
+      if (expectedDomainDir === null) {
+        errors.push(
+          `Runtime test suite id uses an unknown canonical domain: ${runtimeId} in ${relative(root, file)}`,
+        );
+        continue;
+      }
+
+      if (domainDirFromPath !== expectedDomainDir) {
+        errors.push(
+          `Runtime test suite domain mismatch: path=${domainDirFromPath} id=${domainFromId} expectedPath=${expectedDomainDir} for ${relative(root, file)}`,
+        );
+      }
+    }
   }
 
   return [

@@ -7,8 +7,10 @@ This chapter defines the machine-readable artifact contract for local executable
 It covers:
 
 - Pkl executable test suites under [`testsuites/`](../testsuites/)
-- JavaScript runtime test suites under [`runtime/testsuites/`](../runtime/testsuites/)
-- repository-level validation obligations enforced by [`src/validate.ts`](../src/validate.ts) and [`test/validation.spec.ts`](../test/validation.spec.ts)
+- JavaScript runtime test suites under [`testsuites/runtime/`](../testsuites/runtime/)
+- repository-level validation obligations enforced by [`src/validate.ts`](../src/validate.ts) and [`verification/repository-validation.spec.ts`](../verification/repository-validation.spec.ts)
+
+All canonical executable artifacts live under [`testsuites/`](../testsuites/). The [`runtime/`](../runtime/) tree is harness/support code, not a separate artifact root.
 
 It does not redefine the semantic obligations of parser, compiler, type-evaluation, runtime, or benchmark behavior. Those remain defined by the target-specific chapters.
 The mapping from semantic requirements to these artifacts is defined separately by [`09-requirement-matrix-model.md`](./09-requirement-matrix-model.md).
@@ -19,10 +21,12 @@ The local artifact layer is modeled by:
 
 ```text
 PklSuitePath     ::= "testsuites/" SuiteName "/" Group "/" Name ".pkl"
-RuntimeSuitePath ::= "runtime/testsuites/" Name ".ts"
+RuntimeDomain    ::= "dom" | "forms" | "components" | "lifecycle" | "reactivity"
+RuntimeDomainDir ::= "10-dom" | "20-forms" | "30-components" | "40-lifecycle" | "50-reactivity"
+RuntimeSuitePath ::= "testsuites/runtime/" RuntimeDomainDir "/" Name ".ts"
 
 PklSuiteId       ::= SuiteName "." Group "." Name
-RuntimeSuiteId   ::= "runtime." Segment ("." Segment)+
+RuntimeSuiteId   ::= "runtime." RuntimeDomain ("." Segment)+
 
 FeatureId        ::= identifier describing an observable behavior family
 ```
@@ -139,7 +143,10 @@ WellFormedRuntimeInput(i) ⇔
   Contains(i.source, "<template>")
 ```
 
-Each runtime test-suite module under [`runtime/testsuites/`](../runtime/testsuites/) MUST export exactly one canonical binding named `*TestSuite` whose value satisfies `WellFormedRuntimeSuite`.
+Each runtime test-suite module under [`testsuites/runtime/`](../testsuites/runtime/) MUST:
+
+- live under the numbered domain directory that matches the second segment of its canonical runtime id
+- export exactly one canonical binding named `*TestSuite` whose value satisfies `WellFormedRuntimeSuite`
 
 ### 3.3. Upstream Selectors
 
@@ -201,7 +208,7 @@ The reference validator MUST reject any repository state that violates:
 Those checks are operationalized by:
 
 - [`src/validate.ts`](../src/validate.ts)
-- [`test/validation.spec.ts`](../test/validation.spec.ts)
+- [`verification/repository-validation.spec.ts`](../verification/repository-validation.spec.ts)
 
 ## 6. Conformance Boundary
 
