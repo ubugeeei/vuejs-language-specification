@@ -1,0 +1,112 @@
+amends "../../schemas/UpstreamInventory.pkl"
+
+repository = "vuejs/vue-jsx-vapor"
+commit = "20889643214efdecf125251b70fceee87bbb1866"
+generatedAt = "2026-03-10T00:00:00.000Z"
+
+counts {
+  files = 7
+  cases = 11
+  issueRefs = 0
+  benchmarks = 0
+}
+
+files {
+  new InventoryFile {
+    path = "packages/macros/tests/fixtures/define-component.tsx"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "./fixtures/define-component.tsx"
+        kind = "test"
+        line = 1
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/macros/tests/fixtures/define-expose.tsx"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "./fixtures/define-expose.tsx"
+        kind = "test"
+        line = 1
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/macros/tests/fixtures/define-model.tsx"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "./fixtures/define-model.tsx"
+        kind = "test"
+        line = 2
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/macros/tests/fixtures/define-slots.tsx"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "./fixtures/define-slots.tsx"
+        kind = "test"
+        line = 1
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/macros/tests/fixtures/define-style.tsx"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "./fixtures/define-style.tsx"
+        kind = "test"
+        line = 1
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/macros/tests/fixtures/slot.tsx"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "./fixtures/slot.tsx"
+        kind = "test"
+        line = 1
+      }
+    }
+  }
+  new InventoryFile {
+    path = "packages/macros/tests/restructure.spec.ts"
+    kind = "test"
+    cases {
+      new InventoryCase {
+        name = "reconstruct"
+        kind = "test"
+        line = 24
+      }
+      new InventoryCase {
+        name = "reconstruct arrowFunctionExpression"
+        kind = "test"
+        line = 36
+      }
+      new InventoryCase {
+        name = "reconstruct default-prop"
+        kind = "test"
+        line = 45
+      }
+      new InventoryCase {
+        name = "reconstruct rest-prop"
+        kind = "test"
+        line = 54
+      }
+      new InventoryCase {
+        name = "reconstruct AssignmentPattern"
+        kind = "test"
+        line = 63
+      }
+    }
+  }
+}

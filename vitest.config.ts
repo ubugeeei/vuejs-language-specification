@@ -22,6 +22,7 @@ export default defineConfig({
             "verification/conformance-pkl.spec.ts",
             "verification/runtime-conformance.node.spec.ts",
             "verification/repository-validation.spec.ts",
+            "verification/provenance-jsx-vapor-snapshots.spec.ts",
             "verification/provenance-vize-snapshots.spec.ts",
           ],
         },

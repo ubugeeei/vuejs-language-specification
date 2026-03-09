@@ -44,6 +44,7 @@ import type {
   SyntaxTestSuite,
   TypeEvaluationTestSuite,
 } from "./types.ts";
+import { loadVendoredJsxVaporExpectedSnapshotCase } from "./jsx-vapor-snapshots.ts";
 import {
   loadVendoredVizeExpectedSnapshotCase,
   normalizeVizeSnapshotInput,
@@ -339,6 +340,62 @@ function assertVendoredVizeSnapshotExpectation(args: {
   }
 
   assert.equal(args.options ?? null, snapshot.options ?? null);
+}
+
+function assertVendoredJsxVaporSnapshotExpectation(args: {
+  id: string;
+  upstream: Array<{ kind?: string; repository: string; source: string; cases: string[] }>;
+  output: string | null | undefined;
+  options: string | null | undefined;
+}): void {
+  if (args.output == null && args.options == null) {
+    return;
+  }
+
+  const reference = args.upstream.find(
+    (entry) => entry.repository === "vuejs/vue-jsx-vapor" && entry.kind === "snapshot",
+  );
+  assert.ok(reference, `Expected copied snapshot provenance for snapshot-backed suite ${args.id}`);
+  const caseName = reference.cases[0];
+  assert.ok(caseName, `Expected copied snapshot case name for snapshot-backed suite ${args.id}`);
+  const snapshot = loadVendoredJsxVaporExpectedSnapshotCase(reference.source, caseName);
+  assert.ok(snapshot, `Expected copied snapshot oracle for ${reference.source} :: ${caseName}`);
+
+  if (args.output != null) {
+    assert.equal(normalizeNewlines(args.output), normalizeNewlines(snapshot.output));
+  }
+
+  assert.equal(args.options ?? null, null);
+}
+
+function assertVendoredSnapshotExpectation(args: {
+  id: string;
+  upstream: Array<{ kind?: string; repository: string; source: string; cases: string[] }>;
+  source: string;
+  output: string | null | undefined;
+  options: string | null | undefined;
+}): void {
+  if (args.output == null && args.options == null) {
+    return;
+  }
+
+  const hasVizeFixtureReference = args.upstream.some(
+    (entry) => entry.repository === "ubugeeei/vize" && entry.source.startsWith("tests/fixtures/"),
+  );
+  if (hasVizeFixtureReference) {
+    assertVendoredVizeSnapshotExpectation(args);
+    return;
+  }
+
+  const hasJsxVaporSnapshotReference = args.upstream.some(
+    (entry) => entry.repository === "vuejs/vue-jsx-vapor" && entry.kind === "snapshot",
+  );
+  if (hasJsxVaporSnapshotReference) {
+    assertVendoredJsxVaporSnapshotExpectation(args);
+    return;
+  }
+
+  assert.fail(`Expected vendored snapshot provenance for snapshot-backed suite ${args.id}`);
 }
 
 function assertDescriptorExpectation(
@@ -1267,7 +1324,7 @@ export function runParserReferenceTestSuite(testSuite: ParserTestSuite): void {
     );
   }
 
-  assertVendoredVizeSnapshotExpectation({
+  assertVendoredSnapshotExpectation({
     id: testSuite.id,
     upstream: testSuite.upstream,
     source: testSuite.input.source,
@@ -1389,7 +1446,7 @@ export function runCompilerReferenceTestSuite(testSuite: CompilerTestSuite): voi
         );
       }
 
-      assertVendoredVizeSnapshotExpectation({
+      assertVendoredSnapshotExpectation({
         id: testSuite.id,
         upstream: testSuite.upstream,
         source: testSuite.input.source ?? "",
@@ -1400,7 +1457,28 @@ export function runCompilerReferenceTestSuite(testSuite: CompilerTestSuite): voi
       break;
     }
     case "template-expected-snapshot": {
-      assertVendoredVizeSnapshotExpectation({
+      assertVendoredSnapshotExpectation({
+        id: testSuite.id,
+        upstream: testSuite.upstream,
+        source: testSuite.input.source ?? "",
+        output: testSuite.expect.vendoredSnapshotOutput ?? testSuite.expect.normalizedCode ?? null,
+        options: testSuite.expect.vendoredSnapshotOptions,
+      });
+
+      if (
+        testSuite.expect.vendoredSnapshotOutput != null &&
+        testSuite.expect.normalizedCode != null
+      ) {
+        assert.equal(
+          normalizeNewlines(testSuite.expect.normalizedCode),
+          normalizeNewlines(testSuite.expect.vendoredSnapshotOutput),
+        );
+      }
+
+      break;
+    }
+    case "jsx-expected-snapshot": {
+      assertVendoredSnapshotExpectation({
         id: testSuite.id,
         upstream: testSuite.upstream,
         source: testSuite.input.source ?? "",
@@ -1554,7 +1632,7 @@ export function runCompilerReferenceTestSuite(testSuite: CompilerTestSuite): voi
         );
       }
 
-      assertVendoredVizeSnapshotExpectation({
+      assertVendoredSnapshotExpectation({
         id: testSuite.id,
         upstream: testSuite.upstream,
         source: testSuite.input.sfc ?? "",
@@ -1565,7 +1643,7 @@ export function runCompilerReferenceTestSuite(testSuite: CompilerTestSuite): voi
       break;
     }
     case "sfc-expected-snapshot": {
-      assertVendoredVizeSnapshotExpectation({
+      assertVendoredSnapshotExpectation({
         id: testSuite.id,
         upstream: testSuite.upstream,
         source: testSuite.input.sfc ?? "",

@@ -192,6 +192,7 @@ export interface CompilerTestSuite extends BaseTestSuite {
   kind:
     | "template-dom-compile"
     | "template-expected-snapshot"
+    | "jsx-expected-snapshot"
     | "sfc-script-compile"
     | "sfc-style-compile"
     | "sfc-full-compile"

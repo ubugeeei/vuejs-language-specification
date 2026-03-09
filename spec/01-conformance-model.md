@@ -71,7 +71,14 @@ A profile:
 - MUST identify the upstream branch or snapshot it was derived from
 - MUST NOT silently override the meaning of a base-language test suite
 
-`Vapor` is modeled as a profile, not as part of the default base line, because its upstream source of truth lives on Vue minor branches rather than the default stable mainline.
+This repository currently reserves the following opt-in profile names:
+
+- `vapor` for template- and SFC-authored Vapor Mode inputs curated against Vue minor-branch snapshots and copied `ubugeeei/vize` artifacts
+- `jsx-vapor` for JSX- and TSX-authored Vapor inputs curated against `vuejs/vue-jsx-vapor`
+
+Claiming `jsx-vapor` compiler conformance MUST NOT be interpreted as claiming base `syntax` or template-parser conformance, because the base syntax chapters only cover SFC and template source forms.
+
+`Vapor` is modeled as a profile family, not as part of the default base line, because its upstream source of truth does not live on the default stable `vuejs/core` mainline alone.
 
 ## 4. Observability Boundary
 

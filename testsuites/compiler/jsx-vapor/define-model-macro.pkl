@@ -1,0 +1,132 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.jsx-vapor.define-model-macro"
+title = "JSX Vapor defineModel lowering"
+kind = "jsx-expected-snapshot"
+summary = "JSX Vapor macro compilation must lower defineModel into model props, update channels, modifier companions, and author-facing reads that match the copied snapshot oracle exactly."
+
+features {
+  "compiler.snapshot"
+  "compiler.profile.jsx-vapor"
+  "compiler.jsx-vapor"
+  "jsx-vapor.defineModel"
+  "imported.input"
+  "imported.input.jsx-vapor"
+}
+
+profile = "jsx-vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/vuejs-vue-jsx-vapor/packages/macros/tests/fixtures/define-model.tsx"
+  source = "packages/macros/tests/fixtures/define-model.tsx"
+  caseName = "./fixtures/define-model.tsx"
+  originRepository = "vuejs/vue-jsx-vapor"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/vue-jsx-vapor"
+  moduleName = "@vue-jsx-vapor/macros"
+  operation = "copied snapshot oracle via transformJsxMacros"
+  profile = "jsx-vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/vue-jsx-vapor"
+    source = "packages/macros/tests/fixtures/define-model.tsx"
+    cases {
+      "./fixtures/define-model.tsx"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "vuejs/vue-jsx-vapor"
+    source = "packages/macros/tests/__snapshots__/fixtures.spec.ts.snap"
+    cases {
+      "fixtures > ./fixtures/define-model.tsx 1"
+    }
+  }
+}
+
+input {
+  source = #"""
+  
+  import { defineVaporComponent, unref } from 'vue'
+  
+  const $ = unref
+  
+  export const Comp = defineVaporComponent(({ bar }: { bar: string }) => {
+    const foo = defineModel<string, 'm1' | 'm2'>('foo', { default: bar })
+    return <div>{foo.value}</div>
+  })
+  
+  export default function () {
+    const modelValue = $(defineModel<string>()!)
+    return (
+      <Comp v-model:foo_m1={modelValue} bar="bar">
+        {modelValue}
+      </Comp>
+    )
+  }
+  
+  """#
+}
+
+expect {
+  normalizedCode = #"""
+  
+  import { useModel as __useModel } from "/vue-jsx-vapor/macros/use-model";
+  import { defineVaporComponent, unref } from 'vue'
+  
+  const $ = unref
+  
+  export const Comp = defineVaporComponent((__props) => {
+    const foo = __useModel<string, 'm1' | 'm2'>(__props, 'foo', { default: __props.bar })
+    return <div>{foo.value}</div>
+  }, { props: {
+  'bar': null, 
+  'foo': { default: __props.bar, skipFactory: true }, 
+  'onUpdate:foo': null, 
+  'fooModifiers': null
+  } })
+  
+  export default function (__props) {
+    const modelValue = $(__useModel<string>(__props, 'modelValue',)!)
+    return (
+      <Comp v-model:foo_m1={modelValue} bar="bar">
+        {modelValue}
+      </Comp>
+    )
+  }
+  
+  """#
+  vendoredSnapshotOutput = #"""
+  
+  import { useModel as __useModel } from "/vue-jsx-vapor/macros/use-model";
+  import { defineVaporComponent, unref } from 'vue'
+  
+  const $ = unref
+  
+  export const Comp = defineVaporComponent((__props) => {
+    const foo = __useModel<string, 'm1' | 'm2'>(__props, 'foo', { default: __props.bar })
+    return <div>{foo.value}</div>
+  }, { props: {
+  'bar': null, 
+  'foo': { default: __props.bar, skipFactory: true }, 
+  'onUpdate:foo': null, 
+  'fooModifiers': null
+  } })
+  
+  export default function (__props) {
+    const modelValue = $(__useModel<string>(__props, 'modelValue',)!)
+    return (
+      <Comp v-model:foo_m1={modelValue} bar="bar">
+        {modelValue}
+      </Comp>
+    )
+  }
+  
+  """#
+}
+

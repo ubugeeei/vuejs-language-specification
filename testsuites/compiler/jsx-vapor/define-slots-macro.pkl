@@ -1,0 +1,107 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.jsx-vapor.define-slots-macro"
+title = "JSX Vapor defineSlots lowering"
+kind = "jsx-expected-snapshot"
+summary = "JSX Vapor macro compilation must lower defineSlots into the slot helper surface and optional invocation shape captured by the copied snapshot oracle."
+
+features {
+  "compiler.snapshot"
+  "compiler.profile.jsx-vapor"
+  "compiler.jsx-vapor"
+  "jsx-vapor.defineSlots"
+  "imported.input"
+  "imported.input.jsx-vapor"
+}
+
+profile = "jsx-vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/vuejs-vue-jsx-vapor/packages/macros/tests/fixtures/define-slots.tsx"
+  source = "packages/macros/tests/fixtures/define-slots.tsx"
+  caseName = "./fixtures/define-slots.tsx"
+  originRepository = "vuejs/vue-jsx-vapor"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/vue-jsx-vapor"
+  moduleName = "@vue-jsx-vapor/macros"
+  operation = "copied snapshot oracle via transformJsxMacros"
+  profile = "jsx-vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/vue-jsx-vapor"
+    source = "packages/macros/tests/fixtures/define-slots.tsx"
+    cases {
+      "./fixtures/define-slots.tsx"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "vuejs/vue-jsx-vapor"
+    source = "packages/macros/tests/__snapshots__/fixtures.spec.ts.snap"
+    cases {
+      "fixtures > ./fixtures/define-slots.tsx 1"
+    }
+  }
+}
+
+input {
+  source = #"""
+  export const Comp = () => {
+    const slots = defineSlots<{
+      default: () => any
+    }>()
+    return <div>{slots.default?.()}</div>
+  }
+  
+  export default function () {
+    const slots = defineSlots({
+      default: () => <div>default</div>,
+    })
+    return <div>{slots.default?.()}</div>
+  }
+  
+  """#
+}
+
+expect {
+  normalizedCode = #"""
+  
+  import { useSlots as __useSlots } from "/vue-jsx-vapor/macros/use-slots";export const Comp = () => {
+    const slots = __useSlots<{
+      default: () => any
+    }>()
+    return <div>{slots.default?.()}</div>
+  }
+  
+  export default function () {
+    const slots = __useSlots({
+      default: () => <div>default</div>,
+    })
+    return <div>{slots.default?.()}</div>
+  }
+  
+  """#
+  vendoredSnapshotOutput = #"""
+  
+  import { useSlots as __useSlots } from "/vue-jsx-vapor/macros/use-slots";export const Comp = () => {
+    const slots = __useSlots<{
+      default: () => any
+    }>()
+    return <div>{slots.default?.()}</div>
+  }
+  
+  export default function () {
+    const slots = __useSlots({
+      default: () => <div>default</div>,
+    })
+    return <div>{slots.default?.()}</div>
+  }
+  
+  """#
+}
+

@@ -27,12 +27,16 @@ Generated inventories live in:
 
 - `provenance/inventories/vuejs-core.inventory.pkl`
 - `provenance/inventories/vuejs-language-tools.inventory.pkl`
+- `provenance/inventories/vuejs-vue-jsx-vapor.inventory.pkl`
 - `provenance/inventories/vize.inventory.pkl`
 - `provenance/vendor/vuejs-core/test-corpus.pkl`
+- `provenance/vendor/vuejs-vue-jsx-vapor/test-corpus.pkl`
 - `provenance/vendor/ubugeeei-vize/test-corpus.pkl`
 - `provenance/traceability/vuejs-core.traceability.pkl`
 - `provenance/traceability/vuejs-language-tools.traceability.pkl`
+- `provenance/traceability/vuejs-vue-jsx-vapor.traceability.pkl`
 - `provenance/traceability/ubugeeei-vize.traceability.pkl`
+- `provenance/vendor/vuejs-vue-jsx-vapor/expected-snapshots.pkl`
 - `provenance/vendor/vize/expected-snapshots.pkl`
 
 They record:
@@ -78,4 +82,14 @@ When promoting an upstream behavior into this repository:
 
 Vapor evidence must not be merged into the base inventory without a profile tag. Because Vapor lives on Vue minor branches rather than the default upstream line, every Vapor case must carry branch-specific provenance.
 
-Future Vapor-adjacent provenance MAY also be sourced from `vuejs/vue-jsx-vapor`, but those suites MUST remain profile-scoped until a curated local artifact and requirement mapping are added.
+### Template and SFC Vapor
+
+Template- and SFC-authored Vapor evidence MAY be sourced from Vue minor-branch snapshots and copied `ubugeeei/vize` corpora, but those suites MUST remain tagged with `profile = "vapor"` until an official Vapor oracle is vendored locally.
+
+### JSX Vapor
+
+JSX- and TSX-authored Vapor evidence MAY be sourced from `vuejs/vue-jsx-vapor`. Those suites MUST use `profile = "jsx-vapor"`.
+
+Because `vuejs/vue-jsx-vapor` exercises a JSX authoring surface rather than the base template or SFC grammar directly, those suites MUST NOT be counted as base parser or syntax coverage unless they are first normalized into a local artifact that explicitly binds them to that surface.
+
+Shared compiler or runtime requirements MAY reference both `vapor` and `jsx-vapor` suites, but each local artifact MUST remain profile-explicit in its provenance metadata.

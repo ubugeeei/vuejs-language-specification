@@ -1,0 +1,128 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.jsx-vapor.define-expose-macro"
+title = "JSX Vapor defineExpose lowering"
+kind = "jsx-expected-snapshot"
+summary = "JSX Vapor macro compilation must lower defineExpose to the exposed-instance assignment shape captured by the copied snapshot oracle."
+
+features {
+  "compiler.snapshot"
+  "compiler.profile.jsx-vapor"
+  "compiler.jsx-vapor"
+  "jsx-vapor.defineExpose"
+  "imported.input"
+  "imported.input.jsx-vapor"
+}
+
+profile = "jsx-vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/vuejs-vue-jsx-vapor/packages/macros/tests/fixtures/define-expose.tsx"
+  source = "packages/macros/tests/fixtures/define-expose.tsx"
+  caseName = "./fixtures/define-expose.tsx"
+  originRepository = "vuejs/vue-jsx-vapor"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/vue-jsx-vapor"
+  moduleName = "@vue-jsx-vapor/macros"
+  operation = "copied snapshot oracle via transformJsxMacros"
+  profile = "jsx-vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/vue-jsx-vapor"
+    source = "packages/macros/tests/fixtures/define-expose.tsx"
+    cases {
+      "./fixtures/define-expose.tsx"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "vuejs/vue-jsx-vapor"
+    source = "packages/macros/tests/__snapshots__/fixtures.spec.ts.snap"
+    cases {
+      "fixtures > ./fixtures/define-expose.tsx 1"
+    }
+  }
+}
+
+input {
+  source = #"""
+  export function Comp() {
+    defineExpose({
+      foo: 1,
+    })
+    return <div />
+  }
+  
+  export const Comp1 = function (props: any) {
+    defineExpose({
+      foo: props.foo,
+    })
+    return <div />
+  }
+  
+  export const Comp2 = ({ foo }: any) => {
+    defineExpose({
+      foo,
+    })
+    return <div />
+  }
+  
+  """#
+}
+
+expect {
+  normalizedCode = #"""
+  
+  import { getCurrentInstance as __getCurrentInstance } from "/vue-jsx-vapor/props";export function Comp() {
+    ;(__getCurrentInstance().exposed = {
+      foo: 1,
+    })
+    return <div />
+  }
+  
+  export const Comp1 = function (props: any) {
+    ;(__getCurrentInstance().exposed = {
+      foo: props.foo,
+    })
+    return <div />
+  }
+  
+  export const Comp2 = ({ foo, ...__props }: any) => {
+    ;(__getCurrentInstance().exposed = {
+      foo,
+    })
+    return <div />
+  }
+  
+  """#
+  vendoredSnapshotOutput = #"""
+  
+  import { getCurrentInstance as __getCurrentInstance } from "/vue-jsx-vapor/props";export function Comp() {
+    ;(__getCurrentInstance().exposed = {
+      foo: 1,
+    })
+    return <div />
+  }
+  
+  export const Comp1 = function (props: any) {
+    ;(__getCurrentInstance().exposed = {
+      foo: props.foo,
+    })
+    return <div />
+  }
+  
+  export const Comp2 = ({ foo, ...__props }: any) => {
+    ;(__getCurrentInstance().exposed = {
+      foo,
+    })
+    return <div />
+  }
+  
+  """#
+}
+

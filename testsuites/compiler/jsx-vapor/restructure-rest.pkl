@@ -1,0 +1,81 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.jsx-vapor.restructure-rest"
+title = "JSX Vapor restructure lowers rest props through createPropsRestProxy"
+kind = "jsx-expected-snapshot"
+summary = "JSX Vapor parameter restructure must lower rest bindings through createPropsRestProxy and preserve default-bearing prop access exactly as captured in the copied snapshot oracle."
+
+features {
+  "compiler.snapshot"
+  "compiler.profile.jsx-vapor"
+  "compiler.jsx-vapor"
+  "jsx-vapor.restructure"
+  "jsx-vapor.rest"
+  "imported.input"
+  "imported.input.jsx-vapor"
+}
+
+profile = "jsx-vapor"
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/vuejs-vue-jsx-vapor/packages/macros/tests/restructure.spec.ts"
+  source = "packages/macros/tests/restructure.spec.ts"
+  caseName = "reconstruct rest-prop"
+  originRepository = "vuejs/vue-jsx-vapor"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/vue-jsx-vapor"
+  moduleName = "@vue-jsx-vapor/macros/restructure"
+  operation = "copied snapshot oracle via restructure"
+  profile = "jsx-vapor"
+  provisional = true
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "vuejs/vue-jsx-vapor"
+    source = "packages/macros/tests/restructure.spec.ts"
+    cases {
+      "reconstruct rest-prop"
+    }
+  }
+  new UpstreamReference {
+    kind = "snapshot"
+    repository = "vuejs/vue-jsx-vapor"
+    source = "packages/macros/tests/__snapshots__/restructure.spec.ts.snap"
+    cases {
+      "transform > reconstruct rest-prop 1"
+    }
+  }
+}
+
+input {
+  source = #"""
+  function App({foo, bar = 1, ...rest}){
+          return <>{[foo, bar, rest]}</>
+        }
+  """#
+}
+
+expect {
+  normalizedCode = #"""
+  
+  import { createPropsRestProxy as __createPropsRestProxy } from "vue";
+  import { createPropsDefaultProxy as __createPropsDefaultProxy } from "/vue-jsx-vapor/macros/with-defaults";function App(__props){
+  const rest = __createPropsRestProxy(__props, ['foo', 'bar']);
+  __props = __createPropsDefaultProxy(__props, {'.bar': 1});
+          return <>{[__props.foo, __props.bar, rest]}</>
+        }
+  """#
+  vendoredSnapshotOutput = #"""
+  
+  import { createPropsRestProxy as __createPropsRestProxy } from "vue";
+  import { createPropsDefaultProxy as __createPropsDefaultProxy } from "/vue-jsx-vapor/macros/with-defaults";function App(__props){
+  const rest = __createPropsRestProxy(__props, ['foo', 'bar']);
+  __props = __createPropsDefaultProxy(__props, {'.bar': 1});
+          return <>{[__props.foo, __props.bar, rest]}</>
+        }
+  """#
+}
+

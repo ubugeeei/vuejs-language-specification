@@ -362,6 +362,10 @@ function inferProfile(repository: string, source: string, name: string): string 
     return "vapor";
   }
 
+  if (repository === "vuejs/vue-jsx-vapor") {
+    return "jsx-vapor";
+  }
+
   if (repository === "vuejs/core" && source.includes("vue-compat")) {
     return "compat";
   }
@@ -473,6 +477,22 @@ function classifyUpstreamEntry(args: {
       classification: "portable-language",
       rationale:
         "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite.",
+    };
+  }
+
+  if (repository === "vuejs/vue-jsx-vapor") {
+    if (source.includes("/playground/") || source.includes("/demo/") || source.includes("/e2e/")) {
+      return {
+        classification: "integration-host",
+        rationale:
+          "This upstream case depends on JSX Vapor playground wiring, demo applications, or browser-host integration and is therefore tracked separately from the portable suite.",
+      };
+    }
+
+    return {
+      classification: "portable-language",
+      rationale:
+        "This upstream case describes JSX-authored Vapor compiler behavior that should eventually become a local profile-scoped conformance test suite.",
     };
   }
 
