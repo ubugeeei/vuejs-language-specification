@@ -32,6 +32,13 @@ input {
 }
 
 expect {
+  diagnostics {
+    new ErrorExpectation {
+      name = "SyntaxError"
+      message = "Unnecessary value binding used alongside v-model. It will interfere with v-model's behavior."
+      code = "X_V_MODEL_UNNECESSARY_VALUE"
+    }
+  }
   error {
     name = "SyntaxError"
     message = "Unnecessary value binding used alongside v-model. It will interfere with v-model's behavior."

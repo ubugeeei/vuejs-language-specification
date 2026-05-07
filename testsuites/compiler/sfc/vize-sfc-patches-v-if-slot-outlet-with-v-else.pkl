@@ -1,0 +1,93 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-v-if-slot-outlet-with-v-else"
+title = "Imported SFC input: v-if slot outlet with v-else"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "v-if slot outlet with v-else"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "v-if slot outlet with v-else"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-v-if-slot-outlet-with-v-else.vue"
+  sfc = #"""
+  <template>
+    <div>
+      <slot v-if="showing" />
+      <slot v-else name="fallback" />
+    </div>
+  </template>
+  
+  <script setup>
+  import { ref } from 'vue'
+  const showing = ref(false)
+  </script>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { ref } from 'vue'
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-v-if-slot-outlet-with-v-else',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const showing = ref(false)
+  
+  const __returned__ = { showing, ref }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { renderSlot as _renderSlot, createCommentVNode as _createCommentVNode, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", null, [
+      ($setup.showing)
+        ? _renderSlot(_ctx.$slots, "default", { key: 0 })
+        : _renderSlot(_ctx.$slots, "fallback", { key: 1 })
+    ]))
+  }
+  """#
+}

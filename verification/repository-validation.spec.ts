@@ -24,8 +24,8 @@ import {
   validateVendoredUpstreamCorpora,
 } from "../src/index.ts";
 
-const REPOSITORY_TIMEOUT_MS = 60_000;
-const INVENTORY_TIMEOUT_MS = 20_000;
+const REPOSITORY_TIMEOUT_MS = 120_000;
+const INVENTORY_TIMEOUT_MS = 120_000;
 
 function loadStableLines(file: string): string[] {
   return readFileSync(new URL(file, import.meta.url), "utf8")

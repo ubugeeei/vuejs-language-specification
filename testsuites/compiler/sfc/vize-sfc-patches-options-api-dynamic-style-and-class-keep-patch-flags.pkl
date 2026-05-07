@@ -1,0 +1,94 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-options-api-dynamic-style-and-class-keep-patch-flags"
+title = "Imported SFC input: options api dynamic style and class keep patch flags"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "options api dynamic style and class keep patch flags"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "options api dynamic style and class keep patch flags"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-options-api-dynamic-style-and-class-keep-patch-flags.vue"
+  sfc = #"""
+  <script>
+  export default {
+    computed: {
+      knobStyle() {
+        return { transform: 'translate(10px, 20px)' }
+      },
+    },
+  }
+  </script>
+  
+  <template>
+    <div class="map">
+      <div :style="knobStyle" :class="{ dragging }"></div>
+    </div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = true
+      scriptSetup = false
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  
+  export default {
+    computed: {
+      knobStyle() {
+        return { transform: 'translate(10px, 20px)' }
+      },
+    },
+  }
+  
+  """#
+  templateCode = #"""
+  import { normalizeClass as _normalizeClass, normalizeStyle as _normalizeStyle, createElementVNode as _createElementVNode, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  const _hoisted_1 = { class: "map" }
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", _hoisted_1, [
+      _createElementVNode("div", {
+        style: _normalizeStyle($options.knobStyle),
+        class: _normalizeClass({ dragging: _ctx.dragging })
+      }, null, 6 /* CLASS, STYLE */)
+    ]))
+  }
+  """#
+}

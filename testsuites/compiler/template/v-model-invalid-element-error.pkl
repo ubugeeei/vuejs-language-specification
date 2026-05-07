@@ -32,6 +32,13 @@ input {
 }
 
 expect {
+  diagnostics {
+    new ErrorExpectation {
+      name = "SyntaxError"
+      message = "v-model can only be used on <input>, <textarea> and <select> elements."
+      code = "X_V_MODEL_ON_INVALID_ELEMENT"
+    }
+  }
   error {
     name = "SyntaxError"
     message = "v-model can only be used on <input>, <textarea> and <select> elements."

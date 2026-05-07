@@ -40,6 +40,13 @@ input {
 }
 
 expect {
+  diagnostics {
+    new ErrorExpectation {
+      name = "SyntaxError"
+      message = "Mixed v-slot usage on both the component and nested <template>. When there are multiple named slots, all slots should use <template> syntax to avoid scope ambiguity."
+      code = "X_V_SLOT_MIXED_SLOT_USAGE"
+    }
+  }
   error = new ErrorExpectation {
     name = "SyntaxError"
     message = "Mixed v-slot usage on both the component and nested <template>. When there are multiple named slots, all slots should use <template> syntax to avoid scope ambiguity."
