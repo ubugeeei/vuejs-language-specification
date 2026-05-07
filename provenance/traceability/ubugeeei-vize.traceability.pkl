@@ -1,22 +1,148 @@
 amends "../../schemas/UpstreamTraceabilityManifest.pkl"
 
 repository = "ubugeeei/vize"
-commit = "adbe89847252af5e88789450b1bd4fdb9929a958"
-generatedAt = "2026-03-08T15:36:28.519Z"
+commit = "ce293fa928fe1b5a684c123e5048ea2a8238d1a3"
+generatedAt = "2026-05-07T11:30:29.577Z"
 
 counts {
-  total = 1212
-  covered = 1126
-  planned = 14
-  tracked = 72
+  total = 1392
+  covered = 1143
+  planned = 97
+  tracked = 152
 }
 
 entries {
   new TraceabilityEntry {
+    source = "docs/theme/background.test.ts"
+    name = "buildDocsBackgroundScript inlines the shared vein bootstrap"
+    kind = "test"
+    line = 14
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "docs/theme/background.test.ts"
+    name = "createDocsBackgroundHtml reuses the shared canvas id"
+    kind = "test"
+    line = 25
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "docs/theme/syntax-highlight.test.js"
+    name = "createHighlightedHtml does not treat URL fragments as bash comments"
+    kind = "test"
+    line = 62
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "docs/theme/syntax-highlight.test.js"
+    name = "createHighlightedHtml highlights bash commands and flags"
+    kind = "test"
+    line = 43
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "docs/theme/syntax-highlight.test.js"
+    name = "createHighlightedHtml highlights json keys and values"
+    kind = "test"
+    line = 70
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "docs/theme/syntax-highlight.test.js"
+    name = "createHighlightedHtml highlights nix expressions"
+    kind = "test"
+    line = 78
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "docs/theme/syntax-highlight.test.js"
+    name = "createHighlightedHtml highlights vue directives and strings"
+    kind = "test"
+    line = 34
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "docs/theme/syntax-highlight.test.js"
+    name = "detectLanguage resolves language-prefixed classes"
+    kind = "test"
+    line = 21
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "docs/theme/syntax-highlight.test.js"
+    name = "normalizeLanguage resolves docs aliases"
+    kind = "test"
+    line = 8
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
     source = "examples/vite-musea/e2e/vrt/musea-gallery.spec.ts"
     name = "component - ${component}"
     kind = "test"
-    line = 21
+    line = 28
     classification = "visual-regression"
     status = "tracked"
     profile = null
@@ -30,6 +156,20 @@ entries {
     source = "examples/vite-musea/e2e/vrt/musea-gallery.spec.ts"
     name = "gallery top page"
     kind = "test"
+    line = 6
+    classification = "visual-regression"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case is a visual-regression scenario tied to fixture applications and screenshot baselines, so it remains traceability-only."
+  }
+  new TraceabilityEntry {
+    source = "examples/vite-musea/e2e/vrt/musea-gallery.spec.ts"
+    name = "test summary page"
+    kind = "test"
     line = 13
     classification = "visual-regression"
     status = "tracked"
@@ -41,10 +181,38 @@ entries {
     rationale = "This upstream case is a visual-regression scenario tied to fixture applications and screenshot baselines, so it remains traceability-only."
   }
   new TraceabilityEntry {
-    source = "npm/rspack-vize-plugin/src/integration.test.ts"
-    name = "rspack builds a Vue SFC with dedicated loader and style paths"
+    source = "examples/vite-musea/e2e/vrt/musea-gallery.spec.ts"
+    name = "tokens page"
     kind = "test"
-    line = 36
+    line = 20
+    classification = "visual-regression"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case is a visual-regression scenario tied to fixture applications and screenshot baselines, so it remains traceability-only."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/integration.test.ts"
+    name = "rspack builds a Vue SFC with auto-inject mode"
+    kind = "test"
+    line = 43
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/integration.test.ts"
+    name = "rspack omits script setup imports used only in TypeScript positions"
+    kind = "test"
+    line = 135
     classification = "tooling-host"
     status = "tracked"
     profile = null
@@ -76,6 +244,846 @@ entries {
     classification = "tooling-host"
     status = "tracked"
     profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "always adds a CSS fallback rule for plain <style>"
+    kind = "test"
+    line = 120
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "clones CSS rule and builds oneOf (nativeCss)"
+    kind = "test"
+    line = 30
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "clones SCSS rule alongside CSS (nativeCss)"
+    kind = "test"
+    line = 60
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "CSS fallback rule has both scope-loader and style-loader"
+    kind = "test"
+    line = 330
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "deep clones use entries to avoid mutating originals"
+    kind = "test"
+    line = 165
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "does nothing when .vue rule already has oneOf"
+    kind = "test"
+    line = 15
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "does nothing when no vize loader is found"
+    kind = "test"
+    line = 7
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "generates css/auto type for native CSS cloned rules"
+    kind = "test"
+    line = 99
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "handles `loader` + `options` shorthand"
+    kind = "test"
+    line = 268
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "handles `loader` shorthand (no `use` array)"
+    kind = "test"
+    line = 226
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "handles resolved file paths for vize loader"
+    kind = "test"
+    line = 195
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "injects scope-loader between user loaders and style-loader in all cloned rules"
+    kind = "test"
+    line = 291
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "preserves original rule type in clone"
+    kind = "test"
+    line = 143
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "skips '...' entries in rules array"
+    kind = "test"
+    line = 212
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "vue&type=style&index=0&lang=css"
+    kind = "test"
+    line = 138
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "vue&type=style&index=0&lang=css"
+    kind = "test"
+    line = 159
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "vue&type=style&index=0&lang=css"
+    kind = "test"
+    line = 184
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "vue&type=style&index=0&lang=css"
+    kind = "test"
+    line = 348
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "vue&type=style&index=0&lang=scss"
+    kind = "test"
+    line = 83
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/plugin/ruleCloning.test.ts"
+    name = "vue&type=style&index=0&lang=scss"
+    kind = "test"
+    line = 263
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/scoped-css.test.ts"
+    name = "scoped: :deep(), :global(), :slotted() semantics"
+    kind = "test"
+    line = 152
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/scoped-css.test.ts"
+    name = "scoped: @media, @supports, @keyframes preserved and selectors scoped inside"
+    kind = "test"
+    line = 189
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/scoped-css.test.ts"
+    name = "scoped: basic selectors, :hover, ::before, comma groups"
+    kind = "test"
+    line = 119
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/scoped-css.test.ts"
+    name = "scoped: multiple style blocks (scoped + module + unscoped) coexist"
+    kind = "test"
+    line = 254
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/scoped-css.test.ts"
+    name = "scoped: v-bind() replaced with CSS variables"
+    kind = "test"
+    line = 226
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "alias paths are importable"
+    kind = "test"
+    line = 242
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "collects href from image/use SVG elements"
+    kind = "test"
+    line = 373
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "collects poster from video tag"
+    kind = "test"
+    line = 310
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "collects src from img tag"
+    kind = "test"
+    line = 268
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "collects src from img tag — alias path"
+    kind = "test"
+    line = 283
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "data URIs are not importable"
+    kind = "test"
+    line = 254
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "deduplicates repeated URLs"
+    kind = "test"
+    line = 294
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "does not generate type=div or type=el-form-item blocks"
+    kind = "test"
+    line = 57
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "does not treat <template #default> as a custom block"
+    kind = "test"
+    line = 42
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "does not treat <template #prefix> as a custom block"
+    kind = "test"
+    line = 26
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "empty string is not importable"
+    kind = "test"
+    line = 258
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "external URLs are not importable"
+    kind = "test"
+    line = 248
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "extracts a simple <i18n> custom block"
+    kind = "test"
+    line = 12
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "extracts custom block with src attribute"
+    kind = "test"
+    line = 100
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "extracts multiple custom blocks"
+    kind = "test"
+    line = 85
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "extracts named module style blocks"
+    kind = "test"
+    line = 200
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "extracts plain CSS style block"
+    kind = "test"
+    line = 174
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "extracts scoped and module style blocks"
+    kind = "test"
+    line = 186
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "handles deeply nested same-name tags in template"
+    kind = "test"
+    line = 123
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "handles self-closing custom block"
+    kind = "test"
+    line = 146
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "handles SFC with no custom blocks"
+    kind = "test"
+    line = 113
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "ignores dynamic bindings (v-bind / :attr)"
+    kind = "test"
+    line = 322
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "ignores external URLs"
+    kind = "test"
+    line = 333
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "ignores HTML comments"
+    kind = "test"
+    line = 159
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "keeps comment-like text inside strings"
+    kind = "test"
+    line = 224
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "relative paths are importable"
+    kind = "test"
+    line = 237
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "removes block comments and preserves newlines"
+    kind = "test"
+    line = 214
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "returns empty when SFC has no template block"
+    kind = "test"
+    line = 367
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "returns empty when transformAssetUrls is false"
+    kind = "test"
+    line = 343
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "supports custom tag/attribute map"
+    kind = "test"
+    line = 353
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "tilde module path is rewritten (~ stripped in import)"
+    kind = "test"
+    line = 403
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/shared/utils.test.ts"
+    name = "URL with hash fragment is collected as-is (fragment split happens in generateOutput)"
+    kind = "test"
+    line = 388
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/vapor.test.ts"
+    name = "vapor: HMR injection does not break __vapor marker"
+    kind = "test"
+    line = 153
+    classification = "tooling-host"
+    status = "tracked"
+    profile = "vapor"
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/vapor.test.ts"
+    name = "vapor: scoped style coexists with vapor mode"
+    kind = "test"
+    line = 129
+    classification = "tooling-host"
+    status = "tracked"
+    profile = "vapor"
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/rspack-vize-plugin/src/vapor.test.ts"
+    name = "vapor: script setup SFC compiles successfully"
+    kind = "test"
+    line = 114
+    classification = "tooling-host"
+    status = "tracked"
+    profile = "vapor"
     localTestSuites {
     }
     fileIssues {
@@ -153,10 +1161,94 @@ entries {
     rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
   }
   new TraceabilityEntry {
+    source = "npm/vite-plugin-musea/src/art-module.test.ts"
+    name = "generateArtModule rebases side-effect imports and emits setup for import-only script setup"
+    kind = "test"
+    line = 34
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/vite-plugin-musea/src/art-module.test.ts"
+    name = "generatePreviewModule injects art-scoped styles from the virtual art module"
+    kind = "test"
+    line = 69
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/vite-plugin-musea/src/art-module.test.ts"
+    name = "parseScriptSetupForArt keeps multiline imports out of setup body and returns function declarations"
+    kind = "test"
+    line = 8
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/vite-plugin-musea/src/tokens.test.ts"
+    name = "parseTokens merges token directories into canonical reference paths"
+    kind = "test"
+    line = 10
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/vite-plugin-musea/src/utils.test.ts"
+    name = "resolveScanRoots preserves include bases outside the Vite root"
+    kind = "test"
+    line = 9
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
+    source = "npm/vite-plugin-musea/src/utils.test.ts"
+    name = "scanArtFiles discovers art files outside the Vite root when include points upward"
+    kind = "test"
+    line = 16
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on bundler-plugin wrappers, host build tools, or compile-time flag injection rather than the portable parser/compiler contract, so it remains tooling-host coverage."
+  }
+  new TraceabilityEntry {
     source = "playground/e2e/atelier-output-tabs.test.ts"
     name = "switches between VDOM, SSR, and Vapor outputs without shifting the code view toggle"
     kind = "test"
-    line = 96
+    line = 103
     classification = "integration-host"
     status = "tracked"
     profile = "vapor"
@@ -653,6 +1745,20 @@ entries {
   }
   new TraceabilityEntry {
     source = "playground/e2e/edge-cases.test.ts"
+    name = "should downcompile optional chaining type declarations by default"
+    kind = "test"
+    line = 121
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "playground/e2e/edge-cases.test.ts"
     name = "should handle async/await with types"
     kind = "test"
     line = 66
@@ -671,7 +1777,7 @@ entries {
     source = "playground/e2e/edge-cases.test.ts"
     name = "should handle class with decorators pattern"
     kind = "test"
-    line = 177
+    line = 198
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -686,7 +1792,7 @@ entries {
     source = "playground/e2e/edge-cases.test.ts"
     name = "should handle component self-reference"
     kind = "test"
-    line = 242
+    line = 263
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -701,7 +1807,7 @@ entries {
     source = "playground/e2e/edge-cases.test.ts"
     name = "should handle const enum declarations"
     kind = "test"
-    line = 157
+    line = 178
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -716,7 +1822,7 @@ entries {
     source = "playground/e2e/edge-cases.test.ts"
     name = "should handle deeply nested templates"
     kind = "test"
-    line = 207
+    line = 228
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -732,7 +1838,7 @@ entries {
     source = "playground/e2e/edge-cases.test.ts"
     name = "should handle defineExpose"
     kind = "test"
-    line = 388
+    line = 409
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -748,7 +1854,7 @@ entries {
     source = "playground/e2e/edge-cases.test.ts"
     name = "should handle defineModel"
     kind = "test"
-    line = 358
+    line = 379
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -765,7 +1871,7 @@ entries {
     source = "playground/e2e/edge-cases.test.ts"
     name = "should handle defineModel with options"
     kind = "test"
-    line = 372
+    line = 393
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -780,7 +1886,7 @@ entries {
     source = "playground/e2e/edge-cases.test.ts"
     name = "should handle defineOptions"
     kind = "test"
-    line = 411
+    line = 432
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -796,7 +1902,7 @@ entries {
     source = "playground/e2e/edge-cases.test.ts"
     name = "should handle defineSlots with types"
     kind = "test"
-    line = 430
+    line = 451
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -842,7 +1948,7 @@ entries {
     source = "playground/e2e/edge-cases.test.ts"
     name = "should handle enum declarations"
     kind = "test"
-    line = 139
+    line = 160
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -872,7 +1978,7 @@ entries {
     source = "playground/e2e/edge-cases.test.ts"
     name = "should handle keep-alive"
     kind = "test"
-    line = 297
+    line = 318
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -888,7 +1994,7 @@ entries {
     source = "playground/e2e/edge-cases.test.ts"
     name = "should handle multiple root elements (fragments)"
     kind = "test"
-    line = 227
+    line = 248
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -916,24 +2022,9 @@ entries {
   }
   new TraceabilityEntry {
     source = "playground/e2e/edge-cases.test.ts"
-    name = "should handle optional chaining with types"
-    kind = "test"
-    line = 121
-    classification = "portable-language"
-    status = "covered"
-    profile = null
-    localTestSuites {
-      "compiler.sfc.edge-cases-optional-chaining-with-types"
-    }
-    fileIssues {
-    }
-    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
-  }
-  new TraceabilityEntry {
-    source = "playground/e2e/edge-cases.test.ts"
     name = "should handle special HTML entities"
     kind = "test"
-    line = 346
+    line = 367
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -948,7 +2039,7 @@ entries {
     source = "playground/e2e/edge-cases.test.ts"
     name = "should handle suspense"
     kind = "test"
-    line = 276
+    line = 297
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -964,7 +2055,7 @@ entries {
     source = "playground/e2e/edge-cases.test.ts"
     name = "should handle teleport"
     kind = "test"
-    line = 261
+    line = 282
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -980,7 +2071,7 @@ entries {
     source = "playground/e2e/edge-cases.test.ts"
     name = "should handle template literals"
     kind = "test"
-    line = 316
+    line = 337
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -1025,7 +2116,7 @@ entries {
     source = "playground/e2e/edge-cases.test.ts"
     name = "should handle unicode in template"
     kind = "test"
-    line = 331
+    line = 352
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -1038,10 +2129,25 @@ entries {
     rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
   }
   new TraceabilityEntry {
+    source = "playground/e2e/edge-cases.test.ts"
+    name = "should preserve optional chaining type declarations when requested"
+    kind = "test"
+    line = 141
+    classification = "portable-language"
+    status = "covered"
+    profile = null
+    localTestSuites {
+      "compiler.sfc.edge-cases-optional-chaining-with-types"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
     source = "playground/e2e/sfc-compile.test.ts"
     name = "should compile event handlers"
     kind = "test"
-    line = 271
+    line = 274
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -1056,7 +2162,7 @@ entries {
     source = "playground/e2e/sfc-compile.test.ts"
     name = "should compile SFC in SSR mode"
     kind = "test"
-    line = 304
+    line = 307
     classification = "tooling-host"
     status = "tracked"
     profile = null
@@ -1102,7 +2208,7 @@ entries {
     source = "playground/e2e/sfc-compile.test.ts"
     name = "should compile slot content"
     kind = "test"
-    line = 285
+    line = 288
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -1134,7 +2240,7 @@ entries {
     source = "playground/e2e/sfc-compile.test.ts"
     name = "should compile v-for directive"
     kind = "test"
-    line = 242
+    line = 245
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -1149,7 +2255,7 @@ entries {
     source = "playground/e2e/sfc-compile.test.ts"
     name = "should compile v-if directive"
     kind = "test"
-    line = 228
+    line = 231
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -1164,7 +2270,7 @@ entries {
     source = "playground/e2e/sfc-compile.test.ts"
     name = "should compile v-model directive"
     kind = "test"
-    line = 256
+    line = 259
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -1180,7 +2286,7 @@ entries {
     source = "playground/e2e/sfc-compile.test.ts"
     name = "should handle complex generic types"
     kind = "test"
-    line = 109
+    line = 112
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -1196,7 +2302,7 @@ entries {
     source = "playground/e2e/sfc-compile.test.ts"
     name = "should handle defineEmits with type parameter"
     kind = "test"
-    line = 188
+    line = 191
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -1211,7 +2317,7 @@ entries {
     source = "playground/e2e/sfc-compile.test.ts"
     name = "should handle defineProps with type parameter"
     kind = "test"
-    line = 170
+    line = 173
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -1226,7 +2332,7 @@ entries {
     source = "playground/e2e/sfc-compile.test.ts"
     name = "should handle interface declarations"
     kind = "test"
-    line = 131
+    line = 134
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -1241,7 +2347,7 @@ entries {
     source = "playground/e2e/sfc-compile.test.ts"
     name = "should handle type aliases"
     kind = "test"
-    line = 151
+    line = 154
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -1256,7 +2362,7 @@ entries {
     source = "playground/e2e/sfc-compile.test.ts"
     name = "should handle withDefaults"
     kind = "test"
-    line = 205
+    line = 208
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -1271,9 +2377,65 @@ entries {
   }
   new TraceabilityEntry {
     source = "playground/e2e/sfc-compile.test.ts"
+    name = "should keep custom renderer intrinsics as elements while preserving imported lowercase bindings"
+    kind = "test"
+    line = 378
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "playground/e2e/sfc-compile.test.ts"
+    name = "should resolve dotted component tags through setup member bindings in both DOM and SSR output"
+    kind = "test"
+    line = 342
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "playground/e2e/sfc-compile.test.ts"
+    name = "should resolve kebab-case imported components through setup bindings in both DOM and SSR output"
+    kind = "test"
+    line = 322
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "playground/e2e/sfc-compile.test.ts"
+    name = "should resolve lowercase imported components from setup bindings in SSR mode"
+    kind = "test"
+    line = 363
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "playground/e2e/sfc-compile.test.ts"
     name = "should strip generic type parameters from ref/reactive"
     kind = "test"
-    line = 85
+    line = 87
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -1304,7 +2466,7 @@ entries {
     source = "playground/e2e/vite-plugin-vapor.test.ts"
     name = "avoids collisions with local render bindings in script setup"
     kind = "test"
-    line = 115
+    line = 135
     classification = "tooling-host"
     status = "tracked"
     profile = null
@@ -1318,7 +2480,7 @@ entries {
     source = "playground/e2e/vite-plugin-vapor.test.ts"
     name = "builds batch options with vapor enabled"
     kind = "test"
-    line = 45
+    line = 46
     classification = "tooling-host"
     status = "tracked"
     profile = "vapor"
@@ -1346,7 +2508,7 @@ entries {
     source = "playground/e2e/vite-plugin-vapor.test.ts"
     name = "compiles script setup SFCs to a full Vapor render block"
     kind = "test"
-    line = 52
+    line = 54
     classification = "tooling-host"
     status = "tracked"
     profile = "vapor"
@@ -1360,7 +2522,7 @@ entries {
     source = "playground/e2e/vite-plugin-vapor.test.ts"
     name = "compiles the playground app itself to Vapor output"
     kind = "test"
-    line = 82
+    line = 108
     classification = "tooling-host"
     status = "tracked"
     profile = "vapor"
@@ -1374,7 +2536,7 @@ entries {
     source = "playground/e2e/vite-plugin-vapor.test.ts"
     name = "emits Vapor template ref setters for DOM refs used by playground components"
     kind = "test"
-    line = 142
+    line = 160
     classification = "tooling-host"
     status = "tracked"
     profile = "vapor"
@@ -1388,7 +2550,21 @@ entries {
     source = "playground/e2e/vite-plugin-vapor.test.ts"
     name = "keeps Atelier output tabs reactive even when v-if siblings are present"
     kind = "test"
-    line = 197
+    line = 269
+    classification = "tooling-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on the Vite plugin wrapper, plugin option builders, or playground application compilation and is therefore tracked as tooling-host behavior."
+  }
+  new TraceabilityEntry {
+    source = "playground/e2e/vite-plugin-vapor.test.ts"
+    name = "keeps Tres-style custom renderer intrinsics as elements around imported lowercase components"
+    kind = "test"
+    line = 238
     classification = "tooling-host"
     status = "tracked"
     profile = null
@@ -1402,7 +2578,7 @@ entries {
     source = "playground/e2e/vite-plugin-vapor.test.ts"
     name = "keeps v-for aliases inside Vapor v-html expressions"
     kind = "test"
-    line = 180
+    line = 198
     classification = "tooling-host"
     status = "tracked"
     profile = "vapor"
@@ -1417,6 +2593,34 @@ entries {
     name = "omits scopeId for unscoped styles while keeping vapor"
     kind = "test"
     line = 29
+    classification = "tooling-host"
+    status = "tracked"
+    profile = "vapor"
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on the Vite plugin wrapper, plugin option builders, or playground application compilation and is therefore tracked as tooling-host behavior."
+  }
+  new TraceabilityEntry {
+    source = "playground/e2e/vite-plugin-vapor.test.ts"
+    name = "treats lowercase imported Tres-style components as Vapor components"
+    kind = "test"
+    line = 215
+    classification = "tooling-host"
+    status = "tracked"
+    profile = "vapor"
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on the Vite plugin wrapper, plugin option builders, or playground application compilation and is therefore tracked as tooling-host behavior."
+  }
+  new TraceabilityEntry {
+    source = "playground/e2e/vite-plugin-vapor.test.ts"
+    name = "warns and falls back to standard SSR when Vapor is requested for SFCs"
+    kind = "test"
+    line = 82
     classification = "tooling-host"
     status = "tracked"
     profile = "vapor"
@@ -1444,7 +2648,7 @@ entries {
     source = "playground/e2e/vrt/playground.spec.ts"
     name = "dark"
     kind = "test"
-    line = 53
+    line = 46
     classification = "visual-regression"
     status = "tracked"
     profile = null
@@ -1458,7 +2662,7 @@ entries {
     source = "playground/e2e/vrt/playground.spec.ts"
     name = "light"
     kind = "test"
-    line = 47
+    line = 39
     classification = "visual-regression"
     status = "tracked"
     profile = null
@@ -1498,6 +2702,20 @@ entries {
   }
   new TraceabilityEntry {
     source = "playground/e2e/wasm.test.ts"
+    name = "should expose lint rules with preset membership"
+    kind = "test"
+    line = 49
+    classification = "integration-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on application fixtures, playground wiring, or environment-specific integration and is therefore tracked rather than normalized into a portable test suite."
+  }
+  new TraceabilityEntry {
+    source = "playground/e2e/wasm.test.ts"
     name = "should have compileSfc function"
     kind = "test"
     line = 16
@@ -1512,9 +2730,65 @@ entries {
   }
   new TraceabilityEntry {
     source = "playground/e2e/wasm.test.ts"
+    name = "should lint with different built-in presets"
+    kind = "test"
+    line = 90
+    classification = "integration-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on application fixtures, playground wiring, or environment-specific integration and is therefore tracked rather than normalized into a portable test suite."
+  }
+  new TraceabilityEntry {
+    source = "playground/e2e/wasm.test.ts"
     name = "should load WASM module"
     kind = "test"
     line = 5
+    classification = "integration-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on application fixtures, playground wiring, or environment-specific integration and is therefore tracked rather than normalized into a portable test suite."
+  }
+  new TraceabilityEntry {
+    source = "playground/e2e/wasm.test.ts"
+    name = "should report no-get-current-instance for opinionated preset"
+    kind = "test"
+    line = 189
+    classification = "integration-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on application fixtures, playground wiring, or environment-specific integration and is therefore tracked rather than normalized into a portable test suite."
+  }
+  new TraceabilityEntry {
+    source = "playground/e2e/wasm.test.ts"
+    name = "should report no-next-tick for opinionated preset"
+    kind = "test"
+    line = 155
+    classification = "integration-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on application fixtures, playground wiring, or environment-specific integration and is therefore tracked rather than normalized into a portable test suite."
+  }
+  new TraceabilityEntry {
+    source = "playground/e2e/wasm.test.ts"
+    name = "should report no-options-api for opinionated preset"
+    kind = "test"
+    line = 119
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1554,9 +2828,23 @@ entries {
   }
   new TraceabilityEntry {
     source = "playground/src/features/atelier/codeOutputs.test.ts"
-    name = "compiles template outputs for SSR and Vapor variants"
+    name = "compiles template outputs for SSR, Vapor, and Vapor SSR variants"
     kind = "test"
-    line = 82
+    line = 85
+    classification = "integration-host"
+    status = "tracked"
+    profile = "vapor"
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on application fixtures, playground wiring, or environment-specific integration and is therefore tracked rather than normalized into a portable test suite."
+  }
+  new TraceabilityEntry {
+    source = "playground/src/features/atelier/codeOutputs.test.ts"
+    name = "exposes Vapor SSR only for template inputs"
+    kind = "test"
+    line = 126
     classification = "integration-host"
     status = "tracked"
     profile = "vapor"
@@ -1570,7 +2858,21 @@ entries {
     source = "playground/src/features/atelier/codeOutputs.test.ts"
     name = "normalizes SFC SSR and Vapor template outputs using script setup bindings"
     kind = "test"
-    line = 111
+    line = 131
+    classification = "integration-host"
+    status = "tracked"
+    profile = "vapor"
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on application fixtures, playground wiring, or environment-specific integration and is therefore tracked rather than normalized into a portable test suite."
+  }
+  new TraceabilityEntry {
+    source = "playground/src/features/atelier/codeOutputs.test.ts"
+    name = "preserves SFC warnings for each rendered output target"
+    kind = "test"
+    line = 194
     classification = "integration-host"
     status = "tracked"
     profile = "vapor"
@@ -1640,7 +2942,7 @@ entries {
     source = "tests/app/dev/elk.spec.ts"
     name = "i18n: no raw key patterns displayed"
     kind = "test"
-    line = 148
+    line = 154
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1654,7 +2956,7 @@ entries {
     source = "tests/app/dev/elk.spec.ts"
     name = "navigation components are visible"
     kind = "test"
-    line = 118
+    line = 124
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1668,7 +2970,7 @@ entries {
     source = "tests/app/dev/elk.spec.ts"
     name = "no fatal console errors"
     kind = "test"
-    line = 131
+    line = 137
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1682,7 +2984,7 @@ entries {
     source = "tests/app/dev/elk.spec.ts"
     name = "no hydration mismatch errors"
     kind = "test"
-    line = 82
+    line = 88
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1696,7 +2998,7 @@ entries {
     source = "tests/app/dev/elk.spec.ts"
     name = "page renders with #__nuxt attached"
     kind = "test"
-    line = 49
+    line = 55
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1710,7 +3012,7 @@ entries {
     source = "tests/app/dev/elk.spec.ts"
     name = "scoped CSS: data-v-* attributes exist"
     kind = "test"
-    line = 94
+    line = 100
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1724,7 +3026,7 @@ entries {
     source = "tests/app/dev/elk.spec.ts"
     name = "screenshot"
     kind = "test"
-    line = 171
+    line = 177
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1738,7 +3040,7 @@ entries {
     source = "tests/app/dev/elk.spec.ts"
     name = "SSR: server-rendered HTML is not empty"
     kind = "test"
-    line = 75
+    line = 81
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1752,7 +3054,7 @@ entries {
     source = "tests/app/dev/elk.spec.ts"
     name = "styles are applied: computed styles are non-default"
     kind = "test"
-    line = 105
+    line = 111
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1766,7 +3068,7 @@ entries {
     source = "tests/app/dev/misskey.spec.ts"
     name = "async components load"
     kind = "test"
-    line = 125
+    line = 131
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1780,7 +3082,7 @@ entries {
     source = "tests/app/dev/misskey.spec.ts"
     name = "CSS Modules: module-generated class names exist"
     kind = "test"
-    line = 102
+    line = 108
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1794,7 +3096,7 @@ entries {
     source = "tests/app/dev/misskey.spec.ts"
     name = "no fatal console errors"
     kind = "test"
-    line = 144
+    line = 150
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1808,7 +3110,7 @@ entries {
     source = "tests/app/dev/misskey.spec.ts"
     name = "page renders with #misskey_app attached"
     kind = "test"
-    line = 47
+    line = 53
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1822,7 +3124,7 @@ entries {
     source = "tests/app/dev/misskey.spec.ts"
     name = "scoped CSS: data-v-* attributes exist"
     kind = "test"
-    line = 89
+    line = 95
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1836,7 +3138,7 @@ entries {
     source = "tests/app/dev/misskey.spec.ts"
     name = "screenshot"
     kind = "test"
-    line = 161
+    line = 167
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1850,7 +3152,7 @@ entries {
     source = "tests/app/dev/misskey.spec.ts"
     name = "visitor UI renders"
     kind = "test"
-    line = 75
+    line = 81
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1864,7 +3166,7 @@ entries {
     source = "tests/app/dev/npmx.spec.ts"
     name = "client-side navigation works"
     kind = "test"
-    line = 253
+    line = 257
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1878,7 +3180,7 @@ entries {
     source = "tests/app/dev/npmx.spec.ts"
     name = "components: AppHeader and AppFooter are visible"
     kind = "test"
-    line = 309
+    line = 357
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1892,7 +3194,7 @@ entries {
     source = "tests/app/dev/npmx.spec.ts"
     name = "i18n: localized strings displayed (no raw keys)"
     kind = "test"
-    line = 290
+    line = 338
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1906,7 +3208,7 @@ entries {
     source = "tests/app/dev/npmx.spec.ts"
     name = "no fatal console errors"
     kind = "test"
-    line = 327
+    line = 375
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1920,7 +3222,7 @@ entries {
     source = "tests/app/dev/npmx.spec.ts"
     name = "no hydration mismatch errors"
     kind = "test"
-    line = 211
+    line = 215
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1934,7 +3236,7 @@ entries {
     source = "tests/app/dev/npmx.spec.ts"
     name = "page renders with #__nuxt attached"
     kind = "test"
-    line = 116
+    line = 118
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1948,7 +3250,7 @@ entries {
     source = "tests/app/dev/npmx.spec.ts"
     name = "reactivity: search input updates state"
     kind = "test"
-    line = 270
+    line = 293
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1962,7 +3264,7 @@ entries {
     source = "tests/app/dev/npmx.spec.ts"
     name = "scoped CSS: data-v-* attributes exist"
     kind = "test"
-    line = 223
+    line = 227
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1976,7 +3278,7 @@ entries {
     source = "tests/app/dev/npmx.spec.ts"
     name = "screenshot"
     kind = "test"
-    line = 343
+    line = 391
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -1990,7 +3292,7 @@ entries {
     source = "tests/app/dev/npmx.spec.ts"
     name = "server logs stay clean during docs prefetch"
     kind = "test"
-    line = 191
+    line = 194
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -2004,7 +3306,7 @@ entries {
     source = "tests/app/dev/npmx.spec.ts"
     name = "SSR: accessibility route keeps definePageMeta route name"
     kind = "test"
-    line = 151
+    line = 154
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -2018,7 +3320,7 @@ entries {
     source = "tests/app/dev/npmx.spec.ts"
     name = "SSR: docs alias resolves definePageMeta alias and meta"
     kind = "test"
-    line = 169
+    line = 172
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -2032,7 +3334,7 @@ entries {
     source = "tests/app/dev/npmx.spec.ts"
     name = "SSR: server-rendered HTML contains expected content"
     kind = "test"
-    line = 142
+    line = 144
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -2046,7 +3348,7 @@ entries {
     source = "tests/app/dev/npmx.spec.ts"
     name = "styles are applied: .skip-link has position fixed"
     kind = "test"
-    line = 234
+    line = 238
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -2060,7 +3362,7 @@ entries {
     source = "tests/app/dev/vuefes.spec.ts"
     name = "no fatal console errors"
     kind = "test"
-    line = 94
+    line = 109
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -2074,7 +3376,7 @@ entries {
     source = "tests/app/dev/vuefes.spec.ts"
     name = "no hydration mismatch errors"
     kind = "test"
-    line = 67
+    line = 84
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -2088,7 +3390,7 @@ entries {
     source = "tests/app/dev/vuefes.spec.ts"
     name = "page renders with #__nuxt attached"
     kind = "test"
-    line = 48
+    line = 55
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -2102,7 +3404,7 @@ entries {
     source = "tests/app/dev/vuefes.spec.ts"
     name = "scoped CSS: data-v-* attributes exist"
     kind = "test"
-    line = 83
+    line = 98
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -2116,7 +3418,21 @@ entries {
     source = "tests/app/dev/vuefes.spec.ts"
     name = "screenshot"
     kind = "test"
-    line = 110
+    line = 125
+    classification = "integration-host"
+    status = "tracked"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case depends on application fixtures, playground wiring, or environment-specific integration and is therefore tracked rather than normalized into a portable test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/app/dev/vuefes.spec.ts"
+    name = "server logs stay clean after SSR render"
+    kind = "test"
+    line = 74
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -2130,7 +3446,7 @@ entries {
     source = "tests/app/dev/vuefes.spec.ts"
     name = "SSR: server-rendered HTML is not empty"
     kind = "test"
-    line = 61
+    line = 68
     classification = "integration-host"
     status = "tracked"
     profile = null
@@ -9659,7 +10975,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "arrow function with multiple statements in v-for"
     kind = "test"
-    line = 677
+    line = 908
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -9674,7 +10990,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "arrow function with typed parameters in template"
     kind = "test"
-    line = 621
+    line = 852
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -9689,7 +11005,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "attribute with special characters"
     kind = "test"
-    line = 477
+    line = 708
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -9704,7 +11020,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "await in string literal should not trigger async"
     kind = "test"
-    line = 389
+    line = 620
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -9719,7 +11035,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "callback with typed parameters"
     kind = "test"
-    line = 636
+    line = 867
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -9734,7 +11050,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "complex type-based props destructure with defaults"
     kind = "test"
-    line = 305
+    line = 536
     classification = "portable-language"
     status = "planned"
     profile = null
@@ -9746,9 +11062,39 @@ entries {
   }
   new TraceabilityEntry {
     source = "tests/fixtures/sfc/patches.toml"
+    name = "component event member expression handler is invoked"
+    kind = "test"
+    line = 336
+    classification = "portable-language"
+    status = "covered"
+    profile = null
+    localTestSuites {
+      "compiler.sfc.vize-sfc-patches-component-event-member-expression-handler-is-invoked"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/sfc/patches.toml"
+    name = "component event rest params stay local"
+    kind = "test"
+    line = 348
+    classification = "portable-language"
+    status = "covered"
+    profile = null
+    localTestSuites {
+      "compiler.sfc.vize-sfc-patches-component-event-rest-params-stay-local"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/sfc/patches.toml"
     name = "component should not receive scope_id in props"
     kind = "test"
-    line = 792
+    line = 1023
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -9763,7 +11109,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "default as prop name should not use shorthand"
     kind = "test"
-    line = 408
+    line = 639
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -9778,7 +11124,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "duplicate imports should be filtered"
     kind = "test"
-    line = 339
+    line = 570
     classification = "portable-language"
     status = "planned"
     profile = null
@@ -9792,7 +11138,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "duplicate named imports should be filtered"
     kind = "test"
-    line = 355
+    line = 586
     classification = "portable-language"
     status = "planned"
     profile = null
@@ -9804,14 +11150,44 @@ entries {
   }
   new TraceabilityEntry {
     source = "tests/fixtures/sfc/patches.toml"
+    name = "dynamic asset URL with import meta url"
+    kind = "test"
+    line = 151
+    classification = "portable-language"
+    status = "covered"
+    profile = null
+    localTestSuites {
+      "compiler.sfc.vize-sfc-patches-dynamic-asset-url-with-import-meta-url"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/sfc/patches.toml"
     name = "dynamic component with v-slot destructure"
     kind = "test"
-    line = 702
+    line = 933
     classification = "portable-language"
     status = "covered"
     profile = null
     localTestSuites {
       "compiler.sfc.vize-sfc-patches-dynamic-component-with-v-slot-destructure"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/sfc/patches.toml"
+    name = "dynamic slot outlet name in loop"
+    kind = "test"
+    line = 216
+    classification = "portable-language"
+    status = "covered"
+    profile = null
+    localTestSuites {
+      "compiler.sfc.vize-sfc-patches-dynamic-slot-outlet-name-in-loop"
     }
     fileIssues {
     }
@@ -9879,9 +11255,24 @@ entries {
   }
   new TraceabilityEntry {
     source = "tests/fixtures/sfc/patches.toml"
+    name = "function typed prop param does not shadow local t"
+    kind = "test"
+    line = 363
+    classification = "portable-language"
+    status = "covered"
+    profile = null
+    localTestSuites {
+      "compiler.sfc.vize-sfc-patches-function-typed-prop-param-does-not-shadow-local-t"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/sfc/patches.toml"
     name = "generic function call should be stripped"
     kind = "test"
-    line = 577
+    line = 808
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -9896,7 +11287,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "hyphenated component in v-if v-else chain"
     kind = "test"
-    line = 772
+    line = 1003
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -9911,7 +11302,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "hyphenated component name in v-if"
     kind = "test"
-    line = 759
+    line = 990
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -9924,9 +11315,24 @@ entries {
   }
   new TraceabilityEntry {
     source = "tests/fixtures/sfc/patches.toml"
+    name = "imported custom directive binding in script setup"
+    kind = "test"
+    line = 324
+    classification = "portable-language"
+    status = "covered"
+    profile = null
+    localTestSuites {
+      "compiler.sfc.vize-sfc-patches-imported-custom-directive-binding-in-script-setup"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/sfc/patches.toml"
     name = "keep-alive inside v-for should use builtin"
     kind = "test"
-    line = 737
+    line = 968
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -9956,7 +11362,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "multiline arrow function in event handler"
     kind = "test"
-    line = 660
+    line = 891
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -9971,7 +11377,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "non-script-setup component with export default"
     kind = "test"
-    line = 529
+    line = 760
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -9984,9 +11390,39 @@ entries {
   }
   new TraceabilityEntry {
     source = "tests/fixtures/sfc/patches.toml"
+    name = "nullable runtime prop types keep null"
+    kind = "test"
+    line = 387
+    classification = "portable-language"
+    status = "covered"
+    profile = null
+    localTestSuites {
+      "compiler.sfc.vize-sfc-patches-nullable-runtime-prop-types-keep-null"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/sfc/patches.toml"
+    name = "options api dynamic style and class keep patch flags"
+    kind = "test"
+    line = 304
+    classification = "portable-language"
+    status = "covered"
+    profile = null
+    localTestSuites {
+      "compiler.sfc.vize-sfc-patches-options-api-dynamic-style-and-class-keep-patch-flags"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/sfc/patches.toml"
     name = "props destructure with type-based defineProps and defaults"
     kind = "test"
-    line = 290
+    line = 521
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -10001,7 +11437,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "ref with generic type should be stripped"
     kind = "test"
-    line = 595
+    line = 826
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -10016,7 +11452,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "script with setup function"
     kind = "test"
-    line = 551
+    line = 782
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -10046,7 +11482,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "static string with newline"
     kind = "test"
-    line = 463
+    line = 694
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -10059,9 +11495,24 @@ entries {
   }
   new TraceabilityEntry {
     source = "tests/fixtures/sfc/patches.toml"
+    name = "template ref with dynamic props in v if branch"
+    kind = "test"
+    line = 270
+    classification = "portable-language"
+    status = "covered"
+    profile = null
+    localTestSuites {
+      "compiler.sfc.vize-sfc-patches-template-ref-with-dynamic-props-in-v-if-branch"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/sfc/patches.toml"
     name = "top-level await generates async setup"
     kind = "test"
-    line = 376
+    line = 607
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -10076,7 +11527,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "transition inside v-if should use builtin"
     kind = "test"
-    line = 722
+    line = 953
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -10091,7 +11542,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "type comparison should not be stripped"
     kind = "test"
-    line = 426
+    line = 657
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -10106,7 +11557,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "type keyword in conditional"
     kind = "test"
-    line = 441
+    line = 672
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -10119,9 +11570,39 @@ entries {
   }
   new TraceabilityEntry {
     source = "tests/fixtures/sfc/patches.toml"
+    name = "v for template else interpolation wraps text vnode"
+    kind = "test"
+    line = 235
+    classification = "portable-language"
+    status = "covered"
+    profile = null
+    localTestSuites {
+      "compiler.sfc.vize-sfc-patches-v-for-template-else-interpolation-wraps-text-vnode"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/sfc/patches.toml"
+    name = "v if branch keeps maybe ref style patch flag"
+    kind = "test"
+    line = 255
+    classification = "portable-language"
+    status = "covered"
+    profile = null
+    localTestSuites {
+      "compiler.sfc.vize-sfc-patches-v-if-branch-keeps-maybe-ref-style-patch-flag"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/sfc/patches.toml"
     name = "v-else-if with v-bind object spread"
     kind = "test"
-    line = 231
+    line = 462
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -10136,7 +11617,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "v-for with custom directive on element"
     kind = "test"
-    line = 272
+    line = 503
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -10151,7 +11632,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "v-for with v-click-outside"
     kind = "test"
-    line = 254
+    line = 485
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -10164,9 +11645,24 @@ entries {
   }
   new TraceabilityEntry {
     source = "tests/fixtures/sfc/patches.toml"
+    name = "v-if slot outlet with v-else"
+    kind = "test"
+    line = 200
+    classification = "portable-language"
+    status = "covered"
+    profile = null
+    localTestSuites {
+      "compiler.sfc.vize-sfc-patches-v-if-slot-outlet-with-v-else"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/sfc/patches.toml"
     name = "v-if with component props"
     kind = "test"
-    line = 192
+    line = 423
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -10179,9 +11675,24 @@ entries {
   }
   new TraceabilityEntry {
     source = "tests/fixtures/sfc/patches.toml"
+    name = "v-if with custom directive on element"
+    kind = "test"
+    line = 403
+    classification = "portable-language"
+    status = "covered"
+    profile = null
+    localTestSuites {
+      "compiler.sfc.vize-sfc-patches-v-if-with-custom-directive-on-element"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/sfc/patches.toml"
     name = "v-if with v-bind object spread"
     kind = "test"
-    line = 214
+    line = 445
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -10196,7 +11707,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "v-if with v-model on component"
     kind = "test"
-    line = 171
+    line = 185
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -10211,7 +11722,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "v-if with v-model on input"
     kind = "test"
-    line = 157
+    line = 171
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -10226,7 +11737,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "v-model on native input with ref"
     kind = "test"
-    line = 494
+    line = 725
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -10241,7 +11752,7 @@ entries {
     source = "tests/fixtures/sfc/patches.toml"
     name = "v-model on select with ref"
     kind = "test"
-    line = 507
+    line = 738
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -11334,9 +12845,39 @@ entries {
   }
   new TraceabilityEntry {
     source = "tests/fixtures/vapor/component.toml"
+    name = "component merges static and dynamic class"
+    kind = "test"
+    line = 25
+    classification = "portable-language"
+    status = "covered"
+    profile = "vapor"
+    localTestSuites {
+      "compiler.template.vize-vapor-component-component-merges-static-and-dynamic-class"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/vapor/component.toml"
+    name = "component spread props keep override order"
+    kind = "test"
+    line = 29
+    classification = "portable-language"
+    status = "covered"
+    profile = "vapor"
+    localTestSuites {
+      "compiler.template.vize-vapor-component-component-spread-props-keep-override-order"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/vapor/component.toml"
     name = "component v-model"
     kind = "test"
-    line = 73
+    line = 81
     classification = "portable-language"
     status = "covered"
     profile = "vapor"
@@ -11351,7 +12892,7 @@ entries {
     source = "tests/fixtures/vapor/component.toml"
     name = "component with content"
     kind = "test"
-    line = 29
+    line = 37
     classification = "portable-language"
     status = "covered"
     profile = "vapor"
@@ -11411,7 +12952,7 @@ entries {
     source = "tests/fixtures/vapor/component.toml"
     name = "dynamic component"
     kind = "test"
-    line = 61
+    line = 69
     classification = "portable-language"
     status = "covered"
     profile = "vapor"
@@ -11426,7 +12967,7 @@ entries {
     source = "tests/fixtures/vapor/component.toml"
     name = "dynamic with props"
     kind = "test"
-    line = 65
+    line = 73
     classification = "portable-language"
     status = "covered"
     profile = "vapor"
@@ -11441,7 +12982,7 @@ entries {
     source = "tests/fixtures/vapor/component.toml"
     name = "KeepAlive"
     kind = "test"
-    line = 53
+    line = 61
     classification = "portable-language"
     status = "covered"
     profile = "vapor"
@@ -11456,7 +12997,7 @@ entries {
     source = "tests/fixtures/vapor/component.toml"
     name = "named slot"
     kind = "test"
-    line = 33
+    line = 41
     classification = "portable-language"
     status = "covered"
     profile = "vapor"
@@ -11471,7 +13012,7 @@ entries {
     source = "tests/fixtures/vapor/component.toml"
     name = "named v-model"
     kind = "test"
-    line = 77
+    line = 85
     classification = "portable-language"
     status = "covered"
     profile = "vapor"
@@ -11486,7 +13027,7 @@ entries {
     source = "tests/fixtures/vapor/component.toml"
     name = "scoped slot"
     kind = "test"
-    line = 37
+    line = 45
     classification = "portable-language"
     status = "covered"
     profile = "vapor"
@@ -11516,7 +13057,7 @@ entries {
     source = "tests/fixtures/vapor/component.toml"
     name = "Suspense"
     kind = "test"
-    line = 49
+    line = 57
     classification = "portable-language"
     status = "covered"
     profile = "vapor"
@@ -11531,7 +13072,7 @@ entries {
     source = "tests/fixtures/vapor/component.toml"
     name = "Teleport"
     kind = "test"
-    line = 45
+    line = 53
     classification = "portable-language"
     status = "covered"
     profile = "vapor"
@@ -12866,7 +14407,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "boolean prop"
     kind = "test"
-    line = 41
+    line = 45
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -12881,7 +14422,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "component event handler"
     kind = "test"
-    line = 173
+    line = 177
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -12896,7 +14437,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "component event modifiers"
     kind = "test"
-    line = 185
+    line = 189
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -12911,7 +14452,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "component event with argument"
     kind = "test"
-    line = 177
+    line = 181
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -12926,12 +14467,27 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "component multiple events"
     kind = "test"
-    line = 181
+    line = 185
     classification = "portable-language"
     status = "covered"
     profile = null
     localTestSuites {
       "compiler.template.vize-vdom-component-component-multiple-events"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/vdom/component.toml"
+    name = "component name with colon"
+    kind = "test"
+    line = 29
+    classification = "portable-language"
+    status = "covered"
+    profile = null
+    localTestSuites {
+      "compiler.template.vize-vdom-component-component-name-with-colon"
     }
     fileIssues {
     }
@@ -12956,7 +14512,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "component with custom directive"
     kind = "test"
-    line = 165
+    line = 169
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -12986,7 +14542,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "component with v-else"
     kind = "test"
-    line = 153
+    line = 157
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13001,7 +14557,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "component with v-for"
     kind = "test"
-    line = 157
+    line = 161
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13016,7 +14572,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "component with v-if"
     kind = "test"
-    line = 149
+    line = 153
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13031,7 +14587,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "component with v-show"
     kind = "test"
-    line = 161
+    line = 165
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13046,7 +14602,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "dynamic component"
     kind = "test"
-    line = 109
+    line = 113
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13061,7 +14617,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "dynamic component with props"
     kind = "test"
-    line = 117
+    line = 121
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13076,7 +14632,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "dynamic component with static is"
     kind = "test"
-    line = 113
+    line = 117
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13091,7 +14647,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "dynamic prop"
     kind = "test"
-    line = 37
+    line = 41
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13121,7 +14677,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "keep-alive kebab-case"
     kind = "test"
-    line = 85
+    line = 89
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13136,7 +14692,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "KeepAlive"
     kind = "test"
-    line = 69
+    line = 73
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13151,7 +14707,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "multiple props"
     kind = "test"
-    line = 45
+    line = 49
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13166,7 +14722,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "multiple v-model"
     kind = "test"
-    line = 133
+    line = 137
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13181,7 +14737,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "named v-model"
     kind = "test"
-    line = 129
+    line = 133
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13226,7 +14782,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "static prop"
     kind = "test"
-    line = 33
+    line = 37
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13241,7 +14797,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "Suspense"
     kind = "test"
-    line = 65
+    line = 69
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13256,7 +14812,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "suspense kebab-case"
     kind = "test"
-    line = 101
+    line = 105
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13271,7 +14827,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "Teleport"
     kind = "test"
-    line = 61
+    line = 65
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13286,7 +14842,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "teleport kebab-case"
     kind = "test"
-    line = 97
+    line = 101
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13301,7 +14857,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "Transition"
     kind = "test"
-    line = 73
+    line = 77
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13316,7 +14872,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "transition kebab-case"
     kind = "test"
-    line = 89
+    line = 93
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13331,7 +14887,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "transition-group kebab-case"
     kind = "test"
-    line = 93
+    line = 97
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13346,7 +14902,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "TransitionGroup"
     kind = "test"
-    line = 77
+    line = 81
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13361,7 +14917,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "v-bind object"
     kind = "test"
-    line = 49
+    line = 53
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13376,7 +14932,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "v-bind object with extra props"
     kind = "test"
-    line = 53
+    line = 57
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13391,7 +14947,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "v-model on component"
     kind = "test"
-    line = 125
+    line = 129
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13406,7 +14962,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "v-model with modifier"
     kind = "test"
-    line = 137
+    line = 141
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -13421,7 +14977,7 @@ entries {
     source = "tests/fixtures/vdom/component.toml"
     name = "v-model with multiple modifiers"
     kind = "test"
-    line = 141
+    line = 145
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -17754,6 +19310,21 @@ entries {
   }
   new TraceabilityEntry {
     source = "tests/fixtures/vdom/v-slot.toml"
+    name = "conditional named slot with default"
+    kind = "test"
+    line = 109
+    classification = "portable-language"
+    status = "covered"
+    profile = null
+    localTestSuites {
+      "compiler.template.vize-vdom-v-slot-conditional-named-slot-with-default"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/fixtures/vdom/v-slot.toml"
     name = "default slot content"
     kind = "test"
     line = 9
@@ -17861,7 +19432,7 @@ entries {
     source = "tests/fixtures/vdom/v-slot.toml"
     name = "KeepAlive slot"
     kind = "test"
-    line = 125
+    line = 129
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -17951,7 +19522,7 @@ entries {
     source = "tests/fixtures/vdom/v-slot.toml"
     name = "nested components with slots"
     kind = "test"
-    line = 113
+    line = 117
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -18041,7 +19612,7 @@ entries {
     source = "tests/fixtures/vdom/v-slot.toml"
     name = "slot with v-for"
     kind = "test"
-    line = 109
+    line = 113
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -18071,7 +19642,7 @@ entries {
     source = "tests/fixtures/vdom/v-slot.toml"
     name = "Suspense slots"
     kind = "test"
-    line = 129
+    line = 133
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -18086,7 +19657,7 @@ entries {
     source = "tests/fixtures/vdom/v-slot.toml"
     name = "Transition slot"
     kind = "test"
-    line = 121
+    line = 125
     classification = "portable-language"
     status = "covered"
     profile = null
@@ -18122,6 +19693,972 @@ entries {
     profile = null
     localTestSuites {
       "compiler.template.vize-vdom-v-slot-v-slot-with-props-on-component"
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/dev-app.test.ts"
+    name = "buildMisskeyDevConfig uses a valid id generation method"
+    kind = "test"
+    line = 11
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/dev-app.test.ts"
+    name = "resolveAvailablePort skips ports occupied by IPv4 listeners"
+    kind = "test"
+    line = 79
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/dev-app.test.ts"
+    name = "resolveAvailablePort skips ports occupied by IPv6 wildcard listeners"
+    kind = "test"
+    line = 55
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/dev-app.test.ts"
+    name = "runMisskeyBeforeStart builds backend before readiness check"
+    kind = "test"
+    line = 25
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/docs-browser.test.ts"
+    name = "docs browser helper reuses an existing browser path without invoking Playwright install"
+    kind = "test"
+    line = 31
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/docs-browser.test.ts"
+    name = "docs build uses the lazy browser bootstrap helper"
+    kind = "test"
+    line = 21
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/e2e-tasks.test.ts"
+    name = "workspace exposes app e2e task aliases with scoped cache inputs"
+    kind = "test"
+    line = 13
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/e2e-workflow.test.ts"
+    name = "app e2e workflow is manually selectable and uploads failure artifacts"
+    kind = "test"
+    line = 13
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/editor-integrations.test.ts"
+    name = "CI packages editor extension artifacts"
+    kind = "test"
+    line = 172
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/editor-integrations.test.ts"
+    name = "vscode-art grammar stays aligned with vue-aware editor support"
+    kind = "test"
+    line = 78
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/editor-integrations.test.ts"
+    name = "vscode-vize grammar keeps quote-aware block lookaheads"
+    kind = "test"
+    line = 58
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/editor-integrations.test.ts"
+    name = "vscode-vize wires art-vue documents into editor features"
+    kind = "test"
+    line = 28
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/editor-integrations.test.ts"
+    name = "zed-vize registers art-vue as a first-party language"
+    kind = "test"
+    line = 132
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "cargo config forces the bundled Rust linker for Windows MSVC targets"
+    kind = "test"
+    line = 193
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "check and docs workflows use the CI Rust profile for non-release native builds"
+    kind = "test"
+    line = 234
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "check workflow only installs Playwright browsers on cache misses"
+    kind = "test"
+    line = 215
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "check workflow uploads the VRT HTML report when snapshots fail"
+    kind = "test"
+    line = 225
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "deploy-docs deploy job installs MoonBit before running script-mode helpers"
+    kind = "test"
+    line = 20
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "deploy-docs deploy job keeps a full checkout so local actions and scripts remain available"
+    kind = "test"
+    line = 33
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "GitHub workflows opt JavaScript actions into Node 24"
+    kind = "test"
+    line = 13
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "release workflow bundles fresco-native binaries into the root package instead of publishing platform packages"
+    kind = "test"
+    line = 175
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "release workflow configures npm auth fallback for every npm publish job"
+    kind = "test"
+    line = 121
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "release workflow does not pin a separate hard-coded Node version for VS Code publishing"
+    kind = "test"
+    line = 108
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "release workflow overwrites existing GitHub release assets when a tag is re-driven"
+    kind = "test"
+    line = 115
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "release workflow publishes npm packages from package-specific artifacts"
+    kind = "test"
+    line = 130
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "release workflow runs GitHub helper scripts with the native target on every runner"
+    kind = "test"
+    line = 200
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "setup-moonbit defines explicit Windows and Unix execution paths"
+    kind = "test"
+    line = 75
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "setup-moonbit smoke test validates the native async process runtime"
+    kind = "test"
+    line = 90
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "setup-moonbit writes both command and shell shims on Windows so bash steps can resolve moon"
+    kind = "test"
+    line = 99
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/github-workflows.test.ts"
+    name = "WASM build jobs install MoonBit before invoking moon run"
+    kind = "test"
+    line = 41
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/lsp-smoke.test.ts"
+    name = "completion surfaces bindings and directives inside art variants"
+    kind = "test"
+    line = 402
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/lsp-smoke.test.ts"
+    name = "go-to-definition resolves component tags in Vue templates"
+    kind = "test"
+    line = 351
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/lsp-smoke.test.ts"
+    name = "hover and definition stay correct in non-default art variants"
+    kind = "test"
+    line = 371
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/lsp-smoke.test.ts"
+    name = "vize lsp smoke-tests production editor flows"
+    kind = "test"
+    line = 270
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-generate-rule-types.test.ts"
+    name = "generate_rule_types script keeps generated lint rule types in sync"
+    kind = "test"
+    line = 64
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-github-scripts.test.ts"
+    name = "github/build_napi_package builds Apple targets with cargo and writes the expected .node artifact"
+    kind = "test"
+    line = 286
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-github-scripts.test.ts"
+    name = "github/clean_node_binaries removes only top-level .node files"
+    kind = "test"
+    line = 45
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-github-scripts.test.ts"
+    name = "github/clean_node_binaries stays free of async filesystem imports so it works on both native and JS targets"
+    kind = "test"
+    line = 70
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-github-scripts.test.ts"
+    name = "github/collect_native_artifacts copies .node files and skips node_modules"
+    kind = "test"
+    line = 80
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-github-scripts.test.ts"
+    name = "github/configure_npm_auth writes a fallback .npmrc when NPM_TOKEN is present"
+    kind = "test"
+    line = 253
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-github-scripts.test.ts"
+    name = "github/create_site_structure assembles the Pages output tree"
+    kind = "test"
+    line = 110
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-github-scripts.test.ts"
+    name = "github/install_playwright_browsers uses the playground-local Playwright CLI"
+    kind = "test"
+    line = 139
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-github-scripts.test.ts"
+    name = "github/run_many executes command groups in order"
+    kind = "test"
+    line = 19
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-github-scripts.test.ts"
+    name = "github/write_coverage_summary appends the tail of coverage output"
+    kind = "test"
+    line = 183
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-helper.test.ts"
+    name = "runMoonScript falls back to the GitHub runner shim when MOON_BIN is unavailable"
+    kind = "test"
+    line = 23
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-helper.test.ts"
+    name = "setup-moonbit installer reuses a cached toolchain without re-running the bootstrap script"
+    kind = "test"
+    line = 67
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-publish-crates.test.ts"
+    name = "publish_crates runs as a native MoonBit script"
+    kind = "test"
+    line = 84
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-publish-crates.test.ts"
+    name = "publish_crates script keeps publishable workspace dependencies ordered"
+    kind = "test"
+    line = 55
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-publish-crates.test.ts"
+    name = "publish_crates treats a non-zero cargo publish exit as success when the crate is already resolvable"
+    kind = "test"
+    line = 129
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-publish.test.ts"
+    name = "inject_native_optional_deps updates only native optional dependency pins"
+    kind = "test"
+    line = 35
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-publish.test.ts"
+    name = "npm_tag script maps prerelease versions to npm dist-tags"
+    kind = "test"
+    line = 20
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-publish.test.ts"
+    name = "publish_npm_package computes the tag and forwards provenance to vp"
+    kind = "test"
+    line = 193
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-publish.test.ts"
+    name = "publish_npm_package normalizes workspace and catalog dependency specs before publishing"
+    kind = "test"
+    line = 75
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-publish.test.ts"
+    name = "publish_npm_package skips publish when the version is already visible in npm"
+    kind = "test"
+    line = 270
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-publish.test.ts"
+    name = "publish_npm_package treats a non-zero publish exit as success when npm already has the version"
+    kind = "test"
+    line = 324
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-publish.test.ts"
+    name = "publish_npm_package_dirs publishes only subdirectories that contain package.json"
+    kind = "test"
+    line = 394
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-publish.test.ts"
+    name = "publish_vscode_extension adds pre-release when NPM_TAG is not latest"
+    kind = "test"
+    line = 478
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-publish.test.ts"
+    name = "publish_vscode_extension skips publish when the Marketplace already has the version"
+    kind = "test"
+    line = 528
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/moonbit-release.test.ts"
+    name = "release script fails clearly when stdin is not interactive"
+    kind = "test"
+    line = 13
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/package-manifests.test.ts"
+    name = "editor extension manifests stay opt-in and version aligned"
+    kind = "test"
+    line = 72
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/package-manifests.test.ts"
+    name = "esm packed npm manifests point at mjs and d.mts outputs"
+    kind = "test"
+    line = 34
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/package-manifests.test.ts"
+    name = "fresco-native publishes bundled binaries directly from the root package"
+    kind = "test"
+    line = 195
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/package-manifests.test.ts"
+    name = "vize package delegates rule type generation to the workspace MoonBit task"
+    kind = "test"
+    line = 141
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/package-manifests.test.ts"
+    name = "workspace package builds do not nest pnpm run commands"
+    kind = "test"
+    line = 129
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/package-manifests.test.ts"
+    name = "workspace TypeScript package builds use vp pack"
+    kind = "test"
+    line = 158
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/playwright-app-config.test.ts"
+    name = "app e2e Playwright config keeps CI runs guarded and debuggable"
+    kind = "test"
+    line = 13
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/playwright-vrt-config.test.ts"
+    name = "VRT Playwright configs keep failure artifacts and CI-readable output"
+    kind = "test"
+    line = 13
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/production-readiness.test.ts"
+    name = "CLI linter reports production JSON diagnostics"
+    kind = "test"
+    line = 31
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
+    }
+    fileIssues {
+    }
+    rationale = "This upstream case describes parser, compiler, or SFC behavior that should eventually become a local Pkl conformance test suite."
+  }
+  new TraceabilityEntry {
+    source = "tests/tooling/production-readiness.test.ts"
+    name = "CLI typechecker reports mapped TypeScript diagnostics"
+    kind = "test"
+    line = 10
+    classification = "portable-language"
+    status = "planned"
+    profile = null
+    localTestSuites {
     }
     fileIssues {
     }

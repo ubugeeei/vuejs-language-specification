@@ -1,8 +1,8 @@
 amends "../../../schemas/VendoredSnapshotManifest.pkl"
 
 originRepository = "ubugeeei/vize"
-originCommit = "923a9d864583e7e06438db3bc6a720113cf171ac"
-generatedAt = "2026-03-08T02:47:21.762Z"
+originCommit = "ce293fa928fe1b5a684c123e5048ea2a8238d1a3"
+generatedAt = "2026-05-07T11:24:37.233Z"
 policy = "Vendored raw snapshot files copied from vize/tests/expected. This repository owns the copied artifacts so it can evolve them into the primary source of truth for curated Vue language expectations."
 snapshotCount = 34
 
@@ -88,8 +88,8 @@ entries {
     suite = "vapor"
     originPath = "tests/expected/vapor/component.snap"
     copiedPath = "provenance/vendor/vize/tests/expected/vapor/component.snap"
-    bytes = 7051
-    sha256 = "a15b402866cf87e43d72ae19d07d52828eccc830e38dd56796e693ee06af032d"
+    bytes = 8122
+    sha256 = "8ed0735055dde0156f7fa52af5776ac82c3cd7cb11ff124064154b370c65d871"
   }
   ["tests/expected/vapor/edge-cases.snap"] = new SnapshotEntry {
     suite = "vapor"
@@ -158,8 +158,8 @@ entries {
     suite = "vdom"
     originPath = "tests/expected/vdom/component.snap"
     copiedPath = "provenance/vendor/vize/tests/expected/vdom/component.snap"
-    bytes = 19996
-    sha256 = "d4d2b592cd58279c450ee2824dd183f255ed7935d3615add95d8daf70bcb3c13"
+    bytes = 20424
+    sha256 = "82078e77fec07666f9d371fc9fe14edabfff6fcb60be0045f78cbd039b08437a"
   }
   ["tests/expected/vdom/directives.snap"] = new SnapshotEntry {
     suite = "vdom"
@@ -242,7 +242,7 @@ entries {
     suite = "vdom"
     originPath = "tests/expected/vdom/v-slot.snap"
     copiedPath = "provenance/vendor/vize/tests/expected/vdom/v-slot.snap"
-    bytes = 16651
-    sha256 = "ccdf5b1bf34ae512327da24de0f724be909732dcfe032dc2697e8a52201a14af"
+    bytes = 17552
+    sha256 = "3ae86e81952b58e73e15cd2f1e9140391095348ef9aca313a96c4ad0e15d7cbf"
   }
 }

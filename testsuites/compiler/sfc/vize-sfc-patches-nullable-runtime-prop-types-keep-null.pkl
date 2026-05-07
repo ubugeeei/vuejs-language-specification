@@ -1,0 +1,95 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-nullable-runtime-prop-types-keep-null"
+title = "Imported SFC input: nullable runtime prop types keep null"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "nullable runtime prop types keep null"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "nullable runtime prop types keep null"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-nullable-runtime-prop-types-keep-null.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  defineProps<{
+    activeKey: string | null
+    items: string[] | null
+    groupName: string | null
+  }>()
+  </script>
+  
+  <template>
+    <div />
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-patches-nullable-runtime-prop-types-keep-null',
+    props: {
+      activeKey: { type: [String, null], required: true },
+      items: { type: [Array, null], required: true },
+      groupName: { type: [String, null], required: true }
+    },
+    setup(__props: any, { expose: __expose }) {
+    __expose();
+  
+  
+  
+  const __returned__ = {  }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div"))
+  }
+  """#
+}

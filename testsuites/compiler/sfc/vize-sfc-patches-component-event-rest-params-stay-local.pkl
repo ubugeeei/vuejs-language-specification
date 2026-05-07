@@ -1,0 +1,93 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-component-event-rest-params-stay-local"
+title = "Imported SFC input: component event rest params stay local"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "component event rest params stay local"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "component event rest params stay local"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-component-event-rest-params-stay-local.vue"
+  sfc = #"""
+  <script setup>
+  const emit = defineEmits(['update'])
+  </script>
+  
+  <template>
+    <Child
+      @update="(...$args) => emit('update', ...$args)"
+      @change="(...args) => emit('update', ...args)"
+    />
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  
+  export default {
+    __name: 'compiler.sfc.vize-sfc-patches-component-event-rest-params-stay-local',
+    emits: ['update'],
+    setup(__props, { expose: __expose, emit: __emit }) {
+    __expose();
+  
+  const emit = __emit
+  
+  const __returned__ = { emit }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  }
+  """#
+  templateCode = #"""
+  import { resolveComponent as _resolveComponent, openBlock as _openBlock, createBlock as _createBlock } from "vue"
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_Child = _resolveComponent("Child")
+  
+    return (_openBlock(), _createBlock(_component_Child, {
+      onUpdate: _cache[0] || (_cache[0] = (...$args) => $setup.emit('update', ...$args)),
+      onChange: _cache[1] || (_cache[1] = (...args) => $setup.emit('update', ...args))
+    }))
+  }
+  """#
+}

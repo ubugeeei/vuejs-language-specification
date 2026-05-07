@@ -1,0 +1,123 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-function-typed-prop-param-does-not-shadow-local-t"
+title = "Imported SFC input: function typed prop param does not shadow local t"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "function typed prop param does not shadow local t"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "function typed prop param does not shadow local t"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-function-typed-prop-param-does-not-shadow-local-t.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  const { format } = useFormatter(catalog)
+  const props = defineProps<{
+    renderLabel: (value: string, format: any) => string
+  }>()
+  </script>
+  
+  <template>
+    <PopupMenu>
+      <template #items="{ close }">
+        <OptionRow v-slot="{ active }">
+          <li :class="{ active }" @click="close()">
+            <span>{{ format('hello') }}</span>
+            <span>{{ renderLabel('x', format) }}</span>
+          </li>
+        </OptionRow>
+      </template>
+    </PopupMenu>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-patches-function-typed-prop-param-does-not-shadow-local-t',
+    props: {
+      renderLabel: { type: Function, required: true }
+    },
+    setup(__props: any, { expose: __expose }) {
+    __expose();
+  
+  const { format } = useFormatter(catalog)
+  const props = __props
+  
+  const __returned__ = { format, props }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { toDisplayString as _toDisplayString, createElementVNode as _createElementVNode, normalizeClass as _normalizeClass, resolveComponent as _resolveComponent, withCtx as _withCtx, createVNode as _createVNode, openBlock as _openBlock, createBlock as _createBlock } from "vue"
+  
+  const _hoisted_1 = ["onClick"]
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_OptionRow = _resolveComponent("OptionRow")
+    const _component_PopupMenu = _resolveComponent("PopupMenu")
+  
+    return (_openBlock(), _createBlock(_component_PopupMenu, null, {
+      items: _withCtx(({ close }) => [
+        _createVNode(_component_OptionRow, null, {
+          default: _withCtx(({ active }) => [
+            _createElementVNode("li", {
+              class: _normalizeClass({ active }),
+              onClick: $event => (close())
+            }, [
+              _createElementVNode("span", null, _toDisplayString($setup.format('hello')), 1 /* TEXT */),
+              _createElementVNode("span", null, _toDisplayString($props.renderLabel('x', $setup.format)), 1 /* TEXT */)
+            ], 10 /* CLASS, PROPS */, _hoisted_1)
+          ]),
+          _: 2 /* DYNAMIC */
+        }, 1024 /* DYNAMIC_SLOTS */)
+      ]),
+      _: 1 /* STABLE */
+    }))
+  }
+  """#
+}

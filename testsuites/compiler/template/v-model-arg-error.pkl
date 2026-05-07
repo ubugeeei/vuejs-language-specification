@@ -32,6 +32,13 @@ input {
 }
 
 expect {
+  diagnostics {
+    new ErrorExpectation {
+      name = "SyntaxError"
+      message = "v-model argument is not supported on plain elements."
+      code = "X_V_MODEL_ARG_ON_ELEMENT"
+    }
+  }
   error {
     name = "SyntaxError"
     message = "v-model argument is not supported on plain elements."

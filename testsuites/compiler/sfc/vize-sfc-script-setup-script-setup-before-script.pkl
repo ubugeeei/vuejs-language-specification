@@ -1,9 +1,9 @@
 amends "../../../schemas/CompilerTestSuite.pkl"
 
 id = "compiler.sfc.vize-sfc-script-setup-script-setup-before-script"
-title = "Imported SFC input: script and script setup"
+title = "Imported SFC input: script setup before script"
 kind = "sfc-full-compile"
-summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle. The local test-suite input is normalized to the repository's canonical SFC block order."
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/script-setup.toml and the official vuejs/core SFC oracle."
 
 features {
   "compiler.sfc"
@@ -38,20 +38,20 @@ upstream {
 input {
   filename = "compiler.sfc.vize-sfc-script-setup-script-setup-before-script.vue"
   sfc = #"""
-  <script>
-  export const n = 1
-  export default {}
-  </script>
-
   <script setup>
   import { ref } from 'vue'
   const count = ref(0)
   </script>
-
+  
+  <script>
+  export const n = 1
+  export default {}
+  </script>
+  
   <template>
     <div>{{ count }} {{ n }}</div>
   </template>
-
+  
   """#
 }
 

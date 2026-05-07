@@ -1,0 +1,133 @@
+amends "../../../schemas/CompilerTestSuite.pkl"
+
+id = "compiler.sfc.vize-sfc-patches-template-ref-with-dynamic-props-in-v-if-branch"
+title = "Imported SFC input: template ref with dynamic props in v if branch"
+kind = "sfc-full-compile"
+summary = "Static SFC compiler pipeline conformance derived from copied input tests/fixtures/sfc/patches.toml and the official vuejs/core SFC oracle."
+
+features {
+  "compiler.sfc"
+  "imported.input"
+  "imported.input.sfc"
+  "imported.input.patches"
+}
+
+inputOrigin = new ImportedInputOrigin {
+  copiedPath = "provenance/vendor/ubugeeei-vize/tests/fixtures/sfc/patches.toml"
+  source = "tests/fixtures/sfc/patches.toml"
+  caseName = "template ref with dynamic props in v if branch"
+  originRepository = "ubugeeei/vize"
+}
+
+oracle = new ReferenceOracle {
+  repository = "vuejs/core"
+  moduleName = "@vue/compiler-sfc"
+  operation = "parse + compileScript + compileTemplate + compileStyle"
+}
+
+upstream {
+  new UpstreamReference {
+    repository = "ubugeeei/vize"
+    source = "tests/fixtures/sfc/patches.toml"
+    cases {
+      "template ref with dynamic props in v if branch"
+    }
+  }
+}
+
+input {
+  filename = "compiler.sfc.vize-sfc-patches-template-ref-with-dynamic-props-in-v-if-branch.vue"
+  sfc = #"""
+  <script setup lang="ts">
+  import { computed, ref } from 'vue'
+  const reference = ref<HTMLElement>()
+  const floating = ref<HTMLElement>()
+  const isOpen = ref(true)
+  const klass = computed(() => 'x')
+  const styles = computed(() => ({ left: '0px', top: '0px' }))
+  function toggle() {}
+  </script>
+  
+  <template>
+    <button
+      v-if="isOpen"
+      ref="reference"
+      :id="isOpen ? 'open' : undefined"
+      class="base"
+      :class="klass"
+      @click="toggle"
+    >
+      open
+    </button>
+    <div
+      v-if="isOpen"
+      ref="floating"
+      :style="styles"
+    >
+      panel
+    </div>
+  </template>
+  
+  """#
+}
+
+expect {
+    descriptor = new DescriptorExpectation {
+      template = true
+      script = false
+      scriptSetup = true
+      styles = 0
+      customBlocks = 0
+      scriptSetupLang = "ts"
+      scopedStyles = 0
+    }
+  normalizedCode = #"""
+  import { defineComponent as _defineComponent } from 'vue'
+  import { computed, ref } from 'vue'
+  
+  export default /*@__PURE__*/_defineComponent({
+    __name: 'compiler.sfc.vize-sfc-patches-template-ref-with-dynamic-props-in-v-if-branch',
+    setup(__props, { expose: __expose }) {
+    __expose();
+  
+  const reference = ref<HTMLElement>()
+  const floating = ref<HTMLElement>()
+  const isOpen = ref(true)
+  const klass = computed(() => 'x')
+  const styles = computed(() => ({ left: '0px', top: '0px' }))
+  function toggle() {}
+  
+  const __returned__ = { reference, floating, isOpen, klass, styles, toggle }
+  Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+  return __returned__
+  }
+  
+  })
+  """#
+  templateCode = #"""
+  import { normalizeClass as _normalizeClass, openBlock as _openBlock, createElementBlock as _createElementBlock, createCommentVNode as _createCommentVNode, normalizeStyle as _normalizeStyle, Fragment as _Fragment } from "vue"
+  
+  const _hoisted_1 = ["id"]
+  
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock(_Fragment, null, [
+      ($setup.isOpen)
+        ? (_openBlock(), _createElementBlock("button", {
+            key: 0,
+            ref: "reference",
+            id: $setup.isOpen ? 'open' : undefined,
+            class: _normalizeClass(["base", $setup.klass]),
+            onClick: $setup.toggle
+          }, " open ", 10 /* CLASS, PROPS */, _hoisted_1))
+        : _createCommentVNode("v-if", true),
+      ($setup.isOpen)
+        ? (_openBlock(), _createElementBlock("div", {
+            key: 1,
+            ref: "floating",
+            style: _normalizeStyle($setup.styles)
+          }, " panel ", 4 /* STYLE */))
+        : _createCommentVNode("v-if", true)
+    ], 64 /* STABLE_FRAGMENT */))
+  }
+  """#
+}

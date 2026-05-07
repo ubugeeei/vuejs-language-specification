@@ -41,15 +41,15 @@ input {
   <template>
     <div class="a b">Test</div>
   </template>
-
-  <style scoped>
-  .b { color: blue; }
-  </style>
-
+  
   <style>
   .a { color: red; }
   </style>
-
+  
+  <style scoped>
+  .b { color: blue; }
+  </style>
+  
   """#
 }
 
@@ -73,16 +73,16 @@ expect {
   """#
   styleCodes {
     #"""
-
-    .b[data-v-compiler.sfc.vize-sfc-basic-multiple-style-blocks-style-0] { color: blue;
-    }
-
-    """#
-    #"""
-
+    
     .a { color: red;
     }
-
+    
+    """#
+    #"""
+    
+    .b[data-v-compiler.sfc.vize-sfc-basic-multiple-style-blocks-style-1] { color: blue;
+    }
+    
     """#
   }
 }

@@ -16,7 +16,7 @@ upstream {
     repository = "ubugeeei/vize"
     source = "playground/e2e/edge-cases.test.ts"
     cases {
-      "should handle optional chaining with types"
+      "should preserve optional chaining type declarations when requested"
     }
   }
 }

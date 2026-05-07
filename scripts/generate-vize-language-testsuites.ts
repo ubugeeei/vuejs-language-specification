@@ -565,6 +565,14 @@ function createCompilerErrorSuite(
   }
 
   const error = resolvedError as Error & { code?: string | number };
+  const normalizedDiagnostics = capturedErrors.map((diagnostic) => {
+    const normalizedCode = normalizeCompilerErrorCode(diagnostic.code);
+    return {
+      name: diagnostic.name,
+      message: normalizeDiagnosticText(diagnostic.message),
+      ...(normalizedCode !== undefined ? { code: normalizedCode } : {}),
+    };
+  });
   const lines: string[] = [];
 
   lines.push('amends "../../../schemas/CompilerTestSuite.pkl"');
@@ -602,6 +610,7 @@ function createCompilerErrorSuite(
   lines.push("}");
   lines.push("");
   lines.push("expect {");
+  lines.push(...formatDiagnostics(normalizedDiagnostics, "  "));
   lines.push("  error = new ErrorExpectation {");
   lines.push(`    name = ${JSON.stringify(error.name)}`);
   pushAssignedString(lines, "    ", "message", error.message);
