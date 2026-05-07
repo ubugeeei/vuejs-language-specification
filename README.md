@@ -155,7 +155,7 @@ In short:
 Repository maintenance is standardized on:
 
 - Node.js 24+
-- `pnpm` 10+
+- `vp` (VITE+)
 - `oxfmt`
 - `oxlint --type-aware --type-check`
 - Vitest Browser Mode with Playwright for DOM-observable runtime verification
@@ -193,14 +193,13 @@ The repository also contains JavaScript tooling for validation, catalog generati
 Run it from a checkout:
 
 ```bash
-corepack enable
-pnpm install --frozen-lockfile
-pnpm validate
-pnpm manifest
-pnpm catalog --suite compiler
-pnpm coverage:upstream --repository vuejs/language-tools
-pnpm traceability:upstream --repository vuejs/core
-pnpm benchmark:smoke
+vp install --frozen-lockfile
+vp run validate
+vp run manifest
+vp run catalog --suite compiler
+vp run coverage:upstream --repository vuejs/language-tools
+vp run traceability:upstream --repository vuejs/core
+vp run benchmark:smoke
 ```
 
 ## Provenance
@@ -213,15 +212,15 @@ The initial suite is curated from:
 - copied community SFC, CSS, playground, and benchmark-oriented tests
 
 Generated inventories are committed under `provenance/inventories/` and can be refreshed with `scripts/generate-upstream-inventory.ts`.
-Vendored `vuejs/core` test and benchmark source files are committed under `provenance/vendor/vuejs-core/` and can be refreshed with `pnpm vendor:vue-core:tests`.
-Copied community test and fixture source files are committed under `provenance/vendor/ubugeeei-vize/` and can be refreshed with `pnpm vendor:vize:tests`.
-Imported parser/compiler suites can be refreshed with `pnpm generate:imported:testsuites`.
+Vendored `vuejs/core` test and benchmark source files are committed under `provenance/vendor/vuejs-core/` and can be refreshed with `vp run vendor:vue-core:tests`.
+Copied community test and fixture source files are committed under `provenance/vendor/ubugeeei-vize/` and can be refreshed with `vp run vendor:vize:tests`.
+Imported parser/compiler suites can be refreshed with `vp run generate:imported:testsuites`.
 That generator consumes the copied local corpus under [`provenance/vendor/ubugeeei-vize/`](./provenance/vendor/ubugeeei-vize/). Default-profile parser/compiler expectations are derived from the official `vuejs/core` implementation and stored statically; copied snapshots under [`provenance/vendor/vize/tests/expected/`](./provenance/vendor/vize/tests/expected/) remain only for provisional Vapor coverage and provenance.
-Generated traceability manifests are committed under `provenance/traceability/` and can be refreshed with `pnpm generate:traceability`.
-Copied snapshot assets are committed under `provenance/vendor/vize/tests/expected/` and can be refreshed with `pnpm vendor:vize:snapshots`.
-Stable catalog and requirement id manifests are committed under `provenance/stability/` and can be refreshed with `pnpm generate:stability`.
-`pnpm coverage:upstream` reports which inventoried upstream cases are already covered by executable local test suites.
-`pnpm traceability:upstream` summarizes how every inventoried upstream case is represented:
+Generated traceability manifests are committed under `provenance/traceability/` and can be refreshed with `vp run generate:traceability`.
+Copied snapshot assets are committed under `provenance/vendor/vize/tests/expected/` and can be refreshed with `vp run vendor:vize:snapshots`.
+Stable catalog and requirement id manifests are committed under `provenance/stability/` and can be refreshed with `vp run generate:stability`.
+`vp run coverage:upstream` reports which inventoried upstream cases are already covered by executable local test suites.
+`vp run traceability:upstream` summarizes how every inventoried upstream case is represented:
 
 - `covered`
   - backed by one or more executable local test suites

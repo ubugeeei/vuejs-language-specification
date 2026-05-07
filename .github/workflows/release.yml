@@ -15,27 +15,25 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Set up VITE+
+        uses: voidzero-dev/setup-vp@v1
         with:
           node-version: 24
-
-      - name: Enable Corepack
-        run: corepack enable
+          cache: true
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: vp install --frozen-lockfile
 
       - name: Verify repository
-        run: pnpm check
+        run: vp run check
 
       - name: Verify release manifest is current
         run: |
-          pnpm generate:release-manifest
+          vp run generate:release-manifest
           git diff --exit-code provenance/releases/current.json
 
       - name: Build canonical corpus archive
-        run: pnpm release:archive
+        run: vp run release:archive
 
       - name: Publish GitHub Release assets
         env:
