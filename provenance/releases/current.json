@@ -1,22 +1,37 @@
 {
   "schemaVersion": 1,
-  "packageName": "@ubugeeei/vuejs-language-specification",
+  "name": "vuejs-language-specification",
   "version": "0.1.0",
   "tagFormat": "v{version}",
   "distribution": {
     "canonical": {
       "kind": "repository-snapshot",
+      "repository": "ubugeeei/vuejs-language-specification",
+      "sourceArchiveUrl": "https://github.com/ubugeeei/vuejs-language-specification/archive/refs/tags/v0.1.0.tar.gz",
       "manifestPath": "provenance/releases/current.json",
-      "consumption": "pin a git tag or vendor a release tarball",
-      "requiredRoots": ["spec", "testsuites", "runtime", "schemas", "provenance", "fixtures"]
+      "consumption": "pin a GitHub tag or vendor a GitHub Release corpus archive",
+      "requiredRoots": ["spec", "testsuites", "runtime", "schemas", "provenance", "fixtures"],
+      "releaseAssets": [
+        {
+          "kind": "canonical-corpus",
+          "name": "vuejs-language-specification-v0.1.0-corpus.tar.gz",
+          "url": "https://github.com/ubugeeei/vuejs-language-specification/releases/download/v0.1.0/vuejs-language-specification-v0.1.0-corpus.tar.gz",
+          "checksumFile": "vuejs-language-specification-v0.1.0-corpus.tar.gz.sha256",
+          "format": "tar.gz",
+          "contents": [
+            "README.md",
+            "spec",
+            "testsuites",
+            "runtime",
+            "schemas",
+            "provenance",
+            "fixtures"
+          ],
+          "purpose": "Ready-to-vendor language specification, machine-readable test suites, schemas, provenance, fixtures, and runtime harness sources."
+        }
+      ]
     },
-    "secondaryChannels": [
-      {
-        "kind": "npm-package",
-        "identifier": "@ubugeeei/vuejs-language-specification",
-        "purpose": ["cli", "programmatic-api", "javascript-runtime-harness"]
-      }
-    ]
+    "secondaryChannels": []
   },
   "baseline": {
     "repository": "vuejs/core",

@@ -1240,6 +1240,12 @@ function normalizeReleaseManifest(manifest: ReleaseManifest): ReleaseManifest {
         requiredRoots: [...manifest.distribution.canonical.requiredRoots].sort((left, right) =>
           left.localeCompare(right),
         ),
+        releaseAssets: [...manifest.distribution.canonical.releaseAssets]
+          .map((asset) => ({
+            ...asset,
+            contents: [...asset.contents].sort((left, right) => left.localeCompare(right)),
+          }))
+          .sort((left, right) => left.name.localeCompare(right.name)),
       },
       secondaryChannels: [...manifest.distribution.secondaryChannels].map((channel) => ({
         ...channel,
@@ -1526,6 +1532,16 @@ export function validateReleaseManifest(
     for (const relativeRoot of actual.distribution.canonical.requiredRoots) {
       if (!existsSync(join(root, relativeRoot))) {
         errors.push(`Release manifest references missing canonical root: ${relativeRoot}`);
+      }
+    }
+
+    for (const asset of actual.distribution.canonical.releaseAssets) {
+      for (const relativePath of asset.contents) {
+        if (!existsSync(join(root, relativePath))) {
+          errors.push(
+            `Release manifest asset ${asset.name} references missing path: ${relativePath}`,
+          );
+        }
       }
     }
 

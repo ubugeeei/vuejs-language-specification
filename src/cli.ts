@@ -101,8 +101,15 @@ async function main() {
         return;
       }
 
-      console.log(`${manifest.packageName}@${manifest.version}`);
+      console.log(`${manifest.name}@${manifest.version}`);
       console.log(`canonical=${manifest.distribution.canonical.kind}`);
+      console.log(`repository=${manifest.distribution.canonical.repository}`);
+      console.log(`sourceArchive=${manifest.distribution.canonical.sourceArchiveUrl}`);
+      console.log(
+        `corpus=${manifest.distribution.canonical.releaseAssets
+          .map((asset) => asset.url)
+          .join(", ")}`,
+      );
       console.log(`manifest=${manifest.distribution.canonical.manifestPath}`);
       console.log(`consume=${manifest.distribution.canonical.consumption}`);
       console.log(
@@ -110,11 +117,10 @@ async function main() {
           .map((entry) => `${entry.name}:${entry.root}`)
           .join(", ")}`,
       );
-      console.log(
-        `secondary=${manifest.distribution.secondaryChannels
-          .map((entry) => `${entry.kind}:${entry.identifier}`)
-          .join(", ")}`,
-      );
+      const secondaryChannels = manifest.distribution.secondaryChannels
+        .map((entry) => `${entry.kind}:${entry.identifier}`)
+        .join(", ");
+      console.log(`secondary=${secondaryChannels || "none"}`);
       return;
     }
     case "catalog": {

@@ -6,7 +6,12 @@ import { provenanceInventoriesRoot, provenanceTraceabilityRoot } from "./layout.
 import { loadRequirementMatrixEntries } from "./requirements.ts";
 import { runtimeTestSuites } from "./runtime/index.ts";
 import { loadUpstreamInventories, loadVendoredUpstreamCorpora } from "./upstream.ts";
-import type { ReleaseManifest, ReleaseManifestProfile, ReleaseManifestTarget } from "./types.ts";
+import type {
+  ReleaseManifest,
+  ReleaseManifestAsset,
+  ReleaseManifestProfile,
+  ReleaseManifestTarget,
+} from "./types.ts";
 
 interface PackageManifest {
   name: string;
@@ -17,7 +22,10 @@ interface PackageManifest {
 }
 
 const releaseManifestRelativePath = "provenance/releases/current.json";
+const projectName = "vuejs-language-specification";
+const githubRepository = "ubugeeei/vuejs-language-specification";
 const canonicalRoots = ["spec", "testsuites", "runtime", "schemas", "provenance", "fixtures"];
+const canonicalArchiveRootFiles = ["README.md"];
 const targetDefinitions: ReleaseManifestTarget[] = [
   {
     name: "syntax",
@@ -169,6 +177,32 @@ export function canonicalReleaseManifestPath(): string {
   return releaseManifestRelativePath;
 }
 
+export function canonicalReleaseArchiveContents(): string[] {
+  return [...canonicalArchiveRootFiles, ...canonicalRoots];
+}
+
+export function canonicalCorpusArchiveName(version: string): string {
+  return `${projectName}-v${version}-corpus.tar.gz`;
+}
+
+function buildReleaseAssets(version: string): ReleaseManifestAsset[] {
+  const name = canonicalCorpusArchiveName(version);
+  const tag = `v${version}`;
+
+  return [
+    {
+      kind: "canonical-corpus",
+      name,
+      url: `https://github.com/${githubRepository}/releases/download/${tag}/${name}`,
+      checksumFile: `${name}.sha256`,
+      format: "tar.gz",
+      contents: canonicalReleaseArchiveContents(),
+      purpose:
+        "Ready-to-vendor language specification, machine-readable test suites, schemas, provenance, fixtures, and runtime harness sources.",
+    },
+  ];
+}
+
 export function releaseManifestFile(root: string = packageRoot(import.meta.url)): string {
   return join(root, releaseManifestRelativePath);
 }
@@ -179,23 +213,20 @@ export function buildReleaseManifest(root: string = packageRoot(import.meta.url)
 
   return {
     schemaVersion: 1,
-    packageName: packageManifest.name,
+    name: projectName,
     version: packageManifest.version,
     tagFormat: "v{version}",
     distribution: {
       canonical: {
         kind: "repository-snapshot",
+        repository: githubRepository,
+        sourceArchiveUrl: `https://github.com/${githubRepository}/archive/refs/tags/v${packageManifest.version}.tar.gz`,
         manifestPath: canonicalReleaseManifestPath(),
-        consumption: "pin a git tag or vendor a release tarball",
+        consumption: "pin a GitHub tag or vendor a GitHub Release corpus archive",
         requiredRoots: [...canonicalRoots],
+        releaseAssets: buildReleaseAssets(packageManifest.version),
       },
-      secondaryChannels: [
-        {
-          kind: "npm-package",
-          identifier: packageManifest.name,
-          purpose: ["cli", "programmatic-api", "javascript-runtime-harness"],
-        },
-      ],
+      secondaryChannels: [],
     },
     baseline: {
       repository: "vuejs/core",

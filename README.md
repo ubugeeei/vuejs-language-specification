@@ -4,8 +4,8 @@
 
 The project has two complementary outputs:
 
-1. A canonical repository snapshot, versioned by immutable Git tags, that defines observable behavior, portability boundaries, machine-readable conformance suites, schemas, and provenance.
-2. A secondary npm package that ships JavaScript-oriented tooling for validation, cataloging, smoke benchmarking, and the runtime reference harness.
+1. A canonical GitHub-hosted repository snapshot, versioned by immutable Git tags, that defines observable behavior, portability boundaries, machine-readable conformance suites, schemas, and provenance.
+2. JavaScript-oriented tooling in the repository for validation, cataloging, smoke benchmarking, and the runtime reference harness.
 
 ## Motivation
 
@@ -88,12 +88,13 @@ The next planned profile-facing provenance input is `vuejs/vue-jsx-vapor`. It sh
 
 ## Distribution Model
 
-This repository should be consumed like a conformance corpus, not like an npm-first library.
+This repository should be consumed like a conformance corpus, not like a package-registry library.
 
-- The canonical distribution unit is a tagged repository snapshot or release tarball.
-- Implementations should pin a specific tag and vendor or unpack the snapshot locally.
+- The canonical distribution unit is the GitHub Release corpus archive attached to each version tag.
+- Implementations should pin a specific tag and vendor or unpack the GitHub archive locally.
 - The canonical release manifest lives at [`provenance/releases/current.json`](./provenance/releases/current.json).
-- The npm package is a convenience channel for JavaScript consumers. It is not the normative source of truth for suite contents or repository structure.
+- The language specification and machine-readable test suites are usable directly from the archive without package-registry publication or install.
+- JavaScript tooling is run from a checkout or unpacked snapshot today.
 
 The canonical snapshot includes these roots:
 
@@ -145,7 +146,7 @@ In short:
 - `fixtures/benchmarks/`
   - reusable benchmark inputs
 - `src/`
-  - package API, CLI, validators, and benchmark orchestration
+  - local JavaScript API, CLI, validators, and benchmark orchestration
 - `verification/`
   - repository verification for schemas, reference execution, and smoke benchmarks
 
@@ -159,32 +160,47 @@ Repository maintenance is standardized on:
 - `oxlint --type-aware --type-check`
 - Vitest Browser Mode with Playwright for DOM-observable runtime verification
 
-## Package Model
+## GitHub Release Corpus
 
-The npm package is the secondary transport for JavaScript ecosystems. It ships:
+Each GitHub Release publishes a canonical corpus archive named `vuejs-language-specification-v{version}-corpus.tar.gz`.
+It ships the immediately vendorable conformance surface:
 
-- raw specification assets (`spec/`, `testsuites/`, `runtime/`, `schemas/`, `provenance/`)
-- a CLI for Pkl-backed validation, catalog generation, and smoke benchmarking
-- a JavaScript reference harness for runtime conformance execution
-- Vitest Browser Mode runtime tests for DOM-observable conformance
-- the canonical release manifest at `./release-manifest.json`
+- language specification chapters under `spec/`
+- machine-readable test suites under `testsuites/`
+- Pkl schemas under `schemas/`
+- upstream provenance and release metadata under `provenance/`
+- JavaScript runtime harness sources under `runtime/`
+- benchmark fixtures under `fixtures/`
+- the canonical release manifest at `provenance/releases/current.json`
 
-Install:
+Download a tagged corpus archive:
 
 ```bash
-pnpm add @ubugeeei/vuejs-language-specification
+curl -LO https://github.com/ubugeeei/vuejs-language-specification/releases/download/v0.1.0/vuejs-language-specification-v0.1.0-corpus.tar.gz
+tar -xzf vuejs-language-specification-v0.1.0-corpus.tar.gz -C vendor
 ```
 
-Examples:
+The same release also has a checksum file:
 
 ```bash
-pnpm exec vue-language-spec validate
-pnpm exec vue-language-spec manifest
-pnpm exec vue-language-spec catalog --suite compiler
-pnpm exec vue-language-spec requirements
-pnpm exec vue-language-spec coverage --repository vuejs/language-tools
-pnpm exec vue-language-spec traceability --repository vuejs/core
-pnpm exec vue-language-spec benchmark --smoke
+curl -LO https://github.com/ubugeeei/vuejs-language-specification/releases/download/v0.1.0/vuejs-language-specification-v0.1.0-corpus.tar.gz.sha256
+shasum -a 256 -c vuejs-language-specification-v0.1.0-corpus.tar.gz.sha256
+```
+
+## Local Tooling
+
+The repository also contains JavaScript tooling for validation, catalog generation, traceability reports, and smoke benchmarking.
+Run it from a checkout:
+
+```bash
+corepack enable
+pnpm install --frozen-lockfile
+pnpm validate
+pnpm manifest
+pnpm catalog --suite compiler
+pnpm coverage:upstream --repository vuejs/language-tools
+pnpm traceability:upstream --repository vuejs/core
+pnpm benchmark:smoke
 ```
 
 ## Provenance
@@ -216,7 +232,7 @@ Stable catalog and requirement id manifests are committed under `provenance/stab
 
 ## Status
 
-This repository is structured to be released as a canonical conformance snapshot now, with npm as a secondary tooling channel. The current version focuses on:
+This repository is structured to be distributed as a GitHub-hosted canonical conformance snapshot now. The current version focuses on:
 
 - a durable suite format
 - strong provenance

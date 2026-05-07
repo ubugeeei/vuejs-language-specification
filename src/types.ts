@@ -398,9 +398,19 @@ export interface UpstreamTraceabilityManifest {
 }
 
 export interface ReleaseManifestChannel {
-  kind: "npm-package";
+  kind: "source-checkout";
   identifier: string;
   purpose: string[];
+}
+
+export interface ReleaseManifestAsset {
+  kind: "canonical-corpus";
+  name: string;
+  url: string;
+  checksumFile: string;
+  format: "tar.gz";
+  contents: string[];
+  purpose: string;
 }
 
 export interface ReleaseManifestProfile {
@@ -420,15 +430,18 @@ export interface ReleaseManifestTarget {
 
 export interface ReleaseManifest {
   schemaVersion: 1;
-  packageName: string;
+  name: string;
   version: string;
   tagFormat: string;
   distribution: {
     canonical: {
       kind: "repository-snapshot";
+      repository: string;
+      sourceArchiveUrl: string;
       manifestPath: string;
       consumption: string;
       requiredRoots: string[];
+      releaseAssets: ReleaseManifestAsset[];
     };
     secondaryChannels: ReleaseManifestChannel[];
   };

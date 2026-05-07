@@ -37,9 +37,6 @@
     "./release-manifest.json": "./provenance/releases/current.json",
     "./package.json": "./package.json"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
     "build": "tsdown",
     "check": "oxlint --type-aware --type-check --vitest-plugin --node-plugin . && vitest run",
@@ -57,6 +54,7 @@
     "generate:stability": "node --strip-types scripts/generate-stability-manifests.ts",
     "generate:imported:testsuites": "node --strip-types scripts/generate-vize-language-testsuites.ts",
     "generate:vize:testsuites": "node --strip-types scripts/generate-vize-language-testsuites.ts",
+    "release:archive": "node --strip-types scripts/create-release-archive.ts",
     "vendor:vue-core:tests": "node --strip-types scripts/vendor-upstream-test-corpus.ts --inventory provenance/inventories/vuejs-core.inventory.pkl --upstream /tmp/vuejs-core-spec",
     "vendor:vize:tests": "node --strip-types scripts/vendor-upstream-test-corpus.ts --inventory provenance/inventories/vize.inventory.pkl --upstream /tmp/vize-spec-upstream --outputDir provenance/vendor/ubugeeei-vize",
     "vendor:vize:snapshots": "node --strip-types scripts/vendor-vize-expected-snapshots.ts",
