@@ -96,59 +96,19 @@ This repository should be consumed like a conformance corpus, not like a package
 - The language specification and machine-readable test suites are usable directly from the archive without package-registry publication or install.
 - JavaScript tooling is run from a checkout or unpacked snapshot today.
 
-The canonical snapshot includes these roots:
+## Directory Architecture
 
-- `spec/`
-- `testsuites/`
-- `runtime/`
-- `schemas/`
-- `provenance/`
-- `fixtures/`
+See [`ARCHITECTURE.md`](./ARCHITECTURE.md) for the directory map, generation flow, and placement rules.
 
-That structure is summarized by the release manifest and validated in repository tests so downstream implementations can consume a stable snapshot contract.
+The short version:
 
-## Repository Layers
+| Layer                  | Paths                                                                      | Purpose                                                             |
+| ---------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Release corpus         | `spec/`, `testsuites/`, `schemas/`, `runtime/`, `provenance/`, `fixtures/` | Stable artifacts downstream implementations can vendor.             |
+| Repository machinery   | `src/`, `scripts/`, `verification/`, `.github/`                            | Code that generates, validates, and publishes the corpus.           |
+| Generated local output | `dist/`, `node_modules/`                                                   | Local build and dependency output; not part of the corpus contract. |
 
-The repository has three similarly named layers with different roles:
-
-- `testsuites/`
-  - canonical conformance artifacts for every target, with Pkl suites for syntax/parser/compiler/type-evaluation/benchmark and TypeScript runtime suites under `testsuites/runtime/`
-- `runtime/`
-  - JavaScript runtime harness and support code used to execute the runtime artifacts
-- `verification/`
-  - Vitest verification files for this repository itself
-
-In short:
-
-- `testsuite` means a canonical conformance artifact
-- `verification` means a repository-local check of those artifacts
-
-## Repository Layout
-
-- `spec/`
-  - normative and semi-normative documents
-- `testsuites/`
-  - machine-readable conformance test suites for every target, including Pkl suites and runtime TypeScript suites under `testsuites/runtime/10-dom/`, `testsuites/runtime/20-forms/`, `testsuites/runtime/30-components/`, `testsuites/runtime/40-lifecycle/`, and `testsuites/runtime/50-reactivity/`
-- `runtime/`
-  - JavaScript-only runtime harness modules and support code
-- `schemas/`
-  - Pkl schema modules that define every machine-readable suite
-- `provenance/inventories/`
-  - generated inventories derived from upstream tests and issue references
-- `provenance/vendor/vuejs-core/`
-  - vendored raw `vuejs/core` test and benchmark source files plus a manifest that keeps provenance local to this repository
-- `provenance/vendor/ubugeeei-vize/`
-  - copied community fixture/test source files and manifests used as local input corpora
-- `provenance/traceability/`
-  - generated Pkl manifests that represent every inventoried upstream test or benchmark with status `covered`, `planned`, or `tracked`
-- `provenance/vendor/vize/`
-  - copied snapshot assets retained for provisional/profile-specific or historical provenance
-- `fixtures/benchmarks/`
-  - reusable benchmark inputs
-- `src/`
-  - local JavaScript API, CLI, validators, and benchmark orchestration
-- `verification/`
-  - repository verification for schemas, reference execution, and smoke benchmarks
+Key distinction: `testsuites/` is shared conformance data; `verification/` is this repository's own Vitest-based self-check layer.
 
 ## Toolchain
 
@@ -165,6 +125,7 @@ Repository maintenance is standardized on:
 Each GitHub Release publishes a canonical corpus archive named `vuejs-language-specification-v{version}-corpus.tar.gz`.
 It ships the immediately vendorable conformance surface:
 
+- the repository architecture guide at `ARCHITECTURE.md`
 - language specification chapters under `spec/`
 - machine-readable test suites under `testsuites/`
 - Pkl schemas under `schemas/`
@@ -176,15 +137,15 @@ It ships the immediately vendorable conformance surface:
 Download a tagged corpus archive:
 
 ```bash
-curl -LO https://github.com/ubugeeei/vuejs-language-specification/releases/download/v0.1.0/vuejs-language-specification-v0.1.0-corpus.tar.gz
-tar -xzf vuejs-language-specification-v0.1.0-corpus.tar.gz -C vendor
+curl -LO https://github.com/ubugeeei/vuejs-language-specification/releases/download/v0.1.1/vuejs-language-specification-v0.1.1-corpus.tar.gz
+tar -xzf vuejs-language-specification-v0.1.1-corpus.tar.gz -C vendor
 ```
 
 The same release also has a checksum file:
 
 ```bash
-curl -LO https://github.com/ubugeeei/vuejs-language-specification/releases/download/v0.1.0/vuejs-language-specification-v0.1.0-corpus.tar.gz.sha256
-shasum -a 256 -c vuejs-language-specification-v0.1.0-corpus.tar.gz.sha256
+curl -LO https://github.com/ubugeeei/vuejs-language-specification/releases/download/v0.1.1/vuejs-language-specification-v0.1.1-corpus.tar.gz.sha256
+shasum -a 256 -c vuejs-language-specification-v0.1.1-corpus.tar.gz.sha256
 ```
 
 ## Local Tooling

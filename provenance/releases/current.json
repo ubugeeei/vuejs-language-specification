@@ -1,25 +1,26 @@
 {
   "schemaVersion": 1,
   "name": "vuejs-language-specification",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "tagFormat": "v{version}",
   "distribution": {
     "canonical": {
       "kind": "repository-snapshot",
       "repository": "ubugeeei/vuejs-language-specification",
-      "sourceArchiveUrl": "https://github.com/ubugeeei/vuejs-language-specification/archive/refs/tags/v0.1.0.tar.gz",
+      "sourceArchiveUrl": "https://github.com/ubugeeei/vuejs-language-specification/archive/refs/tags/v0.1.1.tar.gz",
       "manifestPath": "provenance/releases/current.json",
       "consumption": "pin a GitHub tag or vendor a GitHub Release corpus archive",
       "requiredRoots": ["spec", "testsuites", "runtime", "schemas", "provenance", "fixtures"],
       "releaseAssets": [
         {
           "kind": "canonical-corpus",
-          "name": "vuejs-language-specification-v0.1.0-corpus.tar.gz",
-          "url": "https://github.com/ubugeeei/vuejs-language-specification/releases/download/v0.1.0/vuejs-language-specification-v0.1.0-corpus.tar.gz",
-          "checksumFile": "vuejs-language-specification-v0.1.0-corpus.tar.gz.sha256",
+          "name": "vuejs-language-specification-v0.1.1-corpus.tar.gz",
+          "url": "https://github.com/ubugeeei/vuejs-language-specification/releases/download/v0.1.1/vuejs-language-specification-v0.1.1-corpus.tar.gz",
+          "checksumFile": "vuejs-language-specification-v0.1.1-corpus.tar.gz.sha256",
           "format": "tar.gz",
           "contents": [
             "README.md",
+            "ARCHITECTURE.md",
             "spec",
             "testsuites",
             "runtime",

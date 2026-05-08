@@ -1,6 +1,6 @@
 {
   "name": "@ubugeeei/vuejs-language-specification",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Canonical Vue.js language corpus with conformance suites, provenance manifests, and JavaScript tooling.",
   "keywords": [
     "benchmark",
@@ -22,6 +22,7 @@
     "schemas",
     "provenance",
     "spec",
+    "ARCHITECTURE.md",
     "README.md"
   ],
   "type": "module",

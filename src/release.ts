@@ -25,7 +25,7 @@ const releaseManifestRelativePath = "provenance/releases/current.json";
 const projectName = "vuejs-language-specification";
 const githubRepository = "ubugeeei/vuejs-language-specification";
 const canonicalRoots = ["spec", "testsuites", "runtime", "schemas", "provenance", "fixtures"];
-const canonicalArchiveRootFiles = ["README.md"];
+const canonicalArchiveRootFiles = ["README.md", "ARCHITECTURE.md"];
 const targetDefinitions: ReleaseManifestTarget[] = [
   {
     name: "syntax",
